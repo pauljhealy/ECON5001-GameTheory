@@ -1,0 +1,153 @@
+\documentclass[10pt,t,english]{beamer}
+\usepackage{fontawesome}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts,amsmath,amssymb,bm,bbm}
+\usepackage{mathrsfs}
+\usepackage{sgame}
+\usepackage{graphicx,pstricks}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{makecell}
+\usepackage{tikz,tikzsymbols,gnuplottex}
+\usetikzlibrary{decorations.pathreplacing,shapes}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{appendixnumberbeamer}
+\usepackage{datetime2}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{listings}
+
+\usepackage{natbib}
+\bibliographystyle{unsrtnat}
+\renewcommand{\bibfont}{\footnotesize}
+\renewcommand{\bibsection}{\vspace{-1em}}
+
+%\usepackage{matlab-prettifier} % For enhanced MATLAB highlighting
+\lstset{
+    language=matlab,
+    % Other options for styling (optional)
+    basicstyle=\ttfamily\footnotesize, % Font style
+    keywordstyle=\color{blue}, % Keyword color
+    commentstyle=\color{green!50!black}, % Comment color
+    stringstyle=\color{red!70!black}, % String color
+    numbers=left, % Line numbers on the left
+    numberstyle=\tiny\color{gray}, % Style for line numbers
+    frame=single, % Frame around the listing
+    breaklines=true, % Allow line breaking
+    captionpos=b, % Caption at the bottom
+    tabsize=4 % Tab size
+}
+
+% ------------------------------------------------------------------------------
+% Use the beautiful metropolis beamer template
+% ------------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{fontawesome}
+\usepackage{FiraSans} 
+\mode<presentation>
+{
+  \usetheme[progressbar=foot,background=light]{metropolis} 
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try default, serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+  %\setbeamertemplate{frame footer}{My custom footer}
+  \makeatletter
+    \setbeamertemplate{frametitle continuation}{}
+  \makeatother
+} 
+\addtobeamertemplate{frametitle continuation}{}{%
+  \setbeamertemplate{frametitle continuation}{}%
+}
+\setbeamertemplate{frametitle continuation}{}
+
+\newenvironment{stepenumerate}{\begin{enumerate}[<+->]}{\end{enumerate}}
+\newenvironment{stepitemize}{\begin{itemize}[<+->]}{\end{itemize} }
+\newenvironment{stepenumeratewithalert}{\begin{enumerate}[<+-| alert@+>]}{\end{enumerate}}
+\newenvironment{stepitemizewithalert}{\begin{itemize}[<+-| alert@+>]}{\end{itemize} }
+
+\newtheorem{question}{Question}
+\newtheorem{claim}{Claim}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{conjecture}{Conjecture}
+
+\definecolor{metrop}{RGB}{29, 44, 44}
+\colorlet{GrayLight}{black!15}
+\colorlet{GrayMedium}{black!30}
+\colorlet{ForestGreen}{green!60!black}
+
+\newenvironment{transitionframe}{
+  \setbeamercolor{background canvas}{bg=black!80}
+  \begin{frame}}{
+    \end{frame}
+}
+
+\newcommand{\br}{
+
+\bigskip
+
+}
+
+\newcommand{\pd}{\partial}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand*\hugme[1]{\tikz[baseline=(char.base)]{\node[shape=ellipse,draw,inner sep=0pt] (char) {#1};}}
+
+\newcounter{saveenumi}
+\newcommand{\seti}{\setcounter{saveenumi}{\value{enumi}}}
+\newcommand{\conti}{\setcounter{enumi}{\value{saveenumi}}}
+\resetcounteronoverlays{saveenumi}
+
+
+
+\newcommand\dotprod[2]{\langle #1 , #2 \rangle}
+\newcommand{\ft}[1]{\widehat #1}
+\newcommand{\qabove}[1]{\overset{\text{\large \textbf ?}}{#1}}
+\newcommand{\eqae}{\overset{\text{a.e.}}{=}}
+\newcommand{\calp}{\mathcal{P}}
+\newcommand{\calg}{\mathcal{G}}
+\newcommand{\calb}{\mathcal{B}}
+\newcommand{\textd}{\text{d}}
+\newcommand{\bbr}{\mathbb{R}}
+\newcommand{\binm}{\mathbin{M}}
+\newcommand{\binc}{\mathbin{C}}
+\newcommand{\binb}{\mathbin{B}}
+\newcommand{\calc}{\mathcal{C}}
+\newcommand{\calh}{\mathcal{H}}
+\newcommand{\bfone}{\mathbf{1}}
+\newcommand{\bbe}{\mathbb{E}}
+\newcommand{\bfle}{\mathbf{e}}
+\newcommand{\calf}{\mathcal{F}}
+\newcommand{\cala}{\mathcal{A}}
+\newcommand{\cale}{\mathcal{E}}
+\newcommand{\bbn}{\mathbb{N}}
+\newcommand{\cantor}{\calc}
+\newcommand{\calY}{\mathcal{Y}}
+\newcommand{\textb}{\text{B}}
+\newcommand{\calm}{\mathcal{M}}
+\newcommand{\bint}{\mathbin{T}}
+\newcommand{\ep}{\epsilon}
+\newcommand{\bbq}{\mathbb{Q}}
+\newcommand{\bbp}{\mathbb{P}}
+\newcommand{\cals}{\mathcal{S}}
+\newcommand{\emptysequence}{e}
+\newcommand{\bbz}{\mathbb{Z}}
+\newcommand{\fraka}{\frak{A}}
+\newcommand{\frakb}{\frak{B}}
+\newcommand{\length}{\text{length}}
+\newcommand{\bfn}{\mathbf{N}}
+\newcommand{\support}{\text{support}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\dom}{\mbox{dom}}
+\def\ut{\underline t}
+\def\um{\underline m}
+\def\PP{\mathbb{P}}
+\def\EE{\mathbb{E}}
+\def\RR{\mathbb{R}}

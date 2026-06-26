@@ -1,0 +1,463 @@
+/* KCB Base Cascading Style Sheet */
+/* March 21, 2007 */
+/*  Table of contents:                     */
+/*  Default fonts for various environments */
+/*  Other style instructions               */
+/*  Other Environments                     */
+/*  Colors                                 */
+/*  Dimensions and margins                 */
+/*  Alignment classes                      */
+
+
+/* W3C's sample CSS Sheet */
+@import url(w3sample.css);
+
+
+
+
+	/* ************************** */
+	/*  Font Instructions         */
+	/* ************************** */
+
+body {
+	font-family: Georgia, Times, Serif;
+	font-size: 11pt;
+	line-height: 13pt;
+	color: black;
+}
+
+h1, h2, h3, h4, h6, dt, th, thead, tfoot, caption, div {
+	font-family:  Geneva, Arial, Helvetica, sans-serif;
+	color: black;
+}
+
+h5, p, ul, dl, dt, dd, ol, li,
+ td, blockquote, address, pre {
+	font-family: Times, Serif;
+	color: black;
+}
+
+/* Headings */
+ h1 {
+	font-size : 170%;
+	font-weight : 500;
+ }
+ h2, caption {
+	font-size : 140%;
+	font-weight : 500;
+ }
+ h3 {
+	font-size : 120%;
+	font-weight : normal;
+ }
+ h4 {
+	font-size : 100%;
+	font-weight : 600;
+	margin-bottom : 0;
+ }
+
+em      {
+        font-style:     italic;
+        font-weight:    normal;
+        color:  	black;
+        }
+
+strong  {
+        font-style:     normal;
+        font-weight:    bold;
+        color:  	black;
+        }
+
+em strong, strong em    {
+        font-style:     italic;
+        font-weight:    bold;
+        color:          black;
+        }
+
+b {
+	font-weight:    bold;
+}
+
+.warning {
+	text-transform: none;
+	font-style:     normal;
+	font-weight:    bolder;
+	background:     #FF0;
+	color:  	red;
+	text-align:     center;
+}
+
+.bold {
+	font-weight:    bolder;
+}
+
+del {
+	text-decoration: line-through;
+	background: #FC6;
+	color: black;
+}
+
+ins     {
+        text-decoration: none;
+        background: #9F3;
+	color: black;
+	}
+
+var, cite, dfn, .note   {
+	font-style: oblique;
+}
+
+address {
+	font-style: italic;
+	text-align: right;
+}
+
+acronym {
+	font-variant: small-caps;
+	letter-spacing: 0.1em;
+}
+
+	/* ************************** */
+	/*  End Font Instructions     */
+	/* ************************** */
+
+
+	/* ************************** */
+	/* Other Style Instructions   */
+	/* ************************** */
+ ul {
+	list-style: none;
+}
+
+
+	/* ************************** */
+	/*  End Other Style           */
+	/* ************************** */
+
+
+	/* ************************** */
+	/* Other Environments         */
+	/* ************************** */
+
+ /* CIT/HSS banner */
+
+#CITHSSHeader {
+	  width: 100%;
+	  height: 44px;
+	  position: relative;
+    padding: 3px 0px 6px 0px;
+}
+
+#logo {
+	  float: left;
+    left: 0px;
+}
+
+#HSS {
+	  position: relative;
+    clear:all;
+    left: 1em;
+	  font-size: 144%;
+	  font-weight: normal;
+	  font-family : Caslon Pro, Georgia, Times, serif;
+    line-height: 1.1;
+	  white-space: nowrap;
+}
+
+#HSS a {
+    text-decoration: none;
+}
+
+ div.banner1 {
+	font-size: 144%;
+	font-weight: normal;
+	font-family : Verdana, Helvetica, Arial, sans-serif;
+	margin-top : 2px;
+	margin-bottom : 2px;
+  line-height : 1.2;
+ }
+ div.banner2 {
+	font-size: 144%;
+	font-weight: 500;
+	font-family : Verdana, Helvetica, Arial, sans-serif;
+	margin-top : 3px;
+	margin-bottom : 3px;
+ }
+ div.banner3 {
+	font-size: 120%;
+	font-weight: normal;
+	font-family : Verdana, Helvetica, Arial, sans-serif;
+	margin-top : 2px;
+	margin-bottom : 2px;
+ }
+/*  Small font */
+span.small {
+	font-size : 80%
+	}
+
+
+/* ------------------------------------------------------------------- */
+/*   Special Environments                                              */
+/* ------------------------------------------------------------------- */
+
+
+/*  In the header  */
+
+ div.dept {
+	font-size: 18px;
+	font-weight: 500;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	margin-top: 3px;
+	margin-bottom: 3px;
+  margin-left: 1em;
+  padding-left: 1em;
+  line-height: 1.1;
+ }
+
+#course-number {
+    color: #FF6E1E;      /* CIT orange */
+    font-size: 141%;
+    font-weight: bolder;
+    text-align: left;
+    padding-bottom: 2pt;
+}
+
+#course-title {
+    font-size:  121%;
+    font-style: italic;
+    text-align: left;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+}
+
+#course-term {
+    color: #999999;       /* ash color */
+    font-size: 100%;
+    text-align: left;
+    padding-top: 2pt;
+    padding-bottom: 2pt;}
+
+#course-time-and-place {
+    text-align: right;
+    font-size: 100%;
+    background-color: #FF6E1E;      /* CIT orange */
+    color: #FFFFFF;
+    padding-right:  3pt;
+    padding-left:   3pt;
+    padding-top:    3pt;
+    padding-bottom: 3pt;
+    clear: both;
+    margin-top:    16pt;
+    margin-bottom: 0pt;
+}
+
+#table-of-contents {
+    background-color: #CED0D1;      /* CIT light gray */
+    text-align: center;
+    font-size: 100%;
+    margin-top:     0pt;
+    margin-bottom:  6pt;
+    padding-top:    1pt;
+    padding-bottom: 1pt;
+    padding-left:   0pt;
+    padding-right:  0pt;
+}
+
+/*  Other Special Environments  */
+
+span.book {               /* use for book title titles */
+    font-style: italic;
+    color: #005851;       /* CIT dark green */
+}
+
+
+	/* ************************** */
+	/* End Other Environments     */
+	/* ************************** */
+
+
+
+	/* ************************** */
+	/*  Begin Color Instructions  */
+	/* ************************** */
+
+body {
+    /* background-color: #f8f8f8; */
+    /* background-color: #e8e8e8; */
+	  /* background: url(http:///www.hss.caltech.edu/~kcb/img/parchment.jpg);  */
+    /*  rgb(255,246,240); rgb(255,248,220) */
+}
+
+hr {
+	background: none;
+  color: #BB0000;      /* OSU Scarlet */
+  border-top: 1px solid #BB0000;
+}
+
+#colophon	{
+	display: none;
+}
+
+col, colgroup, table, tbody, td, tr     {
+	color: black;
+	text-decoration: none;
+	border-color: black;
+	border-style: none;
+}
+
+
+a  {
+	color: #005851;       /* CIT dark green */ /*  rgb(0,85,170); */
+	text-decoration: none;
+	font-weight: normal; }
+
+a:hover {
+	color: yellow;
+	background-color: rgb(0,102,204);
+	text-decoration: none;}
+
+a:active	{
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: #CCF;
+}
+
+a.offsite       {
+	text-decoration: underline;
+	background: #ffc;
+	color: #33F;
+}
+
+
+div.display-quote {
+	background:   rgb(153,204,204);
+	color:        black;
+	border-color: gray;
+}
+
+
+	/* ************************** */
+	/*  End Color Instructions    */
+	/* ************************** */
+
+
+	/* ************************** */
+	/*  Begin Dimensions          */
+	/* ************************** */
+
+body    {
+        margin-top:     12pt;
+        margin-left:    12pt;
+        margin-right:   12pt;
+        padding-top:    0;
+        padding-left:   0;
+        padding-right:  0;
+        padding-bottom: 0;
+        }
+
+
+body.tight	{
+	margin-top:     0;
+	margin-left:    0;
+	margin-right:   0;
+	margin-bottom:  0;
+	}
+
+hr.thick {
+	height: 3px;
+	}
+
+caption {
+	margin-bottom: 6px;
+}
+
+dt {
+	margin-top: 6px;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-top: 0;
+	border-bottom: 0;
+	vertical-align: baseline;
+}
+
+dd, dl {
+	margin-top: 0;
+	margin-bottom: 6px;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-top: 0;
+	border-bottom: 0;
+	vertical-align: baseline;
+
+}
+
+ul {
+	margin-left: 0;
+}
+
+ li { margin-bottom: .5em }
+
+/* In-line lists */
+ .inline li, li.inline {
+	display: inline;
+	padding-left: 7px;
+	padding-right: 7px;
+	margin-left: 0;
+	margin-right: 0;
+	border-left: 1px solid #069;
+ }
+
+ .inline li, li.inline:last-of-type {
+	display: inline;
+	padding-left: 7px;
+	padding-right: 7px;
+	margin-left: 0;
+	margin-right: 0;
+	border-left: 1px solid #069;
+	border-right: 1px solid #069;
+ }
+
+ li.last-inline {
+	display: inline;
+	padding-left: 7px;
+	padding-right: 7px;
+	margin-left: 0;
+	margin-right: 0;
+	border-left: 1px solid #069;
+	border-right: 1px solid #069;
+ }
+
+div.display-quote {
+	border-width: thin;
+	border-style: solid;
+	border-style: groove;
+	margin: 1em .5em;
+	padding: .25em 1em;
+}
+
+
+	/* ************************** */
+	/*  End Dimensions            */
+	/* ************************** */
+
+
+	/* ************************** */
+	/*  Begin Alignment Classes   */
+	/* ************************** */
+
+h1 { text-align: center;	}
+caption { text-align: left;	}
+
+.center	{ text-align: center;	}
+.right	{ text-align: right;  }
+.left   { text-align: left;   }
+
+img.right	{
+	float: right;
+	}
+
+	/* ************************** */
+	/*  End Alignment Classes     */
+	/* ************************** */

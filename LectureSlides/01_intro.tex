@@ -1,0 +1,50 @@
+\include{LectureSlides/includes/metropolis_preamble}
+
+
+% Title page info
+\title[Introduction]{Introduction to Game Theory}
+\author[ECON 5001]{ECON 5001\\P.J. Healy} \color{metrop}
+\institute[OSU]{}
+\date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
+
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{What is Game Theory?}
+\textit{Game theory} is the study of strategic interaction: settings where
+each player's best choice depends on what the others do.
+\br
+\begin{itemize}
+    \item Players, strategies, and payoffs
+    \item Solution concepts: dominance, Nash equilibrium, and refinements
+    \item Applications across economics, political science, biology, and CS
+\end{itemize}
+\end{frame}
+
+\begin{frame}{A First Example: The Prisoner's Dilemma}
+Two players simultaneously choose to \emph{Cooperate} or \emph{Defect}:
+\br
+\begin{center}
+\begin{game}{2}{2}
+      & $C$        & $D$        \\
+$C$   & $-1,-1$    & $-3,\;0$   \\
+$D$   & $0,-3$     & $-2,-2$
+\end{game}
+\end{center}
+\br
+\emph{Defect} strictly dominates \emph{Cooperate} for both players, so the
+unique Nash equilibrium is $(D,D)$ --- even though both prefer $(C,C)$.
+\end{frame}
+
+\begin{frame}{Roadmap}
+\begin{enumerate}
+    \item Strategic-form games and dominance
+    \item Nash equilibrium
+    \item Mixed strategies
+    \item Extensive-form games and backward induction
+    \item Repeated games and reputation
+\end{enumerate}
+\end{frame}
+
+\end{document}

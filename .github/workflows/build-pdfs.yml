@@ -1,0 +1,164 @@
+name: Build Lecture PDFs and Index
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      # 1️⃣ Checkout repository
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Download previously built PDFs
+      - name: Download previously built PDFs
+        run: |
+          mkdir -p public
+          # Fetch PDFs from the current gh-pages branch
+          git fetch origin gh-pages || true
+          git checkout origin/gh-pages -- . || true
+          mv *.pdf public/ 2>/dev/null || true
+          git checkout main -- .
+
+      # 2️⃣ Find all standalone .tex files in LectureSlides
+      - name: Find changed lecture .tex files
+        run: |
+          mkdir -p build
+          if ! git rev-parse HEAD~1 >/dev/null 2>&1; then
+            # No previous commit — recompile everything
+            find LectureSlides -maxdepth 1 -name "*.tex" \
+              ! -path "LectureSlides/includes/*" | sort > texfiles.txt
+            find Syllabus -maxdepth 1 -name "syllabus.tex" > syllabuspath.txt
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual trigger — recompile everything
+            find LectureSlides -maxdepth 1 -name "*.tex" \
+              ! -path "LectureSlides/includes/*" | sort > texfiles.txt
+            find Syllabus -maxdepth 1 -name "syllabus.tex" > syllabuspath.txt
+          else
+            git diff --name-only HEAD~1 HEAD -- 'LectureSlides/*.tex' \
+              | grep -v 'includes/' | sort > texfiles.txt
+            git diff --name-only HEAD~1 HEAD -- 'Syllabus/syllabus.tex' \
+              > syllabuspath.txt
+          fi
+          echo "Files to compile:"
+          cat texfiles.txt
+          cat syllabuspath.txt
+
+      # 2.5 Cache LaTeX packages
+      - name: Cache LaTeX packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: latex-${{ runner.os }}-${{ hashFiles('.github/workflows/*.yml') }}
+          restore-keys: |
+            latex-${{ runner.os }}-
+
+      # 2.6 Cache latexmk build artifacts
+      - name: Cache build artifacts
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: latexmk-${{ runner.os }}-${{ hashFiles('LectureSlides/*.tex', 'Syllabus/syllabus.tex') }}
+          restore-keys: |
+            latexmk-${{ runner.os }}-
+
+      # 3️⃣ Compile each .tex into a PDF
+      - name: Compile lecture PDFs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-upgrade texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-games texlive-pstricks texlive-pictures texlive-science texlive-bibtex-extra latexmk poppler-utils gnuplot
+
+          while IFS= read -r texfile; do
+            echo "Compiling $texfile ..."
+            latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -outdir=build "$texfile"
+          done < texfiles.txt
+
+          while IFS= read -r texfile; do
+            echo "Compiling $texfile ..."
+            latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build "$texfile"
+          done < syllabuspath.txt
+
+      # 4️⃣ Copy PDFs to public/
+      - name: Collect PDFs
+        run: |
+          mkdir -p public
+          cp build/*.pdf public/ 2>/dev/null || true
+          cp *.css public/
+
+      # 5️⃣ Generate index.html from PDF titles
+      - name: Generate index.html
+        run: |
+          pdf_count=$(find public -name "*.pdf" | wc -l)
+          echo "Found $pdf_count PDFs in public/"
+          if [ "$pdf_count" -eq 0 ]; then
+            echo "ERROR: No PDFs found in public/!" && exit 1
+          fi
+          cat topstuff.html > public/index.html
+
+          for f in public/*.pdf; do
+            filename=$(basename "$f")
+            if [ "$filename" = "syllabus.pdf" ]; then
+              continue
+            fi
+
+            base="${filename%.pdf}"
+            texfile="LectureSlides/$base.tex"
+
+            REPO_URL="https://github.com/pauljhealy/ECON5001-GameTheory"
+            BRANCH="main"
+
+            tex_url="$REPO_URL/blob/$BRANCH/LectureSlides/$base.tex"
+
+            raw_title=$(pdfinfo "$f" \
+              | awk '/^Title:/ {flag=1; sub(/^Title:[[:space:]]*/, ""); print; next}
+                     /^[[:space:]]/ && flag {print}
+                     !/^[[:space:]]/ && flag {exit}')
+
+            # Normalize
+            title=$(printf "%s" "$raw_title" \
+              | tr '\n' ' ' \
+              | sed 's/\\\\/ /g' \
+              | sed 's/[[:space:]]\+/ /g' \
+              | sed 's/^ *//; s/ *$//')
+
+            # Fallback to filename if empty
+            if [ -z "$title" ]; then
+              title=$(basename "$f" .pdf)
+            fi
+
+            # Get last commit date for this .tex file
+            last_updated=$(git log -1 --format="%as" -- "$texfile")
+            last_updated_string="(updated $last_updated)"
+            if [ -z "$last_updated" ]; then
+              last_updated="unknown"
+              last_updated_string=""
+            fi
+
+            echo "<li>$title" >> public/index.html
+            echo "<ul><li><a href=\"$filename\">Slides</a></li>" >> public/index.html
+            echo "<li><a href=\"$tex_url\" target=\"_blank\">LaTeX source</a> $last_updated_string</li>" >> public/index.html
+            echo "</ul>" >> public/index.html
+          done
+
+          echo "</ol><br>" >> public/index.html
+          echo "Download the <a href="https://github.com/pauljhealy/ECON5001-GameTheory/blob/main/LectureSlides/includes/metropolis_preamble.tex">preamble file</a> included in every .tex file above." >> public/index.html
+          echo "</body></html>" >> public/index.html
+
+      # 6️⃣ Deploy to GitHub Pages
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
