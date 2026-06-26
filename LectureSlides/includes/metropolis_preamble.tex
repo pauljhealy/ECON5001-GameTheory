@@ -5,7 +5,11 @@
 \usepackage[normalem]{ulem}
 \usepackage{amsfonts,amsmath,amssymb,bm,bbm}
 \usepackage{mathrsfs}
-\usepackage{sgame}
+% NOTE: \usepackage{sgame} is intentionally NOT loaded. The sgame `game`
+% environment is incompatible with the `array` package (loaded above and
+% required by colortbl/makecell/multirow), producing
+% "Missing # inserted in alignment preamble". Build payoff matrices with a
+% plain array/tabular instead -- see LectureSlides/01_intro.tex for an example.
 \usepackage{graphicx,pstricks}
 \usepackage{xcolor}
 \usepackage{colortbl}
