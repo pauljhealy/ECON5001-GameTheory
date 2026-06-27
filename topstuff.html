@@ -1,116 +1,114 @@
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index,nofollow">
+<title>ECON 5001: Game Theory &mdash; Lecture Slides</title>
 
+<!-- Match CarmenCanvas: Lato body font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 
+<style>
+  :root {
+    --osu-scarlet:    #BB0000;
+    --canvas-text:    #2D3B45;  /* Canvas dark font */
+    --canvas-muted:   #6B7780;
+    --canvas-border:  #E1E4E8;
+    --canvas-hover:   #F5F6F7;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: transparent; }
+  body {
+    margin: 0;
+    padding: 16px;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--canvas-text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
 
-  <meta name="title" content="Ohio State University ECON 5001 Home Page">
-  <meta name="robots" content="index,nofollow">
-  <meta name="author" content="mailto:healy.52@osu.edu">
+  .page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+  }
+  .accent-bar {
+    height: 4px;
+    width: 56px;
+    background: var(--osu-scarlet);
+    border-radius: 2px;
+    margin: 0 0 22px 0;
+  }
 
-  <link rel="stylesheet" type="text/css" href="kcb.css">
-  <link rel="stylesheet" type="text/css" href="syllabus.css">
+  ol.lectures {
+    list-style: none;
+    counter-reset: lect;
+    margin: 0;
+    padding: 0;
+  }
+  ol.lectures > li {
+    counter-increment: lect;
+    position: relative;
+    padding: 14px 16px 14px 58px;
+    border: 1px solid var(--canvas-border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+  ol.lectures > li:hover {
+    background: var(--canvas-hover);
+    border-color: var(--osu-scarlet);
+  }
+  ol.lectures > li::before {
+    content: counter(lect);
+    position: absolute;
+    left: 14px;
+    top: 13px;
+    width: 30px;
+    height: 30px;
+    background: var(--osu-scarlet);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-  <link rel="shortcut icon" href="https://healy.econ.ohio-state.edu/pjmug.ico" type="image/vnd.microsoft.icon">
-  <link rel="icon" href="https://healy.econ.ohio-state.edu/pjmug.ico" type="image/vnd.microsoft.icon">
+  a.lect-title {
+    display: inline-block;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--canvas-text);
+    text-decoration: none;
+  }
+  ol.lectures > li:hover a.lect-title { color: var(--osu-scarlet); }
+  a.lect-title:focus { outline: 2px solid var(--osu-scarlet); outline-offset: 3px; }
 
-  <!-- This bumps the <ol> lists down a bit, away from the titles of the lecture -->
-  <style>
-    ol li ul {
-      margin-top: 0.3em;
-    }
-  </style>
+  .lect-meta {
+    margin-top: 3px;
+    font-size: 0.82rem;
+    color: var(--canvas-muted);
+  }
+  .lect-meta a {
+    color: var(--canvas-muted);
+    text-decoration: underline;
+  }
+  .lect-meta a:hover { color: var(--osu-scarlet); }
 
-  <title>Ohio State: ECON 5001: Game Theory: P.J. Healy</title>
+  .empty {
+    color: var(--canvas-muted);
+    font-style: italic;
+  }
+</style>
 </head>
 
-<!-- ................................................................ -->
-<!-- ................................................................ -->
-
-
 <body>
+  <h1 class="page-title">Lecture Slides</h1>
+  <div class="accent-bar"></div>
 
-
-<!-- ................................................................ -->
-<!-- ......................... COURSE HEADER ........................ -->
-<!-- ................................................................ -->
-
-
-<div id="top">
-
-  <div id="CITHSSHeader">
-
-      <a id="logo" href="https://www.osu.edu/" target="_blank"><img src="https://healy.econ.ohio-state.edu/teaching/econ8877/osu_logo.jpg" alt="OSU" height="44"></a>
-
-  <div id="HSS">
-    <a href="https://economics.osu.edu/" target="_blank">Department of Economics</a>
-  </div>
-
-  </div> <!-- end CITHSSHeader -->
-
-  </div>
-
-
-
-
-<!-- ================================================================= -->
-
-<hr>
-
-<h1>ECON 5001: Game Theory</h1>
-
-
-<!-- ================================================================= -->
-
-<div class="banner3">Autumn 2026</div>
-
-
-<p>
-Days &amp; Times TBD // Room TBD
-</p>
-
-  <!-- ================================================================ -->
-
-
-  <p>Professor: <a href="http://healy.econ.ohio-state.edu">P.J. Healy</a>
-  <br>
-  Email: <a href="mailto:healy.52@osu.edu">healy.52@osu.edu</a>
-  <br>
-  Office: Bricker 270
-  </p>
-
-  <!-- ================================================================ -->
-
-
-
-
-<!-- ................................................................ -->
-<hr>
-
-<p>
-<i>How do strategic, rational players behave when their outcomes depend on each other's choices?</i>
-</p>
-<p>
-This course is an introduction to the theory of games: how to model strategic interactions and predict behavior using solution concepts such as dominance, Nash equilibrium, and their refinements.
-</p>
-
-<hr>
-
-
-
-<!-- ................................................................ -->
-
-
-<ul>
-
-  <li>Syllabus:
-    <ul class="flush">
-      <li class="inline"><a href="https://pauljhealy.github.io/ECON5001-GameTheory/syllabus.pdf">Syllabus</a></li>
-    </ul>
-</ul>
-
-
-
-<!-- ................................................................ -->
-<hr style="width:100%;text-align:left;margin-left:0">
-<h2>Lectures</h2>
-
-<ol>
+  <ol class="lectures">

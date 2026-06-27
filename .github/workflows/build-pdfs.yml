@@ -144,14 +144,20 @@ jobs:
               last_updated_string=""
             fi
 
-            echo "<li>$title" >> public/index.html
-            echo "<ul><li><a href=\"$filename\">Slides</a></li>" >> public/index.html
-            echo "<li><a href=\"$tex_url\" target=\"_blank\">LaTeX source</a> $last_updated_string</li>" >> public/index.html
-            echo "</ul>" >> public/index.html
+            # Build the metadata line: updated date (if known) + source link
+            if [ -n "$last_updated" ]; then
+              meta="Updated $last_updated &middot; <a href=\"$tex_url\" target=\"_blank\" rel=\"noopener\">Source</a>"
+            else
+              meta="<a href=\"$tex_url\" target=\"_blank\" rel=\"noopener\">Source</a>"
+            fi
+
+            echo "<li>" >> public/index.html
+            echo "<a class=\"lect-title\" href=\"$filename\" target=\"_blank\" rel=\"noopener\">$title</a>" >> public/index.html
+            echo "<div class=\"lect-meta\">$meta</div>" >> public/index.html
+            echo "</li>" >> public/index.html
           done
 
-          echo "</ol><br>" >> public/index.html
-          echo "Download the <a href="https://github.com/pauljhealy/ECON5001-GameTheory/blob/main/LectureSlides/includes/metropolis_preamble.tex">preamble file</a> included in every .tex file above." >> public/index.html
+          echo "</ol>" >> public/index.html
           echo "</body></html>" >> public/index.html
 
       # 6️⃣ Deploy to GitHub Pages
