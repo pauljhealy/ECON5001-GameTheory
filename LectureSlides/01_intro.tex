@@ -14,7 +14,7 @@
 \begin{frame}{What is Game Theory?}
 \textit{Game theory} is the study of strategic interaction: settings where
 each player's best choice depends on what the others do.
-\br
+\bsk
 \begin{itemize}
     \item Players, strategies, and payoffs
     \item Solution concepts: dominance, Nash equilibrium, and refinements
@@ -24,16 +24,16 @@ each player's best choice depends on what the others do.
 
 \begin{frame}{A First Example: The Prisoner's Dilemma}
 Two players simultaneously choose to \emph{Cooperate} or \emph{Defect}:
-\br
+\bsk
 \begin{center}
-\renewcommand{\arraystretch}{1.4}
-$\begin{array}{c|c|c}
-        & C        & D        \\ \hline
-  C     & -1,-1    & -3,\,0   \\ \hline
-  D     & 0,-3     & -2,-2
-\end{array}$
+% xgames matrixgame: rows = left player (Player 1), columns = top player
+% (Player 2); each cell is "payoff1, payoff2". The `br` key auto-underlines
+% best responses in each player's color.
+\begin{matrixgame}[top left={C, D}, player names={Player 1, Player 2}, br]
+  \payoffmatrix{-1,-1 & -3,0 \\ 0,-3 & -2,-2}
+\end{matrixgame}
 \end{center}
-\br
+\bsk
 \emph{Defect} strictly dominates \emph{Cooperate} for both players, so the
 unique Nash equilibrium is $(D,D)$ --- even though both prefer $(C,C)$.
 \end{frame}

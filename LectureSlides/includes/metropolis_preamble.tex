@@ -5,17 +5,20 @@
 \usepackage[normalem]{ulem}
 \usepackage{amsfonts,amsmath,amssymb,bm,bbm}
 \usepackage{mathrsfs}
-% NOTE: \usepackage{sgame} is intentionally NOT loaded. The sgame `game`
-% environment is incompatible with the `array` package (loaded above and
-% required by colortbl/makecell/multirow), producing
-% "Missing # inserted in alignment preamble". Build payoff matrices with a
-% plain array/tabular instead -- see LectureSlides/01_intro.tex for an example.
+% NOTE: sgame is intentionally NOT used -- its `game` environment is
+% incompatible with the `array` package (required by colortbl/makecell/multirow)
+% and errors with "Missing # inserted in alignment preamble". We use the modern
+% TikZ-based `xgames` package instead (loaded after TikZ below).
 \usepackage{graphicx,pstricks}
 \usepackage{xcolor}
 \usepackage{colortbl}
 \usepackage{makecell}
 \usepackage{tikz,tikzsymbols,gnuplottex}
 \usetikzlibrary{decorations.pathreplacing,shapes}
+% --- xgames: TikZ-based game-theory typesetting (matrixgame, gametree,
+% beliefspace, automaton). Not on CTAN; xgames.sty + fikz.sty are vendored at
+% the repo root. CC BY-SA 4.0 (xgames) / GPL-3.0 (fikz), (c) Benjamin Bernard.
+\usepackage{xgames}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{appendixnumberbeamer}
@@ -93,7 +96,7 @@
     \end{frame}
 }
 
-\newcommand{\br}{
+\newcommand{\bsk}{
 
 \bigskip
 
