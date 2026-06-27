@@ -84,3 +84,46 @@ Create `LectureSlides/NN_name.tex` starting with:
 
 Paths to includes/graphics are written relative to the repo root because
 `latexmk` runs from there in CI. Push to `main` and the site updates automatically.
+
+## Year-over-year versioning
+
+`main` always reflects the current offering. When a term ends, snapshot it with
+an annotated git tag. The tag is immutable, browsable on GitHub, and lets you
+diff or restore individual files across years without any branching.
+
+**Cutting an end-of-term snapshot (e.g., Autumn 2026):**
+
+```sh
+git tag -a aut2026 -m "Autumn 2026 final"
+git push origin aut2026
+```
+
+That's it. To also publish the compiled PDFs as a named GitHub Release so
+students can download last year's slides directly:
+
+```sh
+gh release create aut2026 --title "Autumn 2026" \
+  --notes "Final slides and syllabus, Autumn 2026." \
+  build/*.pdf
+```
+
+(Run `gh workflow run "build-pdfs.yml"` first if `build/` is stale, or
+download the artifacts from the last CI run.)
+
+**Starting the next year:** just edit `main` as usual — it already contains the
+previous year's content, so you're naturally building on it. Update
+`topstuff.html` to reflect the new term. Push, and the live site updates.
+
+**Cross-year diffs and restores:**
+
+```sh
+# What changed in a specific lecture since last year:
+git diff aut2026 -- LectureSlides/05_nash.tex
+
+# Pull back last year's version of a file (then edit as needed):
+git checkout aut2026 -- LectureSlides/05_nash.tex
+```
+
+**Exams and solutions must not live here** — this repo is public, including
+its full history. Keep exams, solution keys, and grading materials in a
+separate **private** repository and apply the same annual-tag discipline there.
