@@ -151,9 +151,22 @@ jobs:
               meta="<a href=\"$tex_url\" target=\"_blank\" rel=\"noopener\">Source</a>"
             fi
 
+            # Instructor's in-class annotated PDF, if one has been uploaded to
+            # Annotated/<base>_PJH.pdf. Copy it into public/ and surface a
+            # prominent download link under the lecture.
+            annot_file="Annotated/${base}_PJH.pdf"
+            annot_link=""
+            if [ -f "$annot_file" ]; then
+              cp "$annot_file" public/
+              annot_link="<a class=\"lect-annot\" href=\"${base}_PJH.pdf\" target=\"_blank\" rel=\"noopener\">&#x270E; Prof. Healy's Annotated Version</a>"
+            fi
+
             echo "<li>" >> public/index.html
             echo "<a class=\"lect-title\" href=\"$filename\" target=\"_blank\" rel=\"noopener\">$title</a>" >> public/index.html
             echo "<div class=\"lect-meta\">$meta</div>" >> public/index.html
+            if [ -n "$annot_link" ]; then
+              echo "$annot_link" >> public/index.html
+            fi
             echo "</li>" >> public/index.html
           done
 

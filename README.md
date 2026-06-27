@@ -29,6 +29,8 @@ Source for the ECON 5001 lecture slides and the public download site.
 | `kcb.css`, `syllabus.css` | Site styling (copied into the published site). |
 | `latexmkrc` | Sets the timezone for `\today` timestamps. |
 | `xgames.sty`, `fikz.sty` | Vendored game-theory typesetting package (see below). |
+| `Annotated/` | In-class annotated PDFs (`NN_name_PJH.pdf`), published per lecture. |
+| `sync-annotated.ps1` | One-click: pull, commit, and push new annotated PDFs. |
 | `.github/workflows/build-pdfs.yml` | Build + deploy pipeline. |
 
 ## Typesetting games (`xgames`)
@@ -84,6 +86,21 @@ Create `LectureSlides/NN_name.tex` starting with:
 
 Paths to includes/graphics are written relative to the repo root because
 `latexmk` runs from there in CI. Push to `main` and the site updates automatically.
+
+## Publishing in-class annotated slides
+
+You can post the version of a deck you mark up live during lecture:
+
+1. Download the lecture PDF, annotate it during class.
+2. Save it into `Annotated/` named `NN_name_PJH.pdf` — matching the lecture's
+   source `LectureSlides/NN_name.tex` (e.g. `01_intro.tex` → `01_intro_PJH.pdf`).
+3. Double-click `sync-annotated.ps1` (or its desktop shortcut). It pulls,
+   commits the new PDF, and pushes.
+4. The build copies it to the site and adds a prominent **"✎ Prof. Healy's
+   Annotated Version"** link under that lecture.
+
+See `Annotated/README.md` for the full convention. Overwrite an existing
+`_PJH.pdf` to update it; re-run the script to publish the change.
 
 ## Year-over-year versioning
 
