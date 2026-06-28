@@ -27,7 +27,7 @@ ignored.
 
 1. Download the lecture PDF and annotate it during class.
 2. Save it here as `NN_name_PJH.pdf` (overwrite to update an existing one).
-3. Double-click `sync-annotated.ps1` at the repo root (or its desktop
-   shortcut). It pulls, commits, and pushes.
+3. Double-click `sync-annotated.cmd` at the repo root. It pulls, commits,
+   and pushes.
 4. GitHub Actions rebuilds the site; the annotated link appears within a
    couple of minutes.
