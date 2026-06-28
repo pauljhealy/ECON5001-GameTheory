@@ -13,7 +13,7 @@ jobs:
       # (replaces the old root-level latexmkrc).
       TZ: America/New_York
     permissions:
-      contents: read
+      contents: write   # needed to commit compiled PDFs back to the repo
       pages: write
       id-token: write
 
@@ -28,6 +28,8 @@ jobs:
       - name: Download previously built PDFs
         run: |
           mkdir -p public
+          # Durable source of prior PDFs: the committed PDFs/ folder on main.
+          cp PDFs/*.pdf public/ 2>/dev/null || true
           # Fetch PDFs from the current gh-pages branch
           git fetch origin gh-pages || true
           git checkout origin/gh-pages -- . || true
@@ -97,6 +99,26 @@ jobs:
         run: |
           mkdir -p public
           cp build/*.pdf public/ 2>/dev/null || true
+
+      # 4.5 Commit the clean compiled PDFs to main so they sync to clones via
+      #     `git pull`. Runs before annotated PDFs are added to public/, so the
+      #     PDFs/ folder holds only the compiled decks. continue-on-error keeps a
+      #     transient push race from blocking the Pages deploy. A GITHUB_TOKEN
+      #     push does not retrigger this workflow; [skip ci] is a backstop.
+      - name: Commit compiled PDFs to repo
+        continue-on-error: true
+        run: |
+          mkdir -p PDFs
+          cp public/*.pdf PDFs/ 2>/dev/null || true
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PDFs
+          if git diff --cached --quiet; then
+            echo "No PDF changes to commit."
+          else
+            git commit -m "Update compiled slide PDFs [skip ci]"
+            git push origin HEAD:main
+          fi
 
       # 5️⃣ Generate index.html from PDF titles
       - name: Generate index.html

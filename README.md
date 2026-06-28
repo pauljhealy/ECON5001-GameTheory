@@ -16,6 +16,11 @@ Source for the ECON 5001 lecture slides and the public download site.
    are re-published. A manual **Run workflow** (workflow_dispatch) or the first commit
    recompiles everything — use it after editing the shared preamble, since the per-file
    diff won't detect that it affects every deck.
+4. The freshly compiled PDFs are also committed back to the `PDFs/` folder on `main`
+   (by the Actions bot, with `[skip ci]`), so a `git pull` on any machine brings the
+   latest slides down — no manual download from the site needed. Note: because this
+   lands on `main`, a `PDFs/` folder will also appear in the linked Overleaf project
+   when you pull there; it's harmless and ignored by compilation.
 
 ## Repository layout
 
@@ -28,6 +33,7 @@ Source for the ECON 5001 lecture slides and the public download site.
 | `HTML/topstuff.html` | HTML header; the build appends the lecture list and closes the page. |
 | `xgames.sty`, `fikz.sty` | Vendored game-theory typesetting package (see below). |
 | `Annotated/` | In-class annotated PDFs (`NN_name_PJH.pdf`), published per lecture. |
+| `PDFs/` | Compiled slide PDFs, auto-committed by CI so they sync to clones via `git pull`. |
 | `scripts/sync-annotated.cmd` | Double-click to pull, commit, and push new annotated PDFs. |
 | `.github/workflows/build-pdfs.yml` | Build + deploy pipeline. |
 
