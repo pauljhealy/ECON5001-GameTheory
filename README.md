@@ -30,8 +30,7 @@ Source for the ECON 5001 lecture slides and the public download site.
 | `latexmkrc` | Sets the timezone for `\today` timestamps. |
 | `xgames.sty`, `fikz.sty` | Vendored game-theory typesetting package (see below). |
 | `Annotated/` | In-class annotated PDFs (`NN_name_PJH.pdf`), published per lecture. |
-| `sync-annotated.cmd` | Double-click launcher (runs the `.ps1`). |
-| `sync-annotated.ps1` | Pull, commit, and push new annotated PDFs. |
+| `sync-annotated.cmd` | Double-click to pull, commit, and push new annotated PDFs. |
 | `.github/workflows/build-pdfs.yml` | Build + deploy pipeline. |
 
 ## Typesetting games (`xgames`)
@@ -96,8 +95,6 @@ You can post the version of a deck you mark up live during lecture:
 2. Save it into `Annotated/` named `NN_name_PJH.pdf` — matching the lecture's
    source `LectureSlides/NN_name.tex` (e.g. `01_intro.tex` → `01_intro_PJH.pdf`).
 3. Double-click `sync-annotated.cmd`. It pulls, commits the new PDF, and pushes.
-   (Double-clicking the `.ps1` directly just opens it in an editor — use the
-   `.cmd`, which is why it exists.)
 4. The build copies it to the site and adds a prominent **"✎ Prof. Healy's
    Annotated Version"** link under that lecture.
 
