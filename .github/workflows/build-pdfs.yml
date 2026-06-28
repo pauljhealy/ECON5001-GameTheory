@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Timezone for \today / \DTMcurrenttime on the compiled slides
+      # (replaces the old root-level latexmkrc).
+      TZ: America/New_York
     permissions:
       contents: read
       pages: write
@@ -93,7 +97,6 @@ jobs:
         run: |
           mkdir -p public
           cp build/*.pdf public/ 2>/dev/null || true
-          cp *.css public/
 
       # 5️⃣ Generate index.html from PDF titles
       - name: Generate index.html
@@ -103,7 +106,7 @@ jobs:
           if [ "$pdf_count" -eq 0 ]; then
             echo "ERROR: No PDFs found in public/!" && exit 1
           fi
-          cat topstuff.html > public/index.html
+          cat HTML/topstuff.html > public/index.html
 
           for f in public/*.pdf; do
             filename=$(basename "$f")

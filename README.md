@@ -25,12 +25,10 @@ Source for the ECON 5001 lecture slides and the public download site.
 | `LectureSlides/includes/metropolis_preamble.tex` | Shared preamble `\include`d by every deck. |
 | `LectureSlides/graphics/` | Images used by the slides. |
 | `Syllabus/syllabus.tex` | Course syllabus (compiled separately, listed first on the site). |
-| `topstuff.html` | HTML header; the build appends the lecture list and closes the page. |
-| `kcb.css`, `syllabus.css` | Site styling (copied into the published site). |
-| `latexmkrc` | Sets the timezone for `\today` timestamps. |
+| `HTML/topstuff.html` | HTML header; the build appends the lecture list and closes the page. |
 | `xgames.sty`, `fikz.sty` | Vendored game-theory typesetting package (see below). |
 | `Annotated/` | In-class annotated PDFs (`NN_name_PJH.pdf`), published per lecture. |
-| `sync-annotated.cmd` | Double-click to pull, commit, and push new annotated PDFs. |
+| `scripts/sync-annotated.cmd` | Double-click to pull, commit, and push new annotated PDFs. |
 | `.github/workflows/build-pdfs.yml` | Build + deploy pipeline. |
 
 ## Typesetting games (`xgames`)
@@ -94,7 +92,7 @@ You can post the version of a deck you mark up live during lecture:
 1. Download the lecture PDF, annotate it during class.
 2. Save it into `Annotated/` named `NN_name_PJH.pdf` — matching the lecture's
    source `LectureSlides/NN_name.tex` (e.g. `01_intro.tex` → `01_intro_PJH.pdf`).
-3. Double-click `sync-annotated.cmd`. It pulls, commits the new PDF, and pushes.
+3. Double-click `scripts/sync-annotated.cmd`. It pulls, commits the new PDF, and pushes.
 4. The build copies it to the site and adds a prominent **"✎ Prof. Healy's
    Annotated Version"** link under that lecture.
 
@@ -128,7 +126,7 @@ download the artifacts from the last CI run.)
 
 **Starting the next year:** just edit `main` as usual — it already contains the
 previous year's content, so you're naturally building on it. Update
-`topstuff.html` to reflect the new term. Push, and the live site updates.
+`HTML/topstuff.html` to reflect the new term. Push, and the live site updates.
 
 **Cross-year diffs and restores:**
 

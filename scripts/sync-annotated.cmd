@@ -11,7 +11,9 @@ REM  Written as a plain batch script on purpose: it needs no PowerShell,
 REM  so a locked-down execution policy can't block it.
 REM ===================================================================
 setlocal
-cd /d "%~dp0"
+REM This script lives in scripts\; cd to its parent (the repo root) so the
+REM git commands below run against the repository.
+cd /d "%~dp0.."
 
 echo == Sync annotated slides ==
 echo Repo: %cd%
