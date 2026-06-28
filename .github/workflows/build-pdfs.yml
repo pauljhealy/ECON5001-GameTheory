@@ -20,7 +20,7 @@ jobs:
     steps:
       # 1️⃣ Checkout repository
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -62,7 +62,7 @@ jobs:
 
       # 2.5 Cache LaTeX packages
       - name: Cache LaTeX packages
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: /var/cache/apt/archives
           key: latex-${{ runner.os }}-${{ hashFiles('.github/workflows/*.yml') }}
@@ -71,7 +71,7 @@ jobs:
 
       # 2.6 Cache latexmk build artifacts
       - name: Cache build artifacts
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: build
           key: latexmk-${{ runner.os }}-${{ hashFiles('LectureSlides/*.tex', 'Syllabus/syllabus.tex') }}
@@ -200,9 +200,9 @@ jobs:
 
       # 6️⃣ Deploy to GitHub Pages
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
