@@ -127,23 +127,40 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p PDFs
-          # Drop committed PDFs no longer present in public/ (pruned above),
-          # then mirror the current set so PDFs/ tracks live decks exactly.
-          for f in PDFs/*.pdf; do
-            [ -e "$f" ] || continue
-            bn=$(basename "$f")
-            [ -e "public/$bn" ] || { echo "Removing stale PDFs/$bn"; rm -f "$f"; }
-          done
-          cp public/*.pdf PDFs/ 2>/dev/null || true
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Mirror PDFs/ to the current valid set: drop decks no longer present
+          # in public/ (pruned above), then copy the live ones in.
+          sync_pdfs() {
+            for f in PDFs/*.pdf; do
+              [ -e "$f" ] || continue
+              bn=$(basename "$f")
+              [ -e "public/$bn" ] || rm -f "$f"
+            done
+            cp public/*.pdf PDFs/ 2>/dev/null || true
+          }
+          sync_pdfs
           git add -A PDFs
           if git diff --cached --quiet; then
             echo "No PDF changes to commit."
-          else
-            git commit -m "Update compiled slide PDFs [skip ci]"
-            git push origin HEAD:main
+            exit 0
           fi
+          git commit -m "Update compiled slide PDFs [skip ci]"
+          # Push with retry: a concurrent build or Overleaf push may have moved
+          # main. Re-apply our mirror onto the latest tip and try again, so a
+          # race never silently drops the PDF update.
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then echo "Pushed."; exit 0; fi
+            echo "Push rejected (attempt $attempt); integrating origin/main..."
+            git fetch origin main
+            git reset --soft origin/main
+            sync_pdfs
+            git add -A PDFs
+            if git diff --cached --quiet; then echo "Nothing to commit after integrate."; exit 0; fi
+            git commit -m "Update compiled slide PDFs [skip ci]"
+            sleep 4
+          done
+          echo "Could not push PDF update after retries (non-fatal)."
 
       # 5️⃣ Generate index.html from PDF titles
       - name: Generate index.html
