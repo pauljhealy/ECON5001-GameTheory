@@ -60,8 +60,7 @@ Minimal 2×2 normal-form game:
 ```
 
 Rows are the left (row) player, columns the top player; each cell is
-`payoff1, payoff2`. The `br` key auto-underlines best responses. See
-`LectureSlides/01_intro.tex` for a worked example and the
+`payoff1, payoff2`. The `br` key auto-underlines best responses. See the
 [xgames documentation](https://carlabernard.ch/beni/downloads/xgames.pdf) for
 game trees, belief spaces, and more.
 

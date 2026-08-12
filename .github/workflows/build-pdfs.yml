@@ -51,9 +51,13 @@ jobs:
               ! -path "LectureSlides/includes/*" | sort > texfiles.txt
             find Syllabus -maxdepth 1 -name "syllabus.tex" > syllabuspath.txt
           else
-            git diff --name-only HEAD~1 HEAD -- 'LectureSlides/*.tex' \
+            # --diff-filter=d drops paths deleted in this push. Without it a
+            # removed or renamed deck lands in texfiles.txt and latexmk fails on
+            # a file that is no longer there. Stale PDFs are handled by the
+            # prune step below, not by compiling them.
+            git diff --name-only --diff-filter=d HEAD~1 HEAD -- 'LectureSlides/*.tex' \
               | grep -v 'includes/' | sort > texfiles.txt
-            git diff --name-only HEAD~1 HEAD -- 'Syllabus/syllabus.tex' \
+            git diff --name-only --diff-filter=d HEAD~1 HEAD -- 'Syllabus/syllabus.tex' \
               > syllabuspath.txt
           fi
           echo "Files to compile:"
@@ -85,11 +89,13 @@ jobs:
           sudo apt-get install -y --no-upgrade texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-games texlive-pstricks texlive-pictures texlive-science texlive-bibtex-extra latexmk poppler-utils gnuplot
 
           while IFS= read -r texfile; do
+            [ -f "$texfile" ] || { echo "Skipping missing $texfile"; continue; }
             echo "Compiling $texfile ..."
             latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -outdir=build "$texfile"
           done < texfiles.txt
 
           while IFS= read -r texfile; do
+            [ -f "$texfile" ] || { echo "Skipping missing $texfile"; continue; }
             echo "Compiling $texfile ..."
             latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build "$texfile"
           done < syllabuspath.txt
