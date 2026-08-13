@@ -37,7 +37,7 @@ Today: what if you don't?
 % Same values both rounds if possible, so the bid-shading comparison is clean.
 % Do NOT explain the pricing rules beyond what's on the screen.
 % ---------------------------------------------------------------------
-\begin{frame}{Log In --- We're Bidding}
+\begin{frame}{Log In: We're Bidding}
 \begin{itemize}
     \item MobLab, today's session
     \item You'll be told what the item is worth \textbf{to you}
@@ -56,12 +56,12 @@ No talking. Bid however you think is smart.
 \end{frame}
 
 \begin{frame}{What Did You Just Play?}
-\textbf{Round 1 --- first-price:} the winner pays \textit{her own bid}.
+\textbf{Round 1, first-price:} the winner pays \textit{their own bid}.
 \bsk
-\textbf{Round 2 --- second-price:} the winner pays \textit{the highest losing bid}.
+\textbf{Round 2, second-price:} the winner pays \textit{the highest losing bid}.
 \bsk
 \vfill
-Show of hands --- in which round did you bid closer to your true value?
+Show of hands: in which round did you bid closer to your true value?
 \vspace{1.1in}
 \end{frame}
 
@@ -76,9 +76,9 @@ Second-Price Auctions
 \begin{frame}{The Rules}
 A \textbf{second-price} (or \textbf{Vickrey}) auction:
 \begin{itemize}
-    \item sealed bids --- nobody sees anyone else's bid
+    \item sealed bids: nobody sees anyone else's bid
     \item highest bidder wins
-    \item the winner pays the \textbf{second-highest} bid, not her own
+    \item the winner pays the \textbf{second-highest} bid, not their own
     \item ties are broken by a rule fixed in advance
 \end{itemize}
 \bsk
@@ -89,24 +89,25 @@ Why would a seller ever do this? It looks like giving money away.
 
 \begin{frame}{An Example: The Game-Day Permit}
 One food truck permit for the lot outside the stadium is up for auction.
+Dos Hermanos and Pitabilities both want it.
 \bsk
 \begin{itemize}
-    \item Truck 1 has run the numbers: the permit is worth \textbf{\$30k} to her
+    \item Dos Hermanos has run the numbers: the permit is worth \textbf{\$30k} to them
     \item Bids must be one of \$10k, \$20k, \$30k, \$40k, \$50k
-    \item Ties go to Truck 2 (decided by a coin flip beforehand)
+    \item Ties go to Pitabilities (decided by a coin flip beforehand)
 \end{itemize}
 \bsk
-Truck 1's payoff:
-$$\pi_1 = \begin{cases} 30 - (\text{Truck 2's bid}) & \text{if Truck 1 wins} \\ 0 & \text{otherwise}\end{cases}$$
+Dos Hermanos's payoff:
+$$\pi_1 = \begin{cases} 30 - (\text{Pitabilities' bid}) & \text{if Dos Hermanos wins} \\ 0 & \text{otherwise}\end{cases}$$
 \vfill
-Note she pays \textit{Truck 2's} bid, not her own.
+Note they pay \textit{Pitabilities'} bid, not their own.
 \vspace{-0.4in}
 \end{frame}
 
-\begin{frame}{Only Truck 1's Payoffs Shown}
+\begin{frame}{Only Dos Hermanos's Payoffs Shown}
 \centering
 {\small
-\begin{matrixgame}[top={10, 20, 30, 40, 50}, left={10, 20, 30, 40, 50}, player names={Truck 1 (value 30), Truck 2}]
+\begin{matrixgame}[top={10, 20, 30, 40, 50}, left={10, 20, 30, 40, 50}, player names={Dos Hermanos (value 30), Pitabilities}]
   \payoffmatrix{0,\cdot & 0,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
                 20,\cdot & 0,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
                 20,\cdot & 10,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
@@ -115,13 +116,13 @@ Note she pays \textit{Truck 2's} bid, not her own.
 \end{matrixgame}}
 \bsk
 \raggedright
-Check one cell: Truck 1 bids 30, Truck 2 bids 10. \vspace{0.5in}
+Check one cell: Dos Hermanos bids 30, Pitabilities bids 10. \vspace{0.5in}
 \end{frame}
 
 \begin{frame}{Reading the Table}
 \begin{itemize}
-    \item Bidding \textbf{30} (her true value) is weakly dominant \vspace{0.3in}
-    \item Bidding \textbf{40} is equivalent to bidding 30 --- also weakly dominant \vspace{0.3in}
+    \item Bidding \textbf{30} (their true value) is weakly dominant \vspace{0.3in}
+    \item Bidding \textbf{40} is equivalent to bidding 30, also weakly dominant \vspace{0.3in}
     \item Bidding \textbf{50} is strictly worse than 30. Where, and why? \vspace{0.3in}
     \item Bidding \textbf{20} or \textbf{10} is weakly worse. Where, and why? \vspace{0.3in}
 \end{itemize}
@@ -129,7 +130,7 @@ Check one cell: Truck 1 bids 30, Truck 2 bids 10. \vspace{0.5in}
 
 \begin{frame}{Vickrey's Theorem}
 \textbf{Theorem (Vickrey, 1961).} In a second-price auction, if player $i$ is selfish and
-greedy, then bidding her true value --- $b_i = v_i$ --- is a \textbf{weakly dominant strategy}.
+greedy, then bidding their true value ($b_i = v_i$) is a \textbf{weakly dominant strategy}.
 \vfill
 Remarkable, because:
 \begin{itemize}
@@ -165,8 +166,8 @@ The theorem assumes the bidder is \textbf{selfish and greedy}.
 \bsk
 Drop that and it fails. Suppose I also care what \textit{you} pay:
 \begin{itemize}
-    \item \textbf{Spiteful} --- if I lose, I'd rather you paid more \vspace{0.35in}
-    \item \textbf{Benevolent} --- if I lose, I'd rather you paid less \vspace{0.35in}
+    \item \textbf{Spiteful}: if I lose, I'd rather you paid more \vspace{0.35in}
+    \item \textbf{Benevolent}: if I lose, I'd rather you paid less \vspace{0.35in}
 \end{itemize}
 \bsk
 In either case, bidding my value is no longer dominant.
@@ -178,7 +179,7 @@ Same mechanism, different preferences, different game. Again.
 \begin{frame}{Back to Your Bids}
 Under second-price, truthful bidding is weakly dominant.
 \bsk
-Under first-price, it is not --- winning means paying your own bid, so bidding your
+Under first-price, it is not\ldots\ winning means paying your own bid, so bidding your
 value guarantees a payoff of exactly zero. You must \textbf{shade} down.
 \vfill
 \centering
@@ -214,18 +215,23 @@ Will people answer honestly?
 \end{frame}
 
 \begin{frame}{The Setup}
-A public project (build the park) costs \$$C$ in total. There are $n$ residents.
+A public project such as building the Upper Arlington Community Center costs
+\$$C$ in total. There are $n$ residents.
 \bsk
 \begin{itemize}
     \item Resident $i$'s share of the cost is $c_i$, with $c_1+\cdots+c_n=C$ \\
       {\footnotesize (shares are announced in advance and need not be equal)}
     \item Resident $i$ starts with wealth $m_i$
-    \item If built, resident $i$ gets benefit worth $v_i$ --- possibly \textbf{negative}
+    \item If built, resident $i$ gets benefit worth $v_i$ (possibly \textbf{negative}) \\
+      {\footnotesize (you live on the street it's going on: traffic, lights, parking)}
 \end{itemize}
 \bsk
 $$U_i(\$m)=\begin{cases} m & \text{if the project is not built}\\ m+v_i & \text{if it is}\end{cases}$$
 \vfill
-Efficiency says: build it if and only if $\displaystyle\sum_{i=1}^n v_i > C$.
+\textbf{Efficiency:} build it exactly when the project is worth more to the residents
+together than it costs to build. Social benefit beats total cost.
+\bsk
+$$\underbrace{\textstyle\sum_{i=1}^n v_i}_{\text{social benefit}}\ \ >\ \ \underbrace{C\vphantom{\textstyle\sum}}_{\text{total cost}}$$
 \vspace{-0.4in}
 \end{frame}
 
@@ -248,25 +254,25 @@ $\sum v_i = 19-15 = 4 < 6 = C$, so it should \textit{not} be built.
 \raggedright
 Gain of 13 to one, loss of 15 to the other.
 \vfill
-The government would happily follow the rule --- if it knew $v_1$ and $v_2$.
+The government would happily follow the rule if it knew $v_1$ and $v_2$.
 \bsk
 It doesn't. And asking is exactly the problem.
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Clarke's Idea}
-Each resident $i$ reports a number $w_i$ --- claimed benefit (or harm, if negative).\\
-She may lie: nothing forces $w_i=v_i$.
+Each resident $i$ reports a number $w_i$, which represents their reported benefit (or harm, if negative).\\
+They may lie: nothing forces $w_i=v_i$.
 \bsk
 \textbf{Decision rule:}
 $$\text{Build?}\quad\begin{cases} \text{Yes} & \text{if } \sum_{j=1}^n w_j > C\\[2pt]
 \text{No} & \text{if } \sum_{j=1}^n w_j \le C\end{cases}$$
 \bsk
-\textbf{Then the twist.} Resident $i$ is \textbf{pivotal} if the decision \textit{without her report}
+\textbf{Then the twist.} Resident $i$ is \textbf{pivotal} if the decision \textit{without their report}
 would differ from the decision \textit{with} it.
 \begin{itemize}
-    \item Not pivotal $\Rightarrow$ she pays no tax
-    \item Pivotal $\Rightarrow$ she pays $\Big|\sum_{j\ne i}w_j-\sum_{j\ne i}c_j\Big|$
+    \item Not pivotal $\Rightarrow$ they pay no tax
+    \item Pivotal $\Rightarrow$ they pay $\Big|\sum_{j\ne i}w_j-\sum_{j\ne i}c_j\Big|$
 \end{itemize}
 \end{frame}
 
@@ -313,8 +319,8 @@ $$U_1 = 40 + 25 - 5 - 15 = 45$$
 \begin{frame}{Clarke's Theorem}
 \vfill
 \centering
-\textbf{Theorem (Clarke, 1971).} In the pivotal mechanism, reporting truthfully ---
-$w_i=v_i$ --- is a \textbf{weakly dominant strategy} for every player.
+\textbf{Theorem (Clarke, 1971).} In the pivotal mechanism, reporting truthfully
+($w_i=v_i$) is a \textbf{weakly dominant strategy} for every player.
 \vfill
 \raggedright
 Same shape as Vickrey: the tax you pay is built out of \textit{other people's} numbers,
@@ -323,44 +329,29 @@ so your report moves the decision without moving your own bill.
 \vspace{0.5in}
 \end{frame}
 
-% ==============================================================
-% MOBLAB #2 --- PLAY BEFORE ANY THEORY
-% ==============================================================
-
-% ---- MobLab run: (Keynesian) Beauty Contest -------------------------
-% Set P = 2/3, integers 1-100. Run 2-3 rounds, showing the winning number
-% after each. Do NOT walk through the iterated-dominance logic first --
-% the whole point is to catch first-round naive play. Save a screenshot of
-% the round-1 histogram; it is referenced again a few slides later.
-% ---------------------------------------------------------------------
-\begin{frame}{Log In Again --- Pick a Number}
-\vfill
+% ---- Historical figure slide: three portraits in chronological order ----
+\begin{frame}{Intellectual History}
 \centering
-\large
-Choose an integer from \textbf{1} to \textbf{100}.
-\bsk
-\normalsize
-Whoever is closest to \ $\tfrac{2}{3}\times$(the average of everyone's number) \ wins.
-\vfill
-\raggedright
-No talking. We'll play a few rounds.
-\bsk
-\vspace{0.8in}
-\end{frame}
-
-\begin{frame}{Results}
-\centering
-\begin{tabular}{lcc}
- & \textbf{Average} & \textbf{Winning number} \\[0.1in]
-Round 1: & \underline{\hspace{0.8in}} & \underline{\hspace{0.8in}} \\[0.3in]
-Round 2: & \underline{\hspace{0.8in}} & \underline{\hspace{0.8in}} \\[0.3in]
-Round 3: & \underline{\hspace{0.8in}} & \underline{\hspace{0.8in}} \\[0.3in]
+\begin{tabular}{c@{\hspace{0.45in}}c@{\hspace{0.45in}}c}
+\includegraphics[height=1.05in]{LectureSlides/graphics/history/VickreyMug.png} &
+\includegraphics[height=1.05in]{LectureSlides/graphics/history/ClarkeMug.png} &
+\includegraphics[height=1.05in]{LectureSlides/graphics/history/GrovesMug.png} \\[0.04in]
+{\small Vickrey, 1961} & {\small Clarke, 1971} & {\small Groves, 1973}
 \end{tabular}
 \bsk
 \raggedright
+\begin{itemize}
+    \item \textbf{1973}: Groves solves the public goods problem in general
+    \item \textbf{1971}: Clarke had already published the special case
+    \item \textbf{1961}: Vickrey had it all along, in a paper about auctions
+\end{itemize}
+\bsk
+The ``pivotal mechanism'' is often called ``the \textbf{VCG} mechanism.''
 \vfill
-What happened between rounds? And why?
-\vspace{-0.3in}
+{\footnotesize Vickrey won the Nobel Prize in 1996 but died three days after it was announced.}\\
+{\footnotesize Vickrey (1961), \textit{J.\ Finance}; Clarke (1971), \textit{Public
+Choice}; Groves (1973), \textit{Econometrica}.}
+\vspace{-0.2in}
 \end{frame}
 
 % ==============================================================
@@ -372,14 +363,14 @@ Iterated Deletion
 \end{frame}
 
 \begin{frame}{The Problem}
-If a player has a dominant strategy, she should play it.
+If a player has a dominant strategy, they should play it.
 \bsk
 But most games don't have one. So what then?
 \vfill
 New idea: even without a dominant strategy, a rational player will never play a
 \textbf{strictly dominated} one.
 \bsk
-And if I know you're rational, I know you won't either --- which shrinks the game
+And if I know you're rational, I know you won't either\ldots\ which shrinks the game
 I'm actually facing.
 \bsk
 And then \textit{that} smaller game may have dominated strategies of its own.
@@ -431,7 +422,7 @@ Delete $C$.
 \end{matrixgame}
 \bsk
 \raggedright
-\textbf{Step 2.} Now $T$ strictly dominates \textit{both} $M$ and $B$ for Player 1 ---
+\textbf{Step 2.} Now $T$ strictly dominates \textit{both} $M$ and $B$ for Player 1,
 which it did not do a moment ago. Delete them.
 \vspace{-0.2in}
 \end{frame}
@@ -453,13 +444,13 @@ $G^\infty=\{(T,L)\}$
 \normalsize
 \raggedright
 Nobody had a dominant strategy at the start, and yet the game has a unique
-prediction --- \textit{provided} each player knows the other is rational, and knows
+prediction, \textit{provided} each player knows the other is rational, and knows
 that the other knows, and so on.
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Bonanno's Example}
-Four rounds instead of three. Only the deleted strategy is named each step.
+Four rounds instead of three.
 \bsk
 \centering
 \begin{matrixgame}[top={e, f, g, h}, left={A, B, C, D}, player names={Player 1, Player 2}]
@@ -472,7 +463,48 @@ Four rounds instead of three. Only the deleted strategy is named each step.
     \item delete $D$ \ (dominated by $C$) \hspace{0.35in} 4. delete $C$ \ (dominated by $A$)
 \end{enumerate}
 \bsk
-Output: $\{(A,e),(A,f),(B,e),(B,f)\}$ --- not a single profile.
+Output: $\{(A,e),(A,f),(B,e),(B,f)\}$, not a single profile.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% MOBLAB #2: BEAUTY CONTEST, PLAYED AFTER IDSDS
+% ==============================================================
+
+% ---- MobLab run: (Keynesian) Beauty Contest -------------------------
+% Set P = 2/3, integers 1-100. Run 2-3 rounds, showing the winning number
+% after each. Deliberately placed AFTER the IDSDS section: students have
+% the vocabulary by now, so the payoff is that they still do not play 1 in
+% round 1. That gap between knowing the logic and using it is the point,
+% and it is what the 'Back to Your Numbers' frame picks up next.
+% ---------------------------------------------------------------------
+\begin{frame}{Log In Again: Pick a Number}
+\vfill
+\centering
+\large
+Choose an integer from \textbf{1} to \textbf{100}.
+\bsk
+\normalsize
+Whoever is closest to \ $\tfrac{2}{3}\times$(the average of everyone's number) \ wins.
+\vfill
+\raggedright
+No talking. We'll play a few rounds.
+\bsk
+\vspace{0.8in}
+\end{frame}
+
+\begin{frame}{Results}
+\centering
+\begin{tabular}{lcc}
+ & \textbf{Average} & \textbf{Winning number} \\[0.1in]
+Round 1: & \underline{\hspace{0.8in}} & \underline{\hspace{0.8in}} \\[0.3in]
+Round 2: & \underline{\hspace{0.8in}} & \underline{\hspace{0.8in}} \\[0.3in]
+Round 3: & \underline{\hspace{0.8in}} & \underline{\hspace{0.8in}} \\[0.3in]
+\end{tabular}
+\bsk
+\raggedright
+\vfill
+What happened between rounds? And why?
 \vspace{-0.3in}
 \end{frame}
 
@@ -541,7 +573,7 @@ Answer: \ $(A,L)$, \ payoffs $(4,0)$
 \end{frame}
 
 \begin{frame}{So the Procedure Isn't Well Defined}
-Two legitimate orders, two different answers --- and not by a little:
+Two legitimate orders, two different answers\ldots\ and not by a little:
 $(2,2)$ versus $(4,0)$.
 \vfill
 \textbf{Fix (Definition).} At every step, identify \textit{all} weakly or strictly dominated
@@ -549,7 +581,7 @@ strategies for \textit{all} players, and delete them \textbf{simultaneously}.
 \bsk
 Applied to that game, IDWDS gives $\{(A,L),(A,R),(T,L),(T,R)\}$.
 \vfill
-Note this is not a single profile --- so the game has no iterated weak
+Note this is not a single profile, so the game has no iterated weak
 dominant-strategy solution.
 \vspace{-0.4in}
 \end{frame}
@@ -560,7 +592,7 @@ IDSDS has a clean story: rationality, plus knowing others are rational, and so o
 IDWDS does not.
 \begin{itemize}
     \item To delete a \textit{weakly} dominated strategy, you must believe your opponent
-      might play anything --- otherwise the tie-breaking case never arises
+      might play anything. Otherwise the tie-breaking case never arises
     \item But deletion is precisely the act of ruling strategies out
 \end{itemize}
 \vfill
@@ -602,27 +634,35 @@ A strategy profile $s^*=(s_1^*,s_2^*)$ is a \textbf{Nash equilibrium} if
 \end{enumerate}
 \vfill
 In words: \textbf{holding the other player's strategy fixed}, neither player can do
-better by changing her own.
+better by changing their own.
 \bsk
 Note what's fixed and what varies in each line. That's the whole definition.
 \vspace{-0.4in}
 \end{frame}
 
-\begin{frame}{Four Ways to Say It}
-\textbf{No regret.} After seeing what the other player did, nobody wishes she had
-chosen differently.
-\bsk
-\textbf{Self-enforcing agreement.} If the players could talk beforehand and shake on
-$s^*$, nobody would want to break it --- assuming the other keeps it.
-\bsk
-\textbf{Viable recommendation.} If a third party publicly recommended $s^*$, nobody
-would want to deviate --- assuming the others comply.
-\bsk
-\textbf{Rationality with correct beliefs.} Each player best-responds to what she
-believes the other will do, and those beliefs are right.
+% ---- Historical figure slide: portrait left, facts right ------------
+\begin{frame}{John Forbes Nash Jr. (1928--2015)}
+\begin{columns}
+\begin{column}{0.32\textwidth}
+    \begin{center}
+        \includegraphics[height=1.3in]{LectureSlides/graphics/history/NashMug.png}
+    \end{center}
+\end{column}
+\begin{column}{0.68\textwidth}
+\begin{itemize}
+    \item Duffin's reference letter, 1948, in full: \\
+      ``He is a mathematical genius.''
+    \item Princeton PhD, 1950: 26 pages, two citations
+    \item One of the two was his own
+    \item Nobel, 1994, with Harsanyi and Selten
+    \item Abel Prize, 2015: PDEs, not games
+    \item Schizophrenia from 1959, three decades away
+    \item Died May 2015, coming home from the Abel ceremony
+\end{itemize}
+\end{column}
+\end{columns}
 \vfill
-{\footnotesize These are all the same inequalities in different clothes.}
-\vspace{-0.3in}
+\vspace{0.5in}
 \end{frame}
 
 \begin{frame}{Finding Them}
@@ -639,6 +679,23 @@ Check $(T,L)$:
 \end{itemize}
 \bsk
 So $(T,L)$ is a Nash equilibrium. Find the other one. \vspace{0.5in}
+\end{frame}
+
+\begin{frame}{Four Ways to Say It}
+\textbf{No regret.} After seeing what the other player did, nobody wishes they had
+chosen differently.
+\bsk
+\textbf{Self-enforcing agreement.} If the players could talk beforehand and shake on
+$s^*$, nobody would want to break it, assuming the other keeps it.
+\bsk
+\textbf{Viable recommendation.} If a third party publicly recommended $s^*$, nobody
+would want to deviate, assuming the others comply.
+\bsk
+\textbf{Rationality with correct beliefs.} Each player best-responds to what they
+believe the other will do, and those beliefs are right.
+\vfill
+{\footnotesize These are all the same inequalities in different clothes.}
+\vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Best Replies}
@@ -681,7 +738,7 @@ Your turn. Columns first, then rows.
 \end{matrixgame}
 \bsk
 \raggedright
-Only $(B,E)$ has both payoffs underlined --- the unique Nash equilibrium.
+Only $(B,E)$ has both payoffs underlined: the unique Nash equilibrium.
 \bsk
 Watch the near-misses:
 \begin{itemize}
@@ -697,42 +754,97 @@ A profile $s^*\in S$ is a Nash equilibrium if, for every player $i$,
 $$\pi_i(s^*)\ \ge\ \pi_i(s_1^*,\ldots,s_{i-1}^*,\ s_i,\ s_{i+1}^*,\ldots,s_n^*)
 \quad\text{for all } s_i\in S_i$$
 \bsk
-$n$ inequalities, one per player. Nothing new --- just more of them.
+$n$ inequalities, one per player. Nothing new, just more of them.
 \vfill
-For three players we draw one table per strategy of Player 3.
-\begin{itemize}
-    \item underline Players 1 and 2 as before, within each table
-    \item underline Player 3's payoff if it's her largest \textit{in that cell across tables}
-\end{itemize}
-\vspace{-0.3in}
+\vspace{0.8in}
 \end{frame}
 
-\begin{frame}{Two Theorems}
-Let $NE(G)$, $IDSDS(G)$, $IDWDS(G)$ be the respective outputs.
+\begin{frame}{Three Players, Two Tables}
+One table per strategy of Player 3. Each cell is $(\pi_1,\pi_2,\pi_3)$.
+\begin{itemize}
+    \item underline Players 1 and 2 as before, \textit{within} each table
+    \item underline Player 3 if it is their largest \textit{across} tables, same cell
+\end{itemize}
+\bsk
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\centering
+Player 3 plays $E$
+\begin{matrixgame}[top={L, R}, left={T, B}, player names={Player 1, Player 2, Player 3}]
+  \payoffmatrix{4,1,4 & 0,0,1 \\ 3,1,3 & 3,3,2}
+\end{matrixgame}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+Player 3 plays $F$
+\begin{matrixgame}[top={L, R}, left={T, B}, player names={Player 1, Player 2, Player 3}]
+  \payoffmatrix{0,0,1 & 2,2,3 \\ 1,4,2 & 1,0,3}
+\end{matrixgame}
+\end{column}
+\end{columns}
+\vfill
+\raggedright
+Two equilibria in here. Find them.
+\onslide<2>{
+\bsk
+$(T,L,E)$ and $(T,R,F)$.
+\bsk
+{\footnotesize Check $(B,R,E)$ and $(B,L,F)$: Players 1 and 2 are both content, and only
+Player 3 wants to move. That is the comparison you cannot see inside one table.}
+}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Nash Survives IDSDS}
+All three procedures return a \textbf{set of strategy profiles}, not one prediction:
+\begin{itemize}
+    \item $NE(G)$: the profiles satisfying the Nash inequalities
+    \item $IDSDS(G)$: the profiles still standing when strict deletion halts
+    \item $IDWDS(G)$: the same, for weak deletion
+\end{itemize}
+Each is a subset of $S$, and each can be empty, a single profile, or many.
 \vfill
 \textbf{Theorem.} \ For every ordinal strategic-form game $G$,
 $$NE(G)\ \subseteq\ IDSDS(G)$$
 \begin{itemize}
     \item A Nash equilibrium never uses a strategy that IDSDS deletes
-    \item So IDSDS never throws away an equilibrium --- it's safe
+    \item So IDSDS never throws away an equilibrium: it's safe
     \item But the same is \textbf{not} true of IDWDS: it is possible that
       $NE(G)\ne\emptyset$ and yet $NE(G)\cap IDWDS(G)=\emptyset$
 \end{itemize}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Strict Nash Equilibrium}
+$s^*$ is a \textbf{strict} Nash equilibrium if every player is \textit{strictly} worse off
+deviating, rather than merely no better off.
+\bsk
+\centering
+\begin{tabular}{ll}
+Nash: & $\pi_i(s^*)\ \ge\ \pi_i(s_i,s_{-i}^*)$ \ \ for every $s_i\in S_i$ \\[0.18in]
+Strict: & $\pi_i(s^*)\ >\ \pi_i(s_i,s_{-i}^*)$ \ \ for every $s_i\ne s_i^*$ \\
+\end{tabular}
+\bsk
+\raggedright
+Two changes: $\ge$ becomes $>$, and $s_i^*$ itself is excluded. It has to be, since
+$\pi_i(s^*)>\pi_i(s^*)$ is false.
 \vfill
-\textbf{Theorem.} \ If $IDSDS(G)=\{s\}$ then $s$ is a strict Nash equilibrium.\\
-If $IDWDS(G)=\{s\}$ then $s$ is a Nash equilibrium.
+\textbf{Theorem.} \ If $IDSDS(G)=\{s^*\}$ then $s^*$ is a strict Nash equilibrium.
+\bsk
+If $IDWDS(G)=\{s^*\}$ then $s^*$ is a Nash equilibrium, but not necessarily a strict one.
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{A Bigger Example}
-50 players. Each secretly writes a request: a multiple of \$10, up to \$100.
+Suppose OSU donor Ratmir Timashev makes the following offer to 50 students.
+Each secretly writes down a request: a multiple of \$10, up to \$100.
 \bsk
 \begin{itemize}
-    \item If \textbf{5 or fewer} players ask for \$100, everyone gets what they asked for
+    \item If \textbf{5 or fewer} students ask for \$100, everyone gets what they asked for
     \item Otherwise, everyone gets nothing
 \end{itemize}
 \bsk
-All players are selfish and greedy. What are the Nash equilibria?
+All students are selfish and greedy. What are the Nash equilibria?
 \vfill
 \vspace{1.1in}
 \end{frame}
@@ -740,7 +852,7 @@ All players are selfish and greedy. What are the Nash equilibria?
 \begin{frame}{A Bigger Example}
 There are two families of equilibria.
 \bsk
-\textbf{(a) Seven or more players request \$100.}\\
+\textbf{(a) Seven or more students request \$100.}\\
 Everyone gets nothing. Can anyone gain by switching alone? \vspace{0.4in}
 \bsk
 \textbf{(b) Exactly five request \$100, and all 45 others request \$90.}\\
@@ -762,7 +874,7 @@ No cell has both payoffs underlined.
 \vfill
 With only ordinal payoffs, a game need not have \textbf{any} Nash equilibrium.
 \bsk
-Fixing this requires letting players randomize --- and randomizing requires
+Fixing this requires letting players randomize, and randomizing requires
 cardinal payoffs. That's Chapter 5.
 \vspace{-0.3in}
 \end{frame}
@@ -788,9 +900,9 @@ You want to write the larger\ldots\ no, the \textit{smaller} number. But not too
 What are the Nash equilibria? \vspace{0.7in}
 \end{frame}
 
-\begin{frame}{The Answer Is $(1,1)$ --- and Only $(1,1)$}
+\begin{frame}{The Answer Is $(1,1)$, and Only $(1,1)$}
 \textbf{It is an equilibrium.} At $(1,1)$ both get 0. If Player 1 switches to any
-$x>1$, then $x\ge y=1$, so she still gets 0.
+$x>1$, then $x\ge y=1$, so they still get 0.
 \bsk
 \textbf{Nothing else is.}
 \begin{itemize}
@@ -811,39 +923,194 @@ So the unique Nash equilibrium has both players using a weakly dominated strateg
 \begin{frame}{Cournot Competition}
 {\footnotesize (This one uses calculus.)}
 \bsk
-Two firms produce an identical good. Firm $i$ chooses quantity $q_i\ge 0$ at
-constant unit cost $c$. Price is set by total output:
-$$P=a-b(q_1+q_2),\qquad a>c,\ b>0$$
+Shell and Speedway sell an identical good: a gallon of regular. Station $i$
+chooses quantity $q_i\ge 0$ at constant unit cost $c$. The price is a \textit{function}
+of total output:
+$$P(q_1,q_2)=a-b(q_1+q_2),\qquad a>c,\ b>0$$
 \bsk
-Firm 1's profit:
-$$\pi_1(q_1,q_2)=Pq_1-cq_1=(a-c)q_1-b q_1^2-b q_1 q_2$$
+Shell's profit:
+$$\pi_1(q_1,q_2)=P(q_1,q_2)\,q_1-cq_1=(a-c)q_1-b q_1^2-b q_1 q_2$$
 \bsk
-Strategy sets are $[0,\infty)$ --- infinite. But a Nash equilibrium is still just a
-pair $(\bar q_1,\bar q_2)$ where neither firm wants to move.
+Strategy sets are $[0,\infty)$ (infinite). But a Nash equilibrium is still just a
+pair $(\bar q_1,\bar q_2)$ where neither station wants to move.
 \vfill
-{\footnotesize Cournot wrote this down in 1838 --- inventing Nash equilibrium about
+{\footnotesize Cournot wrote this down in 1838, inventing Nash equilibrium about
 120 years early, for this one class of games.}
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{Solving It}
-Fix $\bar q_2$. Then $\pi_1$ is a function of $q_1$ alone, and it's concave
-($\partial^2\pi_1/\partial q_1^2=-2b<0$), so set the derivative to zero:
-$$\frac{\partial \pi_1}{\partial q_1}=a-c-2b\bar q_1-b\bar q_2=0$$
-$$\frac{\partial \pi_2}{\partial q_2}=a-c-2b\bar q_2-b\bar q_1=0$$
+\begin{frame}{Variables and Parameters}
+Not every letter in a model plays the same role.
 \bsk
-Two equations, two unknowns: \vspace{0.5in}
+\textbf{Parameters:} \ $a$, $b$, $c$
+\begin{itemize}
+    \item fixed numbers, known to everyone, chosen by nobody
+    \item placeholders for a number that is already settled before anyone moves
+    \item left as letters so one solution covers every version of the game
+\end{itemize}
 \bsk
-\centering
-$\displaystyle \bar q_1=\bar q_2=\frac{a-c}{3b}$
+\textbf{Choice variables:} \ $q_1$, $q_2$
+\begin{itemize}
+    \item placeholders for a number that someone gets to pick
+    \item these are the strategies: $S_i=[0,\infty)$
+\end{itemize}
+\bsk
+\textbf{Derived values} (functions of the variables): \ $P(q_1,q_2)$, \ $\pi_i(q_1,q_2)$
+\begin{itemize}
+    \item not fixed in advance, and nobody chooses them directly
+    \item they are \textit{functions}: feed in the choices, get a number out
+\end{itemize}
 \vfill
+For any letter, ask: could a player have made it come out differently? \vspace{0.3in}
+\end{frame}
+
+% ---- Calculus reminder: partials, FOC, SOC --------------------------
+\begin{frame}{Maximizing, With Two Variables}
+From the math review: to maximize $f(x)$, set $f'(x)=0$.
+\bsk
+Shell's profit depends on \textit{two} quantities:
+$$\pi_1(q_1,q_2)=(a-c)q_1-bq_1^2-bq_1q_2$$
+\bsk
+But Shell only chooses $q_1$. Speedway's $q_2$ is not Shell's to pick.
+\vfill
+So treat $q_2$ as a fixed number and maximize over $q_1$ alone. \vspace{0.8in}
+\end{frame}
+
+\begin{frame}{Partial Derivatives}
+A \textbf{partial derivative} is an ordinary derivative taken while every other variable
+is held constant, treated as though it were just a number.
+\bsk
+$$\frac{\partial f}{\partial x}\ :\quad \text{differentiate in } x, \text{ treat } y
+\text{ as a constant}$$
+\bsk
+The curly $\partial$ is the only new thing. The rules are the ones you already know.
+\vfill
+$f(x,y)=3x^2+5xy+y^3$
+\bsk
+$\dfrac{\partial f}{\partial x}=$ \underline{\hspace{2in}} \vspace{0.4in}
+
+$\dfrac{\partial f}{\partial y}=$ \underline{\hspace{2in}} \vspace{0.3in}
+\end{frame}
+
+\begin{frame}{Why That Works}
+Same $f(x,y)=3x^2+5xy+y^3$. Suppose $y$ is stuck at $2$:
+$$f(x,2)=3x^2+10x+8$$
+\bsk
+That is a function of $x$ alone. Differentiate it the ordinary way:
+\bsk
+$\dfrac{d}{dx}f(x,2)=$ \underline{\hspace{2in}} \vspace{0.5in}
+
+Now compare it to $\dfrac{\partial f}{\partial x}$ with $y=2$ substituted in.
+\vfill
+Holding a variable constant and plugging in a constant are the same operation.
+\vspace{0.5in}
+\end{frame}
+
+\begin{frame}{Finding the Maximizer}
+Two conditions, in words first:
+\begin{itemize}
+    \item \textbf{First order}: at the top, the slope in the $x$ direction is flat
+    \item \textbf{Second order}: the curve bends downward there, so flat means a peak
+      rather than a valley
+\end{itemize}
+\bsk
+$$\underbrace{\frac{\partial f}{\partial x}=0}_{\text{slope is flat}}
+\qquad\text{and}\qquad
+\underbrace{\frac{\partial^2 f}{\partial x^2}<0}_{\text{bending downward}}$$
+\vfill
+Skip the second condition and a flat point could just as easily be a minimum.
+\vspace{0.7in}
+\end{frame}
+
+\begin{frame}{Shell's Problem}
+$$\pi_1(q_1,q_2)=(a-c)q_1-bq_1^2-bq_1q_2$$
+\bsk
+Hold $q_2$ fixed. First order:
+\bsk
+$\dfrac{\partial \pi_1}{\partial q_1}=$ \underline{\hspace{2.2in}} $=0$ \vspace{0.6in}
+
+Second order:
+\bsk
+$\dfrac{\partial^2 \pi_1}{\partial q_1^2}=$ \underline{\hspace{1.2in}}, negative because
+$b>0$, so the flat point is a maximum. \vspace{0.4in}
+\end{frame}
+
+\begin{frame}{From First-Order Condition to Best Reply}
+Shell's first-order condition holds at Shell's optimum, \textit{whatever} $q_2$ turns out
+to be:
+$$a-c-2bq_1-bq_2=0$$
+\bsk
+So solve it for $q_1$: \vspace{0.9in}
+
+\centering
+$\displaystyle BR_1(q_2)=\frac{a-c-bq_2}{2b}$
+\vfill
+\raggedright
+The second-order condition was $-2b<0$, so this really is Shell's best, not its worst.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{A Best Reply Is a Function}
+$$BR_1(q_2)=\frac{a-c-bq_2}{2b}$$
+\bsk
+Feed it a quantity for Speedway, and it hands back Shell's best answer to that quantity.
+One input, one output.
+\bsk
+\begin{itemize}
+    \item If Speedway floods the market, $BR_1$ tells Shell to pull back
+    \item If Speedway sits out, $BR_1$ tells Shell to act like a monopolist
+\end{itemize}
+\bsk
+Speedway's problem is the same with the labels swapped:
+$$BR_2(q_1)=\frac{a-c-bq_1}{2b}$$
+\vfill
+{\footnotesize $BR_i(q_{-i})$ is truncated at 0 if needed.}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Nash Equilibrium Is a Fixed Point}
+Recall the best-reply version of the definition: $(q_1^*,q_2^*)$ is a Nash equilibrium
+exactly when each is a best reply to the other.
+$$q_1^*=BR_1(q_2^*) \qquad\text{and}\qquad q_2^*=BR_2(q_1^*)$$
+\bsk
+Substitute the second into the first:
+$$q_1^*=BR_1\big(BR_2(q_1^*)\big)$$
+\bsk
+Two equations in two unknowns just became \textbf{one} equation in one unknown.
+\vfill
+Start at $q_1^*$, ask what Speedway would do, then ask what Shell would do back. A Nash
+equilibrium is a quantity that returns to \textit{itself} after that round trip.
+\vspace{0.3in}
+\end{frame}
+
+\begin{frame}{Solving the Fixed Point}
+$$q_1=\frac{a-c-b\,BR_2(q_1)}{2b},\qquad BR_2(q_1)=\frac{a-c-bq_1}{2b}$$
+\bsk
+Substitute, then solve for $q_1$: \vspace{2.4in}
+
+\centering
+$\displaystyle q_1^*=\frac{a-c}{3b}$
+\end{frame}
+
+\begin{frame}{And Then the Other One}
+Feed $q_1^*$ back through Speedway's best reply:
+$$q_2^*=BR_2(q_1^*)=\frac{a-c-b\left(\frac{a-c}{3b}\right)}{2b}$$
+\bsk
+$q_2^*=$ \underline{\hspace{1.6in}} \vspace{0.8in}
+
+\raggedright
+No surprise that it matches $q_1^*$: the two stations face identical problems, so the
+equilibrium had to be symmetric.
+\vfill
+Worth checking directly that $BR_1(q_2^*)=q_1^*$. It does.
+\vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{Cournot: The Numbers}
 At $\bar q_1=\bar q_2=\dfrac{a-c}{3b}$:
 \bsk
 \begin{itemize}
-    \item Price: \hspace{0.55in} $\displaystyle P=\frac{a+2c}{3}$
+    \item Price: \hspace{0.55in} $\displaystyle P(\bar q_1,\bar q_2)=\frac{a+2c}{3}$
     \bsk
     \item Each profit: \hspace{0.1in} $\displaystyle \frac{(a-c)^2}{9b}$
 \end{itemize}
@@ -865,9 +1132,9 @@ profit $=$ \underline{\hspace{0.8in}}
 \begin{itemize}
     \item \textbf{Second-price auction}: truthful bidding is weakly dominant (Vickrey)
     \item \textbf{Pivotal mechanism}: truthful reporting is weakly dominant (Clarke)
-    \item \textbf{IDSDS}: delete strictly dominated strategies, repeat --- order-free,
-      justified by common knowledge of rationality
-    \item \textbf{IDWDS}: order matters, so delete simultaneously --- and the
+    \item \textbf{IDSDS}: delete strictly dominated strategies, repeat (order-free,
+      justified by common knowledge of rationality)
+    \item \textbf{IDWDS}: order matters, so delete simultaneously, and the
       justification is murkier
     \item \textbf{Nash equilibrium}: nobody gains by deviating alone
     \item $NE\subseteq IDSDS$, but a game may have no Nash equilibrium at all
@@ -883,7 +1150,7 @@ Next: what happens when players can randomize.
     \item Exercises: \S2.9.3 (auctions), \S2.9.4 (pivotal mechanism),\\
       \S2.9.5 (iterated deletion), \S2.9.6 (Nash equilibrium), \S2.9.7 (infinite games)
     \item Proofs of both theorems are in \S2.8
-    \item Solutions in \S2.10 --- try them first
+    \item Solutions in \S2.10. Try them first
 \end{itemize}
 \vfill
 \end{frame}

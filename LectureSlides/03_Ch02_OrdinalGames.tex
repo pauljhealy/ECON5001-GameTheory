@@ -79,9 +79,9 @@ So: what should Sarah do?
 % 50,50 / 0,100 / 100,0 / 0,0 (units of $1000). One round, no chat, no rematch.
 % Set the class code below before lecture.
 % --------------------------------------------------------------------
-\begin{frame}{Before We Analyze It --- Let's Play}
+\begin{frame}{Before We Analyze It: Let's Play}
 \begin{itemize}
-    \item Phone, tablet, or laptop --- whatever you've got
+    \item Phone, tablet, or laptop (whatever you've got)
     \item Log in to \textbf{MobLab} and join today's session
     \item Class code: \hspace{0.1in} \texttt{\underline{\hspace{1.3in}}}
     \item One decision: \textbf{Split} or \textbf{Steal}
@@ -137,9 +137,9 @@ We assumed Sarah is \textbf{selfish and greedy}: she cares only about her own mo
 \bsk
 That might be false! Sarah might:
 \begin{itemize}
-    \item value \textbf{fairness} --- an even split beats grabbing everything
-    \item feel \textbf{benevolence} --- if she gets nothing anyway, she'd rather Steven get something
-    \item feel \textbf{spite} --- she'd rather Steven get nothing
+    \item value \textbf{fairness}: an even split beats grabbing everything
+    \item feel \textbf{benevolence}: if she gets nothing anyway, she'd rather Steven get something
+    \item feel \textbf{spite}: she'd rather Steven get nothing
 \end{itemize}
 \bsk
 Under some of these, the ``obvious'' answer flips completely.
@@ -173,30 +173,31 @@ Frame $+$ rankings $=$ \textbf{game}
 \vfill
 \end{frame}
 
-\begin{frame}{Our Own Example: Friday Night}
-Alex and Blair want to have dinner. Both phones are dead, so no messaging.\\
-Each just walks to one of the two places they always go.
+\begin{frame}{Our Own Example: Sunday Morning}
+Long Saturday night. Alex and Blair both forgot to charge their phones, and both
+need a serious breakfast.\\
+No way to message. Each just walks to one of the two places they always go.
 \bsk
 \begin{itemize}
-    \item Alex chooses: Taco Truck ($T$) or Ramen Shop ($R$)
-    \item Blair chooses: Taco Truck ($T$) or Ramen Shop ($R$)
+    \item Alex chooses: Buckeye Donuts ($B$) or HangOverEasy ($H$)
+    \item Blair chooses: Buckeye Donuts ($B$) or HangOverEasy ($H$)
     \item They choose simultaneously (neither sees the other's choice)
 \end{itemize}
 \bsk
 Four things can happen:
 \begin{itemize}
-    \item $o_1$: both at the Taco Truck
-    \item $o_2$: Alex at tacos, Blair at ramen (they eat alone)
-    \item $o_3$: Alex at ramen, Blair at tacos (they eat alone)
-    \item $o_4$: both at the Ramen Shop
+    \item $o_1$: both at Buckeye Donuts
+    \item $o_2$: Alex at BuckyDs, Blair at HangOE (they eat alone)
+    \item $o_3$: Alex at HangOE, Blair at BuckyDs (they eat alone)
+    \item $o_4$: both at HangOverEasy
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Friday Night as a Frame}
+\begin{frame}{Sunday Morning as a Frame}
 \begin{itemize}
     \item Players: \hspace{0.5in} $I=\{1,2\}$ \hspace{0.2in} (1 $=$ Alex, 2 $=$ Blair)
-    \item Strategies: \hspace{0.28in} $S_1=\{T,R\}$, \hspace{0.1in} $S_2=\{T,R\}$
-    \item Profiles: \hspace{0.45in} $S=S_1\times S_2=\{(T,T),(T,R),(R,T),(R,R)\}$
+    \item Strategies: \hspace{0.28in} $S_1=\{B,H\}$, \hspace{0.1in} $S_2=\{B,H\}$
+    \item Profiles: \hspace{0.45in} $S=S_1\times S_2=\{(B,B),(B,H),(H,B),(H,H)\}$
     \item Outcomes: \hspace{0.29in} $O=\{o_1,o_2,o_3,o_4\}$
     \item Outcome function: $f:S\to O$
 \end{itemize}
@@ -204,7 +205,7 @@ Four things can happen:
 \centering
 \begin{tabular}{c|c|c|c|c|}
 \cline{2-5}
-$s$: & $(T,T)$ & $(T,R)$ & $(R,T)$ & $(R,R)$ \\
+$s$: & $(B,B)$ & $(B,H)$ & $(H,B)$ & $(H,H)$ \\
 \cline{2-5}
 $f(s)$: & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
 \cline{2-5}
@@ -256,7 +257,7 @@ Preferences
 Outcomes are \textit{things}, not numbers:
 \bsk
 \begin{itemize}
-    \item ``both at the Taco Truck''
+    \item ``both at Buckeye Donuts''
     \item ``Sarah gets \$100,000 and Steven gets nothing''
     \item ``the park gets built and I pay \$40''
 \end{itemize}
@@ -319,7 +320,7 @@ With numbers, ``at least as big'' comes for free:
     \item the comparisons \textit{never} cycle
 \end{itemize}
 \bsk
-With outcomes, neither is automatic. ``Both at the taco truck'' and
+With outcomes, neither is automatic. ``Both at Buckeye Donuts'' and
 ``Sarah gets \$100,000'' are not on a number line.
 \vfill
 So the two properties we get for free with $\ge$ become
@@ -347,7 +348,9 @@ $o\sim_i o'$ & $i$ finds $o$ just as good as $o'$; $i$ is \textit{indifferent} \
 \raggedright
 The subscript $i$ matters: preferences belong to \textbf{a person}.
 \bsk
-$M\succ_{\text{Alice}} J$ \ but \ $M\sim_{\text{Bob}} J$ \ is perfectly consistent.
+Let $C$ be dinner at Cazuela's and $Y$ be dinner at Yoshi Sushi. Then
+$$C\succ_{\text{Alice}} Y \quad\text{but}\quad C\sim_{\text{Bob}} Y$$
+is perfectly consistent: Alice prefers Cazuela's, Bob can't tell the difference.
 \vfill
 Chains are read left to right, best to worst:
 $$o_3\succ o_1\succ o_2\sim o_4$$
@@ -476,9 +479,9 @@ This is what ``\textbf{ordinal}'' means: \textit{only the order carries informat
 \vfill
 \textbf{Consequence: utility cannot be compared across people.}
 \bsk
-Alice's utility for pizza is $5$. Bob's is $4$.
+Alice's utility for Massey's Columbus-style pizza is $5$. Bob's is $4$.
 \begin{itemize}
-    \item Does Alice like pizza more than Bob does? \hspace{0.2in} \textbf{No idea.}
+    \item Does Alice like Massey's more than Bob does? \hspace{0.2in} \textbf{No idea.}
     \item Bob could have written $400$ instead of $4$ and said the same thing
     \item Each person's numbers only speak about \textit{that person's own} ranking
 \end{itemize}
@@ -486,21 +489,21 @@ Alice's utility for pizza is $5$. Bob's is $4$.
 \end{frame}
 
 \begin{frame}{What Utility Does \textit{Not} Mean}
-``Alice's utility for Mexican food is 10.''
+``Alice's utility for Cazuela's is 10.''
 \begin{itemize}
     \item Meaningless on its own.
 \end{itemize}
 \bsk
-``Alice's utility for Mexican is 10 and for Japanese is 5.''
+``Alice's utility for Cazuela's is 10 and for Yoshi Sushi is 5.''
 \begin{itemize}
-    \item Meaningful --- it says she prefers Mexican.
-    \item Does \textbf{not} say Mexican is ``twice as good.''
+    \item Meaningful: it says she prefers Cazuela's.
+    \item Does \textbf{not} say Cazuela's is ``twice as good.''
     \item We could have used $100$ and $-25$ and said exactly the same thing.
 \end{itemize}
 \vfill
 Also: a utility of $1$ does not mean ``first choice.'' Low number, low rank.
 \bsk
-Think of it as an index of satisfaction --- but hold that thought loosely.
+Think of it as an index of satisfaction, but hold that thought loosely.
 \vspace{-0.4in}
 \end{frame}
 
@@ -552,7 +555,7 @@ $$\pi_i(s)\ =\ U_i\big(f(s)\big)$$
 \begin{itemize}
     \item $f(s)$: the outcome that profile $s$ produces
     \item $U_i(\cdot)$: how much $i$ likes that outcome
-    \item $\pi_i(s)$: the two composed --- utility \textit{as a function of strategies}
+    \item $\pi_i(s)$: the two composed (utility \textit{as a function of strategies})
 \end{itemize}
 \vfill
 The triple $\langle I,(S_1,\ldots,S_n),(\pi_1,\ldots,\pi_n)\rangle$ is the
@@ -581,8 +584,9 @@ But remember what's underneath it.
 \vspace{-0.4in}
 \end{frame}
 
-\begin{frame}{Friday Night: Three Different Games, One Frame}
-\textbf{Story A.} Both would rather be together; Alex likes tacos, Blair likes ramen.
+\begin{frame}{Sunday Morning: Three Different Games, One Frame}
+\textbf{Story A.} Both would rather be together; Alex wants donuts, Blair wants
+chicken \& waffles.
 \bsk
 \begin{itemize}
     \item Alex: $o_1\succ_1 o_4\succ_1 o_2\sim_1 o_3$
@@ -590,14 +594,14 @@ But remember what's underneath it.
 \end{itemize}
 \bsk
 \centering
-\begin{matrixgame}[top={Tacos, Ramen}, left={Tacos, Ramen}, player names={Alex, Blair}]
+\begin{matrixgame}[top={BuckyDs, HangOE}, left={BuckyDs, HangOE}, player names={Alex, Blair}]
   \payoffmatrix{3,2 & 1,1 \\ 1,1 & 2,3}
 \end{matrixgame}
 \vfill
 \end{frame}
 
-\begin{frame}{Friday Night: Three Different Games, One Frame}
-\textbf{Story B.} Alex wants company; Blair wants to eat alone tonight.
+\begin{frame}{Sunday Morning: Three Different Games, One Frame}
+\textbf{Story B.} Alex wants company; Blair wants to eat alone this morning.
 \bsk
 \begin{itemize}
     \item Alex: $o_1\sim_1 o_4\succ_1 o_2\sim_1 o_3$
@@ -605,7 +609,7 @@ But remember what's underneath it.
 \end{itemize}
 \bsk
 \centering
-\begin{matrixgame}[top={Tacos, Ramen}, left={Tacos, Ramen}, player names={Alex, Blair}]
+\begin{matrixgame}[top={BuckyDs, HangOE}, left={BuckyDs, HangOE}, player names={Alex, Blair}]
   \payoffmatrix{2,0 & 0,2 \\ 0,2 & 2,0}
 \end{matrixgame}
 \vfill
@@ -613,16 +617,16 @@ But remember what's underneath it.
 Same frame. Completely different game. \vspace{0.4in}
 \end{frame}
 
-\begin{frame}{Friday Night: Three Different Games, One Frame}
+\begin{frame}{Sunday Morning: Three Different Games, One Frame}
 \textbf{Story C.} Neither cares about company at all; each just wants their favorite food.
 \bsk
 \begin{itemize}
-    \item Alex: $o_1\sim_1 o_2\succ_1 o_3\sim_1 o_4$ \hspace{0.3in} (tacos, period)
-    \item Blair: $o_2\sim_2 o_4\succ_2 o_1\sim_2 o_3$ \hspace{0.3in} (ramen, period)
+    \item Alex: $o_1\sim_1 o_2\succ_1 o_3\sim_1 o_4$ \hspace{0.3in} (donuts, period)
+    \item Blair: $o_2\sim_2 o_4\succ_2 o_1\sim_2 o_3$ \hspace{0.3in} (chicken \& waffles, period)
 \end{itemize}
 \bsk
 \centering
-\begin{matrixgame}[top={Tacos, Ramen}, left={Tacos, Ramen}, player names={Alex, Blair}]
+\begin{matrixgame}[top={BuckyDs, HangOE}, left={BuckyDs, HangOE}, player names={Alex, Blair}]
   \payoffmatrix{1,0 & 1,1 \\ 0,0 & 0,1}
 \end{matrixgame}
 \vfill
@@ -690,9 +694,9 @@ Dominance
 \end{frame}
 
 \begin{frame}{The Idea}
-Fix one player. Compare two of \textit{her own} strategies, $a$ and $b$.
+Fix one player. Compare two of \textit{their own} strategies, $a$ and $b$.
 \bsk
-Ask: how do $a$ and $b$ compare \textbf{in every situation she might face}?
+Ask: how do $a$ and $b$ compare \textbf{in every situation they might face}?
 \bsk
 \begin{itemize}
     \item If $a$ always beats $b$: \hspace{0.42in} $a$ \textbf{strictly dominates} $b$
@@ -757,7 +761,7 @@ $T$ never does worse, and does better against $C$. This is \textbf{weak} dominan
 \end{frame}
 
 \begin{frame}{Definition: Dominance}
-Let $i$ be a player and $a,b\in S_i$ two of her strategies.
+Let $i$ be a player and $a,b\in S_i$ two of their strategies.
 \bsk
 \begin{itemize}
     \item $a$ \textbf{strictly dominates} $b$ if
@@ -790,7 +794,7 @@ Think of ``dominates'' as ``is better than.''
 \end{frame}
 
 \begin{frame}{Dominant $=$ Best}
-``Dominant'' needs no second strategy named --- it means \textit{better than all of them}.
+``Dominant'' needs no second strategy named: it means \textit{better than all of them}.
 \bsk
 \begin{itemize}
     \item $a$ is a \textbf{strictly dominant strategy} if $a$ strictly dominates
@@ -803,7 +807,7 @@ Think of ``dominates'' as ``is better than.''
 Consequences:
 \begin{itemize}
     \item There is at most \textbf{one} strictly dominant strategy. Why? \vspace{0.35in}
-    \item There can be \textbf{several} weakly dominant strategies --- but any two of
+    \item There can be \textbf{several} weakly dominant strategies, but any two of
       them must be equivalent.
 \end{itemize}
 \end{frame}
@@ -874,7 +878,7 @@ Chose Steal: & \underline{\hspace{1in}} \\[0.3in]
 \bsk
 \raggedright
 \vfill
-If everyone were selfish and greedy, Steal is weakly dominant --- so we'd expect
+If everyone were selfish and greedy, Steal is weakly dominant, so we'd expect
 100\% Steal.
 \bsk
 We didn't get that. So which assumption was wrong? \vspace{0.5in}
@@ -903,8 +907,8 @@ While you watch, ask yourself:
 % ==============================================================
 
 \begin{frame}{Our Own Example: The Price War}
-Two food trucks park on the same block every day. Each morning, each owner
-independently sets a \textbf{Normal} price or runs a \textbf{Discount}.
+Dos Hermanos and Pitabilities park on the same block every day. Each morning,
+each owner independently sets a \textbf{Normal} price or runs a \textbf{Discount}.
 \bsk
 \begin{itemize}
     \item If neither discounts: they split the lunch crowd at healthy margins
@@ -919,7 +923,7 @@ $$\text{(I discount, they don't)}\ \succ\ \text{(neither)}\ \succ\ \text{(both)}
 
 \begin{frame}{The Price War}
 \centering
-\begin{matrixgame}[top={Normal, Discount}, left={Normal, Discount}, player names={Truck 1, Truck 2}, br]
+\begin{matrixgame}[top={Normal, Discount}, left={Normal, Discount}, player names={Dos Hermanos, Pitabilities}, br]
   \payoffmatrix{2,2 & 0,3 \\ 3,0 & 1,1}
 \end{matrixgame}
 \bsk
@@ -979,7 +983,7 @@ envious: \ $o_3\succ_{\text{Doug}} o_1\succ_{\text{Doug}} o_4\succ_{\text{Doug}}
 Extra effort is strictly dominant for both. \\
 (Extra, Extra) is a strict dominant-strategy profile.
 \vfill
-Same game as the price war --- different story, identical structure.\\
+Same game as the price war: different story, identical structure.\\
 That is what game theory is for.
 \vspace{-0.4in}
 \end{frame}
@@ -1016,7 +1020,7 @@ Next: what if nobody has a dominant strategy?
 \begin{itemize}
     \item Bonanno, \textit{Game Theory}, \S2.1--2.2
     \item Exercises: \S2.9.1 (frames and preferences), \S2.9.2 (dominance)
-    \item Full solutions are in \S2.10 --- try them before you look
+    \item Full solutions are in \S2.10. Try them before you look
 \end{itemize}
 \vfill
 \end{frame}
