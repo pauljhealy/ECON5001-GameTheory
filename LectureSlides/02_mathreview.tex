@@ -1,7 +1,7 @@
 \input{LectureSlides/includes/metropolis_preamble}
 
 % Title page info
-\title[Math Review]{Math Review}
+\title[Math Review]{Math Review (Not in the book)}
 \author[ECON 5001]{ECON 5001\\Prof. Healy} \color{metrop}
 \institute[OSU]{}
 \date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
@@ -54,6 +54,23 @@
     \item Element of: $\in$ (and not an element of: $\notin$)\vspace{0.6in}
     \item ``Disjoint'' (mutually exclusive) sets: $A\cap B=\emptyset$
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Math Language: Quantifiers}
+    \begin{itemize}
+        \item ``For all'' (or ``for every''): $\forall$
+        \item ``There exists \uline{\ \ \ \ } such that'': $\exists$ \uline{\ \ \ \ } s.t.
+    \end{itemize}
+    \bsk
+    \textbf{Examples:} Suppose $A=\{1,3\}$, $B=\{-1,2,4\}$ 
+    \begin{itemize}
+        \item<2->Is this true: $\forall x\in A\ \ \exists y\in B\ \ s.t.\ \ \ \ y>x$\\
+        When $x=1$ set $y=2$. When $x=3$ set $y=4$\ $\checkmark$
+        \item<3->Is this true: $\exists x\in B\ \ s.t.\ \ \forall y\in A\ \ \ \ x>y$\\
+        Set $x=4$. When $y=1$ then $x>y$, and when $y=3$ then $x>y$\ $\checkmark$
+        \item<4->Is this true: $\forall x\in B\ \ \exists y\in A\ \ s.t.\ \ \ \ y>x$\\
+        ?
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Cartesian Product}
