@@ -27,6 +27,7 @@ Source for the ECON 5001 lecture slides and the public download site.
 | Path | Purpose |
 |------|---------|
 | `LectureSlides/*.tex` | One standalone beamer deck per lecture. Filename → PDF name. |
+| `LectureSlides/xx_*.tex` | Same, but **unlisted** — compiled and deployed, kept off the index. |
 | `LectureSlides/includes/metropolis_preamble.tex` | Shared preamble `\include`d by every deck. |
 | `LectureSlides/graphics/` | Images used by the slides. |
 | `Syllabus/syllabus.tex` | Course syllabus (compiled separately, listed first on the site). |
@@ -89,6 +90,22 @@ Create `LectureSlides/NN_name.tex` starting with:
 
 Paths to includes/graphics are written relative to the repo root because
 `latexmk` runs from there in CI. Push to `main` and the site updates automatically.
+
+## Unlisted decks (`xx_` prefix)
+
+A deck whose filename starts with `xx_` instead of a lecture number — e.g.
+`xx_TextErrata.tex`, `xx_SelectionEffects.tex` — is treated as **unlisted**. It
+compiles exactly like any other deck, its PDF is deployed to the site and
+committed to `PDFs/`, but the index-generation step skips it, so it does not
+appear on the public lecture list. Use it for material that isn't a numbered
+lecture: the running Bonanno errata, one-off asides, work in progress.
+
+> **Unlisted is not private.** The PDF still sits on the site at its direct URL
+> (`.../xx_TextErrata.pdf`) and the `.tex` is in a public repo with full history.
+> Exams and solution keys still belong in the separate private repo.
+
+To promote an unlisted deck onto the site, rename it with a lecture number; the
+prune step drops the old PDF and the new one is indexed on the next build.
 
 ## Publishing in-class annotated slides
 

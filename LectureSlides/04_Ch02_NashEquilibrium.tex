@@ -1,0 +1,891 @@
+\input{LectureSlides/includes/metropolis_preamble}
+
+
+% Title page info
+\title[Nash Equilibrium]{Auctions, Iterated Dominance, \& Nash Equilibrium}
+\author[ECON 5001]{ECON 5001\\Prof. Healy} \color{metrop}
+\institute[OSU]{}
+\date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
+
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{Where We Left Off}
+We can now:
+\begin{itemize}
+    \item separate a \textbf{frame} from a \textbf{game}
+    \item write preferences as a complete, transitive $\succsim_i$
+    \item represent $\succsim_i$ with an ordinal utility function
+    \item compare two strategies of one player: \textbf{dominance}
+\end{itemize}
+\bsk
+And we found: if you have a dominant strategy, play it.
+\vfill
+Today: what if you don't?
+\vspace{-0.5in}
+\end{frame}
+
+% ==============================================================
+% MOBLAB #1 --- PLAY BEFORE ANY THEORY
+% ==============================================================
+
+% ---- MobLab run: sealed-bid auction ---------------------------------
+% Game: "Private Value Sealed" (Auction topic). Run TWO rounds:
+%   Round 1: winner pays own bid   (first price)
+%   Round 2: winner pays 2nd-highest bid (second price)
+% Same values both rounds if possible, so the bid-shading comparison is clean.
+% Do NOT explain the pricing rules beyond what's on the screen.
+% ---------------------------------------------------------------------
+\begin{frame}{Log In --- We're Bidding}
+\begin{itemize}
+    \item MobLab, today's session
+    \item You'll be told what the item is worth \textbf{to you}
+    \begin{itemize}
+        \item that number is yours alone; others have different ones
+    \end{itemize}
+    \item Submit one sealed bid. Highest bid wins.
+    \item We'll play it \textbf{twice}, under two different rules
+\end{itemize}
+\bsk
+Your payoff is your value minus what you pay, or zero if you don't win.
+\vfill
+\centering
+No talking. Bid however you think is smart.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What Did You Just Play?}
+\textbf{Round 1 --- first-price:} the winner pays \textit{her own bid}.
+\bsk
+\textbf{Round 2 --- second-price:} the winner pays \textit{the highest losing bid}.
+\bsk
+\vfill
+Show of hands --- in which round did you bid closer to your true value?
+\vspace{1.1in}
+\end{frame}
+
+% ==============================================================
+% 2.3 SECOND-PRICE AUCTION
+% ==============================================================
+
+\begin{frame}[standout]
+Second-Price Auctions
+\end{frame}
+
+\begin{frame}{The Rules}
+A \textbf{second-price} (or \textbf{Vickrey}) auction:
+\begin{itemize}
+    \item sealed bids --- nobody sees anyone else's bid
+    \item highest bidder wins
+    \item the winner pays the \textbf{second-highest} bid, not her own
+    \item ties are broken by a rule fixed in advance
+\end{itemize}
+\bsk
+Why would a seller ever do this? It looks like giving money away.
+\vfill
+\vspace{0.9in}
+\end{frame}
+
+\begin{frame}{An Example: The Game-Day Permit}
+One food truck permit for the lot outside the stadium is up for auction.
+\bsk
+\begin{itemize}
+    \item Truck 1 has run the numbers: the permit is worth \textbf{\$30k} to her
+    \item Bids must be one of \$10k, \$20k, \$30k, \$40k, \$50k
+    \item Ties go to Truck 2 (decided by a coin flip beforehand)
+\end{itemize}
+\bsk
+Truck 1's payoff:
+$$\pi_1 = \begin{cases} 30 - (\text{Truck 2's bid}) & \text{if Truck 1 wins} \\ 0 & \text{otherwise}\end{cases}$$
+\vfill
+Note she pays \textit{Truck 2's} bid, not her own.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Only Truck 1's Payoffs Shown}
+\centering
+{\small
+\begin{matrixgame}[top={10, 20, 30, 40, 50}, left={10, 20, 30, 40, 50}, player names={Truck 1 (value 30), Truck 2}]
+  \payoffmatrix{0,\cdot & 0,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
+                20,\cdot & 0,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
+                20,\cdot & 10,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
+                20,\cdot & 10,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
+                20,\cdot & 10,\cdot & 0,\cdot & -10,\cdot & 0,\cdot}
+\end{matrixgame}}
+\bsk
+\raggedright
+Check one cell: Truck 1 bids 30, Truck 2 bids 10. \vspace{0.5in}
+\end{frame}
+
+\begin{frame}{Reading the Table}
+\begin{itemize}
+    \item Bidding \textbf{30} (her true value) is weakly dominant \vspace{0.3in}
+    \item Bidding \textbf{40} is equivalent to bidding 30 --- also weakly dominant \vspace{0.3in}
+    \item Bidding \textbf{50} is strictly worse than 30. Where, and why? \vspace{0.3in}
+    \item Bidding \textbf{20} or \textbf{10} is weakly worse. Where, and why? \vspace{0.3in}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Vickrey's Theorem}
+\textbf{Theorem (Vickrey, 1961).} In a second-price auction, if player $i$ is selfish and
+greedy, then bidding her true value --- $b_i = v_i$ --- is a \textbf{weakly dominant strategy}.
+\vfill
+Remarkable, because:
+\begin{itemize}
+    \item it holds no matter how many bidders there are
+    \item it holds no matter what anyone else bids
+    \item you don't need to guess, predict, or model your rivals at all
+\end{itemize}
+\vfill
+Truth-telling isn't nice here. It's just optimal.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Why It Works: Two Cases}
+Let $v_1$ be my value and $b_2$ the other bid. Compare bidding $v_1$ to anything else.
+\bsk
+\textbf{Case 1: $b_2\le v_1$.} \ Bidding $v_1$ wins and pays $b_2$, for a payoff of $v_1-b_2\ge 0$.
+\begin{itemize}
+    \item Bidding higher: still win, still pay $b_2$. \underline{\hspace{1.5in}}
+    \item Bidding below $b_2$: lose, payoff 0. \underline{\hspace{1.5in}}
+\end{itemize}
+\bsk
+\textbf{Case 2: $b_2>v_1$.} \ Bidding $v_1$ loses, for a payoff of 0.
+\begin{itemize}
+    \item Bidding anything below $b_2$: still lose. \underline{\hspace{1.5in}}
+    \item Bidding at or above $b_2$: win, pay $b_2$. \underline{\hspace{1.5in}}
+\end{itemize}
+\bsk
+Raising your bid can only ever change \textit{whether} you win, never \textit{what you pay}.
+\end{frame}
+
+\begin{frame}{The Fine Print}
+The theorem assumes the bidder is \textbf{selfish and greedy}.
+\bsk
+Drop that and it fails. Suppose I also care what \textit{you} pay:
+\begin{itemize}
+    \item \textbf{Spiteful} --- if I lose, I'd rather you paid more \vspace{0.35in}
+    \item \textbf{Benevolent} --- if I lose, I'd rather you paid less \vspace{0.35in}
+\end{itemize}
+\bsk
+In either case, bidding my value is no longer dominant.
+\vfill
+Same mechanism, different preferences, different game. Again.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Back to Your Bids}
+Under second-price, truthful bidding is weakly dominant.
+\bsk
+Under first-price, it is not --- winning means paying your own bid, so bidding your
+value guarantees a payoff of exactly zero. You must \textbf{shade} down.
+\vfill
+\centering
+\begin{tabular}{lc}
+Round 1 (first-price), average bid/value: & \underline{\hspace{1in}} \\[0.3in]
+Round 2 (second-price), average bid/value: & \underline{\hspace{1in}} \\[0.3in]
+\end{tabular}
+\vfill
+\end{frame}
+
+% ==============================================================
+% 2.4 PIVOTAL MECHANISM
+% ==============================================================
+
+\begin{frame}[standout]
+The Pivotal Mechanism
+\end{frame}
+
+\begin{frame}{A Real Headline}
+\textit{Davis Enterprise}, January 12, 2001:
+\bsk
+\begin{quote}
+``By consensus, the Davis City Council agreed Wednesday to order a community-wide
+public opinion poll to gauge how much Davis residents would be willing to pay for a
+park tax and a public safety tax.''
+\end{quote}
+\bsk
+Will people answer honestly?
+\begin{itemize}
+    \item If my answer doesn't affect my tax bill: \vspace{0.35in}
+    \item If my answer does affect my tax bill: \vspace{0.35in}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The Setup}
+A public project (build the park) costs \$$C$ in total. There are $n$ residents.
+\bsk
+\begin{itemize}
+    \item Resident $i$'s share of the cost is $c_i$, with $c_1+\cdots+c_n=C$ \\
+      {\footnotesize (shares are announced in advance and need not be equal)}
+    \item Resident $i$ starts with wealth $m_i$
+    \item If built, resident $i$ gets benefit worth $v_i$ --- possibly \textbf{negative}
+\end{itemize}
+\bsk
+$$U_i(\$m)=\begin{cases} m & \text{if the project is not built}\\ m+v_i & \text{if it is}\end{cases}$$
+\vfill
+Efficiency says: build it if and only if $\displaystyle\sum_{i=1}^n v_i > C$.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Why Efficiency Isn't Enough}
+$n=2$, \ $m_1=50$, \ $m_2=60$, \ $v_1=19$, \ $v_2=-15$, \ $C=6$, \ $c_1=6$, \ $c_2=0$.
+\bsk
+$\sum v_i = 19-15 = 4 < 6 = C$, so it should \textit{not} be built.
+\bsk
+\centering
+\begin{tabular}{l|c|c|}
+\cline{2-3}
+ & Not built & Built \\
+\hline
+\multicolumn{1}{|l|}{Resident 1} & $50$ & $50+19-6=63$ \\
+\hline
+\multicolumn{1}{|l|}{Resident 2} & $60$ & $60-15=45$ \\
+\hline
+\end{tabular}
+\bsk
+\raggedright
+Gain of 13 to one, loss of 15 to the other.
+\vfill
+The government would happily follow the rule --- if it knew $v_1$ and $v_2$.
+\bsk
+It doesn't. And asking is exactly the problem.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Clarke's Idea}
+Each resident $i$ reports a number $w_i$ --- claimed benefit (or harm, if negative).\\
+She may lie: nothing forces $w_i=v_i$.
+\bsk
+\textbf{Decision rule:}
+$$\text{Build?}\quad\begin{cases} \text{Yes} & \text{if } \sum_{j=1}^n w_j > C\\[2pt]
+\text{No} & \text{if } \sum_{j=1}^n w_j \le C\end{cases}$$
+\bsk
+\textbf{Then the twist.} Resident $i$ is \textbf{pivotal} if the decision \textit{without her report}
+would differ from the decision \textit{with} it.
+\begin{itemize}
+    \item Not pivotal $\Rightarrow$ she pays no tax
+    \item Pivotal $\Rightarrow$ she pays $\Big|\sum_{j\ne i}w_j-\sum_{j\ne i}c_j\Big|$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Worked Example}
+$n=3$, \ $C=10$, \ $c_1=3$, $c_2=2$, $c_3=5$. \ Reports: $w_1=-1$, $w_2=8$, $w_3=3$.
+\bsk
+$\sum w_j=10$, which is \textit{not} greater than $C=10$, so the project is \textbf{not built}.
+\bsk
+\centering
+{\small
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$i$ & $\sum_{j\ne i}w_j$ & $\sum_{j\ne i}c_j$ & Decision without $i$ & Tax \\
+\hline
+$1$ & $8+3=11$ & $2+5=7$ & Build (pivotal) & $|11-7|=4$ \\
+\hline
+$2$ & $-1+3=2$ & $3+5=8$ & Don't (not pivotal) & $0$ \\
+\hline
+$3$ & $-1+8=7$ & $3+2=5$ & Build (pivotal) & $|7-5|=2$ \\
+\hline
+\end{tabular}}
+\bsk
+\raggedright
+\vfill
+Note residents 1 and 3 each flipped the outcome, and each pays for it.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{``Then I'll Just Avoid Being Pivotal''}
+You can guarantee it: report $w_i=c_i$ and you are never pivotal, never taxed.
+\bsk
+Is that smart? Take $n=4$, $C=15$, $c=(5,0,5,5)$. You are resident 1, with
+$m_1=40$ and $v_1=25$. You expect $w_2=-40$, $w_3=15$, $w_4=20$.
+\bsk
+\textbf{Report $w_1=c_1=5$:} \ $\sum w_j = 0 < 15$, not built, and you pay nothing.
+$$U_1 = 40$$
+\bsk
+\textbf{Report truthfully, $w_1=25$:} \ $\sum w_j = 20 > 15$, so it \textit{is} built.
+You are pivotal, taxed $|(-5)-(10)|=15$.
+$$U_1 = 40 + 25 - 5 - 15 = 45$$
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Clarke's Theorem}
+\vfill
+\centering
+\textbf{Theorem (Clarke, 1971).} In the pivotal mechanism, reporting truthfully ---
+$w_i=v_i$ --- is a \textbf{weakly dominant strategy} for every player.
+\vfill
+\raggedright
+Same shape as Vickrey: the tax you pay is built out of \textit{other people's} numbers,
+so your report moves the decision without moving your own bill.
+\vfill
+\vspace{0.5in}
+\end{frame}
+
+% ==============================================================
+% MOBLAB #2 --- PLAY BEFORE ANY THEORY
+% ==============================================================
+
+% ---- MobLab run: (Keynesian) Beauty Contest -------------------------
+% Set P = 2/3, integers 1-100. Run 2-3 rounds, showing the winning number
+% after each. Do NOT walk through the iterated-dominance logic first --
+% the whole point is to catch first-round naive play. Save a screenshot of
+% the round-1 histogram; it is referenced again a few slides later.
+% ---------------------------------------------------------------------
+\begin{frame}{Log In Again --- Pick a Number}
+\vfill
+\centering
+\large
+Choose an integer from \textbf{1} to \textbf{100}.
+\bsk
+\normalsize
+Whoever is closest to \ $\tfrac{2}{3}\times$(the average of everyone's number) \ wins.
+\vfill
+\raggedright
+No talking. We'll play a few rounds.
+\bsk
+\vspace{0.8in}
+\end{frame}
+
+\begin{frame}{Results}
+\centering
+\begin{tabular}{lcc}
+ & \textbf{Average} & \textbf{Winning number} \\[0.1in]
+Round 1: & \underline{\hspace{0.8in}} & \underline{\hspace{0.8in}} \\[0.3in]
+Round 2: & \underline{\hspace{0.8in}} & \underline{\hspace{0.8in}} \\[0.3in]
+Round 3: & \underline{\hspace{0.8in}} & \underline{\hspace{0.8in}} \\[0.3in]
+\end{tabular}
+\bsk
+\raggedright
+\vfill
+What happened between rounds? And why?
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 2.5 ITERATED DELETION
+% ==============================================================
+
+\begin{frame}[standout]
+Iterated Deletion
+\end{frame}
+
+\begin{frame}{The Problem}
+If a player has a dominant strategy, she should play it.
+\bsk
+But most games don't have one. So what then?
+\vfill
+New idea: even without a dominant strategy, a rational player will never play a
+\textbf{strictly dominated} one.
+\bsk
+And if I know you're rational, I know you won't either --- which shrinks the game
+I'm actually facing.
+\bsk
+And then \textit{that} smaller game may have dominated strategies of its own.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{IDSDS}
+\textbf{Iterated Deletion of Strictly Dominated Strategies.}
+\bsk
+Start with game $G$.
+\begin{itemize}
+    \item $G^1$: delete every strictly dominated strategy, for every player
+    \item $G^2$: do it again, inside $G^1$
+    \item \ \ $\vdots$
+    \item $G^\infty$: the output, reached in finitely many steps if $G$ is finite
+\end{itemize}
+\bsk
+If $G^\infty$ is a single strategy profile, we call it the
+\textbf{iterated strict dominant-strategy profile}.\\
+Otherwise it's just ``the output of IDSDS.''
+\vfill
+{\footnotesize Order doesn't matter: any sequence of deletions of strictly dominated
+strategies reaches the same output.}
+\end{frame}
+
+\begin{frame}{Doing It}
+\centering
+\begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,3 & 5,1 & 6,2 \\ 2,1 & 8,4 & 3,6 \\ 3,0 & 9,6 & 2,8}
+\end{matrixgame}
+\bsk
+\raggedright
+Nobody has a dominant strategy here. Check a couple:
+\begin{itemize}
+    \item $T$ vs.\ $M$ for Player 1: \ $4>2$, but $5<8$ \ $\Rightarrow$ neither dominates
+    \item $T$ vs.\ $B$ for Player 1: \ $6>2$, but $5<9$ \ $\Rightarrow$ neither dominates
+\end{itemize}
+\bsk
+So start with Player 2. \vspace{0.5in}
+\end{frame}
+
+\begin{frame}{Doing It}
+\textbf{Step 1.} For Player 2, $R$ strictly dominates $C$: \ $2>1$, \ $6>4$, \ $8>6$.
+Delete $C$.
+\bsk
+\centering
+\begin{matrixgame}[top={L, R}, left={T, M, B}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,3 & 6,2 \\ 2,1 & 3,6 \\ 3,0 & 2,8}
+\end{matrixgame}
+\bsk
+\raggedright
+\textbf{Step 2.} Now $T$ strictly dominates \textit{both} $M$ and $B$ for Player 1 ---
+which it did not do a moment ago. Delete them.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Doing It}
+\centering
+\begin{matrixgame}[top={L, R}, left={T}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,3 & 6,2}
+\end{matrixgame}
+\bsk
+\raggedright
+\textbf{Step 3.} Player 2 now faces a one-row game: $L$ gives 3, $R$ gives 2.
+Delete $R$.
+\vfill
+\centering
+\large
+$G^\infty=\{(T,L)\}$
+\bsk
+\normalsize
+\raggedright
+Nobody had a dominant strategy at the start, and yet the game has a unique
+prediction --- \textit{provided} each player knows the other is rational, and knows
+that the other knows, and so on.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Bonanno's Example}
+Four rounds instead of three. Only the deleted strategy is named each step.
+\bsk
+\centering
+\begin{matrixgame}[top={e, f, g, h}, left={A, B, C, D}, player names={Player 1, Player 2}]
+  \payoffmatrix{6,3 & 4,4 & 4,1 & 3,0 \\ 5,4 & 6,3 & 0,2 & 5,1 \\ 5,0 & 3,2 & 6,1 & 4,0 \\ 2,0 & 2,3 & 3,3 & 6,1}
+\end{matrixgame}
+\bsk
+\raggedright
+\begin{enumerate}
+    \item delete $h$ \ (dominated by $g$) \hspace{0.4in} 3. delete $g$ \ (dominated by $f$)
+    \item delete $D$ \ (dominated by $C$) \hspace{0.35in} 4. delete $C$ \ (dominated by $A$)
+\end{enumerate}
+\bsk
+Output: $\{(A,e),(A,f),(B,e),(B,f)\}$ --- not a single profile.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Back to Your Numbers}
+$\tfrac{2}{3}$ of the average can never exceed $\tfrac{2}{3}\times 100\approx 66.7$.
+\begin{itemize}
+    \item So $67$ strictly dominates everything above it. Delete $68$--$100$. \vspace{0.25in}
+    \item Now the target can't exceed $\tfrac{2}{3}\times 67\approx 44.7$. Delete $45$--$67$. \vspace{0.25in}
+    \item Now it can't exceed $\tfrac{2}{3}\times 45=30$. Delete $31$--$45$. \vspace{0.25in}
+    \item Keep going \ldots \ where does it end? \vspace{0.25in}
+\end{itemize}
+\vfill
+So why didn't we all play that in round 1?
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{IDWDS, and Why It's Trickier}
+What if we delete \textbf{weakly} dominated strategies too?
+\bsk
+\centering
+\begin{matrixgame}[top={L, R}, left={A, T, M, B}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,0 & 0,0 \\ 3,2 & 2,2 \\ 1,1 & 0,0 \\ 0,0 & 1,1}
+\end{matrixgame}
+\bsk
+\raggedright
+Two perfectly reasonable places to start:
+\begin{itemize}
+    \item $M$ is strictly dominated by $T$ \ \ \ \ \ ($3>1$, $2>0$)
+    \item $B$ is strictly dominated by $T$ \ \ \ \ \ ($3>0$, $2>1$)
+\end{itemize}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Order One: Delete $M$ First}
+\centering
+Delete $M$ \ $\Rightarrow$ \ for Player 2, $R$ now weakly dominates $L$ \ $\Rightarrow$ delete $L$
+\bsk
+\begin{matrixgame}[top={R}, left={A, T, B}, player names={Player 1, Player 2}]
+  \payoffmatrix{0,0 \\ 2,2 \\ 1,1}
+\end{matrixgame}
+\bsk
+\raggedright
+Now $A$ and $B$ are strictly dominated by $T$.
+\vfill
+\centering
+\large
+Answer: \ $(T,R)$, \ payoffs $(2,2)$
+\vfill
+\end{frame}
+
+\begin{frame}{Order Two: Delete $B$ First}
+\centering
+Delete $B$ \ $\Rightarrow$ \ for Player 2, $L$ now weakly dominates $R$ \ $\Rightarrow$ delete $R$
+\bsk
+\begin{matrixgame}[top={L}, left={A, T, M}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,0 \\ 3,2 \\ 1,1}
+\end{matrixgame}
+\bsk
+\raggedright
+Now $T$ and $M$ are strictly dominated by $A$.
+\vfill
+\centering
+\large
+Answer: \ $(A,L)$, \ payoffs $(4,0)$
+\vfill
+\end{frame}
+
+\begin{frame}{So the Procedure Isn't Well Defined}
+Two legitimate orders, two different answers --- and not by a little:
+$(2,2)$ versus $(4,0)$.
+\vfill
+\textbf{Fix (Definition).} At every step, identify \textit{all} weakly or strictly dominated
+strategies for \textit{all} players, and delete them \textbf{simultaneously}.
+\bsk
+Applied to that game, IDWDS gives $\{(A,L),(A,R),(T,L),(T,R)\}$.
+\vfill
+Note this is not a single profile --- so the game has no iterated weak
+dominant-strategy solution.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{A Word of Caution}
+IDSDS has a clean story: rationality, plus knowing others are rational, and so on.
+\bsk
+IDWDS does not.
+\begin{itemize}
+    \item To delete a \textit{weakly} dominated strategy, you must believe your opponent
+      might play anything --- otherwise the tie-breaking case never arises
+    \item But deletion is precisely the act of ruling strategies out
+\end{itemize}
+\vfill
+So the justification needs rationality \textit{and} a notion of caution, and the two
+pull against each other.
+\bsk
+We won't resolve that here. Just don't treat the two procedures as equally innocent.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 2.6 NASH EQUILIBRIUM
+% ==============================================================
+
+\begin{frame}[standout]
+Nash Equilibrium
+\end{frame}
+
+\begin{frame}{Still Not Enough}
+Games solved outright by IDSDS or IDWDS are the exception.
+\bsk
+We need something that applies to \textit{every} game.
+\vfill
+The idea: stop asking ``what will a rational player do?'' and start asking
+\bsk
+\centering
+\large
+``which profiles are \textbf{stable}?''
+\vfill
+\end{frame}
+
+\begin{frame}{Definition: Nash Equilibrium (Two Players)}
+A strategy profile $s^*=(s_1^*,s_2^*)$ is a \textbf{Nash equilibrium} if
+\bsk
+\begin{enumerate}
+    \item for every $s_1\in S_1$: \hspace{0.3in} $\pi_1(s_1^*,s_2^*)\ \ge\ \pi_1(s_1,s_2^*)$
+    \bsk
+    \item for every $s_2\in S_2$: \hspace{0.3in} $\pi_2(s_1^*,s_2^*)\ \ge\ \pi_2(s_1^*,s_2)$
+\end{enumerate}
+\vfill
+In words: \textbf{holding the other player's strategy fixed}, neither player can do
+better by changing her own.
+\bsk
+Note what's fixed and what varies in each line. That's the whole definition.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Four Ways to Say It}
+\textbf{No regret.} After seeing what the other player did, nobody wishes she had
+chosen differently.
+\bsk
+\textbf{Self-enforcing agreement.} If the players could talk beforehand and shake on
+$s^*$, nobody would want to break it --- assuming the other keeps it.
+\bsk
+\textbf{Viable recommendation.} If a third party publicly recommended $s^*$, nobody
+would want to deviate --- assuming the others comply.
+\bsk
+\textbf{Rationality with correct beliefs.} Each player best-responds to what she
+believes the other will do, and those beliefs are right.
+\vfill
+{\footnotesize These are all the same inequalities in different clothes.}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Finding Them}
+\centering
+\begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}]
+  \payoffmatrix{3,2 & 0,0 & 1,1 \\ 3,0 & 1,5 & 4,4 \\ 1,0 & 2,3 & 3,0}
+\end{matrixgame}
+\bsk
+\raggedright
+Check $(T,L)$:
+\begin{itemize}
+    \item Player 1, holding $L$ fixed: \ $T$ gives 3; \ $M$ gives 3; \ $B$ gives 1 \ \checkmark
+    \item Player 2, holding $T$ fixed: \ $L$ gives 2; \ $C$ gives 0; \ $R$ gives 1 \ \checkmark
+\end{itemize}
+\bsk
+So $(T,L)$ is a Nash equilibrium. Find the other one. \vspace{0.5in}
+\end{frame}
+
+\begin{frame}{Best Replies}
+Strategy $s_i$ is a \textbf{best reply} to $s_{-i}$ if
+$$\pi_i(s_i,s_{-i})\ \ge\ \pi_i(s_i',s_{-i})\quad\text{for every } s_i'\in S_i$$
+\bsk
+Equivalent definition of Nash equilibrium:
+\vfill
+\centering
+\large
+$s$ is a Nash equilibrium \ $\iff$ \ every $s_i$ is a best reply to $s_{-i}$
+\vfill
+\normalsize
+\raggedright
+This is the version worth memorizing. It also tells you how to \textit{find} equilibria.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{The Underlining Trick}
+\begin{enumerate}
+    \item In each \textbf{column}, underline Player 1's largest payoff (all ties)
+    \item In each \textbf{row}, underline Player 2's largest payoff (all ties)
+    \item Any cell with \textbf{both} numbers underlined is a Nash equilibrium
+\end{enumerate}
+\bsk
+\centering
+\begin{matrixgame}[top={E, F, G, H}, left={A, B, C, D}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,0 & 3,2 & 2,3 & 4,1 \\ 4,2 & 2,1 & 1,2 & 0,2 \\ 3,6 & 5,5 & 3,1 & 5,0 \\ 2,3 & 3,2 & 1,2 & 3,3}
+\end{matrixgame}
+\bsk
+\raggedright
+Your turn. Columns first, then rows.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Underlining Trick}
+\centering
+\begin{matrixgame}[top={E, F, G, H}, left={A, B, C, D}, player names={Player 1, Player 2}, br]
+  \payoffmatrix{4,0 & 3,2 & 2,3 & 4,1 \\ 4,2 & 2,1 & 1,2 & 0,2 \\ 3,6 & 5,5 & 3,1 & 5,0 \\ 2,3 & 3,2 & 1,2 & 3,3}
+\end{matrixgame}
+\bsk
+\raggedright
+Only $(B,E)$ has both payoffs underlined --- the unique Nash equilibrium.
+\bsk
+Watch the near-misses:
+\begin{itemize}
+    \item $(A,E)$: Player 1 is happy, Player 2 would rather move to $G$
+    \item $(C,F)$: Player 1 is happy, Player 2 would rather move to $E$
+    \item $(D,H)$: Player 2 is happy, Player 1 would rather move to $C$
+\end{itemize}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{More Than Two Players}
+A profile $s^*\in S$ is a Nash equilibrium if, for every player $i$,
+$$\pi_i(s^*)\ \ge\ \pi_i(s_1^*,\ldots,s_{i-1}^*,\ s_i,\ s_{i+1}^*,\ldots,s_n^*)
+\quad\text{for all } s_i\in S_i$$
+\bsk
+$n$ inequalities, one per player. Nothing new --- just more of them.
+\vfill
+For three players we draw one table per strategy of Player 3.
+\begin{itemize}
+    \item underline Players 1 and 2 as before, within each table
+    \item underline Player 3's payoff if it's her largest \textit{in that cell across tables}
+\end{itemize}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Two Theorems}
+Let $NE(G)$, $IDSDS(G)$, $IDWDS(G)$ be the respective outputs.
+\vfill
+\textbf{Theorem.} \ For every ordinal strategic-form game $G$,
+$$NE(G)\ \subseteq\ IDSDS(G)$$
+\begin{itemize}
+    \item A Nash equilibrium never uses a strategy that IDSDS deletes
+    \item So IDSDS never throws away an equilibrium --- it's safe
+    \item But the same is \textbf{not} true of IDWDS: it is possible that
+      $NE(G)\ne\emptyset$ and yet $NE(G)\cap IDWDS(G)=\emptyset$
+\end{itemize}
+\vfill
+\textbf{Theorem.} \ If $IDSDS(G)=\{s\}$ then $s$ is a strict Nash equilibrium.\\
+If $IDWDS(G)=\{s\}$ then $s$ is a Nash equilibrium.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{A Bigger Example}
+50 players. Each secretly writes a request: a multiple of \$10, up to \$100.
+\bsk
+\begin{itemize}
+    \item If \textbf{5 or fewer} players ask for \$100, everyone gets what they asked for
+    \item Otherwise, everyone gets nothing
+\end{itemize}
+\bsk
+All players are selfish and greedy. What are the Nash equilibria?
+\vfill
+\vspace{1.1in}
+\end{frame}
+
+\begin{frame}{A Bigger Example}
+There are two families of equilibria.
+\bsk
+\textbf{(a) Seven or more players request \$100.}\\
+Everyone gets nothing. Can anyone gain by switching alone? \vspace{0.4in}
+\bsk
+\textbf{(b) Exactly five request \$100, and all 45 others request \$90.}\\
+Everyone is paid. Can anyone gain by switching alone? \vspace{0.4in}
+\bsk
+{\footnotesize Convince yourself that \textit{exactly six} requesting \$100 is not an equilibrium.}
+\end{frame}
+
+\begin{frame}{When There Is None}
+Matching Pennies. Both match $\Rightarrow$ Player 1 wins; otherwise Player 2 wins.
+\bsk
+\centering
+\begin{matrixgame}[top={H, T}, left={H, T}, player names={Player 1, Player 2}, br]
+  \payoffmatrix{1,0 & 0,1 \\ 0,1 & 1,0}
+\end{matrixgame}
+\bsk
+\raggedright
+No cell has both payoffs underlined.
+\vfill
+With only ordinal payoffs, a game need not have \textbf{any} Nash equilibrium.
+\bsk
+Fixing this requires letting players randomize --- and randomizing requires
+cardinal payoffs. That's Chapter 5.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 2.7 INFINITE STRATEGY SETS
+% ==============================================================
+
+\begin{frame}[standout]
+Infinite Strategy Sets
+\end{frame}
+
+\begin{frame}{No Table, Same Definition}
+Two players. Each writes down a real number $\ge 1$, so $S_1=S_2=[1,\infty)$.
+\bsk
+Player 1 writes $x$, Player 2 writes $y$:
+$$\pi_1(x,y)=\begin{cases} x-1 & \text{if } x<y\\ 0 & \text{if } x\ge y\end{cases}
+\qquad
+\pi_2(x,y)=\begin{cases} y-1 & \text{if } x>y\\ 0 & \text{if } x\le y\end{cases}$$
+\bsk
+You want to write the larger\ldots\ no, the \textit{smaller} number. But not too small.
+\vfill
+What are the Nash equilibria? \vspace{0.7in}
+\end{frame}
+
+\begin{frame}{The Answer Is $(1,1)$ --- and Only $(1,1)$}
+\textbf{It is an equilibrium.} At $(1,1)$ both get 0. If Player 1 switches to any
+$x>1$, then $x\ge y=1$, so she still gets 0.
+\bsk
+\textbf{Nothing else is.}
+\begin{itemize}
+    \item If $x=y>1$: Player 1 gets 0, but any $\hat x$ with $1<\hat x<x$ gives
+      $\hat x-1>0$
+    \item If $x<y$: Player 1 gets $x-1$, but any $\hat x$ with $x<\hat x<y$ gives
+      $\hat x-1>x-1$
+    \item If $y<x$: same argument for Player 2
+\end{itemize}
+\vfill
+\textbf{And now the strange part.} For Player 1, $x=1$ is \textbf{weakly dominated}
+by every other strategy.
+\bsk
+So the unique Nash equilibrium has both players using a weakly dominated strategy.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Cournot Competition}
+{\footnotesize (This one uses calculus.)}
+\bsk
+Two firms produce an identical good. Firm $i$ chooses quantity $q_i\ge 0$ at
+constant unit cost $c$. Price is set by total output:
+$$P=a-b(q_1+q_2),\qquad a>c,\ b>0$$
+\bsk
+Firm 1's profit:
+$$\pi_1(q_1,q_2)=Pq_1-cq_1=(a-c)q_1-b q_1^2-b q_1 q_2$$
+\bsk
+Strategy sets are $[0,\infty)$ --- infinite. But a Nash equilibrium is still just a
+pair $(\bar q_1,\bar q_2)$ where neither firm wants to move.
+\vfill
+{\footnotesize Cournot wrote this down in 1838 --- inventing Nash equilibrium about
+120 years early, for this one class of games.}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Solving It}
+Fix $\bar q_2$. Then $\pi_1$ is a function of $q_1$ alone, and it's concave
+($\partial^2\pi_1/\partial q_1^2=-2b<0$), so set the derivative to zero:
+$$\frac{\partial \pi_1}{\partial q_1}=a-c-2b\bar q_1-b\bar q_2=0$$
+$$\frac{\partial \pi_2}{\partial q_2}=a-c-2b\bar q_2-b\bar q_1=0$$
+\bsk
+Two equations, two unknowns: \vspace{0.5in}
+\bsk
+\centering
+$\displaystyle \bar q_1=\bar q_2=\frac{a-c}{3b}$
+\vfill
+\end{frame}
+
+\begin{frame}{Cournot: The Numbers}
+At $\bar q_1=\bar q_2=\dfrac{a-c}{3b}$:
+\bsk
+\begin{itemize}
+    \item Price: \hspace{0.55in} $\displaystyle P=\frac{a+2c}{3}$
+    \bsk
+    \item Each profit: \hspace{0.1in} $\displaystyle \frac{(a-c)^2}{9b}$
+\end{itemize}
+\bsk
+Try it: \ $a=25$, \ $b=2$, \ $c=1$.
+\bsk
+\centering
+$\bar q_1=\bar q_2=$ \underline{\hspace{0.8in}} \hspace{0.4in}
+$P=$ \underline{\hspace{0.8in}} \hspace{0.4in}
+profit $=$ \underline{\hspace{0.8in}}
+\vfill
+\end{frame}
+
+% ==============================================================
+% WRAP
+% ==============================================================
+
+\begin{frame}{Where We Landed}
+\begin{itemize}
+    \item \textbf{Second-price auction}: truthful bidding is weakly dominant (Vickrey)
+    \item \textbf{Pivotal mechanism}: truthful reporting is weakly dominant (Clarke)
+    \item \textbf{IDSDS}: delete strictly dominated strategies, repeat --- order-free,
+      justified by common knowledge of rationality
+    \item \textbf{IDWDS}: order matters, so delete simultaneously --- and the
+      justification is murkier
+    \item \textbf{Nash equilibrium}: nobody gains by deviating alone
+    \item $NE\subseteq IDSDS$, but a game may have no Nash equilibrium at all
+\end{itemize}
+\vfill
+Next: what happens when players can randomize.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Reading \& Practice}
+\begin{itemize}
+    \item Bonanno, \textit{Game Theory}, \S2.3--2.7
+    \item Exercises: \S2.9.3 (auctions), \S2.9.4 (pivotal mechanism),\\
+      \S2.9.5 (iterated deletion), \S2.9.6 (Nash equilibrium), \S2.9.7 (infinite games)
+    \item Proofs of both theorems are in \S2.8
+    \item Solutions in \S2.10 --- try them first
+\end{itemize}
+\vfill
+\end{frame}
+
+\end{document}

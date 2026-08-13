@@ -184,6 +184,19 @@ jobs:
               continue
             fi
 
+            # Decks whose source is named xx_*.tex (no lecture number) are
+            # "unlisted": they still compile, deploy, and land in PDFs/, but they
+            # are deliberately left off the public index. Use this for material
+            # that isn't a numbered lecture -- running errata, one-off asides.
+            # Note: unlisted is not private. The PDF is still on the site at its
+            # direct URL and the .tex is in a public repo.
+            case "$filename" in
+              xx_*)
+                echo "Unlisted (xx_ prefix), skipping index entry: $filename"
+                continue
+                ;;
+            esac
+
             base="${filename%.pdf}"
             texfile="LectureSlides/$base.tex"
 
