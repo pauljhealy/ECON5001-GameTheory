@@ -1,0 +1,807 @@
+\input{LectureSlides/includes/metropolis_preamble}
+
+% Title page info
+\title[Dynamic Games]{Chapter 4: General Dynamic Games}
+\author[ECON 5001]{ECON 5001\\Prof. Healy} \color{metrop}
+\institute[OSU]{}
+\date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
+
+% ---------------------------------------------------------------------
+% Trees use xgames. New in this deck, beyond deck 05:
+%   \informset (w1) -- (w2);       enclose nodes in one information set
+%   \informset[dashed] / [curved=15]   alternative renderings
+%   \subgame[inner sep=3ex] at (w2);   circle the subgame starting at w2
+% Both must come AFTER the \branch commands that define those coordinates,
+% and both are overlay aware, e.g. \subgame<3->.
+% Put label=none on the second branch of an information set so the
+% player's name isn't printed twice.
+% ---------------------------------------------------------------------
+
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{What Chapter 3 Assumed}
+Last time, every player knew the entire history when it was her turn.
+\bsk
+That ruled out almost everything interesting:
+\begin{itemize}
+    \item sealed bids
+    \item a firm choosing capacity without seeing its rival's choice
+    \item poker
+    \item any move made \textbf{at the same time} as somebody else's
+\end{itemize}
+\vfill
+In this lecture we drop that assumption, then rebuild backward induction so it
+still works.
+\vspace{-0.4in}
+\end{frame}
+
+% ==============================================================
+% MOBLAB --- PLAY FIRST
+% ==============================================================
+
+% ---- MobLab run: coordination game -----------------------------------
+% Game: "Matrix: Instructor Specified", 2x2, one shot, no chat. Payoffs:
+%   Startup/Startup 3,3   Startup/Job 0,1   Job/Startup 1,0   Job/Job 1,1
+% Label the actions "Startup" and "Corp job" if the interface allows,
+% otherwise use A and B and map them aloud.
+% Play BEFORE information sets are introduced. The same game returns twice:
+% drawn as a tree with an information set (Section 4.1), and as the
+% post-entry subgame in the SPE example (Section 4.4).
+% ---------------------------------------------------------------------
+\begin{frame}{Log In: Startup or Safe Job?}
+\begin{itemize}
+    \item You and a friend have an idea for an ambitious startup
+    \item It only works if \textbf{both} of you quit and go all in
+    \item The alternative is a cushy corporate job: safe, decent money
+    \item Go all in alone and the startup fails. You get nothing.
+\end{itemize}
+\bsk
+You two decide \textbf{at the same time}, with no chance to talk first.
+\vfill
+\centering
+Pick one.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What We Did}
+\centering
+\begin{matrixgame}[top={Startup, Corp job}, left={Startup, Corp job}, player names={You, Your friend}, br]
+  \payoffmatrix{3,3 & 0,1 \\ 1,0 & 1,1}
+\end{matrixgame}
+\bsk
+\raggedright
+\begin{tabular}{lc}
+Share who went all in: & \underline{\hspace{1in}} \\[0.25in]
+Share who took the job: & \underline{\hspace{1in}} \\[0.25in]
+\end{tabular}
+\bsk
+Two Nash equilibria: (Startup, Startup) and (Corp job, Corp job). One is
+better for everyone. Getting there requires trusting your friend.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 4.1 IMPERFECT INFORMATION
+% ==============================================================
+
+\begin{frame}[standout]
+Information Sets
+\end{frame}
+
+\begin{frame}{A Familiar Situation}
+To discourage copying, I print two versions of the exam, white paper and pink,
+and hand them out so neighbors never share one.
+\bsk
+Or do I? Writing genuinely different versions is extra work for me. I might be
+bluffing: same questions, different paper.
+\bsk
+A student who didn't study is sitting next to someone who did.
+\begin{itemize}
+    \item Turn in a blank exam and, given earlier grades, he gets a \textbf{C}
+    \item Copy, and if the versions are identical he gets an \textbf{A}
+    \item Copy, and if the versions differ he is caught and gets an \textbf{F}
+\end{itemize}
+\vfill
+The moves are sequential. I decide first, but he doesn't \textit{see} my decision.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Drawing What He Doesn't Know}
+\centering
+\begin{gametree}[player names={Professor, Student}, scale=0.85]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=6.2]
+    {Identical versions; Different versions};
+  \branch[player=2, label=none] from (w1) to[v=1.5, h=2.6]
+    {Copy(\makecell{Student\\ gets A}); Blank(\makecell{Student\\ gets C})};
+  \branch from (w2) to
+    {Copy(\makecell{Caught:\\ gets F}); Blank(\makecell{Student\\ gets C})};
+  \informset (w1) -- (w2);
+\end{gametree}
+\bsk
+\raggedright
+The enclosure is an \textbf{information set}: the Student knows he is at one of
+those two nodes, but not which one.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Definition: Extensive-Form Game-Frame}
+Everything from Chapter 3, plus one item:
+\bsk
+\begin{itemize}
+    \item a finite rooted directed tree
+    \item players $I=\{1,\ldots,n\}$, one assigned to every decision node
+    \item actions on edges, no two edges out of a node sharing an action
+    \item outcomes assigned to terminal nodes
+\end{itemize}
+\bsk
+$\star$ \ For every player $i$, a \textbf{partition} $\mathcal{D}_i$ of her decision
+nodes $D_i$. Each cell of the partition is an \textbf{information set}.
+\bsk
+We write $H$ for a single information set, so $H\in\mathcal{D}_i$.
+\bsk
+\centering
+\textbf{Restriction:} any two nodes in the same information set must offer
+\textit{exactly the same actions}.
+\vfill
+\raggedright
+Why must that hold? \vspace{0.3in}
+\end{frame}
+
+\begin{frame}{A Note on Notation}
+Three different things, easily confused:
+\bsk
+\begin{itemize}
+    \item $D_i$ \ is the set of \textbf{all} decision nodes belonging to player $i$
+      \vspace{0.15in}
+    \item $\mathcal{D}_i$ \ is the \textbf{partition} of $D_i$, a collection of sets
+      \vspace{0.15in}
+    \item $H\in\mathcal{D}_i$ \ is \textbf{one} information set, a single cell
+\end{itemize}
+\vfill
+{\footnotesize Bonanno writes $D$ and $D'$ where we write $H$ and $H'$. Watch out:
+in Chapter 3 he also used $D$ for the set of \textit{all} decision nodes in the
+tree, so the same letter does two jobs. We'll stick with $H$ for information sets.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Perfect Information Is the Special Case}
+\vfill
+\centering
+\large
+Every information set is a singleton\\
+\bsk
+$\Longleftrightarrow$\\
+\bsk
+Perfect information
+\vfill
+\normalsize
+\raggedright
+So Chapter 3 was not a different theory. It was this one, with the partition
+as fine as it can be.
+\bsk
+Convention from here: we draw an enclosure \textbf{only} around information sets
+with two or more nodes. A lone node is its own information set.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Perfect Recall: First Condition}
+Almost all of game theory assumes players don't forget.
+\bsk
+\begin{block}{Condition 1}
+No node in an information set is a \textbf{predecessor} of another node in it.
+\end{block}
+\bsk
+Below, $H=\{r,u\}$ violates it: $r$ comes before $u$, so Player 1 cannot tell
+whether she has already moved.
+\vfill
+\centering
+\begin{gametree}[labels=short, scale=0.78]
+  \branch[player=1, root=w, label=90, label text=$r$] from (0,0) to[v=1.3, h=4.0] {a; b(\ )};
+  \branch[label=180, label text=$u$] from (w1) to[v=1.3, h=1.6] {a(\ ); b(\ )};
+  \informset[curved=25, label=none] (w) -- (w1);
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{Perfect Recall: Second Condition}
+\begin{block}{Condition 2}
+If $x\in H$ leads to $y\in H'$ by action $a$, then \textbf{every} node in $H'$
+has a predecessor in $H$ reached by that same $a$.
+\end{block}
+\bsk
+Below, $H'$ is Player 2's lower information set. Its right node is reached via
+$H$, but its left node never passes through $H$ at all. Player 2 cannot tell
+whether this is her first move or her second.
+\vfill
+\centering
+\begin{gametree}[labels=short, scale=0.7]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=6.4] {a; b};
+  \branch[player=2, label=0, label text=$H$] from (w2) to[v=1.4, h=2.6] {c; d(\ )};
+  \branch[label=none] from (w1) to[v=1.4, h=1.6] {e(\ ); f(\ )};
+  \branch[label=none] from (w21) to {e(\ ); f(\ )};
+  \informset[curved=18] (w1) -- (w21) {$H'$};
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{The Same Game, Drawn as a Tree}
+\centering
+\only<1>{\begin{gametree}[player names={You, Your friend}, scale=0.85]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=5.0] {Startup; Corp job};
+  \branch[player=2, label=none] from (w1) to[v=1.4, h=2.0] {Startup(3,3); Corp job(0,1)};
+  \branch from (w2) to {Startup(1,0); Corp job(1,1)};
+  \informset (w1) -- (w2);
+\end{gametree}}%
+\only<2>{\begin{gametree}[player names={You, Your friend}, scale=0.85]
+  \branch[player=2, root=w, label=90] from (0,0) to[v=1.3, h=5.0] {Startup; Corp job};
+  \branch[player=1, label=none] from (w1) to[v=1.4, h=2.0] {Startup(3,3); Corp job(1,0)};
+  \branch from (w2) to {Startup(0,1); Corp job(1,1)};
+  \informset (w1) -- (w2);
+\end{gametree}}
+\bsk
+\raggedright
+\onslide<1->{One of you is drawn as moving first, but the other's information set
+means she sees nothing. So this is \textbf{the same game} as the matrix.}
+\bsk
+\onslide<2>{Swap who moves first and nothing changes. Simultaneity is not about
+time. It is about \textbf{what you know when you choose}.}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% 4.2 STRATEGIES
+% ==============================================================
+
+\begin{frame}[standout]
+Strategies, Again
+\end{frame}
+
+\begin{frame}{One Choice per Information Set}
+\begin{block}{Definition}
+A \textbf{strategy} for a player in an extensive-form game is a list of choices,
+one for every \textbf{information set} of that player.
+\end{block}
+\bsk
+Chapter 3 said ``one for every decision node.'' That was the same rule, because
+every node was its own information set.
+\vfill
+The change matters: a player can no longer make a plan that depends on
+something she cannot observe.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{A Plan You Are Not Allowed to Make}
+Two candidates, Yvonne and Fran, interview for one position. The employer says:
+``don't call me, I'll call you.'' If the first candidate turns him down, he
+immediately calls the other, never saying it's a second offer.
+\bsk
+Yvonne would love to plan:
+\textit{If he calls me first, I say Yes. If I'm the recycled offer, I say No.}
+\bsk
+\centering
+\begin{gametree}[player names={Employer, Yvonne, Fran}, scale=0.58]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=8.4]
+    {Call Yvonne; Call Fran};
+  \branch[player=2, label=none] from (w1) to[v=1.7, h=2.2] {Yes(\ ); No(\ )};
+  \branch[player=3, label=0] from (w2) to[v=1.7, h=3.0] {Yes(\ ); No};
+  \branch[player=2, label=none] from (w22) to[v=1.7, h=2.2] {Yes(\ ); No(\ )};
+  \informset[player=2, curved=16] (w1) -- (w22);
+\end{gametree}
+\bsk
+\raggedright
+Must choose the \textbf{same action at every node} of an information set.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{From Tree to Table, Again}
+Every strategy profile still determines a path, hence an outcome, hence payoffs.
+So every extensive-form game still has a \textbf{strategic form}.
+\bsk
+And we could just find its Nash equilibria and stop.
+\vfill
+But Chapter 3 taught us not to. Some Nash equilibria of the strategic form rest
+on threats nobody would carry out.
+\bsk
+We fixed that with backward induction, which needs a \textit{last} decision node.
+\vfill
+\centering
+\large
+What is the analogue when players move blind?
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 4.3 SUBGAMES
+% ==============================================================
+
+\begin{frame}[standout]
+Subgames
+\end{frame}
+
+\begin{frame}{The Idea}
+A \textbf{subgame} is a piece of the tree that could stand alone as a game.
+\bsk
+Informal procedure:
+\begin{enumerate}
+    \item Pick a decision node $x$ whose information set is \textbf{just} $\{x\}$
+    \item Draw an oval around $x$ and everything that follows it
+\end{enumerate}
+\bsk
+If that oval \textbf{cuts through} an information set, the oval is illegal.
+So only call it a subgame if it cuts \textbf{no} information set.
+\bsk
+``Cutting'' means some information set has one node inside your oval and another
+node outside it.
+\vfill
+Every game is a subgame of itself. Anything smaller is a \textbf{proper} subgame.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Why Cutting Is Fatal}
+\centering
+\begin{gametree}[labels=short, scale=0.85]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=5.6] {L; R};
+  \branch[player=2, label=135] from (w1) to[v=1.5, h=1.8] {a(2,2); b(0,0)};
+  \branch[player=1, label=45] from (w2) to[v=1.5, h=2.4] {U; D(2,0)};
+  \branch[player=2, label=none] from (w21) to[v=1.5, h=1.6] {a(1,3); b(3,1)};
+  \informset[curved=15] (w1) -- (w21);
+\end{gametree}
+\bsk
+\raggedright
+Player 1's node after $R$ looks like a fine place to start. But the oval around
+it would contain \textit{one} of Player 2's two nodes.
+\bsk
+Player 2 can't tell those nodes apart, so you cannot hand her the right-hand
+piece and call it a game. Half her uncertainty is outside it.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Definition: Subgame}
+Let $S(x)$ be the set containing $x$ and all its successors.
+\bsk
+$S(x)$ is a \textbf{subgame starting at $x$} if:
+\bsk
+\begin{enumerate}
+    \item the information set containing $x$ is the singleton $\{x\}$, and
+    \bsk
+    \item for every information set $H$ in the game, \ if $H\cap S(x)\ne\emptyset$
+      \ then \ $H\subset S(x)$
+\end{enumerate}
+\bsk
+It is a \textbf{proper} subgame if $x$ is not the root.
+\vfill
+A subgame is \textbf{minimal} if it contains no other subgame strictly inside it.
+Those are the ones we solve first.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 4.4 SUBGAME-PERFECT EQUILIBRIUM
+% ==============================================================
+
+\begin{frame}[standout]
+Subgame-Perfect Equilibrium
+\end{frame}
+
+\begin{frame}{Definition}
+Let $s$ be a strategy profile for the whole game, and $G$ a subgame. Write
+$s|_G$ for the \textbf{restriction} of $s$ to $G$: the part of $s$ that prescribes
+choices at $G$'s information sets, and only those.
+\bsk
+\begin{block}{Definition}
+$s$ is a \textbf{subgame-perfect equilibrium} if, for \textbf{every} subgame $G$,
+the restriction $s|_G$ is a Nash equilibrium of $G$.
+\end{block}
+\bsk
+The whole game is one of its own subgames, so every subgame-perfect equilibrium
+is a Nash equilibrium.
+\vfill
+Not every Nash equilibrium is subgame perfect. That's the point.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{IKEA and Wayfair, Again}
+IKEA is the established furniture store at Polaris, earning \$10 million a year
+in profit. Wayfair decides whether to open across I-71.
+\bsk
+If Wayfair opens, the two stores \textbf{simultaneously} decide whether to fund a
+joint campaign advertising Polaris as a furniture destination.
+\begin{itemize}
+    \item Both fund it: shoppers drive up from all over. Both gain.
+    \item Neither funds it: nothing changes.
+    \item One funds it alone: too small to work, and the money is gone.
+\end{itemize}
+\bsk
+\vfill
+That second stage is the startup game you played earlier.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Whole Game}
+\centering
+\begin{gametree}[player names={Wayfair, IKEA}, scale=0.72, subgame={depth=9mm}]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=7.6] {Out(2,10); In};
+  \branch[player=1, label=0] from (w2) to[v=1.6, h=4.0] {Fund; Skip};
+  \branch[player=2, label=none] from (w21) to[v=1.6, h=1.5]
+    {Fund(3,3); Skip(0,1)};
+  \branch from (w22) to {Fund(1,0); Skip(1,1)};
+  \informset (w21) -- (w22);
+  \subgame[inner sep=4.6ex] at (w2);
+\end{gametree}
+\bsk
+\raggedright
+{\footnotesize Annual profit in \$millions. First number Wayfair, second IKEA.}
+\ The circle marks the only proper subgame.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Algorithm}
+\begin{enumerate}
+    \item Find a \textbf{minimal} subgame.
+    \bsk
+    \item Solve it. Find its Nash equilibria, pick one, and note the strategies.
+    \bsk
+    \item \textbf{Mark} the subgame's starting node with that equilibrium's payoff
+      vector, exactly as in backward induction, then delete everything below it.
+      You now have a smaller game.
+    \bsk
+    \item Repeat until no proper subgames remain. Solve what's left. Patch together
+      everything you noted along the way.
+\end{enumerate}
+\bsk
+{\footnotesize Same marking idea as Chapter 3. The only change: a minimal subgame may
+be a whole simultaneous game rather than a single node, so we mark it with a Nash
+equilibrium payoff instead of one player's best choice.}
+\vfill
+If a subgame had several Nash equilibria, run the procedure again with a different
+one for a different subgame-perfect equilibrium.
+\bsk
+{\footnotesize If some subgame has \textit{no} Nash equilibrium, neither does the game.}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Step 1: Solve the Subgame}
+\centering
+\begin{matrixgame}[top={Fund, Skip}, left={Fund, Skip}, player names={Wayfair, IKEA}, br]
+  \payoffmatrix{3,3 & 0,1 \\ 1,0 & 1,1}
+\end{matrixgame}
+\bsk
+\raggedright
+Two Nash equilibria: \ (Fund, Fund) with payoffs $(3,3)$, \ and
+(Skip, Skip) with payoffs $(1,1)$.
+\vfill
+So we have to run the algorithm \textbf{twice}.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Step 2: Replace and Solve}
+Using the \textbf{(Fund, Fund)} equilibrium.
+\bsk
+\centering
+\begin{gametree}[player names={Wayfair, IKEA}, scale=0.72, subgame={depth=9mm}]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=7.6] {Out(2,10); In};
+  \branch[player=1, label=0] from (w2) to[v=1.6, h=4.0] {Fund; Skip};
+  \branch[player=2, label=none] from (w21) to[v=1.6, h=1.5]
+    {Fund(3,3); Skip(0,1)};
+  \branch from (w22) to {Fund(1,0); Skip(1,1)};
+  \informset (w21) -- (w22);
+  \subgame[inner sep=4.6ex] at (w2);
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{Step 2: Replace and Solve}
+Using the \textbf{(Skip, Skip)} equilibrium.
+\bsk
+\centering
+\begin{gametree}[player names={Wayfair, IKEA}, scale=0.72, subgame={depth=9mm}]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=7.6] {Out(2,10); In};
+  \branch[player=1, label=0] from (w2) to[v=1.6, h=4.0] {Fund; Skip};
+  \branch[player=2, label=none] from (w21) to[v=1.6, h=1.5]
+    {Fund(3,3); Skip(0,1)};
+  \branch from (w22) to {Fund(1,0); Skip(1,1)};
+  \informset (w21) -- (w22);
+  \subgame[inner sep=4.6ex] at (w2);
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{Two Subgame-Perfect Equilibria}
+$$\big((\text{In},\text{Fund}),\ \text{Fund}\big)
+\qquad\text{and}\qquad
+\big((\text{Out},\text{Skip}),\ \text{Skip}\big)$$
+\vfill
+In the second one Wayfair never opens, \textit{because} it expects no campaign.
+\bsk
+Nothing about the market changed. The pessimism is self-confirming.
+\vfill
+\begin{itemize}
+    \item Both firms would prefer the first equilibrium
+    \item Neither can get there by acting alone
+    \item Subgame perfection does \textbf{not} pick between them
+\end{itemize}
+\bsk
+Refinements narrow the set of predictions. Not always to one.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{The Strategic Form}
+Wayfair's strategy is a pair: what to do at the root, and what to do in the
+campaign stage.
+\bsk
+\centering
+{\small
+\only<1>{\begin{matrixgame}[top={Fund, Skip}, left={(Out\,Fund), (Out\,Skip), (In\,Fund), (In\,Skip)}, player names={Wayfair, IKEA}]
+  \payoffmatrix{2,10 & 2,10 \\ 2,10 & 2,10 \\ 3,3 & 0,1 \\ 1,0 & 1,1}
+\end{matrixgame}}%
+\only<2>{\begin{matrixgame}[top={Fund, Skip}, left={(Out\,Fund), (Out\,Skip), (In\,Fund), (In\,Skip)}, player names={Wayfair, IKEA}, br]
+  \payoffmatrix{2,10 & 2,10 \\ 2,10 & 2,10 \\ 3,3 & 0,1 \\ 1,0 & 1,1}
+\end{matrixgame}}}
+\bsk
+\raggedright
+\onslide<2>{Three cells have both payoffs underlined. Three Nash equilibria.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Nash Equilibrium We Threw Out}
+The strategic form has \textbf{three} Nash equilibria. Wayfair's strategy is a pair:
+what to do at the root, and what to do in the campaign stage.
+\bsk
+\centering
+\begin{tabular}{lll}
+\textbf{Profile} & \textbf{Subgame play} & \textbf{Subgame perfect?} \\
+\hline
+$\big((\text{In},\text{Fund}),\text{Fund}\big)$ & (Fund, Fund) & yes \\
+$\big((\text{Out},\text{Skip}),\text{Skip}\big)$ & (Skip, Skip) & yes \\
+$\big((\text{Out},\text{Fund}),\text{Skip}\big)$ & (Fund, Skip) & \textbf{no} \\
+\end{tabular}
+\bsk
+\raggedright
+\vfill
+The third is a Nash equilibrium of the whole game. Wayfair staying out is a best
+reply if it believes IKEA will skip.
+\bsk
+But its plan for the subgame is incoherent: if entry happened, funding alone
+earns 0, and it would rather skip. \vspace{0.3in}
+\end{frame}
+
+\begin{frame}{Three Things Worth Remembering}
+\begin{itemize}
+    \item In a \textbf{perfect-information} game, subgame-perfect equilibrium is
+      exactly backward induction. Every decision node starts a subgame, so the
+      algorithm walks the tree from the leaves. \vspace{0.25in}
+    \item If a game has \textbf{no proper subgames}, every Nash equilibrium is
+      subgame perfect. The refinement has nothing to bite on. \vspace{0.25in}
+    \item Otherwise subgame perfection is a strict refinement: fewer predictions,
+      all of them Nash. \vspace{0.25in}
+\end{itemize}
+\vfill
+{\footnotesize Bonanno's Figures 4.8 and 4.9 work through larger three-player trees
+with several subgames. Worth doing before the problem set.}
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 4.5 CHANCE MOVES
+% ==============================================================
+
+\begin{frame}[standout]
+Chance Moves
+\end{frame}
+
+\begin{frame}{When Nobody Chose It}
+Sometimes what happens isn't anyone's decision. A card is dealt, a part fails,
+a customer walks in.
+\bsk
+We model this with a fictitious player: \textbf{Nature} (or \textbf{Chance}).
+\bsk
+\begin{itemize}
+    \item Nature moves at some nodes
+    \item Each of Nature's actions carries a \textbf{probability}
+    \item Nature has no payoffs and no objectives, so it isn't really a player
+\end{itemize}
+\vfill
+Everything else (information sets, strategies, subgames) is unchanged.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Three Cards}
+Three cards: one black, two red. Shuffled, face down.
+\bsk
+\textbf{Nature moves first}, turning up the top card: black with probability
+$\tfrac{1}{3}$, red with probability $\tfrac{2}{3}$.
+\bsk
+Then the players move:
+\begin{itemize}
+    \item Adele looks at the top card without showing Ben
+    \item She tells Ben ``black'' or ``red'', truthfully or not
+    \item Ben then guesses the true color
+    \item Correct guess: Adele pays Ben \$9. Wrong: Ben pays Adele \$9.
+\end{itemize}
+\vfill
+Ben has two information sets, one for each thing Adele might say, and in each
+he is unsure what the card actually is.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Card Game}
+\centering
+\begin{gametree}[player names={Adele, Ben}, scale=0.58]
+  \branch[player=0, root=w, label=90] from (0,0) to[v=1.5, h=8.6]
+    {$\tfrac13$ Black; $\tfrac23$ Red};
+  \branch[player=1, label=135] from (w1) to[v=1.5, h=4.2] {``B''; ``R''};
+  \branch[label=45] from (w2) to {``R''; ``B''};
+  \branch[player=2, label=none] from (w11) to[v=1.9, h=1.5] {B(-9,9); R(9,-9)};
+  \branch[label=none] from (w12) to {B(-9,9); R(9,-9)};
+  \branch[label=none] from (w21) to {B(9,-9); R(-9,9)};
+  \branch[label=none] from (w22) to {B(9,-9); R(-9,9)};
+  \informset[dashed] (w12) -- (w21);
+  \informset[curved=52] (w11) -- (w22);
+\end{gametree}
+\bsk
+\raggedright
+{\footnotesize Nature moves first. Adele's label is what she \textit{says}; Ben's is
+what he \textit{guesses}. First payoff Adele, second Ben.}
+\bsk
+Ben has two information sets, one for each thing Adele might say. In each, he
+knows what he heard but not what the card is.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{A New Difficulty}
+Take the profile: Adele always tells the truth, Ben always guesses black.
+\bsk
+What's the outcome? It depends on the card, so the outcome is itself a gamble:
+\bsk
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+Outcome & Adele pays \$9 & Ben pays \$9 \\
+\hline
+Probability & $\tfrac{1}{3}$ & $\tfrac{2}{3}$ \\
+\hline
+\end{tabular}
+\bsk
+\raggedright
+\vfill
+We call this a \textbf{lottery}. To build a strategic form we need to know how
+players rank \textit{lotteries}, not just outcomes.
+\bsk
+Chapter 5 answers that properly. For now, one shortcut.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Expected Value}
+\begin{block}{Definition}
+The \textbf{expected value} of the money lottery
+$\begin{pmatrix} \$x_1 & \$x_2 & \cdots & \$x_n \\ p_1 & p_2 & \cdots & p_n\end{pmatrix}$
+is
+$$x_1p_1 + x_2p_2 + \cdots + x_np_n$$
+\end{block}
+\bsk
+\centering
+$\begin{pmatrix} \$5 & \$15 & \$25 \\[2pt] \tfrac{1}{5} & \tfrac{2}{5} & \tfrac{2}{5}\end{pmatrix}$
+\ has expected value \ \underline{\hspace{0.9in}}
+\bsk
+$\begin{pmatrix} -\$9 & \$9 \\[2pt] \tfrac{1}{3} & \tfrac{2}{3}\end{pmatrix}$
+\ has expected value \ \underline{\hspace{0.9in}}
+\vfill
+\end{frame}
+
+\begin{frame}{Risk Neutrality}
+\begin{block}{Definition}
+A player is \textbf{risk neutral} if she considers a money lottery to be
+\textit{just as good as} its expected value.
+\end{block}
+\bsk
+So a risk-neutral player ranks lotteries by their expected value, and we can use
+that number as her payoff.
+\bsk
+\centering
+$L_1=\begin{pmatrix} \$5 & \$15 & \$25 \\[2pt] \tfrac{1}{5} & \tfrac{2}{5} & \tfrac{2}{5}\end{pmatrix}$
+\hspace{0.2in}
+$L_2=\begin{pmatrix} \$16 \\[2pt] 1\end{pmatrix}$
+\hspace{0.2in}
+$L_3=\begin{pmatrix} \$0 & \$32 & \$48 \\[2pt] \tfrac{5}{8} & \tfrac{1}{8} & \tfrac{1}{4}\end{pmatrix}$
+\bsk
+\raggedright
+A risk-neutral player ranks these: \underline{\hspace{2in}}
+\vfill
+{\footnotesize This is a convenience, not a claim about people. Risk neutrality
+lets us finish Chapter 4 without the machinery of Chapter 5.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Why the Assumption Is Doing Work}
+$L_2$ and $L_3$ have the same expected value, \$16.
+\bsk
+\begin{itemize}
+    \item $L_2$ pays \$16 for certain
+    \item $L_3$ pays nothing five times out of eight, and sometimes \$48
+\end{itemize}
+\bsk
+A risk-neutral player is \textbf{indifferent} between them.
+\vfill
+Most people are not. Ask yourself which you'd take, and notice that your answer
+is information the expected value throws away.
+\bsk
+Recovering it is exactly what Chapter 5 is for.
+\vspace{-0.4in}
+\end{frame}
+
+% ==============================================================
+% WORKED EXAMPLE
+% ==============================================================
+
+\begin{frame}[standout]
+Let's Work One Out
+\end{frame}
+
+\begin{frame}{A Three-Player Dynamic Game}
+\centering
+\begin{gametree}[player names={Ann, Ben, Cal}, scale=0.66]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=8.0] {Out(3,3,3); In};
+  \branch[player=2, label=0] from (w2) to[v=1.5, h=4.2] {L; R};
+  \branch[player=3, label=none] from (w21) to[v=1.5, h=1.8] {u(4,1,1); d(0,0,4)};
+  \branch[label=none] from (w22) to {u(1,4,0); d};
+  \branch[player=1, label=0] from (w222) to[v=1.5, h=1.8] {p(2,2,2); q(5,1,1)};
+  \informset[player=3] (w21) -- (w22);
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{A Three-Player Dynamic Game}
+Its strategic form. Ann's strategy is a pair: the root, then her later node.
+\bsk
+\centering
+{\scriptsize
+\begin{matrixgame}[top={L, R}, left={(Out\,p), (Out\,q), (In\,p), (In\,q)}, bottom={Cal: u, Cal: d}, player names={Ann, Ben, Cal}]
+  \payoffmatrix{3,3,3 & 3,3,3 \\ 3,3,3 & 3,3,3 \\ 4,1,1 & 1,4,0 \\ 4,1,1 & 1,4,0}
+  \payoffmatrix[pos={4.6,0}]{3,3,3 & 3,3,3 \\ 3,3,3 & 3,3,3 \\ 0,0,4 & 2,2,2 \\ 0,0,4 & 5,1,1}
+\end{matrixgame}}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{A Three-Player Dynamic Game}
+\begin{enumerate}
+    \item List every subgame. Why is there none starting at Cal's left node? \vspace{0.3in}
+    \item How many strategies does each player have? \vspace{0.3in}
+    \item Run the subgame-perfect equilibrium algorithm. Solve the smallest
+      subgame first. \vspace{0.35in}
+    \item Find a Nash equilibrium of the whole game that is \textbf{not}
+      subgame perfect. \vspace{0.3in}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{What Have We Learned, Charlie Brown?}
+\begin{itemize}
+    \item An \textbf{information set} collects nodes a player cannot tell apart;
+      perfect information is the case where all are singletons
+    \item A \textbf{strategy} gives one choice per information set, not per node
+    \item A \textbf{subgame} starts at a singleton information set and cuts no
+      information set
+    \item \textbf{Subgame-perfect equilibrium}: Nash in every subgame. Solve minimal
+      subgames first, replace, repeat
+    \item \textbf{Nature} handles chance; risk neutrality ranks lotteries by mean
+\end{itemize}
+\vfill
+Next: what if players aren't risk neutral?
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Reading \& Practice}
+\begin{itemize}
+    \item Bonanno, \textit{Game Theory}, Chapter 4
+    \item Exercises: \S4.6.1 (imperfect information), \S4.6.2 (strategies),\\
+      \S4.6.3 (subgames), \S4.6.4 (subgame-perfect equilibrium),\\
+      \S4.6.5 (chance moves)
+    \item Exercise 4.2 is the entry game with a simultaneous second stage, close to
+      the IKEA example, with more to it
+    \item Solutions in \S4.7
+\end{itemize}
+\vfill
+\end{frame}
+
+\end{document}

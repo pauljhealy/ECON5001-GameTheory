@@ -9,8 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Timezone for \today / \DTMcurrenttime on the compiled slides
-      # (replaces the old root-level latexmkrc).
+      # Timezone for \today / \DTMcurrenttime on the compiled slides. The
+      # root-level latexmkrc sets the same value for Overleaf's builders,
+      # which run in UTC; this keeps CI and Overleaf agreeing.
       TZ: America/New_York
     permissions:
       contents: write   # needed to commit compiled PDFs back to the repo

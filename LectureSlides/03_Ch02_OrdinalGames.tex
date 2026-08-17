@@ -1,8 +1,7 @@
 \input{LectureSlides/includes/metropolis_preamble}
 
-
 % Title page info
-\title[Ordinal Games]{Ordinal Games in Strategic Form}
+\title[Ordinal Games]{Chapter 2 (Part 1): Ordinal Games in Strategic Form}
 \author[ECON 5001]{ECON 5001\\Prof. Healy} \color{metrop}
 \institute[OSU]{}
 \date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
@@ -20,7 +19,7 @@
     \item \textbf{Dominance}: our first solution concept
 \end{itemize}
 \vfill
-Big idea for today:
+Big idea for this lecture:
 \bsk
 \vspace{0.6in}
 \end{frame}
@@ -82,7 +81,7 @@ So: what should Sarah do?
 \begin{frame}{Before We Analyze It: Let's Play}
 \begin{itemize}
     \item Phone, tablet, or laptop (whatever you've got)
-    \item Log in to \textbf{MobLab} and join today's session
+    \item Log in to \textbf{MobLab} and join our session
     \item Class code: \hspace{0.1in} \texttt{\underline{\hspace{1.3in}}}
     \item One decision: \textbf{Split} or \textbf{Steal}
 \end{itemize}
@@ -868,7 +867,7 @@ And the fair-minded version? \vspace{0.5in}
 \end{frame}
 
 \begin{frame}{What Did \textit{We} Do?}
-Back to this morning's MobLab results.
+Back to our MobLab results.
 \bsk
 \centering
 \begin{tabular}{lc}
@@ -1002,7 +1001,42 @@ Couldn't they just agree?
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Where We Landed}
+% ==============================================================
+% WORKED EXAMPLE
+% ==============================================================
+
+\begin{frame}[standout]
+Let's Work One Out
+\end{frame}
+
+\begin{frame}{Three Carts at the North Market}
+Ann, Ben, and Cal each run a cart. Every Saturday each one independently picks
+a special: the \textbf{Classic} or something \textbf{New}.
+\bsk
+\centering
+{\small
+\begin{matrixgame}[top={Classic, New}, left={Classic, New}, bottom={Cal: Classic, Cal: New}, player names={Ann, Ben, Cal}]
+  \payoffmatrix{3,3,2 & 4,3,1 \\ 1,3,4 & 2,1,3}
+  \payoffmatrix[pos={5.4,0}]{3,2,3 & 4,0,2 \\ 1,2,3 & 2,0,4}
+\end{matrixgame}}
+\bsk
+\raggedright
+{\footnotesize Ann picks the row, Ben the column, Cal the table. Payoffs in order:
+Ann, Ben, Cal.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Three Carts at the North Market}
+\begin{enumerate}
+    \item Does Ann have a dominant strategy? Strict or weak? \vspace{0.3in}
+    \item Does Ben? \vspace{0.3in}
+    \item Does Cal? \vspace{0.3in}
+    \item Is there a dominant-strategy profile? \vspace{0.3in}
+    \item If Ann and Ben play their dominant strategies, what should Cal do? \vspace{0.3in}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{What Have We Learned, Charlie Brown?}
 \begin{itemize}
     \item A \textbf{game-frame} is players, strategies, outcomes, and $f$
     \item Preferences are a complete, transitive relation $\succsim_i$ on outcomes

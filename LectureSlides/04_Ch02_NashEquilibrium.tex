@@ -1,8 +1,7 @@
 \input{LectureSlides/includes/metropolis_preamble}
 
-
 % Title page info
-\title[Nash Equilibrium]{Auctions, Iterated Dominance, \& Nash Equilibrium}
+\title[Nash Equilibrium]{Chapter 2 (Part 2): Auctions, Iterated Dominance, \& Nash Equilibrium}
 \author[ECON 5001]{ECON 5001\\Prof. Healy} \color{metrop}
 \institute[OSU]{}
 \date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
@@ -22,7 +21,7 @@ We can now:
 \bsk
 And we found: if you have a dominant strategy, play it.
 \vfill
-Today: what if you don't?
+In this lecture: what if you don't?
 \vspace{-0.5in}
 \end{frame}
 
@@ -39,7 +38,7 @@ Today: what if you don't?
 % ---------------------------------------------------------------------
 \begin{frame}{Log In: We're Bidding}
 \begin{itemize}
-    \item MobLab, today's session
+    \item MobLab, our session
     \item You'll be told what the item is worth \textbf{to you}
     \begin{itemize}
         \item that number is yours alone; others have different ones
@@ -1128,7 +1127,43 @@ profit $=$ \underline{\hspace{0.8in}}
 % WRAP
 % ==============================================================
 
-\begin{frame}{Where We Landed}
+% ==============================================================
+% WORKED EXAMPLE
+% ==============================================================
+
+\begin{frame}[standout]
+Let's Work One Out
+\end{frame}
+
+\begin{frame}{Three Bars on High Street}
+Ann, Ben, and Cal each run a bar. Before a home game each independently commits
+to a \textbf{Big} promotion or a \textbf{Small} one.
+\bsk
+\centering
+{\small
+\begin{matrixgame}[top={Big, Small}, left={Big, Small}, bottom={Cal: Big, Cal: Small}, player names={Ann, Ben, Cal}]
+  \payoffmatrix{2,2,2 & 0,3,1 \\ 3,0,1 & 1,1,0}
+  \payoffmatrix[pos={5.4,0}]{1,1,3 & 0,0,2 \\ 0,2,0 & 2,2,3}
+\end{matrixgame}}
+\bsk
+\raggedright
+{\footnotesize Ann picks the row, Ben the column, Cal the table. Payoffs in order:
+Ann, Ben, Cal.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Three Bars on High Street}
+\begin{enumerate}
+    \item Does anyone have a dominant strategy? \vspace{0.25in}
+    \item Does IDSDS delete anything at all? \vspace{0.25in}
+    \item Find every Nash equilibrium. Underline Ann's best payoff in each column,
+      Ben's in each row, and Cal's whenever it beats her payoff in the same cell
+      of the other table. \vspace{0.35in}
+    \item Is either equilibrium Pareto superior to the other? \vspace{0.25in}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{What Have We Learned, Charlie Brown?}
 \begin{itemize}
     \item \textbf{Second-price auction}: truthful bidding is weakly dominant (Vickrey)
     \item \textbf{Pivotal mechanism}: truthful reporting is weakly dominant (Clarke)
