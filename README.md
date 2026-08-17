@@ -33,6 +33,7 @@ Source for the ECON 5001 lecture slides and the public download site.
 | `Syllabus/syllabus.tex` | Course syllabus (compiled separately, listed first on the site). |
 | `HTML/topstuff.html` | HTML header; the build appends the lecture list and closes the page. |
 | `xgames.sty`, `fikz.sty` | Vendored game-theory typesetting package (see below). |
+| `latexmkrc` | Sets `TZ` to `America/New_York` so Overleaf's UTC builders date the slides correctly. |
 | `Annotated/` | In-class annotated PDFs (`NN_name_PJH.pdf`), published per lecture. |
 | `PDFs/` | Compiled slide PDFs, auto-committed by CI (renamed/deleted decks auto-pruned) so they sync via `git pull`. |
 | `scripts/sync-annotated.cmd` | Double-click to pull, commit, and push new annotated PDFs. |
