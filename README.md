@@ -116,8 +116,12 @@ You can post the version of a deck you mark up live during lecture:
 2. Save it into `Annotated/` named `NN_name_PJH.pdf` — matching the lecture's
    source `LectureSlides/NN_name.tex` (e.g. `01_intro.tex` → `01_intro_PJH.pdf`).
 3. Double-click `scripts/sync-annotated.cmd`. It pulls, commits the new PDF, and pushes.
-4. The build copies it to the site and adds a prominent **"✎ Prof. Healy's
-   Annotated Version"** link under that lecture.
+4. The build copies it to the site and adds a **"✎ Prof. Healy's Annotated
+   Version"** link under that lecture, followed by the date it was last
+   modified. That date is the PDF's own internal `ModDate` when the annotation
+   app stamped one; if `ModDate` still equals `CreationDate` (nothing re-saved
+   the file, so the timestamp is just the LaTeX build time), the build uses the
+   date the annotated PDF was committed instead.
 
 See `Annotated/README.md` for the full convention. Overwrite an existing
 `_PJH.pdf` to update it; re-run the script to publish the change.
