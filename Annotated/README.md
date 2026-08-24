@@ -19,9 +19,11 @@ Examples:
 | `LectureSlides/02_dominance.tex` | `02_dominance.pdf` | `Annotated/02_dominance_PJH.pdf` |
 
 The build matches the `_PJH.pdf` suffix back to its lecture and adds a
-prominent **"✎ Prof. Healy's Annotated Version"** download link under that
-lecture on the public site. A file that doesn't match any lecture is simply
-ignored.
+**"✎ Prof. Healy's Annotated Version"** link under that lecture on the public
+site, followed by `(modified YYYY-MM-DD)`. That date comes from the PDF's own
+internal `ModDate`, falling back to the file's commit date when `ModDate` is
+unchanged from `CreationDate` — i.e. when the annotation app never re-stamped
+the file. A file that doesn't match any lecture is simply ignored.
 
 ## Workflow
 
