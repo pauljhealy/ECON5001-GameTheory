@@ -9,8 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Timezone for \today / \DTMcurrenttime on the compiled slides
-      # (replaces the old root-level latexmkrc).
+      # Timezone for \today / \DTMcurrenttime on the compiled slides. The
+      # root-level latexmkrc sets the same value for Overleaf's builders,
+      # which run in UTC; this keeps CI and Overleaf agreeing.
       TZ: America/New_York
     permissions:
       contents: write   # needed to commit compiled PDFs back to the repo
@@ -178,6 +179,17 @@ jobs:
           fi
           cat HTML/topstuff.html > public/index.html
 
+          # Normalize a pdfinfo date to YYYY-MM-DD. Accepts either the
+          # -isodates form ("2026-08-13T01:48:08-04") or the human form
+          # ("Thu Aug 13 05:48:08 2026 UTC"). Prints nothing if unparseable.
+          norm_date() {
+            case "$1" in
+              "") ;;
+              [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]*) printf "%s" "$1" | cut -c1-10 ;;
+              *) date -d "$1" +%F 2>/dev/null || true ;;
+            esac
+          }
+
           for f in public/*.pdf; do
             filename=$(basename "$f")
             if [ "$filename" = "syllabus.pdf" ]; then
@@ -238,13 +250,51 @@ jobs:
             fi
 
             # Instructor's in-class annotated PDF, if one has been uploaded to
-            # Annotated/<base>_PJH.pdf. Copy it into public/ and surface a
-            # prominent download link under the lecture.
+            # Annotated/<base>_PJH.pdf. Copy it into public/ and surface a text
+            # link under the lecture, followed by when the annotated file was
+            # last modified -- the PDF's own internal ModDate when the
+            # annotation app stamped one, otherwise the file's commit date.
             annot_file="Annotated/${base}_PJH.pdf"
             annot_link=""
             if [ -f "$annot_file" ]; then
               cp "$annot_file" public/
-              annot_link="<a class=\"lect-annot\" href=\"${base}_PJH.pdf\" target=\"_blank\" rel=\"noopener\">&#x270E; Prof. Healy's Annotated Version</a>"
+
+              # Read the metadata once. -isodates is preferred; poppler builds
+              # that do not support the flag fall back to the human form, and
+              # norm_date handles either.
+              annot_info=$(pdfinfo -isodates "$annot_file" 2>/dev/null) || annot_info=""
+              [ -n "$annot_info" ] || annot_info=$(pdfinfo "$annot_file" 2>/dev/null || true)
+              annot_mod=$(printf "%s\n" "$annot_info" \
+                | awk -F': +' '/^ModDate:/ {print $2; exit}')
+              annot_created=$(printf "%s\n" "$annot_info" \
+                | awk -F': +' '/^CreationDate:/ {print $2; exit}')
+
+              annot_updated=""
+              if [ -n "$annot_mod" ] && [ "$annot_mod" != "$annot_created" ]; then
+                # The annotation app re-saved the file, so ModDate really is
+                # when the markup was last written. Trust it.
+                annot_updated=$(norm_date "$annot_mod")
+              fi
+
+              # ModDate identical to CreationDate means nothing ever re-stamped
+              # the file: the timestamp is still the LaTeX build time, not the
+              # annotation time. Same story if there is no ModDate at all. Use
+              # the date the annotated PDF was committed instead.
+              if [ -z "$annot_updated" ]; then
+                annot_updated=$(git log -1 --format="%as" -- "$annot_file")
+              fi
+
+              # Nothing in git either (added but never committed) -- fall back
+              # to the PDF's own timestamp rather than showing no date.
+              if [ -z "$annot_updated" ]; then
+                annot_updated=$(norm_date "$annot_mod")
+              fi
+
+              annot_date=""
+              if [ -n "$annot_updated" ]; then
+                annot_date=" <span class=\"lect-annot-date\">(modified $annot_updated)</span>"
+              fi
+              annot_link="<div class=\"lect-annot-line\"><a class=\"lect-annot\" href=\"${base}_PJH.pdf\" target=\"_blank\" rel=\"noopener\">&#x270E; Prof. Healy's Annotated Version</a>${annot_date}</div>"
             fi
 
             echo "<li>" >> public/index.html

@@ -1,0 +1,838 @@
+\input{LectureSlides/includes/metropolis_preamble}
+
+% Title page info
+\title[Perfect Information]{Chapter 3: Perfect-Information Games}
+\author[ECON 5001]{ECON 5001\\Prof. Healy} \color{metrop}
+\institute[OSU]{}
+\date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
+
+% ---------------------------------------------------------------------
+% Trees use xgames' gametree environment. Syntax reminder:
+%   \branch«overlay»[<opt>] from (<parent>) to[<edge opt>] {<children>};
+%   - player=i        colors the branch and labels the parent with i's name
+%   - root=w          names the parent coordinate (needed for the root)
+%   - label=<angle>   places the node's player label at that angle
+%   - v / h           vertical drop, horizontal spread of the children
+%   - children are ";"-separated: <action>«overlay»[<opt>](<payoffs>)
+%   - child i of parent (w) gets coordinate (wi), so (w22) is the second
+%     child of the second child -- that's how deeper branches attach
+%   - an overlay on an action, e.g. Accept<1->, highlights that edge in the
+%     player's color. That is how backward-induction choices are marked
+%     here, in place of Bonanno's doubled edges.
+% labels=short prints "1", "2", "3" instead of full player names.
+% ---------------------------------------------------------------------
+
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{Everything So Far Happened at Once}
+In Chapter 2, players chose \textbf{simultaneously}, seeing nothing beforehand.
+\bsk
+But most interesting situations aren't like that:
+\begin{itemize}
+    \item chess
+    \item an offer and a counteroffer
+    \item a firm entering a market and the incumbent responding
+    \item calling a play after seeing the defense line up
+\end{itemize}
+\vfill
+Now: players move \textbf{in turn}, and everyone sees the whole history.
+\vspace{-0.4in}
+\end{frame}
+
+% ==============================================================
+% MOBLAB --- PLAY FIRST
+% ==============================================================
+
+% ---- MobLab run: Centipede ------------------------------------------
+% Play BEFORE backward induction is defined. Default settings are fine;
+% 4-6 legs, one-shot, no chat, random rematch off. Record how far the
+% average pair got -- the "How Far Did We Get?" frame below wants it, and
+% the "Back to the Centipede" frame near the end refers to it again.
+% ---------------------------------------------------------------------
+\begin{frame}{Log In: Take It or Leave It}
+\begin{itemize}
+    \item MobLab, our session. You'll be paired with someone here.
+    \item A pile of money sits on the table, and it \textbf{grows} every round
+    \item On your turn: \textbf{Take} the pile, or \textbf{Pass} it back
+    \item Taking ends the game. Whoever takes gets the larger share.
+\end{itemize}
+\bsk
+\vfill
+\centering
+No talking. Play it the way you'd actually play it.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{How Far Did We Get?}
+\centering
+\begin{tabular}{lc}
+Pairs that ended at the first decision: & \underline{\hspace{1in}} \\[0.3in]
+Average round the pile was taken: & \underline{\hspace{1in}} \\[0.3in]
+Pairs that made it to the end: & \underline{\hspace{1in}} \\[0.3in]
+\end{tabular}
+\bsk
+\raggedright
+\vfill
+Hold onto these numbers. We'll come back to them.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 3.1 TREES, FRAMES, GAMES
+% ==============================================================
+
+\begin{frame}[standout]
+Trees
+\end{frame}
+
+\begin{frame}{Perfect Information}
+In a \textbf{dynamic game} (or \textbf{extensive form}) players move in sequence.
+\bsk
+This chapter covers the case of \textbf{perfect information}:
+\vfill
+\centering
+\large
+whenever it is a player's turn to move,\\ she knows every move made so far
+\vfill
+\normalsize
+\raggedright
+Chess has it. Poker does not.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Rooted Directed Trees}
+A \textbf{rooted directed tree} is a set of \textbf{nodes} joined by directed \textbf{edges}.
+\bsk
+Alex and Blair are out to dinner. The check arrives.
+\bsk
+\centering
+\begin{gametree}[player names={Alex, Blair}, scale=0.82]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=5.8]
+    {I've got this; Want to split?};
+  \branch[player=2, label=135] from (w1) to[v=1.5, h=2.4]
+    {Thanks($o_1$); Add my card($o_2$)};
+  \branch[label=45] from (w2) to {Sure($o_3$); Rather not($o_4$)};
+\end{gametree}
+\end{frame}
+
+\begin{frame}{Rooted Directed Trees}
+A \textbf{rooted directed tree} is a set of \textbf{nodes} joined by directed \textbf{edges}:
+\bsk
+\begin{itemize}
+    \item the \textbf{root} has no edge leading into it
+    \item every other node has \textbf{exactly one} edge leading into it
+    \item there is a \textbf{unique path} from the root to any other node
+\end{itemize}
+\bsk
+Nodes with no edges out are \textbf{terminal} ($Z$), all others
+\textbf{decision nodes} ($D$).
+$$X = D\cup Z$$
+\bsk
+We write $x$ for a particular node, and $S(x)$ for $x$ together with everything
+that follows it.
+\vfill
+Unique paths are what make ``the history so far'' well defined.
+\vspace{-0.5in}
+\end{frame}
+
+\begin{frame}{Definition: Extensive Form With Perfect Information}
+A \textbf{finite extensive form with perfect information} consists of:
+\bsk
+\begin{itemize}
+    \item a finite rooted directed tree
+    \bsk
+    \item a set of players $I=\{1,\ldots,n\}$, one at \textbf{each decision node}
+    \bsk
+    \item a set of actions $A$, one assigned to every edge, with no two edges out of
+      the same node getting the same action
+    \bsk
+    \item a set of outcomes $O$, one assigned to every terminal node
+\end{itemize}
+\vfill
+Note what's missing: \textbf{preferences}. This is a frame, not a game.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Dissolving the Partnership}
+Amy and Beth are dissolving the partnership behind their Short North coffee shop.
+The assets are valued at \$100,000.
+\bsk
+\begin{itemize}
+    \item The charter says the senior partner, \textbf{Amy}, proposes a split
+    \item \textbf{Beth} can Accept, or Reject and take it to court
+    \item In court: each side pays \$20,000 in legal fees, and the verdict
+      (no uncertainty) gives 60\% to Amy, 40\% to Beth
+    \item Amy has only two possible offers: \textbf{50-50} or \textbf{70-30}
+\end{itemize}
+\bsk
+So rejecting always yields Amy $\$60{,}000-\$20{,}000=\$40{,}000$ and Beth
+$\$40{,}000-\$20{,}000=\$20{,}000$.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Frame}
+\centering
+\begin{gametree}[player names={Amy, Beth}, scale=0.85]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=5.4]
+    {Offer 50-50; Offer 70-30};
+  \branch[player=2, label=135] from (w1) to[v=1.5, h=2.3]
+    {Accept(\makecell{$o_1$\\ \$50{,}000\\ \$50{,}000});
+     Reject(\makecell{$o_2$\\ \$40{,}000\\ \$20{,}000})};
+  \branch[label=45] from (w2) to
+    {Accept(\makecell{$o_3$\\ \$70{,}000\\ \$30{,}000});
+     Reject(\makecell{$o_4$\\ \$40{,}000\\ \$20{,}000})};
+\end{gametree}
+\bsk
+\raggedright
+{\footnotesize Top number is Amy's, bottom number is Beth's.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Backward-Induction Reasoning}
+Start at the \textit{end} and work back toward the root.
+\bsk
+\begin{itemize}
+    \item Offered 50-50, Beth compares \$50,000 to \$20,000 \ $\Rightarrow$ \ accept
+      \vspace{0.25in}
+    \item Offered 70-30, Beth compares \$30,000 to \$20,000 \ $\Rightarrow$ \ accept
+      \vspace{0.25in}
+    \item Anticipating both, Amy compares \$50,000 to \$70,000 \ $\Rightarrow$ \ offer 70-30
+      \vspace{0.25in}
+\end{itemize}
+\vfill
+Clean. Convincing. And built on an assumption we never stated.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Same Flaw as Golden Balls}
+We assumed Beth cares only about her own money.
+\bsk
+Suppose instead Beth thinks she worked just as hard as Amy, and that the only fair
+split is 50-50. She may feel strongly enough that she would give up \$10,000 to
+refuse an unfair offer.
+\bsk
+That is: \ $o_4\succ_{\text{Beth}} o_3$.
+\vfill
+Then the reasoning above gives the wrong answer.
+\bsk
+\centering
+\large
+A tree with outcomes at the leaves is a \textbf{frame}.\\
+\bsk
+Add each player's ranking and you have a \textbf{game}.
+\vfill
+\end{frame}
+
+\begin{frame}{Adding Preferences}
+Amy is selfish and greedy: \hspace{0.35in} $o_3\succ_1 o_1\succ_1 o_2\sim_1 o_4$
+\bsk
+Beth cares about fairness: \hspace{0.2in} $o_1\succ_2 o_2\sim_2 o_4\succ_2 o_3$
+\bsk
+\centering
+\begin{tabular}{c|c|c|c|c|}
+\cline{2-5}
+ & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
+\cline{2-5}
+$U_1$ (Amy) & $2$ & $1$ & $3$ & $1$ \\
+\cline{2-5}
+$U_2$ (Beth) & $3$ & $2$ & $1$ & $2$ \\
+\cline{2-5}
+\end{tabular}
+\bsk
+\raggedright
+\vfill
+Now replace each outcome with its payoff pair and rerun the algorithm.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Game}
+\centering
+\begin{gametree}[player names={Amy, Beth}, scale=0.9]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=4.6]
+    {Offer 50-50<1->; Offer 70-30};
+  \branch[player=2, label=135] from (w1) to[v=1.4, h=1.9]
+    {Accept<1->(2,3); Reject(1,2)};
+  \branch[label=45] from (w2) to {Accept(3,1); Reject<1->(1,2)};
+\end{gametree}
+\bsk
+\raggedright
+Highlighted edges are the backward-induction choices. Amy now offers \textbf{50-50}
+(she anticipates that 70-30 would be rejected).
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% 3.2 BACKWARD INDUCTION
+% ==============================================================
+
+\begin{frame}[standout]
+Backward Induction
+\end{frame}
+
+\begin{frame}{The Algorithm}
+Call a node \textbf{marked} once a payoff vector is attached to it. Initially, exactly
+the terminal nodes are marked.
+\bsk
+\begin{enumerate}
+    \item Pick a decision node $x$ whose immediate successors are \textbf{all} marked.
+      Let $i$ be the player who moves at $x$.
+    \bsk
+    \item Select a choice leading to an immediate successor with the highest payoff
+      \textit{for player $i$}. Mark $x$ with that successor's whole payoff vector.
+    \bsk
+    \item Repeat until every node is marked.
+\end{enumerate}
+\vfill
+Finiteness guarantees this terminates: start at nodes followed only by terminal nodes,
+and work outward.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{When Choices Tie}
+Step 2 says ``select a choice.'' If two choices tie for a player, the algorithm
+doesn't say which, so it can produce \textbf{several} solutions.
+\bsk
+\centering
+\begin{gametree}[labels=short, scale=0.9]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=4.6] {a; b};
+  \branch[player=2, label=135] from (w1) to[v=1.3, h=1.9] {c(2,1,0); d(0,0,2)};
+  \branch[label=45] from (w2) to {e(3,1,0); f};
+  \branch[player=3, label=45] from (w22) to[v=1.3, h=1.7] {g(1,2,1); h(0,0,1)};
+\end{gametree}
+\bsk
+\raggedright
+{\footnotesize Payoffs in order: Player 1, Player 2, Player 3.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{When Choices Tie}
+Step 2 says ``select a choice.'' If two choices tie for a player, the algorithm
+doesn't say which, so it can produce \textbf{several} solutions.
+\bsk
+\centering
+\begin{gametree}[labels=short, scale=0.9]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=4.6] {a; b};
+  \branch[player=2, label=135] from (w1) to[v=1.3, h=1.9] {c(2,1,0); d(0,0,2)};
+  \branch[label=45] from (w2) to {e(3,1,0); f};
+  \branch[player=3, label=45] from (w22) to[v=1.3, h=1.7] {g(1,2,1); h(0,0,1)};
+\end{gametree}
+\bsk
+\raggedright
+{\footnotesize Payoffs in order: Player 1, Player 2, Player 3.}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% 3.3 STRATEGIES
+% ==============================================================
+
+\begin{frame}[standout]
+Strategies
+\end{frame}
+
+\begin{frame}{A Strategy Is a Complete Plan}
+\begin{block}{Definition}
+A \textbf{strategy} for a player in a perfect-information game is a list of choices,
+\textbf{one for each decision node of that player}.
+\end{block}
+\bsk
+Not ``what I will do'' but ``what I would do \textit{everywhere} I might move.''
+\bsk
+In the game two slides back, Player 2 has two decision nodes, so a strategy is a pair.
+Before the game starts she doesn't know whether Player 1 will pick $a$ or $b$,
+so she must plan for both:
+$$(c,e)\qquad (c,f)\qquad (d,e)\qquad (d,f)$$
+\vfill
+Four strategies, not two.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Counting Strategies}
+Suppose Player 1 has three decision nodes in some game:
+\begin{itemize}
+    \item at the first, three choices $a_1,a_2,a_3$
+    \item at the second, two choices $b_1,b_2$
+    \item at the third, four choices $c_1,c_2,c_3,c_4$
+\end{itemize}
+\bsk
+A strategy fills in three blanks:
+$$\Big(\underbrace{\rule{0.8in}{0.4pt}}_{\text{one of } a_1,a_2,a_3},\
+\underbrace{\rule{0.8in}{0.4pt}}_{\text{one of } b_1,b_2},\
+\underbrace{\rule{0.8in}{0.4pt}}_{\text{one of } c_1,\ldots,c_4}\Big)$$
+\bsk
+So her strategy set is a Cartesian product of the action sets she faces:
+$$S_1=\{a_1,a_2,a_3\}\times\{b_1,b_2\}\times\{c_1,c_2,c_3,c_4\}$$
+\centering
+$3\times 2\times 4 = 24$ strategies
+\vfill
+\raggedright
+Strategy sets get large fast. That's the price of ``complete plan.''
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{A Redundancy Worth Noticing}
+\centering
+\begin{gametree}[labels=short, scale=0.9]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=4.6] {a; b};
+  \branch[player=2, label=135] from (w1) to[v=1.3, h=1.9] {c(2,1); d(0,0)};
+  \branch[label=45] from (w2) to {e(3,1); f};
+  \branch[player=1, label=45] from (w22) to[v=1.3, h=1.7] {g(1,2); h(1,0)};
+\end{gametree}
+\bsk
+\raggedright
+Strategy $(a,g)$ says: play $a$ at the root, and $g$ at my other node.
+\bsk
+But if she plays $a$, that other node is \textbf{never reached}. Why plan for it?
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Why Keep the Redundancy?}
+Three ways to justify it:
+\bsk
+\begin{enumerate}
+    \item \textbf{Mistakes.} She's cautious enough to plan for the possibility that she
+      intends $a$ but ends up playing $b$. \vspace{0.25in}
+    \item \textbf{Delegation.} A strategy is a set of instructions handed to someone
+      playing on her behalf, who needs to know what to do everywhere. \vspace{0.25in}
+    \item \textbf{Beliefs.} A strategy isn't really Player 1's plan at all, but Player 2's
+      \textit{belief} about what Player 1 would do. \vspace{0.25in}
+\end{enumerate}
+\vfill
+We'll set this aside for now and just use the definition.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{On Path and Off Path}
+A strategy profile traces one path from the root to a terminal node.
+\bsk
+\begin{itemize}
+    \item Nodes on that path are \textbf{on the path of play}
+    \item Every other node is \textbf{off the path of play}
+\end{itemize}
+\bsk
+A strategy must still say what to do off path. Nobody ever sees those choices,
+but they are what make the on-path choices rational.
+\vfill
+\centering
+\begin{gametree}[labels=short, scale=0.72]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=4.6] {\ ; \ };
+  \branch[player=2, label=135] from (w1) to[v=1.3, h=1.8] {\ (\ ); \ (\ )};
+  \branch[label=45] from (w2) to {\ (\ ); \ (\ )};
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{From Tree to Table}
+Every strategy profile determines a unique path, hence a unique terminal node,
+hence a unique payoff vector.
+\bsk
+So every perfect-information game has an \textbf{associated strategic form}.
+\bsk
+\centering
+\only<1>{\begin{matrixgame}[top={ce, cf, de, df}, left={ag, ah, bg, bh}, player names={Player 1, Player 2}]
+  \payoffmatrix{2,1 & 2,1 & 0,0 & 0,0 \\ 2,1 & 2,1 & 0,0 & 0,0 \\ 3,1 & 1,2 & 3,1 & 1,2 \\ 3,1 & 1,0 & 3,1 & 1,0}
+\end{matrixgame}}%
+\only<2>{\begin{matrixgame}[top={ce, cf, de, df}, left={ag, ah, bg, bh}, player names={Player 1, Player 2}, br]
+  \payoffmatrix{2,1 & 2,1 & 0,0 & 0,0 \\ 2,1 & 2,1 & 0,0 & 0,0 \\ 3,1 & 1,2 & 3,1 & 1,2 \\ 3,1 & 1,0 & 3,1 & 1,0}
+\end{matrixgame}}
+\bsk
+\raggedright
+The top two rows are identical. That's the redundancy showing up.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Five Equilibria, Two Solutions}
+That game has \textbf{five} Nash equilibria:
+$$(ag,cf)\quad (ah,cf)\quad (bg,df)\quad (bh,ce)\quad (bh,de)$$
+\bsk
+It has \textbf{two} backward-induction solutions:
+\begin{itemize}
+    \item $\big((a,g),(c,f)\big)$ \ (because $g$ and $h$ tie for Player 1)
+    \item $\big((b,h),(c,e)\big)$
+\end{itemize}
+\bsk
+Both are Nash equilibria.\\ The other three are not backward-induction solutions.
+\vfill
+That gap is the whole point of the next section.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Solution vs.\ Outcome}
+A backward-induction \textbf{solution} is a \textit{strategy profile}. It describes
+behavior everywhere, including at nodes that never get reached.
+\bsk
+A backward-induction \textbf{outcome} is the \textit{sequence of moves actually made}.
+\bsk
+\centering
+\begin{tabular}{ll}
+Solution $\big((a,g),(c,f)\big)$ & outcome $ac$, \ payoffs $(2,1)$ \\[0.15in]
+Solution $\big((b,h),(c,e)\big)$ & outcome $be$, \ payoffs $(3,1)$ \\
+\end{tabular}
+\vfill
+\raggedright
+Keep the distinction straight. Exam questions live here.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 3.4 BI VS NASH
+% ==============================================================
+
+\begin{frame}[standout]
+Backward Induction \& Nash
+\end{frame}
+
+\begin{frame}{The Theorem}
+\textbf{Theorem.} Every backward-induction solution of a perfect-information game is a
+Nash equilibrium of the associated strategic form.
+\vfill
+Suppose player $i$ deviates.
+\begin{itemize}
+    \item If she only changes what she does off the path, the play doesn't change,
+      so her payoff doesn't either
+    \item If she changes what she does at a node \textit{on} the path, the algorithm
+      already checked that alternative and rejected it
+\end{itemize}
+\vfill
+So backward induction is a \textbf{refinement} of Nash equilibrium: fewer solutions,
+all of them Nash.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Which Nash Equilibria Get Cut?}
+\vfill
+\centering
+\large
+Usually the ones resting on an \textbf{incredible threat}.
+\vfill
+\normalsize
+\raggedright
+\vspace{1.2in}
+\end{frame}
+
+\begin{frame}{The Entry Game}
+IKEA has been the only big furniture store at Polaris for years, earning \$5 million.
+Wayfair is deciding whether to open across I-71.
+\bsk
+\begin{itemize}
+    \item If Wayfair stays \textbf{out}, it earns \$1 million elsewhere
+    \item If Wayfair enters, IKEA can \textbf{fight}, a price war leaving both at zero
+    \item Or IKEA can \textbf{accommodate} and share, and both make \$2 million
+\end{itemize}
+\bsk
+Both firms are selfish and greedy.
+\vfill
+IKEA announces: ``open here and we will bury you on price.''\\
+Should Wayfair believe it?
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Entry Game}
+\centering
+\begin{gametree}[player names={Wayfair, IKEA}, scale=0.95]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=4.2]
+    {Out(1,5); In<1->};
+  \branch[player=2, label=0] from (w2) to[v=1.4, h=2.2]
+    {Fight(0,0); Accommodate<1->(2,2)};
+\end{gametree}
+\bsk
+\raggedright
+{\footnotesize First number Wayfair, second number IKEA.}
+\bsk
+Backward induction: faced with entry, IKEA compares 0 to 2. It accommodates.
+Knowing that, Wayfair enters.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{But There Are Two Nash Equilibria}
+\centering
+\begin{matrixgame}[top={Fight, Accommodate}, left={In, Out}, player names={Wayfair, IKEA}, br]
+  \payoffmatrix{0,0 & 2,2 \\ 1,5 & 1,5}
+\end{matrixgame}
+\bsk
+\raggedright
+\begin{itemize}
+    \item $(\text{In},\text{Accommodate})$, the backward-induction solution
+    \item $(\text{Out},\text{Fight})$, also a Nash equilibrium!
+\end{itemize}
+\bsk
+It survives only because Wayfair never enters, so the threat is untested.
+\vfill
+It is an \textbf{incredible threat}: if entry actually happened, IKEA would not
+want to carry it out.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Selten's Chain-Store Game}
+IKEA also has a store in Cincinnati, and Wayfair could expand there next.
+So the entry decision happens \textbf{one city at a time}, with everyone watching
+what happened in the earlier one.
+\bsk
+IKEA makes the argument in CBus:
+\bsk
+\begin{quote}
+\small
+Fighting you costs me \$2 million today. But Cincy is watching. If they see me
+fight, they may stay out, and then I make $\$(0+5)=\$5$ million across the two
+cities. If I accommodate you here, they enter there too, and I make
+$\$(2+2)=\$4$ million. So it \textit{is} in my interest to fight. Stay out.
+\end{quote}
+\vfill
+Sounds right. Does backward induction agree?
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Reply}
+No, and the reason is where backward induction starts.
+\bsk
+\begin{itemize}
+    \item Whatever happens in CBus, Cincy is the \textbf{last} interaction
+    \item Nobody is watching after that, so no reputation is left to build
+    \item So Cincy is just the one-shot entry game, and IKEA accommodates \vspace{0.3in}
+    \item Which means Cincy goes the same way \textit{regardless} of CBus
+    \item So fighting in CBus buys IKEA nothing: $\$(0+2)=\$2$ million against
+      $\$(2+2)=\$4$ million
+\end{itemize}
+\bsk
+Entry happens in both cities. IKEA accommodates both.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What That Tells Us}
+The reputation argument is intuitive and backward induction rejects it.
+\bsk
+\begin{itemize}
+    \item That's not a flaw in the arithmetic. The unraveling is airtight
+    \item The reputation story needs \textbf{uncertainty}: the Cincy entrant must be
+      unsure what kind of opponent IKEA is
+    \item In a perfect-information game, uncertainty is ruled out by definition
+\end{itemize}
+\vfill
+We'll come back to this with better tools. For now, note the limitation.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Backward Induction and IDWDS}
+Backward induction resembles deleting dominated choices at each node.
+\bsk
+Applying IDWDS to the strategic form of a perfect-information game gives profiles
+containing \textbf{at least one} backward-induction solution.
+\bsk
+But that's all you can say in general. The IDWDS output:
+\begin{itemize}
+    \item may also contain profiles that are \textbf{not} backward-induction solutions
+    \item may \textbf{miss} some backward-induction solutions
+\end{itemize}
+\vfill
+So they're related, not the same. Don't use one to compute the other.
+\vspace{-0.4in}
+\end{frame}
+
+% ==============================================================
+% 3.5 TWO-PLAYER GAMES
+% ==============================================================
+
+\begin{frame}[standout]
+Win, Lose, or Draw
+\end{frame}
+
+\begin{frame}{Win-Lose Games}
+Two players, two outcomes: Player 1 wins ($W_1$) or Player 2 wins ($W_2$).
+\bsk
+Player 1 strictly prefers $W_1$; Player 2 strictly prefers $W_2$. Use payoffs
+$(1,0)$ and $(0,1)$.
+\vfill
+\centering
+\textbf{Theorem.} In every finite two-player win-lose game with perfect information,
+\textbf{one of the two players has a winning strategy.}
+\vfill
+\raggedright
+A winning strategy guarantees a win \textit{no matter what the opponent does}.
+\bsk
+Note what it doesn't say: \textit{which} player, or what the strategy is.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Let's Play}
+Two players take turns choosing a number from $\{1,2,\ldots,10\}$.\\
+Running total starts at 0. \textbf{First to reach 100 or more wins.}
+\bsk
+Player 1 moves first.
+\vfill
+\centering
+Volunteer? I'll go second.
+\vfill
+\raggedright
+\vspace{0.6in}
+\end{frame}
+
+\begin{frame}{Why I Was Always Going to Lose That}
+The tree is far too big to draw: 10{,}000 nodes just for the first four moves.
+But we can reason backward anyway.
+\bsk
+Call a total a \textbf{losing position} if whoever has to move from it cannot win.
+\bsk
+\begin{itemize}
+    \item \textbf{89} is a losing position: from 89 you can reach only $90,\ldots,99$,
+      and from any of those I can hit exactly 100 \vspace{0.2in}
+    \item \textbf{78} is the next one down: from 78 you must reach $79,\ldots,88$,
+      and from any of those I can get to 89 \vspace{0.2in}
+    \item Keep going: \ $89,\ 78,\ 67,\ 56,\ 45,\ 34,\ 23,\ 12,\ \mathbf{1}$
+\end{itemize}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Player 1's Winning Strategy}
+\vfill
+\centering
+\large
+Start with \textbf{1}.\\
+\bsk
+Then every turn, choose $\mathbf{11-n}$, where $n$ is what your opponent just chose.
+\vfill
+\normalsize
+\raggedright
+Each pair of moves adds exactly 11, so the total marches $1, 12, 23, \ldots, 89, 100$.
+\bsk
+Notice this is a genuine \textit{strategy}: it says what to do at every position
+Player 1 could face, not just the ones on the winning path.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Adding a Draw}
+Now three outcomes: $W_1$, $W_2$, and a draw $D$, with
+$$W_1\succ_1 D\succ_1 W_2 \qquad\text{and}\qquad W_2\succ_2 D\succ_2 W_1$$
+\bsk
+\textbf{Theorem.} Every such game falls into exactly one of three categories:
+\begin{enumerate}
+    \item Player 1 has a strategy guaranteeing $W_1$
+    \item Player 2 has a strategy guaranteeing $W_2$
+    \item Player 1 can guarantee \textit{at least} a draw, and so can Player 2, so if
+      both play well it's a draw
+\end{enumerate}
+\vfill
+The proof is the same backward-induction argument, with three possible markings
+instead of two.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Which Category?}
+\begin{itemize}
+    \item \textbf{Tic-Tac-Toe:} category 3. Solved: perfect play draws. \vspace{0.25in}
+    \item \textbf{Checkers:} category 3. Solved in 2007, after 18 years of work. \vspace{0.25in}
+    \item \textbf{Chess:} \underline{\hspace{2in}} \vspace{0.25in}
+\end{itemize}
+\vfill
+The theorem says chess is in \textit{one} of the three categories. It does not say
+which, and nobody knows.
+\bsk
+Existence proofs are like that.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% BACK TO THE CENTIPEDE
+% ==============================================================
+
+\begin{frame}{Back to the Centipede}
+Apply backward induction to the game you played:
+\bsk
+\begin{itemize}
+    \item At the \textbf{last} decision, taking beats passing. So take. \vspace{0.2in}
+    \item At the second-to-last, you know the other player will take next, so passing
+      gets you the smaller share. So take. \vspace{0.2in}
+    \item Keep unraveling \ldots \ all the way to the first move. \vspace{0.2in}
+\end{itemize}
+\bsk
+\centering
+\large
+Prediction: the very first player takes immediately.
+\vfill
+\normalsize
+\raggedright
+Our numbers said: \underline{\hspace{2.2in}}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{So Who's Wrong?}
+Three honest possibilities:
+\bsk
+\begin{itemize}
+    \item The \textbf{payoffs} are wrong. Players may care about the other person or
+      about fairness, so the game isn't the one we wrote down \vspace{0.25in}
+    \item The \textbf{reasoning} is wrong. Players may not carry the unraveling through
+      that many steps \vspace{0.25in}
+    \item The \textbf{beliefs} are wrong. I might reason perfectly and still pass if I
+      doubt that \textit{you} will \vspace{0.25in}
+\end{itemize}
+\vfill
+All three are live. We'll get the machinery to separate them later.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% WORKED EXAMPLE
+% ==============================================================
+
+\begin{frame}[standout]
+Let's Work One Out
+\end{frame}
+
+\begin{frame}{Planning Spring Break}
+Ann, Ben, and Cal share a house and settle the trip in turn, each seeing every
+decision made before theirs.
+\bsk
+\centering
+\begin{gametree}[player names={Ann, Ben, Cal}, scale=0.66]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=7.4] {a; b};
+  \branch[player=2, label=135] from (w1) to[v=1.5, h=3.2] {c(2,3,1); d};
+  \branch[player=3, label=45] from (w2) to[v=1.5, h=3.2] {g(0,4,3); h};
+  \branch[player=3, label=180] from (w12) to[v=1.5, h=1.7] {e(1,1,4); f(3,2,2)};
+  \branch[player=1, label=0] from (w22) to[v=1.5, h=1.7] {i(4,0,3); j(2,2,2)};
+\end{gametree}
+\bsk
+\raggedright
+{\footnotesize Payoffs in order: Ann, Ben, Cal.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Planning Spring Break}
+\begin{enumerate}
+    \item How many strategies does each player have? \vspace{0.35in}
+    \item Run backward induction. Where does a player face a tie? \vspace{0.35in}
+    \item Write out \textbf{both} backward-induction solutions, as strategy
+      profiles. \vspace{0.35in}
+    \item What are the two backward-induction outcomes? \vspace{0.35in}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{What Have We Learned, Charlie Brown?}
+\begin{itemize}
+    \item Perfect-information games are drawn as \textbf{rooted trees}; a frame becomes
+      a game once preferences are added
+    \item \textbf{Backward induction} works from the leaves inward; ties give several
+      solutions
+    \item A \textbf{strategy} covers all your decision nodes, even unreachable ones
+    \item Every backward-induction solution is a \textbf{Nash equilibrium}; the extra
+      Nash equilibria typically rest on \textbf{incredible threats}
+    \item In finite two-player win-lose games, \textbf{somebody} has a winning strategy
+\end{itemize}
+\vfill
+Next: what happens when players \textit{don't} see the whole history.
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Reading \& Practice}
+\begin{itemize}
+    \item Bonanno, \textit{Game Theory}, Chapter 3
+    \item Exercises: \S3.7.1 (trees and frames), \S3.7.2 (backward induction),\\
+      \S3.7.3 (strategies), \S3.7.4 (two-player games)
+    \item Exercise 3.8 shows IDWDS missing a backward-induction solution
+    \item Solutions in \S3.8
+\end{itemize}
+\vfill
+\end{frame}
+
+\end{document}
