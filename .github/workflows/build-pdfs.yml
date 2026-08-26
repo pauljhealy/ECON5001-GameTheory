@@ -179,14 +179,20 @@ jobs:
           fi
           cat HTML/topstuff.html > public/index.html
 
-          # Normalize a pdfinfo date to YYYY-MM-DD. Accepts either the
-          # -isodates form ("2026-08-13T01:48:08-04") or the human form
-          # ("Thu Aug 13 05:48:08 2026 UTC"). Prints nothing if unparseable.
+          # Normalize a pdfinfo date to YYYY-MM-DD in the workflow's timezone
+          # (America/New_York, set at job level). Accepts either the -isodates
+          # form ("2026-08-13T01:48:08-04", or UTC as "...Z") or the human form
+          # ("Thu Aug 13 05:48:08 2026 UTC"). Converting rather than truncating
+          # matters: xournalpp stamps ModDate in UTC, so an afternoon class
+          # would otherwise be dated the following day. Prints nothing if
+          # unparseable.
           norm_date() {
+            [ -n "$1" ] || return 0
+            date -d "$1" +%F 2>/dev/null && return 0
+            # Not something date(1) understands -- fall back to the leading
+            # date field if the string at least starts with one.
             case "$1" in
-              "") ;;
               [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]*) printf "%s" "$1" | cut -c1-10 ;;
-              *) date -d "$1" +%F 2>/dev/null || true ;;
             esac
           }
 
@@ -249,15 +255,37 @@ jobs:
               meta="<a href=\"$tex_url\" target=\"_blank\" rel=\"noopener\">Source</a>"
             fi
 
-            # Instructor's in-class annotated PDF, if one has been uploaded to
-            # Annotated/<base>_PJH.pdf. Copy it into public/ and surface a text
-            # link under the lecture, followed by when the annotated file was
-            # last modified -- the PDF's own internal ModDate when the
-            # annotation app stamped one, otherwise the file's commit date.
-            annot_file="Annotated/${base}_PJH.pdf"
-            annot_link=""
-            if [ -f "$annot_file" ]; then
+            # Instructor's in-class annotated slides. A deck often spans more
+            # than one class meeting, so a lecture can have several:
+            #
+            #   Annotated/<base>_PJH.pdf   whole deck covered in one meeting
+            #   Annotated/<base>_PJH1.pdf  first meeting spent on this deck
+            #   Annotated/<base>_PJH2.pdf  second meeting, and so on up to _PJH9
+            #
+            # Every file that exists gets its own dated link under the lecture.
+            # The list below is already in display order: "_PJH.pdf" sorts ahead
+            # of "_PJH1.pdf" because "." < "1", and a single digit keeps 1..9 in
+            # numeric order. Mixing the unnumbered file with numbered ones is
+            # allowed but not expected -- it would just list as an extra entry.
+            #
+            # The links are collected in a scratch file rather than a shell
+            # variable: a multi-line string cannot be written inside a YAML
+            # block scalar without ending the block.
+            annot_list="${RUNNER_TEMP:-/tmp}/annot_lines.html"
+            : > "$annot_list"
+            for annot_file in "Annotated/${base}_PJH.pdf" "Annotated/${base}"_PJH[1-9].pdf; do
+              [ -f "$annot_file" ] || continue
+              annot_name=$(basename "$annot_file")
               cp "$annot_file" public/
+
+              # Part number: "1".."9", or empty for the unnumbered file.
+              part=${annot_name#"${base}_PJH"}
+              part=${part%.pdf}
+              if [ -n "$part" ]; then
+                annot_label="&#x270E; Prof. Healy's Annotated Version (Part $part)"
+              else
+                annot_label="&#x270E; Prof. Healy's Annotated Version"
+              fi
 
               # Read the metadata once. -isodates is preferred; poppler builds
               # that do not support the flag fall back to the human form, and
@@ -269,10 +297,13 @@ jobs:
               annot_created=$(printf "%s\n" "$annot_info" \
                 | awk -F': +' '/^CreationDate:/ {print $2; exit}')
 
+              # Which timestamp is the class meeting? NOT CreationDate: the
+              # annotation app carries that over from the compiled deck, so it
+              # records when latexmk built the slides -- typically the night
+              # before, sometimes days earlier. ModDate is when the annotation
+              # app last wrote the file, which is the class itself. Prefer it.
               annot_updated=""
               if [ -n "$annot_mod" ] && [ "$annot_mod" != "$annot_created" ]; then
-                # The annotation app re-saved the file, so ModDate really is
-                # when the markup was last written. Trust it.
                 annot_updated=$(norm_date "$annot_mod")
               fi
 
@@ -292,17 +323,16 @@ jobs:
 
               annot_date=""
               if [ -n "$annot_updated" ]; then
-                annot_date=" <span class=\"lect-annot-date\">(modified $annot_updated)</span>"
+                annot_date=" <span class=\"lect-annot-date\">(annotated $annot_updated)</span>"
               fi
-              annot_link="<div class=\"lect-annot-line\"><a class=\"lect-annot\" href=\"${base}_PJH.pdf\" target=\"_blank\" rel=\"noopener\">&#x270E; Prof. Healy's Annotated Version</a>${annot_date}</div>"
-            fi
+
+              echo "<div class=\"lect-annot-line\"><a class=\"lect-annot\" href=\"${annot_name}\" target=\"_blank\" rel=\"noopener\">${annot_label}</a>${annot_date}</div>" >> "$annot_list"
+            done
 
             echo "<li>" >> public/index.html
             echo "<a class=\"lect-title\" href=\"$filename\" target=\"_blank\" rel=\"noopener\">$title</a>" >> public/index.html
             echo "<div class=\"lect-meta\">$meta</div>" >> public/index.html
-            if [ -n "$annot_link" ]; then
-              echo "$annot_link" >> public/index.html
-            fi
+            cat "$annot_list" >> public/index.html
             echo "</li>" >> public/index.html
           done
 

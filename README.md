@@ -34,7 +34,7 @@ Source for the ECON 5001 lecture slides and the public download site.
 | `HTML/topstuff.html` | HTML header; the build appends the lecture list and closes the page. |
 | `xgames.sty`, `fikz.sty` | Vendored game-theory typesetting package (see below). |
 | `latexmkrc` | Sets `TZ` to `America/New_York` so Overleaf's UTC builders date the slides correctly. |
-| `Annotated/` | In-class annotated PDFs (`NN_name_PJH.pdf`), published per lecture. |
+| `Annotated/` | In-class annotated PDFs (`NN_name_PJH1.pdf`, `_PJH2.pdf`, ... or `_PJH.pdf`), published per lecture. |
 | `PDFs/` | Compiled slide PDFs, auto-committed by CI (renamed/deleted decks auto-pruned) so they sync via `git pull`. |
 | `scripts/sync-annotated.cmd` | Double-click to pull, commit, and push new annotated PDFs. |
 | `.github/workflows/build-pdfs.yml` | Build + deploy pipeline. |
@@ -113,18 +113,23 @@ prune step drops the old PDF and the new one is indexed on the next build.
 You can post the version of a deck you mark up live during lecture:
 
 1. Download the lecture PDF, annotate it during class.
-2. Save it into `Annotated/` named `NN_name_PJH.pdf` — matching the lecture's
-   source `LectureSlides/NN_name.tex` (e.g. `01_intro.tex` → `01_intro_PJH.pdf`).
-3. Double-click `scripts/sync-annotated.cmd`. It pulls, commits the new PDF, and pushes.
-4. The build copies it to the site and adds a **"✎ Prof. Healy's Annotated
-   Version"** link under that lecture, followed by the date it was last
-   modified. That date is the PDF's own internal `ModDate` when the annotation
-   app stamped one; if `ModDate` still equals `CreationDate` (nothing re-saved
-   the file, so the timestamp is just the LaTeX build time), the build uses the
-   date the annotated PDF was committed instead.
+2. Save it into `Annotated/`, named for the class meeting it came from —
+   `NN_name_PJH1.pdf` for the first meeting spent on `LectureSlides/NN_name.tex`,
+   `_PJH2.pdf` for the second, up to `_PJH9`. If a deck was covered start to
+   finish in one meeting, drop the number: `NN_name_PJH.pdf`.
+3. Double-click `scripts/sync-annotated.cmd`. It pulls, commits the new PDFs, and pushes.
+4. The build copies them to the site and adds one link per part under that
+   lecture — **"✎ Prof. Healy's Annotated Version (Part N)"**, or without the
+   part for the unnumbered file — each followed by `(annotated YYYY-MM-DD)`.
+
+That date is the PDF's internal `ModDate`, i.e. when the annotation app last
+saved it, which is the class meeting. It is **not** `CreationDate`: annotators
+copy that over from the compiled deck, so it records the latexmk build, not the
+lecture. When `ModDate` equals `CreationDate` (nothing re-stamped the file) the
+build falls back to the annotated PDF's commit date.
 
 See `Annotated/README.md` for the full convention. Overwrite an existing
-`_PJH.pdf` to update it; re-run the script to publish the change.
+`_PJHn.pdf` to update it; re-run the script to publish the change.
 
 ## Year-over-year versioning
 

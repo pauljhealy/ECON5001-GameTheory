@@ -2,8 +2,10 @@
 REM ===================================================================
 REM  One-click sync for in-class annotated slides.
 REM
-REM  Drop your annotated PDF(s) into the Annotated\ folder (named
-REM  NN_name_PJH.pdf), then double-click this file. It pulls the latest
+REM  Drop your annotated PDF(s) into the Annotated\ folder, named for the
+REM  class meeting they came from -- NN_name_PJH1.pdf, NN_name_PJH2.pdf, and
+REM  so on, or NN_name_PJH.pdf if one meeting covered the whole deck -- then
+REM  double-click this file. It pulls the latest
 REM  from GitHub, stages/commits anything new under Annotated\, and
 REM  pushes. The push triggers the site rebuild.
 REM
