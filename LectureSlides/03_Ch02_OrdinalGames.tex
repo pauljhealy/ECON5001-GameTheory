@@ -841,19 +841,82 @@ Think of ``dominates'' as ``is better than.''
 ``Dominant'' needs no second strategy named: it means \textit{better than all of them}.
 \bsk
 \begin{itemize}
-    \item $a$ is a \textbf{strictly dominant strategy} if $a$ strictly dominates
+    \item $s_i$ is a \textbf{strictly dominant strategy} if $s_i$ strictly dominates
       \textit{every} other strategy of player $i$
     \bsk
-    \item $a$ is a \textbf{weakly dominant strategy} if, for every other strategy $x$,
-      either $a$ weakly dominates $x$ or $a$ is equivalent to $x$
+    \item $s_i$ is a \textbf{weakly dominant strategy} if, for every other strategy $s_i'$,
+      either $s_i$ weakly dominates $s_i$ or $s_i$ is equivalent to $s_i'$
 \end{itemize}
 \vfill
-Consequences:
+Two consequences, one at a time:
 \begin{itemize}
-    \item There is at most \textbf{one} strictly dominant strategy. Why? \vspace{0.35in}
+    \item There is at most \textbf{one} strictly dominant strategy
     \item There can be \textbf{several} weakly dominant strategies, but any two of
-      them must be equivalent.
+      them must be equivalent
 \end{itemize}
+\vspace{0.2in}
+\end{frame}
+
+\begin{frame}{Only One Can Be Strictly Dominant}
+Player 1's payoffs only:
+\bsk
+\centering
+\begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,\cdot & 3,\cdot & 5,\cdot \\ 2,\cdot & 1,\cdot & 4,\cdot \\ 1,\cdot & 1,\cdot & 2,\cdot}
+\end{matrixgame}
+\bsk
+\raggedright
+$T$ beats $M$ in every column, and beats $B$ in every column. So $T$ is strictly dominant.
+\end{frame}
+
+\begin{frame}{Only One Can Be Strictly Dominant}
+It cannot be done, and the reason is short.
+\bsk
+Suppose $a$ and $b$ are both strictly dominant, and $a\ne b$.
+\begin{itemize}
+    \item $a$ strictly dominant $\Rightarrow$ \ $\pi_i(a,s_{-i})>\pi_i(b,s_{-i})$ \ everywhere
+    \item $b$ strictly dominant $\Rightarrow$ \ $\pi_i(b,s_{-i})>\pi_i(a,s_{-i})$ \ everywhere
+\end{itemize}
+\bsk
+Pick any $s_{-i}$. Then $\pi_i(a,s_{-i})>\pi_i(b,s_{-i})>\pi_i(a,s_{-i})$
+\vfill
+That would be a violation of transitivity, but payoffs/utilities (numbers) can't violate transitivity!!
+\vspace{0.7in}
+\end{frame}
+
+\begin{frame}{Several Can Be Weakly Dominant}
+\centering
+\begin{matrixgame}[top={L, R}, left={T, M, B}, player names={Player 1, Player 2}]
+  \payoffmatrix{3,\cdot & 2,\cdot \\ 3,\cdot & 2,\cdot \\ 1,\cdot & 2,\cdot}
+\end{matrixgame}
+\bsk
+\raggedright
+\begin{itemize}
+    \item $T$ vs $B$: \ $3>1$ and $2=2$, so $T$ \textbf{weakly dominates} $B$
+    \item $M$ vs $B$: \ same story
+    \item $T$ vs $M$: \ identical in both columns, so they are \textbf{equivalent}
+\end{itemize}
+\bsk
+Check the definition: for every other strategy, $T$ either weakly dominates it or is
+equivalent to it. Same for $M$.
+\vfill
+So $T$ and $M$ are \textit{both} weakly dominant. \vspace{0.4in}
+\end{frame}
+
+\begin{frame}{But They Must Be Equivalent}
+Notice that $T$ and $M$ in that game were the same row twice. That is not a coincidence.
+\bsk
+Suppose $a$ and $b$ are both weakly dominant.
+\begin{itemize}
+    \item Then $a$ weakly dominates $b$, so $\pi_i(a,s_{-i})\geq \pi_i(b,s_{-i})$ for
+      \textit{every} $s_{-i}$
+    \item And $b$ weakly dominates $a$, so $\pi_i(b,s_{-i})\ge\pi_i(a,s_{-i})$ for
+      \textit{every} $s_{-i}$
+\end{itemize}
+\bsk
+So the only way to have two weakly dominant strategies is for them to be equivalent:\\
+$$\pi_i(a,s_{-i})=\pi_i(b,s_{-i})\quad \forall s_{-i}$$
+\vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{Dominant-Strategy Profiles}
@@ -864,7 +927,7 @@ Let $s=(s_1,\ldots,s_n)$ be a strategy profile.
       for \textit{every} player $i$
     \bsk
     \item $s$ is a \textbf{weak dominant-strategy profile} if $s_i$ is weakly dominant for
-      every player $i$, and for at least one player $j$, $s_j$ is not strictly dominant
+      every player $i$, and for at least one player $j$, $s_j$ is not \textit{strictly} dominant
 \end{itemize}
 \vfill
 Unqualified ``dominant-strategy profile'' defaults to \textbf{weak}.
@@ -926,24 +989,6 @@ If everyone were selfish and greedy, Steal is weakly dominant, so we'd expect
 100\% Steal.
 \bsk
 We didn't get that. So which assumption was wrong? \vspace{0.5in}
-\end{frame}
-
-\begin{frame}{Let's Watch}
-\vfill
-\centering
-\large
-\textbf{Golden Balls: Split or Steal}
-\bsk
-\normalsize
-\url{https://www.youtube.com/watch?v=tBtr8-VMj0E}
-\vfill
-\raggedright
-While you watch, ask yourself:
-\begin{itemize}
-    \item Which game are \textit{they} playing?
-    \item What does the talking do, if agreements aren't binding?
-\end{itemize}
-\vspace{-0.3in}
 \end{frame}
 
 % ==============================================================
@@ -1054,8 +1099,8 @@ Couldn't they just agree?
 Let's Work One Out
 \end{frame}
 
-\begin{frame}{Three Carts at the North Market}
-Ann, Ben, and Cal each run a cart. Every Saturday each one independently picks
+\begin{frame}{Three Booths at the North Market}
+Ann, Ben, and Cal each run a booth. Every Saturday each one independently picks
 a special: the \textbf{Classic} or something \textbf{New}.
 \bsk
 \centering
@@ -1071,7 +1116,7 @@ Ann, Ben, Cal.}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Three Carts at the North Market}
+\begin{frame}{Three Booths at the North Market}
 \begin{enumerate}
     \item Does Ann have a dominant strategy? Strict or weak? \vspace{0.3in}
     \item Does Ben? \vspace{0.3in}
