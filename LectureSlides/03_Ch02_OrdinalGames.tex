@@ -2,7 +2,7 @@
 
 % Title page info
 \title[Ordinal Games]{Chapter 2 (Part 1): Ordinal Games in Strategic Form}
-\author[ECON 5001]{ECON 5001\\Prof. Healy\\Based on: \textit{Game Theory} by Giacomo Bonanno} \color{metrop}
+\author[ECON 5001]{ECON 5001\\Prof. Paul J. Healy\\Based on: \textit{Game Theory} by Giacomo Bonanno} \color{metrop}
 \institute[OSU]{}
 \date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
 
@@ -157,11 +157,11 @@ No talking, no signaling. Choose what you'd actually choose.
 \bsk
 
 \raggedright
-Sarah can't control Steven. But she can consider both cases.
+Sarah can't control Steven. But she can consider both cases. \textbf{Contingent thinking}:
 \begin{itemize}
-    \item Suppose Steven picks \textbf{Steal}: \vspace{0.45in}
-    \item Suppose Steven picks \textbf{Split}: \vspace{0.45in}
-    \item Therefore Sarah should \underline{\hspace{1.6in}}
+    \item Contingency \#1: Steven picks \textbf{Steal}: \vspace{0.45in}
+    \item Contingency \#2: Steven picks \textbf{Split}: \vspace{0.45in}
+    \item The strategy that's best in \textit{every} contingency is: \underline{\hspace{1.6in}}
 \end{itemize}
 \end{frame}
 
@@ -177,18 +177,30 @@ The argument snuck in an assumption.
 \end{frame}
 
 \begin{frame}{What's Wrong With That Argument?}
-We assumed Sarah is \textbf{selfish and greedy}: she cares only about her own money, and more is better.
-\bsk
-That might be false! Sarah might:
+We assumed Sarah is \textbf{selfish and greedy}
 \begin{itemize}
-    \item value \textbf{fairness}: an even split beats grabbing everything
-    \item feel \textbf{benevolence}: if she gets nothing anyway, she'd rather Steven get something
-    \item feel \textbf{spite}: she'd rather Steven get nothing
+    \item \textbf{Selfish:} Her objective only involves her own payoff, not his
+    \item \textbf{Greedy:} ``More is better.'' Her objective is to maximize the thing she cares about
 \end{itemize}
 \bsk
-Under some of these, the ``obvious'' answer flips completely.
+That might be false! Sarah might want to:
+\begin{tabular}{|l|c|c|}
+     \hline
+     \textbf{Motive} & \textbf{Selfish?} & \textbf{Greedy?}  \\
+     \hline
+     Maximize sum of payoffs (utilitarian) & & \\
+     \hline
+     Maximize his payoff (benevolent) & & \\
+     \hline
+     Minimize the difference (fairness) & & \\
+     \hline
+     Minimize his payoff (spite) & & \\
+     \hline
+\end{tabular}
+\bsk
+Under some of these, the ``rational'' recommendation flips completely.
 \vfill
-\textbf{Moral:} the table above is not yet enough to say what's rational.
+\textbf{Moral:} We can't say what's ``rational'' without knowing the person's objectives
 \vspace{-0.4in}
 \end{frame}
 
@@ -199,36 +211,36 @@ Under some of these, the ``obvious'' answer flips completely.
 \begin{frame}{Frames vs.\ Games}
 What the table gave us:
 \begin{itemize}
-    \item the players
-    \item what each can do
-    \item what \textbf{outcome} results from each combination
+    \item the players ($i\in \{1,2\}$)
+    \item what each can do ($s_i\in \{C,D\}$)
+    \item outcome function: \textbf{outcome} for each strategy profile (e.g., $(D,C)\mapsto($\$100k,\$0k$)$)
 \end{itemize}
 \bsk
 What the table did \textit{not} give us:
 \begin{itemize}
-    \item how each player \textbf{ranks} those outcomes
+    \item how each player \textbf{ranks} those outcomes\\
+    The player's \textbf{objective} or \textbf{preferences}
 \end{itemize}
 \vfill
 \centering
 \large
-Table alone $=$ \textbf{game-frame}\\
+Table alone $=$ \textbf{game-frame} (a.k.a. \textbf{game form})\\
 \bsk
 Frame $+$ rankings $=$ \textbf{game}
 \vfill
 \end{frame}
 
-\begin{frame}{Our Own Example: Sunday Morning}
-Long Saturday night. Alex and Blair both forgot to charge their phones, and both
-need a serious breakfast.\\
-No way to message. Each just walks to one of the two places they always go.
+\begin{frame}{New Example: Meet-Cute Sunday Morning}
+Alex and Blair meet at a Saturday night party and hit it off. They agree to meet at 11am for a big breakfast, but then both go home and fall asleep without charging their phones.\\
+10:50am: Both wake up, and remember that they talked about (B) Buckeye Donuts, and (H) HangOverEasy. But no way to message and it's time to go! What to do?
 \bsk
 \begin{itemize}
-    \item Alex chooses: Buckeye Donuts ($B$) or HangOverEasy ($H$)
+    \item Alex chooses: Buckeye Donuts ($B$) or HangOverEasy ($H$).
     \item Blair chooses: Buckeye Donuts ($B$) or HangOverEasy ($H$)
-    \item They choose simultaneously (neither sees the other's choice)
+    \item They choose ``simultaneously'' (neither sees the other's choice)
 \end{itemize}
 \bsk
-Four things can happen:
+Four \textbf{outcomes} can happen:
 \begin{itemize}
     \item $o_1$: both at Buckeye Donuts
     \item $o_2$: Alex at BuckyDs, Blair at HangOE (they eat alone)
@@ -243,21 +255,15 @@ Four things can happen:
     \item Strategies: \hspace{0.28in} $S_1=\{B,H\}$, \hspace{0.1in} $S_2=\{B,H\}$
     \item Profiles: \hspace{0.45in} $S=S_1\times S_2=\{(B,B),(B,H),(H,B),(H,H)\}$
     \item Outcomes: \hspace{0.29in} $O=\{o_1,o_2,o_3,o_4\}$
-    \item Outcome function: $f:S\to O$
+    \item Outcome function: $f:S\to O$\\
+    $(B,B)\mapsto o_1$, $(B,H)\mapsto o_2$, $(H,B)\mapsto o_3$, $(H,H)\mapsto o_4$\\
+    Matrix representation:
 \end{itemize}
 \bsk
 \centering
-\begin{tabular}{c|c|c|c|c|}
-\cline{2-5}
-$s$: & $(B,B)$ & $(B,H)$ & $(H,B)$ & $(H,H)$ \\
-\cline{2-5}
-$f(s)$: & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
-\cline{2-5}
-\end{tabular}
-\vfill
-\raggedright
-Notice: \textbf{nothing here says what anybody wants.}
-\vspace{-0.4in}
+\begin{matrixgame}[top left={B, H}, w=1.2]
+    \payoffmatrix{o_1 & o_2 \\ o_3 & o_4}
+\end{matrixgame}
 \end{frame}
 
 \begin{frame}{Definition: Game-Frame in Strategic Form}
@@ -320,15 +326,17 @@ For each player $i$ we write down a single relation on $O$:
 $o \succsim_i o'$
 \bsk
 \normalsize
-``Player $i$ considers $o$ to be \textbf{at least as good as} $o'$''
+``Player $i$ considers $o$ to be \textbf{at least as good as} $o'$''\\
+or: ``Player $i$ \textbf{weakly prefers} $o$ to $o'$''
 \bsk
 \raggedright
 \vfill
 This one relation is enough. From it we \textit{define} the other two:
 \bsk
 \begin{itemize}
-    \item \textbf{Strict preference:} $o\succ_i o'$ \ if \ $o\succsim_i o'$ \ and \ \textit{not} $o'\succsim_i o$
-    \item \textbf{Indifference:} \hspace{0.16in} $o\sim_i o'$ \ if \ $o\succsim_i o'$ \ and \ $o'\succsim_i o$
+    \item \textbf{Weak preference:} $o \succsim_i o':\quad$ $o$ is \textit{at least as good as} $o'$
+    \item \textbf{Strict preference:} $o\succ_i o':\quad$ $o$ is \textit{strictly better than} $o'$
+    \item \textbf{Indifference:} \hspace{0.16in} $o\sim_i o':\quad$ $o$ and $o'$ are \textit{equivalent}; I'm fine with either
 \end{itemize}
 \end{frame}
 
@@ -349,23 +357,27 @@ $x= y$ & $o\sim_i o'$ & just as good as \\
 \end{tabular}
 \bsk
 \raggedright
-And the definitions are the same moves you'd make in grade school:
+We can derive $>$ and $=$ from $\geq$:
 \begin{itemize}
     \item $x>y$ \ means \ $x\ge y$ \ and \ \textit{not} $y\ge x$
     \item $x=y$ \ means \ $x\ge y$ \ and \ $y\ge x$
 \end{itemize}
-\vspace{-0.3in}
+Similarly, we can derive $\succ_i$ and $\sim_i$ from $\succsim_i$:
+\begin{itemize}
+    \item $x\succ_i y$ \ means \ $x\succsim_i y$ \ and \ \textit{not} $y\succsim_i x$
+    \item $x\sim_i y$ \ means \ $x\succsim_i y$ \ and \ $y\succsim_i x$
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Where the Analogy Breaks}
 With numbers, ``at least as big'' comes for free:
 \begin{itemize}
     \item any two numbers \textit{can} be compared
-    \item the comparisons \textit{never} cycle
+    \item the comparisons \textit{never} cycle (can't have $3>2>1>3$)
 \end{itemize}
 \bsk
 With outcomes, neither is automatic. ``Both at Buckeye Donuts'' and
-``Sarah gets \$100,000'' are not on a number line.
+``Sarah gets \$100,000, Steve gets \$0'' are not on a number line.
 \vfill
 So the two properties we get for free with $\ge$ become
 \textbf{assumptions} about $\succsim_i$.
@@ -383,7 +395,7 @@ That's next.
 $o\succsim_i o'$ & $i$ finds $o$ at least as good as $o'$ \\
  & (better than, \textit{or} just as good as) \\
 \hline
-$o\succ_i o'$ & $i$ finds $o$ better than $o'$; $i$ \textit{prefers} $o$ to $o'$ \\
+$o\succ_i o'$ & $i$ finds $o$ better than $o'$; $i$ \textit{strictly prefers} $o$ to $o'$ \\
 \hline
 $o\sim_i o'$ & $i$ finds $o$ just as good as $o'$; $i$ is \textit{indifferent} \\
 \hline
@@ -394,7 +406,7 @@ The subscript $i$ matters: preferences belong to \textbf{a person}.
 \bsk
 Let $C$ be dinner at Cazuela's and $Y$ be dinner at Yoshi Sushi. Then
 $$C\succ_{\text{Alice}} Y \quad\text{but}\quad C\sim_{\text{Bob}} Y$$
-is perfectly consistent: Alice prefers Cazuela's, Bob can't tell the difference.
+is perfectly consistent: Alice prefers Cazuela's, Bob truly doesn't care.
 \vfill
 Chains are read left to right, best to worst:
 $$o_3\succ o_1\succ o_2\sim o_4$$
@@ -403,16 +415,19 @@ $$o_3\succ o_1\succ o_2\sim o_4$$
 
 \begin{frame}{Two Assumptions We Will Always Make}
 \textbf{1. Completeness.} For any two outcomes $o$ and $o'$:
-$$o\succsim_i o' \quad\text{or}\quad o'\succsim_i o \quad\text{(or both)}$$
+$$\text{either}\quad o\succsim_i o' \quad\text{or}\quad o'\succsim_i o \quad\text{(or both)}$$
 \begin{itemize}
-    \item i.e., the player is never unable to compare
-    \item ``I don't know'' and ``I don't care'' are different! \vspace{0.4in}
+    \item i.e., the player is always able to make a choice
+    \item ``I don't care'' $\mapsto$ indifference
+    \item ``I don't know'' $\mapsto$ violation of completeness 
+    \vspace{0.2in}
 \end{itemize}
 \bsk
 \textbf{2. Transitivity.} For any three outcomes:
 $$\text{if } o_1\succsim_i o_2 \ \text{ and } \ o_2\succsim_i o_3 \ \text{ then } \ o_1\succsim_i o_3$$
 \begin{itemize}
-    \item i.e., the ranking doesn't cycle \vspace{0.4in}
+    \item The ranking doesn't cycle
+    \item Violation: $o_1 \succsim_i o_2 \succsim_i o_3 \succsim_i o_1$
 \end{itemize}
 \end{frame}
 
@@ -422,17 +437,15 @@ Suppose your preferences \textit{cycle}: \ $x\succ y$, \ $y\succ z$, \ but \ $z\
 You own $z$. I own $x$ and $y$.
 \bsk
 \begin{itemize}
-    \item You prefer $y$ to $z$, so you'd pay me a penny to trade $z$ for $y$ \vspace{0.35in}
-    \item You prefer $x$ to $y$, so you'd pay me a penny to trade $y$ for $x$ \vspace{0.35in}
-    \item You prefer $z$ to $x$, so you'd pay me a penny to trade $x$ for $z$ \vspace{0.35in}
+    \item ``Pay me a dollar and I'll give you $y$ for $z$'' \vspace{0.35in}
+    \item ``Pay me a dollar and I'll give you $x$ for $y$'' \vspace{0.35in}
+    \item ``Pay me a dollar and I'll give you $z$ for $x$'' \vspace{0.35in}
 \end{itemize}
-Now you're back where you started, three cents poorer. Repeat forever.
-\vfill
-{\scriptsize This ``money pump'' argument is not in the text, but is standard.}
+Now you're back where you started, three dollars poorer. Repeat forever. ``Money pump.''
 \end{frame}
 
 \begin{frame}{Transitivity Buys Us a Lot}
-If $\succsim_i$ is complete and transitive, then $\succ_i$ and $\sim_i$ inherit good behavior:
+If $\succsim_i$ is complete and transitive, then $\succ_i$ and $\sim_i$ will be transitive as well:
 \bsk
 \begin{itemize}
     \item if $o_1\sim o_2$ and $o_2\sim o_3$ then $o_1\sim o_3$
@@ -452,7 +465,7 @@ $$o_3\ \succ\ o_5\sim o_1\ \succ\ o_4\ \succ\ o_2$$
 \bsk
 \textbf{Way 1: chain notation.} Exactly what's written above.
 \bsk
-\textbf{Way 2: a list, best on top.} Ties share a row.
+\textbf{Way 2: a vertical list, best on top.} Ties share a row.
 \bsk
 \centering
 \begin{tabular}{rl}
@@ -523,7 +536,7 @@ This is what ``\textbf{ordinal}'' means: \textit{only the order carries informat
 \vfill
 \textbf{Consequence: utility cannot be compared across people.}
 \bsk
-Alice's utility for Massey's Columbus-style pizza is $5$. Bob's is $4$.
+Alice's utility for Massey's pizza is $5$. Bob's is $4$.
 \begin{itemize}
     \item Does Alice like Massey's more than Bob does? \hspace{0.2in} \textbf{No idea.}
     \item Bob could have written $400$ instead of $4$ and said the same thing
@@ -597,9 +610,9 @@ Then define player $i$'s \textbf{payoff function} $\pi_i:S\to\RR$ by
 $$\pi_i(s)\ =\ U_i\big(f(s)\big)$$
 \bsk
 \begin{itemize}
-    \item $f(s)$: the outcome that profile $s$ produces
+    \item $f(s)$: the outcome that strategy profile $s$ produces
     \item $U_i(\cdot)$: how much $i$ likes that outcome
-    \item $\pi_i(s)$: the two composed (utility \textit{as a function of strategies})
+    \item $\pi_i(s)=U_i(f(s))$: the two composed (utility \textit{as a function of strategies})
 \end{itemize}
 \vfill
 The triple $\langle I,(S_1,\ldots,S_n),(\pi_1,\ldots,\pi_n)\rangle$ is the
@@ -623,23 +636,30 @@ The triple $\langle I,(S_1,\ldots,S_n),(\pi_1,\ldots,\pi_n)\rangle$ is the
 \bsk
 \raggedright
 \vfill
-Everything from here on is written in terms of $\pi_i$.\\
-But remember what's underneath it.
+Everything from here on is written in terms of $\pi_i$\\
+Usually we'll skip the physical outcomes.\\
+But remember that they're there! Under the surface.
 \vspace{-0.4in}
 \end{frame}
 
 \begin{frame}{Sunday Morning: Three Different Games, One Frame}
-\textbf{Story A.} Both would rather be together; Alex wants donuts, Blair wants
+\textbf{Story A.} Both want to eat together; Alex wants donuts, Blair wants
 chicken \& waffles.
-\bsk
 \begin{itemize}
-    \item Alex: $o_1\succ_1 o_4\succ_1 o_2\sim_1 o_3$
-    \item Blair: $o_4\succ_2 o_1\succ_2 o_2\sim_2 o_3$
+    \item $o_1$: both at Buckeye Donuts
+    \item $o_2$: Alex at BuckyDs, Blair at HangOE (they eat alone)
+    \item $o_3$: Alex at HangOE, Blair at BuckyDs (they eat alone)
+    \item $o_4$: both at HangOverEasy
+\end{itemize}
+\begin{itemize}
+    \item Alex ($i=1$): $o_1\succ_1 o_4\succ_1 o_2\succ_1 o_3$
+    \item Blair ($i=2$): $o_4\succ_2 o_1\succ_2 o_3\succ_2 o_2$
 \end{itemize}
 \bsk
+An ordinal game:\\
 \centering
 \begin{matrixgame}[top={BuckyDs, HangOE}, left={BuckyDs, HangOE}, player names={Alex, Blair}]
-  \payoffmatrix{3,2 & 1,1 \\ 1,1 & 2,3}
+  \payoffmatrix{4,3 & 2,1 \\ 1,2 & 3,4}
 \end{matrixgame}
 \vfill
 \end{frame}
@@ -679,6 +699,7 @@ Here the answer feels obvious. Why? \vspace{0.5in}
 \end{frame}
 
 \begin{frame}{Back to Golden Balls}
+Back to Golden Balls\\
 Suppose \textbf{both} are selfish and greedy:
 \begin{itemize}
     \item Sarah: $o_3\succ_1 o_1\succ_1 o_2\sim_1 o_4$
@@ -740,7 +761,7 @@ Dominance
 \begin{frame}{The Idea}
 Fix one player. Compare two of \textit{their own} strategies, $a$ and $b$.
 \bsk
-Ask: how do $a$ and $b$ compare \textbf{in every situation they might face}?
+Ask: how do $a$ and $b$ compare \textbf{in every contingency they might face}?
 \bsk
 \begin{itemize}
     \item If $a$ always beats $b$: \hspace{0.42in} $a$ \textbf{strictly dominates} $b$
@@ -748,7 +769,7 @@ Ask: how do $a$ and $b$ compare \textbf{in every situation they might face}?
     \item If they always tie: \hspace{0.5in} $a$ and $b$ are \textbf{equivalent}
 \end{itemize}
 \vfill
-``Situation'' $=$ a choice of strategies by \textit{everyone else}.
+``contingency'' $=$ a choice of strategies by \textit{everyone else}.
 \vspace{-0.4in}
 \end{frame}
 
@@ -761,7 +782,7 @@ so that $s=(s_i,\ s_{-i})$.
 \bsk
 \begin{itemize}
     \item $S_{-i}$ is the set of all such sub-profiles: $S_{-i}=\times_{j\ne i}S_j$
-    \item $\pi_i(a,s_{-i})$ means: $i$ plays $a$, everyone else plays $s_{-i}$
+    \item $\pi_i(s_i,s_{-i})$ means: $i$ plays $s_i$, everyone else plays $s_{-i}$
 \end{itemize}
 \vfill
 Example: $S_1=\{a,b,c\}$, $S_2=\{d,e\}$, $S_3=\{f,g\}$, and $s=(b,d,g)$.
@@ -770,6 +791,7 @@ Then $s_{-2}=$ \underline{\hspace{1.2in}} \hspace{0.3in}\\and $(e,s_{-2})=$ \und
 \end{frame}
 
 \begin{frame}{An Example (Player 1's Payoffs Only)}
+Player 1's utilities/payoffs:
 \centering
 \begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}]
   \payoffmatrix{4,\cdot & 3,\cdot & 5,\cdot \\ 2,\cdot & 1,\cdot & 4,\cdot \\ 4,\cdot & 1,\cdot & 5,\cdot}
@@ -833,27 +855,91 @@ From here on, ``$a$ weakly dominates $b$'' means
     \item ``$x$ is dominated by $y$'' \hspace{0.05in} $\rightsquigarrow$ \hspace{0.1in} fine
 \end{itemize}
 \bsk
-Think of ``dominates'' as ``is better than.''
+Think of ``dominates'' as ``is better than in every contingency.''
 \vspace{-0.4in}
 \end{frame}
 
 \begin{frame}{Dominant $=$ Best}
-``Dominant'' needs no second strategy named: it means \textit{better than all of them}.
+``Dominant'': \textit{dominates every other strategy}.
 \bsk
 \begin{itemize}
-    \item $a$ is a \textbf{strictly dominant strategy} if $a$ strictly dominates
+    \item $s_i$ is a \textbf{strictly dominant strategy} for $i$ if $s_i$ strictly dominates
       \textit{every} other strategy of player $i$
     \bsk
-    \item $a$ is a \textbf{weakly dominant strategy} if, for every other strategy $x$,
-      either $a$ weakly dominates $x$ or $a$ is equivalent to $x$
+    \item $s_i$ is a \textbf{weakly dominant strategy} if, for every other strategy $s_i'$,
+      either $s_i$ weakly dominates $s_i'$ or $s_i$ is equivalent to $s_i'$
 \end{itemize}
 \vfill
 Consequences:
 \begin{itemize}
-    \item There is at most \textbf{one} strictly dominant strategy. Why? \vspace{0.35in}
+    \item There is at most \textbf{one} strictly dominant strategy.
+    \vspace{0.35in}
     \item There can be \textbf{several} weakly dominant strategies, but any two of
       them must be equivalent.
 \end{itemize}
+\vspace{0.2in}
+\end{frame}
+
+\begin{frame}{Only One Can Be Strictly Dominant}
+Player 1's payoffs only:
+\bsk
+\centering
+\begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,\cdot & 3,\cdot & 5,\cdot \\ 2,\cdot & 1,\cdot & 4,\cdot \\ 1,\cdot & 1,\cdot & 2,\cdot}
+\end{matrixgame}
+\bsk
+\raggedright
+$T$ beats $M$ in every column, and beats $B$ in every column. So $T$ is strictly dominant.
+\end{frame}
+
+\begin{frame}{Only One Can Be Strictly Dominant}
+It cannot be done, and the reason is short.
+\bsk
+Suppose $a$ and $b$ are both strictly dominant, and $a\ne b$.
+\begin{itemize}
+    \item $a$ strictly dominant $\Rightarrow$ \ $\pi_i(a,s_{-i})>\pi_i(b,s_{-i})$ \ everywhere
+    \item $b$ strictly dominant $\Rightarrow$ \ $\pi_i(b,s_{-i})>\pi_i(a,s_{-i})$ \ everywhere
+\end{itemize}
+\bsk
+Pick any $s_{-i}$. Then $\pi_i(a,s_{-i})>\pi_i(b,s_{-i})>\pi_i(a,s_{-i})$
+\vfill
+That would be a violation of transitivity, but payoffs/utilities (numbers) can't violate transitivity!!
+\vspace{0.7in}
+\end{frame}
+
+\begin{frame}{Several Can Be Weakly Dominant}
+\centering
+\begin{matrixgame}[top={L, R}, left={T, M, B}, player names={Player 1, Player 2}]
+  \payoffmatrix{3,\cdot & 2,\cdot \\ 3,\cdot & 2,\cdot \\ 1,\cdot & 2,\cdot}
+\end{matrixgame}
+\bsk
+\raggedright
+\begin{itemize}
+    \item $T$ vs $B$: \ $3>1$ and $2=2$, so $T$ \textbf{weakly dominates} $B$
+    \item $M$ vs $B$: \ same story
+    \item $T$ vs $M$: \ identical in both columns, so they are \textbf{equivalent}
+\end{itemize}
+\bsk
+Check the definition: for every other strategy, $T$ either weakly dominates it or is
+equivalent to it. Same for $M$.
+\vfill
+So $T$ and $M$ are \textit{both} weakly dominant. \vspace{0.4in}
+\end{frame}
+
+\begin{frame}{But They Must Be Equivalent}
+Notice that $T$ and $M$ in that game were the same row twice. That is not a coincidence.
+\bsk
+Suppose $a$ and $b$ are both weakly dominant.
+\begin{itemize}
+    \item Then $a$ weakly dominates $b$, so $\pi_i(a,s_{-i})\geq \pi_i(b,s_{-i})$ for
+      \textit{every} $s_{-i}$
+    \item And $b$ weakly dominates $a$, so $\pi_i(b,s_{-i})\ge\pi_i(a,s_{-i})$ for
+      \textit{every} $s_{-i}$
+\end{itemize}
+\bsk
+So the only way to have two weakly dominant strategies is for them to be equivalent:\\
+$$\pi_i(a,s_{-i})=\pi_i(b,s_{-i})\quad \forall s_{-i}$$
+\vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{Dominant-Strategy Profiles}
@@ -864,7 +950,7 @@ Let $s=(s_1,\ldots,s_n)$ be a strategy profile.
       for \textit{every} player $i$
     \bsk
     \item $s$ is a \textbf{weak dominant-strategy profile} if $s_i$ is weakly dominant for
-      every player $i$, and for at least one player $j$, $s_j$ is not strictly dominant
+      every player $i$, and for at least one player $j$, $s_j$ is not \textit{strictly} dominant
 \end{itemize}
 \vfill
 Unqualified ``dominant-strategy profile'' defaults to \textbf{weak}.
@@ -926,24 +1012,6 @@ If everyone were selfish and greedy, Steal is weakly dominant, so we'd expect
 100\% Steal.
 \bsk
 We didn't get that. So which assumption was wrong? \vspace{0.5in}
-\end{frame}
-
-\begin{frame}{Let's Watch}
-\vfill
-\centering
-\large
-\textbf{Golden Balls: Split or Steal}
-\bsk
-\normalsize
-\url{https://www.youtube.com/watch?v=tBtr8-VMj0E}
-\vfill
-\raggedright
-While you watch, ask yourself:
-\begin{itemize}
-    \item Which game are \textit{they} playing?
-    \item What does the talking do, if agreements aren't binding?
-\end{itemize}
-\vspace{-0.3in}
 \end{frame}
 
 % ==============================================================
@@ -1054,8 +1122,8 @@ Couldn't they just agree?
 Let's Work One Out
 \end{frame}
 
-\begin{frame}{Three Carts at the North Market}
-Ann, Ben, and Cal each run a cart. Every Saturday each one independently picks
+\begin{frame}{Three Booths at the North Market}
+Ann, Ben, and Cal each run a booth. Every Saturday each one independently picks
 a special: the \textbf{Classic} or something \textbf{New}.
 \bsk
 \centering
@@ -1071,7 +1139,7 @@ Ann, Ben, Cal.}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Three Carts at the North Market}
+\begin{frame}{Three Booths at the North Market}
 \begin{enumerate}
     \item Does Ann have a dominant strategy? Strict or weak? \vspace{0.3in}
     \item Does Ben? \vspace{0.3in}
@@ -1087,7 +1155,7 @@ Ann, Ben, Cal.}
     \item Preferences are a complete, transitive relation $\succsim_i$ on outcomes
     \item An \textbf{ordinal utility function} represents $\succsim_i$; the numbers are arbitrary
     \item Frame $+$ preferences $=$ \textbf{game}; composing gives payoffs $\pi_i=U_i\circ f$
-    \item \textbf{Dominance} compares two strategies of one player across all situations
+    \item \textbf{Dominance} compares two strategies of one player across all contingencies
     \item A dominant strategy is best against everything
 \end{itemize}
 \vfill
