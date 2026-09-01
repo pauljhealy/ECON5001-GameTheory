@@ -217,18 +217,17 @@ Frame $+$ rankings $=$ \textbf{game}
 \vfill
 \end{frame}
 
-\begin{frame}{Our Own Example: Sunday Morning}
-Long Saturday night. Alex and Blair both forgot to charge their phones, and both
-need a serious breakfast.\\
-No way to message. Each just walks to one of the two places they always go.
+\begin{frame}{New Example: Meet-Cute Sunday Morning}
+Alex and Blair meet at a Saturday night party and hit it off. They agree to meet at 11am for a big breakfast, but then both go home and fall asleep without charging their phones.\\
+10:50am: Both wake up, and remember that they talked about (B) Buckeye Donuts, and (H) HangOverEasy. But no way to message and it's time to go! What to do?
 \bsk
 \begin{itemize}
-    \item Alex chooses: Buckeye Donuts ($B$) or HangOverEasy ($H$)
+    \item Alex chooses: Buckeye Donuts ($B$) or HangOverEasy ($H$).
     \item Blair chooses: Buckeye Donuts ($B$) or HangOverEasy ($H$)
-    \item They choose simultaneously (neither sees the other's choice)
+    \item They choose ``simultaneously'' (neither sees the other's choice)
 \end{itemize}
 \bsk
-Four things can happen:
+Four \textbf{outcomes} can happen:
 \begin{itemize}
     \item $o_1$: both at Buckeye Donuts
     \item $o_2$: Alex at BuckyDs, Blair at HangOE (they eat alone)
@@ -243,21 +242,15 @@ Four things can happen:
     \item Strategies: \hspace{0.28in} $S_1=\{B,H\}$, \hspace{0.1in} $S_2=\{B,H\}$
     \item Profiles: \hspace{0.45in} $S=S_1\times S_2=\{(B,B),(B,H),(H,B),(H,H)\}$
     \item Outcomes: \hspace{0.29in} $O=\{o_1,o_2,o_3,o_4\}$
-    \item Outcome function: $f:S\to O$
+    \item Outcome function: $f:S\to O$\\
+    $(B,B)\mapsto o_1$, $(B,H)\mapsto o_2$, $(H,B)\mapsto o_3$, $(H,H)\mapsto o_4$\\
+    Matrix representation:
 \end{itemize}
 \bsk
 \centering
-\begin{tabular}{c|c|c|c|c|}
-\cline{2-5}
-$s$: & $(B,B)$ & $(B,H)$ & $(H,B)$ & $(H,H)$ \\
-\cline{2-5}
-$f(s)$: & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
-\cline{2-5}
-\end{tabular}
-\vfill
-\raggedright
-Notice: \textbf{nothing here says what anybody wants.}
-\vspace{-0.4in}
+\begin{matrixgame}[top left={B, H}, w=1.2]
+    \payoffmatrix{o_1 & o_2 \\ o_3 & o_4}
+\end{matrixgame}
 \end{frame}
 
 \begin{frame}{Definition: Game-Frame in Strategic Form}
