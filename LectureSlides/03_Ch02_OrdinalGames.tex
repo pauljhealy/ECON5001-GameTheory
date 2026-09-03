@@ -138,7 +138,27 @@ No talking, no signaling. Choose what you'd actually choose.
 \vfill
 \end{frame}
 
-\begin{frame}{A Tempting Argument}
+\begin{frame}{For Fun: What Would the Philosophers Say? (Not on Quiz/Test)}
+  \begin{center}
+  \renewcommand{\arraystretch}{1.6}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \textbf{Philosopher} & \textbf{My (very amateurish) Understanding} \\
+    \midrule
+    Kant     & Categorical imperative: What if \textit{everyone} did that? Thus, $C\succ D$ \\
+    Hobbes   & Life is ``solitary, poor, nasty, brutish, and short.'' We need a government \\
+    Locke    & People have a natural duty to each other, even without government \\
+    Hume     & Cooperate becomes convention through repeated play (ex: two farmers) \\
+    Rousseau & Trust and the social contract keep society functioning. Play $C$ \\
+    Bentham/Mill & Cooperate because it maximizes total welfare (sum of utilities). \\
+    Ayn Rand     & Don't let anyone distract you from your goal (probably $D$, could be $C$) \\
+    Nietzsche & Don't fall for ``herd morality!'' You choose your own morals. \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}{A ``Rational'' Argument}
 \centering
 {\footnotesize
 \begin{tabular}{cc|c|c|}
@@ -260,10 +280,12 @@ Four \textbf{outcomes} can happen:
     Matrix representation:
 \end{itemize}
 \bsk
-\centering
+\begin{center}
 \begin{matrixgame}[top left={B, H}, w=1.2]
     \payoffmatrix{o_1 & o_2 \\ o_3 & o_4}
 \end{matrixgame}
+\end{center}
+But what do they \textbf{prefer}? Being together, or going to their favorite place?
 \end{frame}
 
 \begin{frame}{Definition: Game-Frame in Strategic Form}
@@ -284,16 +306,16 @@ where
 Why a function? \vspace{0.5in}
 \end{frame}
 
-\begin{frame}{Golden Balls as a Frame}
-Write it out:
-\bsk
-\begin{itemize}
-    \item $I=$ \vspace{0.3in}
-    \item $S_1=$ \hspace{1.3in} $S_2=$ \vspace{0.3in}
-    \item $O=$ \vspace{0.3in}
-    \item $f=$ \vspace{0.3in}
-\end{itemize}
-\end{frame}
+% \begin{frame}{Golden Balls as a Frame}
+% Write it out:
+% \bsk
+% \begin{itemize}
+%     \item $I=$ \vspace{0.3in}
+%     \item $S_1=$ \hspace{1.3in} $S_2=$ \vspace{0.3in}
+%     \item $O=$ \vspace{0.3in}
+%     \item $f=$ \vspace{0.3in}
+% \end{itemize}
+% \end{frame}
 
 % ==============================================================
 % 3. PREFERENCES  (extended treatment)
@@ -307,7 +329,7 @@ Preferences
 Outcomes are \textit{things}, not numbers:
 \bsk
 \begin{itemize}
-    \item ``both at Buckeye Donuts''
+    \item ``we eat together at Buckeye Donuts''
     \item ``Sarah gets \$100,000 and Steven gets nothing''
     \item ``the park gets built and I pay \$40''
 \end{itemize}
@@ -493,6 +515,8 @@ $U$ & $6$ & $1$ & $8$ & $2$ & $6$ \\
 Rule: bigger number $=$ better; equal numbers $=$ indifferent.
 \vfill
 Check it against $o_3\succ o_5\sim o_1\succ o_4\succ o_2$: \vspace{0.7in}
+
+(There's a 4th way in the book using sets. Skip it.)
 \end{frame}
 
 \begin{frame}{Definition: Ordinal Utility Function}
@@ -521,11 +545,11 @@ All three of these represent the \textit{same} ranking $o_3\succ o_1\succ o_2\si
 \cline{2-5}
  & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
 \cline{2-5}
-$f$ & $5$ & $2$ & $10$ & $2$ \\
+Utility function 1: & $5$ & $2$ & $10$ & $2$ \\
 \cline{2-5}
-$g$ & $0.8$ & $0.7$ & $1$ & $0.7$ \\
+Utility function 2: & $0.8$ & $0.7$ & $1$ & $0.7$ \\
 \cline{2-5}
-$h$ & $27$ & $1$ & $100$ & $1$ \\
+Utility function 3: & $27$ & $1$ & $100$ & $1$ \\
 \cline{2-5}
 \end{tabular}
 \bsk
@@ -603,19 +627,64 @@ The only new ingredient is the list of rankings, one per player.
 \vspace{-0.5in}
 \end{frame}
 
+\begin{frame}{Writing Games With Payoffs}
+ \begin{center}
+ \begin{tabular}{ccc}
+    {\begin{matrixgame}[top={C,D}, left={C,D}]
+    \payoffmatrix{o_1 & o_2 \\ o_3 & o_4}
+    \end{matrixgame}}
+      &
+     \begin{tabular}{ll}
+        $U_1(o_1)=3$ & $U_2(o_1)=3$ \\
+        $U_1(o_2)=0$ & $U_2(o_2)=4$ \\
+        $U_1(o_3)=4$ & $U_2(o_3)=0$ \\
+        $U_1(o_4)=0$ & $U_2(o_4)=0$ \\
+                    &               \\
+                    &               \\
+     \end{tabular}
+      &
+    {\begin{matrixgame}[top={C, D}, left={C, D}]
+    \payoffmatrix{3,3 & 0,4 \\ 4,0 & 0,0}
+    \end{matrixgame}} \\
+    Game Frame & $+$ Utilities & $=$ ``Reduced'' Ordinal Game
+ \end{tabular}
+ \end{center}
+\begin{itemize}
+    \item Physical outcomes are replaced with their utility values
+    \item We often call these ``payoffs'' (though they're utilities)
+    \begin{itemize}
+        \item Sarah doesn't \textit{really} have a utility for $s=(C,C)$
+        \item She \textit{actually} has a utility for $o_1=($\$50k,\$50k$)$
+        \item But we can write $U(o_1)$ in the $(C,C)$ cell since $(C,C)\mapsto o_1$
+    \end{itemize}
+    \item Convention: Player 1's payoff first, Player 2's payoff second
+    \item Most game theory texts skip the game frame and just write reduced ordinal games!
+\end{itemize}
+\end{frame}
+
+% \begin{frame}{Test}
+%     \centering
+%     \begin{tabular}{c}
+%          {\begin{matrixgame}[top={C,D},left={C,D},player names={P1,P2}]
+%              \payoffmatrix{3,3 & 0,4\\4,0 & 1,1}
+%          \end{matrixgame}}
+%     \end{tabular}
+% \end{frame}
+
 \begin{frame}{Payoff Functions}
 Replace each ranking $\succsim_i$ with a utility function $U_i$ that represents it.
 \bsk
-Then define player $i$'s \textbf{payoff function} $\pi_i:S\to\RR$ by
+For any strategy profile $s$, define player $i$'s \textbf{payoff function} at $s$ by
 $$\pi_i(s)\ =\ U_i\big(f(s)\big)$$
 \bsk
-\begin{itemize}
-    \item $f(s)$: the outcome that strategy profile $s$ produces
-    \item $U_i(\cdot)$: how much $i$ likes that outcome
-    \item $\pi_i(s)=U_i(f(s))$: the two composed (utility \textit{as a function of strategies})
-\end{itemize}
+Read ``$U_i(f(s))$'' from inside to outside:
+\begin{enumerate}
+    \item $s$ is a strategy profile (e.g, $(C,C)$)
+    \item $f(s)$ is the outcome at $s$ (e.g., $o_1$)
+    \item $U_i(f(s))$ is just $U_i(o_1)$, player $i$'s utility of that outcome (e.g., 3)
+\end{enumerate}
 \vfill
-The triple $\langle I,(S_1,\ldots,S_n),(\pi_1,\ldots,\pi_n)\rangle$ is the
+The list $\langle I,(S_1,\ldots,S_n),(\pi_1,\ldots,\pi_n)\rangle$ is the
 \textbf{reduced} ordinal game.\\
 ``Reduced'' because we've thrown away the names of the outcomes.
 \vspace{-0.3in}
@@ -699,55 +768,55 @@ Here the answer feels obvious. Why? \vspace{0.5in}
 \end{frame}
 
 \begin{frame}{Back to Golden Balls}
-Back to Golden Balls\\
-Suppose \textbf{both} are selfish and greedy:
+Back to Golden Balls. Suppose \textbf{both} are selfish and greedy:
 \begin{itemize}
     \item Sarah: $o_3\succ_1 o_1\succ_1 o_2\sim_1 o_4$
     \item Steven: $o_2\succ_2 o_1\succ_2 o_3\sim_2 o_4$
 \end{itemize}
 \bsk
-Pick utilities (any numbers with the right order will do):
+Pick utilities (let's use ``my utility $=$ my dollars'' (divided by 1,000)):
 \bsk
 \centering
-\begin{tabular}{c|c|c|c|c|}
+\begin{tabular}{r|c|c|c|c|}
 \cline{2-5}
- & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
+Strategy Profile: & $(C,C)$ & $(C,D)$ & $(D,C)$ & $(D,D)$ \\
 \cline{2-5}
-$U_1$ & $3$ & $2$ & $4$ & $2$ \\
+Outcome: & $o_1=(\$50\text{k},\$50\text{k})$ & $o_2=(\$0,\$100\text{k})$ & $o_3=(\$100\text{k},\$0)$ & $o_4=(\$0,\$0)$ \\
 \cline{2-5}
-$U_2$ & $3$ & $4$ & $2$ & $2$ \\
+\cline{2-5}
+$U_1$ & $50$ & $0$ & $100$ & $0$ \\
+\cline{2-5}
+$U_2$ & $50$ & $100$ & $0$ & $0$ \\
 \cline{2-5}
 \end{tabular}
 \bsk
 \begin{matrixgame}[top={Split, Steal}, left={Split, Steal}, player names={Sarah, Steven}]
-  \payoffmatrix{3,3 & 2,4 \\ 4,2 & 2,2}
+  \payoffmatrix{50,50 & 0,100 \\ 100,0 & 0,0}
 \end{matrixgame}
 \end{frame}
 
 \begin{frame}{Back to Golden Balls}
-Now suppose Sarah is \textbf{fair-minded and benevolent}, Steven still selfish and greedy:
-\begin{itemize}
-    \item Sarah: $o_1\succ_1 o_3\succ_1 o_2\succ_1 o_4$
-    \item Steven: $o_2\succ_2 o_1\succ_2 o_3\sim_2 o_4$
-\end{itemize}
+Now suppose Sarah is still selfish and greedy...\\
+but Steven is \textbf{fair-minded and benevolent} (utility boost $+75$ if same payoffs)
 \bsk
 \centering
 \begin{tabular}{c|c|c|c|c|}
 \cline{2-5}
- & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
+ & $o_1=(\$50\text{k},\$50\text{k})$ & $o_2=(\$0,\$100\text{k})$ & $o_3=(\$100\text{k},\$0)$ & $o_4=(\$0,\$0)$ \\
 \cline{2-5}
-$U_1$ & $4$ & $2$ & $3$ & $1$ \\
+Sarah's $U_1$ & $50$ & $0$ & $100$ & $0$ \\
 \cline{2-5}
-$U_2$ & $3$ & $4$ & $2$ & $2$ \\
+Steven's $U_2$ & $50+75=125$ & $100$ & $0$ & $0+75=75$ \\
 \cline{2-5}
 \end{tabular}
 \bsk
 \begin{matrixgame}[top={Split, Steal}, left={Split, Steal}, player names={Sarah, Steven}]
-  \payoffmatrix{4,3 & 2,4 \\ 3,2 & 1,2}
+  \payoffmatrix{50,125 & 0,100 \\ 100,0 & 0,75}
 \end{matrixgame}
 \vfill
 \raggedright
-Same show, same rules, same table of prizes. \textbf{Different game.}
+Same show, same rules, same table of prizes. \textbf{Different game.}\\
+And Steven no longer has an ``obviously rational'' strategy!
 \end{frame}
 
 % ==============================================================
@@ -758,19 +827,43 @@ Same show, same rules, same table of prizes. \textbf{Different game.}
 Dominance
 \end{frame}
 
-\begin{frame}{The Idea}
-Fix one player. Compare two of \textit{their own} strategies, $a$ and $b$.
-\bsk
-Ask: how do $a$ and $b$ compare \textbf{in every contingency they might face}?
-\bsk
+\begin{frame}{Underlining Best Responses}
+\begin{center}
+    \begin{matrixgame}[top={Split, Steal}, left={Split, Steal}, player names={Sarah, Steven}]
+  \payoffmatrix{50,125 & 0,100 \\ 100,0 & 0,75}
+\end{matrixgame}
+\end{center}
+How to analyze this?
 \begin{itemize}
-    \item If $a$ always beats $b$: \hspace{0.42in} $a$ \textbf{strictly dominates} $b$
-    \item If $a$ never loses to $b$, \\ and sometimes beats it: \hspace{0.06in} $a$ \textbf{weakly dominates} $b$
-    \item If they always tie: \hspace{0.5in} $a$ and $b$ are \textbf{equivalent}
+    \item Rationality: engage in contingent thinking.
+    \item ``What's my best response to every contingency?'' (Contingency = strategy of other)
+    \item Look at payoffs in that contingency, underline the highest payoffs
+    \item We call those ``best replies'' or ``best responses''
+    \item If one strategy is \textit{always} a best response then it \textbf{dominates} the other
+    \begin{itemize}
+        \item \textbf{Weakly} dominates: always best response but with some ties
+        \item \textbf{Strictly} dominates: always best response, no ties
+        \item \textbf{Equivalent}: tied in every contingency
+    \end{itemize}
 \end{itemize}
-\vfill
-``contingency'' $=$ a choice of strategies by \textit{everyone else}.
-\vspace{-0.4in}
+    
+\end{frame}
+
+\begin{frame}{Comparing Strategies}
+\centering
+\begin{matrixgame}[top={L, C, R}, left={A, B, C, D}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,\cdot & 3,\cdot & 5,\cdot \\ 2,\cdot & 1,\cdot & 4,\cdot \\ 4,\cdot & 1,\cdot & 5,\cdot\\ 2,\cdot & 1,\cdot & 4,\cdot }
+\end{matrixgame}
+\bsk
+\raggedright
+Look at Player 1 and compare any two strategies (call them $x$ and $y$)
+\begin{itemize}
+    \item If $x$ always beats $y$ w/ no ties: \hspace{0.42in} $x$ \textbf{strictly dominates} $y$
+    \item If $x$ always beats $y$ but w/ ties: \hspace{0.40in} $x$ \textbf{weakly dominates} $y$
+    \item If they always tie: \hspace{1.2in} $x$ and $y$ are \textbf{equivalent}
+\end{itemize}
+Then do the same for Player 2...\\
+\textbf{Recommendation/Prediction:} Never play a strategy that is dominated!
 \end{frame}
 
 \begin{frame}{Notation for ``Everyone Else''}
@@ -790,55 +883,55 @@ Example: $S_1=\{a,b,c\}$, $S_2=\{d,e\}$, $S_3=\{f,g\}$, and $s=(b,d,g)$.
 Then $s_{-2}=$ \underline{\hspace{1.2in}} \hspace{0.3in}\\and $(e,s_{-2})=$ \underline{\hspace{1.2in}}
 \end{frame}
 
-\begin{frame}{An Example (Player 1's Payoffs Only)}
-Player 1's utilities/payoffs:
-\centering
-\begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}]
-  \payoffmatrix{4,\cdot & 3,\cdot & 5,\cdot \\ 2,\cdot & 1,\cdot & 4,\cdot \\ 4,\cdot & 1,\cdot & 5,\cdot}
-\end{matrixgame}
-\bsk
-\raggedright
-Compare $T$ and $M$, row by row:
-\begin{itemize}
-    \item vs.\ $L$: \hspace{0.3in} $4$ \underline{\hspace{0.3in}} $2$
-    \item vs.\ $C$: \hspace{0.3in} $3$ \underline{\hspace{0.3in}} $1$
-    \item vs.\ $R$: \hspace{0.3in} $5$ \underline{\hspace{0.3in}} $4$
-\end{itemize}
-\vfill
-Conclusion: \vspace{0.4in}
-\end{frame}
+% \begin{frame}{An Example (Player 1's Payoffs Only)}
+% Player 1's utilities/payoffs:
+% \centering
+% \begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}]
+%   \payoffmatrix{4,\cdot & 3,\cdot & 5,\cdot \\ 2,\cdot & 1,\cdot & 4,\cdot \\ 4,\cdot & 1,\cdot & 5,\cdot}
+% \end{matrixgame}
+% \bsk
+% \raggedright
+% Compare $T$ and $M$, row by row:
+% \begin{itemize}
+%     \item vs.\ $L$: \hspace{0.3in} $4$ \underline{\hspace{0.3in}} $2$
+%     \item vs.\ $C$: \hspace{0.3in} $3$ \underline{\hspace{0.3in}} $1$
+%     \item vs.\ $R$: \hspace{0.3in} $5$ \underline{\hspace{0.3in}} $4$
+% \end{itemize}
+% \vfill
+% Conclusion: \vspace{0.4in}
+% \end{frame}
 
-\begin{frame}{An Example (Player 1's Payoffs Only)}
-\centering
-\begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}]
-  \payoffmatrix{4,\cdot & 3,\cdot & 5,\cdot \\ 2,\cdot & 1,\cdot & 4,\cdot \\ 4,\cdot & 1,\cdot & 5,\cdot}
-\end{matrixgame}
-\bsk
-\raggedright
-Now compare $T$ and $B$:
-\begin{itemize}
-    \item vs.\ $L$: \hspace{0.3in} $4$ \underline{\hspace{0.3in}} $4$
-    \item vs.\ $C$: \hspace{0.3in} $3$ \underline{\hspace{0.3in}} $1$
-    \item vs.\ $R$: \hspace{0.3in} $5$ \underline{\hspace{0.3in}} $5$
-\end{itemize}
-\vfill
-$T$ never does worse, and does better against $C$. This is \textbf{weak} dominance.
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{An Example (Player 1's Payoffs Only)}
+% \centering
+% \begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}]
+%   \payoffmatrix{4,\cdot & 3,\cdot & 5,\cdot \\ 2,\cdot & 1,\cdot & 4,\cdot \\ 4,\cdot & 1,\cdot & 5,\cdot}
+% \end{matrixgame}
+% \bsk
+% \raggedright
+% Now compare $T$ and $B$:
+% \begin{itemize}
+%     \item vs.\ $L$: \hspace{0.3in} $4$ \underline{\hspace{0.3in}} $4$
+%     \item vs.\ $C$: \hspace{0.3in} $3$ \underline{\hspace{0.3in}} $1$
+%     \item vs.\ $R$: \hspace{0.3in} $5$ \underline{\hspace{0.3in}} $5$
+% \end{itemize}
+% \vfill
+% $T$ never does worse, and does better against $C$. This is \textbf{weak} dominance.
+% \vspace{-0.3in}
+% \end{frame}
 
 \begin{frame}{Definition: Dominance}
 Let $i$ be a player and $a,b\in S_i$ two of their strategies.
 \bsk
 \begin{itemize}
     \item $a$ \textbf{strictly dominates} $b$ if
-    $$\pi_i(a,s_{-i})>\pi_i(b,s_{-i}) \quad\text{for every } s_{-i}\in S_{-i}$$
+    $$\pi_i(a,s_{-i})>\pi_i(b,s_{-i}) \quad\forall s_{-i}\in S_{-i}$$
     \bsk
     \item $a$ \textbf{weakly dominates} $b$ if
-    $$\pi_i(a,s_{-i})\ge\pi_i(b,s_{-i}) \quad\text{for every } s_{-i}\in S_{-i}$$
-    \hspace{0.2in} \textit{and} \ $\pi_i(a,s_{-i})>\pi_i(b,s_{-i})$ for at least one $s_{-i}$
+    $$\pi_i(a,s_{-i})\ge\pi_i(b,s_{-i}) \quad\forall s_{-i}\in S_{-i}$$
+    \hspace{1.5in} \textit{and} $\exists\ s_{-i}$ s.t. $\pi_i(a,s_{-i})>\pi_i(b,s_{-i})$
     \bsk
     \item $a$ is \textbf{equivalent} to $b$ if
-    $$\pi_i(a,s_{-i})=\pi_i(b,s_{-i}) \quad\text{for every } s_{-i}\in S_{-i}$$
+    $$\pi_i(a,s_{-i})=\pi_i(b,s_{-i}) \quad \forall s_{-i}\in S_{-i}$$
 \end{itemize}
 \end{frame}
 
@@ -900,10 +993,10 @@ Suppose $a$ and $b$ are both strictly dominant, and $a\ne b$.
     \item $a$ strictly dominant $\Rightarrow$ \ $\pi_i(a,s_{-i})>\pi_i(b,s_{-i})$ \ everywhere
     \item $b$ strictly dominant $\Rightarrow$ \ $\pi_i(b,s_{-i})>\pi_i(a,s_{-i})$ \ everywhere
 \end{itemize}
+Contradiction!!
 \bsk
-Pick any $s_{-i}$. Then $\pi_i(a,s_{-i})>\pi_i(b,s_{-i})>\pi_i(a,s_{-i})$
 \vfill
-That would be a violation of transitivity, but payoffs/utilities (numbers) can't violate transitivity!!
+(Technically, would be a transitivity violation: $f(a,s_{-i})\succ_i f(b,s_{-i}) \succ_i f(a,s_{-i})$)
 \vspace{0.7in}
 \end{frame}
 
@@ -981,11 +1074,10 @@ $A$ vs.\ $C$: & $B$ vs.\ $D$: \\[0.3in]
 % ==============================================================
 
 \begin{frame}{So What About Sarah?}
-Selfish and greedy version:
-\bsk
+Selfish and greedy version:\\
 \centering
 \begin{matrixgame}[top={Split, Steal}, left={Split, Steal}, player names={Sarah, Steven}]
-  \payoffmatrix{3,3 & 2,4 \\ 4,2 & 2,2}
+  \payoffmatrix{50,50 & 0,100 \\ 100,0 & 0,0}
 \end{matrixgame}
 \bsk
 \raggedright
@@ -994,25 +1086,29 @@ Selfish and greedy version:
     \item So (Steal, Steal) is a \underline{\hspace{1.2in}} dominant-strategy profile
 \end{itemize}
 \vfill
-And the fair-minded version? \vspace{0.5in}
+What if both are fair-minded ($+75$ for equal earnings)?\\
+\centering
+\begin{matrixgame}[top={Split, Steal}, left={Split, Steal}, player names={Sarah, Steven}]
+  \payoffmatrix{125,125 & 0,100 \\ 100,0 & 75,75}
+\end{matrixgame}
 \end{frame}
 
-\begin{frame}{What Did \textit{We} Do?}
-Back to our MobLab results.
-\bsk
-\centering
-\begin{tabular}{lc}
-Chose Split: & \underline{\hspace{1in}} \\[0.3in]
-Chose Steal: & \underline{\hspace{1in}} \\[0.3in]
-\end{tabular}
-\bsk
-\raggedright
-\vfill
-If everyone were selfish and greedy, Steal is weakly dominant, so we'd expect
-100\% Steal.
-\bsk
-We didn't get that. So which assumption was wrong? \vspace{0.5in}
-\end{frame}
+% \begin{frame}{What Did \textit{We} Do?}
+% Back to our MobLab results.
+% \bsk
+% \centering
+% \begin{tabular}{lc}
+% Chose Split: & \underline{\hspace{1in}} \\[0.3in]
+% Chose Steal: & \underline{\hspace{1in}} \\[0.3in]
+% \end{tabular}
+% \bsk
+% \raggedright
+% \vfill
+% If everyone were selfish and greedy, Steal is weakly dominant, so we'd expect
+% 100\% Steal.
+% \bsk
+% We didn't get that. So which assumption was wrong? \vspace{0.5in}
+% \end{frame}
 
 % ==============================================================
 % 7. PRISONER'S DILEMMA & PARETO
@@ -1124,7 +1220,8 @@ Let's Work One Out
 
 \begin{frame}{Three Booths at the North Market}
 Ann, Ben, and Cal each run a booth. Every Saturday each one independently picks
-a special: the \textbf{Classic} or something \textbf{New}.
+a special: the \textbf{Classic} or something \textbf{New}.\\
+Three player game: third player picks the \textbf{matrix}.
 \bsk
 \centering
 {\small
