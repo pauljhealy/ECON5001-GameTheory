@@ -36,7 +36,7 @@ In this lecture: what if you don't?
 % Same values both rounds if possible, so the bid-shading comparison is clean.
 % Do NOT explain the pricing rules beyond what's on the screen.
 % ---------------------------------------------------------------------
-\begin{frame}{Log In: We're Bidding}
+\begin{frame}{Log In: Auction Game}
 \begin{itemize}
     \item MobLab: Two auctions. You're bidders.
     \item You'll be told what the item is worth \textbf{to you}
@@ -61,12 +61,13 @@ No talking. Bid however you think is smart.
 \end{frame}
 
 \begin{frame}{What Did You Just Play?}
-\textbf{Round 1, first-price:} the winner pays \textit{their own bid}.
+\textbf{Round 1, first-price auction:} the winner pays \textit{their own bid}.
 \bsk
-\textbf{Round 2, second-price:} the winner pays \textit{the highest losing bid}.
+\textbf{Round 2, second-price auction:} the winner pays \textit{the 2nd highest bid}.
 \bsk
 \vfill
-In which round did you bid closer to your true value? Did you ``underbid'' (bid $<$ value) or ``overbid'' (bid $>$ value)?
+In which round did you bid closer to your true value?\\
+Did you (bid $<$ value) or (bid $>$ value)?
 \vspace{1.1in}
 \end{frame}
 
@@ -93,26 +94,28 @@ Why would a seller ever do this? It looks like giving money away.
 \end{frame}
 
 \begin{frame}{An Example: The Game-Day Permit}
-One food truck permit for the lot outside the stadium is up for auction.
+Suppose OSU auctions off a food truck permit near the stadium for game day.\\
 Dos Hermanos and Pitabilities both want it.
 \bsk
 \begin{itemize}
-    \item Dos Hermanos has run the numbers: the permit is worth \textbf{\$30k} to them
-    \item Bids must be one of \$10k, \$20k, \$30k, \$40k, \$50k
+    \item Dos Hermanos (Player 1): estimates \textbf{\$30k} extra profit if they get it\\
+    This is their \textbf{value} for the permit. Write $v_1=30$ (in thousands)
+    \item Suppose bids must be one of \$10k, \$20k, \$30k, \$40k, \$50k\\
+    So $S_1=S_2=\{10,20,30,40,50\}$. They have 5 possible strategies.\\
+    Write bids as $b_1\in S_1$ and $b_2\in S_2$
+    \item \textbf{Second-price auction:}highest bid wins, pays \textit{2nd highest bid}
     \item Ties go to Pitabilities (decided by a coin flip beforehand)
 \end{itemize}
 \bsk
-Dos Hermanos's payoff:
-$$\pi_1 = \begin{cases} 30 - (\text{Pitabilities' bid}) & \text{if Dos Hermanos wins} \\ 0 & \text{otherwise}\end{cases}$$
-\vfill
-Note they pay \textit{Pitabilities'} bid, not their own.
-\vspace{-0.4in}
+Dos Hermanos's payoff in the Second Price Auction:
+$$\pi_1 = \begin{cases} v_1 - b_2 & \text{if}\ b_1>b_2 \\ 0 & \text{if}\ b_1\leq b_2\end{cases}$$
+Assume utility $=$ money (selfish \& greedy)
 \end{frame}
 
 \begin{frame}{Only Dos Hermanos's Payoffs Shown}
 \centering
 {\small
-\begin{matrixgame}[top={10, 20, 30, 40, 50}, left={10, 20, 30, 40, 50}, player names={Dos Hermanos (value 30), Pitabilities}]
+\begin{matrixgame}[top={10, 20, 30, 40, 50}, left={10, 20, 30, 40, 50}, player names={Dos Hermanos ($v_1=30$), Pitabilities}]
   \payoffmatrix{0,\cdot & 0,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
                 20,\cdot & 0,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
                 20,\cdot & 10,\cdot & 0,\cdot & 0,\cdot & 0,\cdot \\
@@ -121,7 +124,7 @@ Note they pay \textit{Pitabilities'} bid, not their own.
 \end{matrixgame}}
 \bsk
 \raggedright
-Check one cell: Dos Hermanos bids 30, Pitabilities bids 10. \vspace{0.5in}
+Recall: $\pi_1 = \begin{cases} v_1 - b_2 & \text{if}\ b_1>b_2 \\ 0 & \text{if}\ b_1\leq b_2\end{cases}$\hspace{0.25in} with $v_1=30$
 \end{frame}
 
 \begin{frame}{Reading the Table}
