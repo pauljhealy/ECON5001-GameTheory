@@ -15,10 +15,26 @@
 \usepackage{makecell}
 \usepackage{tikz,tikzsymbols,gnuplottex}
 \usetikzlibrary{decorations.pathreplacing,shapes,positioning,arrows.meta,fit,backgrounds,calc}
+
 % --- xgames: TikZ-based game-theory typesetting (matrixgame, gametree,
 % beliefspace, automaton). Not on CTAN; xgames.sty + fikz.sty are vendored at
 % the repo root. CC BY-SA 4.0 (xgames) / GPL-3.0 (fikz), (c) Benjamin Bernard.
 \usepackage{xgames}
+
+% Custom command for shading rows in a matrixgame
+% ---------------------------------------------------------------------------
+% \shaderow[<fill options>]{<row>}{<first column>}{<last column>}
+% Call this inside the matrixgame, after \payoffmatrix
+% Can wrap in a \foreach to shade multiple regions
+% Example: \foreach \i in {1,...,5}{ \shaderow[green!50!black]{\i}{\i}{5} }
+\newcommand{\shaderow}[4][red!60]{%
+  \ifnum#3=1\relax\def\xl{0}\else\pgfmathsetmacro{\xl}{\pmtwi[#3-1]}\fi
+  \ifnum#2=1\relax\def\yt{0}\else\pgfmathsetmacro{\yt}{\pmthi[#2-1]}\fi
+  \pgfmathsetmacro{\xr}{\pmtwi[#4]}%
+  \pgfmathsetmacro{\yb}{\pmthi[#2]}%
+  \fill[opacity=0.18, #1] ($(pmt1-tl)+(\xl,-\yt)$) rectangle ($(pmt1-tl)+(\xr,-\yb)$);%
+}
+
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{appendixnumberbeamer}
