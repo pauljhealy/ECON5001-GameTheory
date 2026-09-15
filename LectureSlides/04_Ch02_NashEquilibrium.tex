@@ -397,12 +397,14 @@ The ``pivotal mechanism'' is often called ``the \textbf{VCG} mechanism.''
 \begin{frame}[standout]
     Using ``Never Best Replies''\\
     to Find\\
-    Strictly Dominated Strategies
+    Strictly Dominated Strategies\\
+    (not in the book)
 \end{frame}
 
 
 \begin{frame}{Dominance vs. ``Never Best Reply''}
-Use underlining to identify best replies to each column:
+\textbf{Player 1:} $M$ is strictly dominated by $U$\\
+How to find that? Try  underlining best replies:
 
 \centering
 \begin{matrixgame}[top={L, C, R}, left={U, M, D}, player names={Player 1, Player 2}, br=<2->]
@@ -414,7 +416,7 @@ Use underlining to identify best replies to each column:
 \raggedright
 \onslide<2->{\textbf{Fact:} Strictly Dominated $\Rightarrow$ Never a Best Reply to Any $s_{-i}$ (never underlined)
 \bsk
-Soooo... can we use this to find strictly dominated strategies?}
+Soooo... can we always use this to find strictly dominated strategies?}
 \end{frame}
 
 \begin{frame}{Dominance vs. ``Never Best Reply''}
@@ -428,7 +430,8 @@ Use underlining to identify best replies to each column:
 \end{matrixgame}
 
 \raggedright
-\onslide<2->{\textbf{Fact:} Never a Best Reply to Any $s_{-i}$ $\not\Rightarrow$ Strictly Dominated
+\onslide<2->{$M$ is \textbf{not} strictly dominated by $U$ or $D$.\\
+\textbf{Fact:} Never a Best Reply to any $s_{-i}$ $\not\Rightarrow$ Strictly Dominated
 \bsk
 \textbf{Thus:} A ``Never Best Reply'' is a good \textit{candidate} when finding strictly dominated strategies, but you still need to verify!}
 \end{frame}
@@ -447,7 +450,10 @@ Find the strictly dominated strategies for \textbf{Player 2}:\bsk
 
 \raggedright
 \vfill
-\onslide<3>{Never Best Reply: $\{C,E\}$\\Strictly Dominated: $\{E\}$}
+\onslide<3>{\textbf{Step 1:} Find all Never Best Replies\\
+\textbf{Step 2:} Check which of those are strictly dominated.
+\bsk
+Never Best Reply: $\{C,E\}$\\Strictly Dominated: $\{E\}$}
 \end{frame}
 
 \begin{frame}[standout]
@@ -674,18 +680,19 @@ Two perfectly reasonable places to start:
 \begin{frame}{IDWDS Problem 2: Might be a Best Reply}
     Does IDWDS have the same rationality foundation?
     \begin{center}
+    \centering
+        \begin{matrixgame}[top={L,R},left={U,D}]
+            \payoffmatrix{50,0 & 10,100\\10,0 & 10,100}
+    \end{matrixgame}
+    \end{center}
+    $D$ is weakly dominated but is it \textit{definitely} irrational?
+    \bsk
+    Golden Balls example:
+    \begin{center}
         \begin{matrixgame}[top={C,D},left={C,D},player names={Sarah,Steven}]
             \payoffmatrix{50,50 & 0,100\\100,0 & 0,0}
         \end{matrixgame}
     \end{center}
-    $D$ is weakly dominated but is it \textit{definitely} irrational?\\
-    What if Sarah were \textit{positive} that Steven would play $D$?\\
-    Better example:
-    
-    \centering
-        \begin{matrixgame}[top={U,D},left={L,R}]
-            \payoffmatrix{50,0 & 10,100\\10,0 & 10,100}
-    \end{matrixgame}
 \end{frame}
 
 
@@ -805,18 +812,17 @@ Verify $(T,L)$ is a Nash equilibrium (NE):
 So $(T,L)$ is a Nash equilibrium. Find the other one. \vspace{0.5in}
 \end{frame}
 
-\begin{frame}{Four Ways to Say It}
+\begin{frame}{Four Justifications}
 \textbf{No regret.} After seeing what the other player did, nobody wishes they had
 chosen differently.
 \bsk
 \textbf{Self-enforcing agreement.} If the players could talk beforehand and shake on
-$s^*$, nobody would want to break it, assuming the other keeps it.
+$s^*$, nobody would want to break it.
 \bsk
 \textbf{Viable recommendation.} If a third party publicly recommended $s^*$, nobody
 would want to deviate, assuming the others comply.
 \bsk
-\textbf{Rationality with correct beliefs.} Each player best-responds to what they
-believe the other will do, and those beliefs are right.
+\textbf{Rationality with correct beliefs.} Each player has a correct prediction to what the opponents will do, and best responds to that.
 \vfill
 \end{frame}
 
@@ -877,7 +883,7 @@ A profile $s^*\in S$ is a Nash equilibrium if, for every player $i$,
 $$\pi_i(s^*)\ \ge\ \pi_i(s_1^*,\ldots,s_{i-1}^*,\ s_i,\ s_{i+1}^*,\ldots,s_n^*)
 \quad\text{for all } s_i\in S_i$$
 \bsk
-$n$ inequalities, one per player. Nothing new, just more of them.
+$n$ inequalities, one per player.
 \vfill
 \vspace{0.8in}
 \end{frame}
@@ -892,7 +898,7 @@ Let's try a 3-player game ($2\times 2\times 2$)\bsk
 \end{matrixgame}
 \vfill
 \raggedright
-Two equilibria in here. Find them using the underlining technique.
+Two Nash equilibria here. Find them using the underlining technique.
 \onslide<3>{
 \bsk
 $(T,L,E)$ and $(T,R,F)$: the only cells with all three payoffs underlined.
