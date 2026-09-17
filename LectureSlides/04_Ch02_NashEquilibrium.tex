@@ -457,7 +457,7 @@ Never Best Reply: $\{C,E\}$\\Strictly Dominated: $\{E\}$}
 \end{frame}
 
 \begin{frame}[standout]
-Next Solution Concept:\\Iterated Deletion of Dominated Strategies
+Next Solution Concept:\\Iterated Deletion of Strictly Dominated Strategies
 \end{frame}
 
 \begin{frame}{An Example}
@@ -856,12 +856,16 @@ Lets us use the underlining trick to find N.E.
     \item In each \textbf{row}, underline Player 2's largest payoff (incl. ties)
     \item Any cell with \textbf{both} numbers underlined is a Nash equilibrium
 \end{enumerate}
-\bsk
 \centering
 \begin{matrixgame}[top={E, F, G, H}, left={A, B, C, D}, player names={Player 1, Player 2}]
   \payoffmatrix{4,0 & 3,2 & 2,3 & 4,1 \\ 4,2 & 2,1 & 1,2 & 0,2 \\ 3,6 & 5,5 & 3,1 & 5,0 \\ 2,3 & 3,2 & 1,2 & 3,3}
 \end{matrixgame}
 
+\begin{tabular}{ccccc}
+{\color{player1}Player 1:} & $BR_1(E)=$\hspace{0.40in} & $BR_1(F)=$\hspace{0.40in} & $BR_1(G)=$\hspace{0.40in} & $BR_1(H)=$\hspace{0.40in} \\
+ & & & & \\
+{\color{player2}Player 2:} & $BR_2(A)=$\hspace{0.40in} & $BR_2(B)=$\hspace{0.40in} & $BR_2(C)=$\hspace{0.40in} & $BR_2(D)=$\hspace{0.40in}
+\end{tabular}
 \end{frame}
 
 \begin{frame}{The Underlining Trick}
@@ -871,21 +875,24 @@ Lets us use the underlining trick to find N.E.
 \end{matrixgame}
 \bsk
 \raggedright
-Only $(B,E)$ has both payoffs underlined: the unique Nash equilibrium profile
-\bsk
-Any other profile: someone would \textit{gain} by deviating \textit{unilaterally}.
+Only $(B,E)$ has both payoffs underlined: the unique Nash equilibrium profile\\
+$$
+B \in BR_1(E) \quad \quad E\in BR_2(B)
+$$
+Any other profile: someone would \textit{gain (strictly)} by deviating \textit{unilaterally}.
 \bsk
 \textbf{Ex:} from $(A,E)$, PLR2 would deviate to $G$
 \end{frame}
 
 \begin{frame}{More Than Two Players}
-A profile $s^*\in S$ is a Nash equilibrium if, for every player $i$,
+A profile $s^*=(s_1^*,s_2^*,\ldots,s_n^*)\in S$ is a Nash equilibrium if, for every player $i$,
 $$\pi_i(s^*)\ \ge\ \pi_i(s_1^*,\ldots,s_{i-1}^*,\ s_i,\ s_{i+1}^*,\ldots,s_n^*)
 \quad\text{for all } s_i\in S_i$$
 \bsk
-$n$ inequalities, one per player.
-\vfill
-\vspace{0.8in}
+Equivalently (and more compact):
+$$
+    s_i^* \in BR_i(s_{-i}^*) \quad \text{for all}\ i\in\{1,2,\ldots,n\}
+$$
 \end{frame}
 
 \begin{frame}{A Three-Player Example}
@@ -898,57 +905,180 @@ Let's try a 3-player game ($2\times 2\times 2$)\bsk
 \end{matrixgame}
 \vfill
 \raggedright
-Two Nash equilibria here. Find them using the underlining technique.
+Two Nash equilibria:
 \onslide<3>{
 \bsk
 $(T,L,E)$ and $(T,R,F)$: the only cells with all three payoffs underlined.
-\par\smallskip
-{\footnotesize Check $(B,R,E)$ and $(B,L,F)$: two underlines each. Players 1 and 2 are content; only Player 3 wants to move.}
+\bsk
+Check: Why isn't $(B,R,E)$ and Nash equilibrium? How about $(B,L,F)$?
 }
 \vspace{-0.3in}
 \end{frame}
+
+\begin{frame}{A Grammar Tangent}
+\centering
+    {\large What's the plural of ``equilibrium''???}
+    \bsk
+    \begin{enumerate}
+        \item \textbf{Equilibria}. True to Latin pluralization
+        \item \textbf{Equilibriums}. Acceptable in modern English dictionaries.
+    \end{enumerate}
+    \bsk
+    \textbf{This class:} Equilibria.
+\end{frame}
+
+\begin{frame}{Non-Existence of Nash Equilibrium}
+Game: ``Matching Pennies''\\
+\centering
+\begin{matrixgame}[top={H, T}, left={H, T}, player names={Defender, Attacker}, br]
+  \payoffmatrix{1,0 & 0,1 \\ 0,1 & 1,0}
+\end{matrixgame}
+
+\raggedright
+Classic example of an ``attacker-defender'' (discoordination) game.\\
+\textbf{Examples:} Penalty kicks, play-calling, tax auditing, law/rule enforcement
+\bsk
+No cell has both payoffs underlined $\Rightarrow$ $\not\exists$ Nash equilibrium!
+\vfill
+With only ordinal payoffs, a game \textbf{may not have} a Nash equilibrium.
+\bsk
+\textbf{Chapter 5}: if we allow players to randomize 50/50, \textbf{that} becomes a Nash equilibrium.\\
+\textbf{Chapter 2}: no randomization yet. Only ``pure strategies.''
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}[standout]
+A Theorem:
+\bsk
+Nash Equilibrium is never eliminated by ID\underline{S}DS    
+\end{frame}
+
 \begin{frame}{Nash Survives IDSDS}
-All three procedures return a \textbf{set of strategy profiles}, not one prediction:
+Solution concepts predict a \textbf{set} of strategy profiles for a given game.\\
+Math notation:
 \begin{itemize}
-    \item $NE(G)$: the Nash equilibrium profiles for game $G$
-    \item $IDSDS(G)$: the profiles that survive IDSDS in game $G$
-    \item $IDWDS(G)$: the profiles that survive IDWDS in game $G$
+    \item $SDS(G)$: the set of strictly dominant strategy profiles in game $G$
+    \item $IDSDS(G)$: the set of profiles that survive IDSDS in game $G$
+    \item $IDWDS(G)$: the set of profiles that survive IDWDS in game $G$ (which order?)
+    \item $NE(G)$: the set of Nash equilibrium profiles for game $G$
 \end{itemize}
-Each is a subset of $S$, and each can be empty, a single profile, or many.
+Each is a subset of $S$. Can be empty, can be a singleton, can have many profiles.
 \vfill
 \textbf{Theorem.} \ For every ordinal strategic-form game $G$,
 $$NE(G)\ \subseteq\ IDSDS(G)$$
 \begin{itemize}
     \item A Nash equilibrium never uses a strategy that IDSDS deletes
-    \item So IDSDS never throws away a Nash equilibrium: it's safe
+    \item So IDSDS never throws away a Nash equilibrium
     \item But the same is \textbf{not} true of IDWDS: it is possible that $NE(G)\cap IDWDS(G)=\emptyset$
 \end{itemize}
 \vspace{-0.3in}
 \end{frame}
 
+\begin{frame}[standout]
+Another Solution Concept:\\
+\uline{Strict} Nash Equilibrium
+\bsk
+{\small (Technically, a ``refinement'' of N.E.)}
+    
+\end{frame}
+
 \begin{frame}{Strict Nash Equilibrium}
-$s^*$ is a \textbf{strict} Nash equilibrium if every player is \textit{strictly} worse off
-deviating, rather than merely no better off.
+$s^*$ is a \textbf{strict} Nash equilibrium if every player is \textit{strictly} worse off.\\
+In other words, Nash equilibrium with \textbf{no ties allowed}.
 \bsk
 \centering
 \begin{tabular}{ll}
-Nash: & $\pi_i(s^*)\ \ge\ \pi_i(s_i,s_{-i}^*)$ \ \ for every $s_i\in S_i$ \\[0.18in]
-Strict: & $\pi_i(s^*)\ >\ \pi_i(s_i,s_{-i}^*)$ \ \ for every $s_i\ne s_i^*$ \\
+$s^*$ is \textbf{Nash Eq.}: & $\pi_i(s_i^*,s_{-i}^*)\ \ge\ \pi_i(s_i,s_{-i}^*)$ \ \ for every $s_i\in S_i$ (including $s_i=s_i^*$) \\[0.18in]
+$s^*$ is \textbf{Strict Nash Eq.}: & $\pi_i(s_i^*,s_{-i}^*)\ >\ \pi_i(s_i,s_{-i}^*)$ \ \ for every $s_i\ne s_i^*$ \\
 \end{tabular}
 \bsk
 \raggedright
-Two changes: $\ge$ becomes $>$, and $s_i^*$ itself is excluded. It has to be, since
-$\pi_i(s^*)>\pi_i(s^*)$ is false.
-\vfill
-\textbf{Theorem.} \ If $IDSDS(G)=\{s^*\}$ then $s^*$ is a strict Nash equilibrium.
+Two changes: $\ge$ becomes $>$, and $s_i^*$ has to be excluded on RHS
 \bsk
-If $IDWDS(G)=\{s^*\}$ then $s^*$ is a Nash equilibrium, but not necessarily a strict one.
-\vspace{-0.3in}
+\centering
+\begin{matrixgame}[top={L, C, R}, left={U, M, D}]
+  \payoffmatrix{3,3 & 3,1 & 0,0 \\
+                1,0 & 1,3 & 2,1 \\
+                0,1 & 2,0 & 2,3}
+\end{matrixgame}
+
+\raggedright
+
+\textbf{Theorem:} All Strict Nash equilibria are Nash equilibria ( $SNE(G)\subseteq NE(G)$ )
+\end{frame}
+
+\begin{frame}{The IDSDS vs. Nash Theorem}
+We learned that $NE(G)\subseteq IDSDS(G)$ for Nash equilibrium.\\
+\textbf{Theorem}: $SNE(G)\subseteq NE(G) \subseteq IDSDS(G)$.
+\bsk
+When are they all equal?\\
+\textbf{Theorem.} \ If $IDSDS(G)=\{s^*\}$ then $s^*$ is a Strict Nash equilibrium and it is the only Nash equilibrium.
+\bsk
+In math notation:\\
+$$
+IDSDS(G) = \{s^*\}\quad \Longrightarrow \quad SNE(G)=NE(G)=IDSDS(G) =\{s^*\}
+$$
+\end{frame}
+
+\begin{frame}[standout]
+    Putting It Together:\\
+    IDSDS, IDWDS, NE, and SNE
+\end{frame}
+
+\begin{frame}{What About ID\underline{W}DS vs. NE and SNE?}
+How does ID\underline{W}DS relate to Nash equilibrium and Strict Nash equilibrium?
+\begin{center}
+    \begin{matrixgame}[top={L,R},left={U,D},player names={P1,P2}]
+        \payoffmatrix{1,1 & 0,0 \\ 0,0 & 0,0}
+    \end{matrixgame}
+\end{center}
+$$
+    IDSDS(G)=\onslide<2->{S}\quad\quad IDWDS(G)=\onslide<3->{\{(U,L)\}}\quad NE(G)=\onslide<4->{\{(U,L),(D,R)\}}\quad SNE(G)=\onslide<5->{\{(U,L)\}}
+$$
+\bsk
+\textbf{Theorem}: \onslide<5->{$SNE(G)\subseteq IDWDS(G)$ (Strict Nash always survives IDWDS)}
+\bsk
+But what about $NE(G)$ vs. $IDWDS(G)$??
+\end{frame}
+
+\begin{frame}{What About ID\underline{W}DS vs. NE and SNE?}
+Now try a modified matching pennies (attacker-defender) game:
+\begin{center}
+    \begin{matrixgame}[top={H, T, D}, left={H, T, D}, players=false]
+      \payoffmatrix{1,0 & 0,1 & 0,-1 \\
+                    0,1 & 1,0 & 0,0 \\
+                    0,0 & -1,-1 & 0,0}
+    \end{matrixgame}
+\end{center}
+\begin{tabular}{lll}
+    $IDSDS(G)=\onslide<2->{\{H,T,D\}\times\{H,T,D\} ($=S$)}$\hspace{0.8in} &
+     & $IDWDS(G)=\onslide<3->{\{H,T\}\times\{H,T\}}$ \\
+    $NE(G)=\onslide<4->{\{(D,D)\}}\hspace{0.8in}$ & & $SNE(G)=\onslide<5->{\emptyset$}
+\end{tabular}
+\bsk
+\textbf{Theorem}: $SNE(G)\subseteq IDWDS(G)$ (Strict Nash always survives IDWDS)\\
+\textbf{Theorem}: \onslide<5->{$NE(G)$ and $IDWDS(G)$ are not necessarily related by inclusion.\\Can have $NE(G)\subseteq IDWDS(G)$ or $IDWDS(G)\subseteq NE(G)$ or $IDWDS(G)\cap NE(G)=\emptyset$ }
+\end{frame}
+
+
+\begin{frame}{Putting It All Together}
+    \begin{itemize}
+        \item $SNE(G)\subseteq NE(G) \subseteq IDSDS(G)$
+        \item $SNE(G) \subseteq IDWDS(G) \subseteq IDSDS(G)$
+        \item $NE(G)$ and $IDWDS(G)$ can go either way
+    \end{itemize}
+    \bsk
+    Which can be empty??
+    \begin{itemize}
+        \item<2-> $SNE(G)$ can be empty
+        \item<3-> $NE(G)$ can be empty
+        \item<4-> $IDWDS(G)$ and $IDSDS(G)$ will \textbf{never} be empty (by design)
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{A Bigger Example}
-Suppose OSU donor Ratmir Timashev makes the following offer to 50 students.
-Each secretly writes down a request: a multiple of \$10, up to \$100.
+Suppose OSU donor Ratmir Timashev makes the following offer to 50 students.\\
+Each secretly writes down a request from $\{\$10,\$20,\$30,\ldots,\$100\}$
 \bsk
 \begin{itemize}
     \item If \textbf{5 or fewer} students ask for \$100, everyone gets what they asked for
@@ -971,25 +1101,7 @@ Is this a \textbf{strict} Nash equilibrium?\vspace{0.4in}
 Everyone is paid. Can anyone gain by switching alone?\\
 Is this a \textbf{strict} Nash equilibrium?\vspace{0.4in}
 \bsk
-{\footnotesize Convince yourself that \textit{exactly six} requesting \$100 is not an equilibrium.}
-\end{frame}
-
-\begin{frame}{When There Is None}
-Matching Pennies. Both match $\Rightarrow$ Player 1 wins; otherwise Player 2 wins.
-\bsk
-\centering
-\begin{matrixgame}[top={H, T}, left={H, T}, player names={Player 1, Player 2}, br]
-  \payoffmatrix{1,0 & 0,1 \\ 0,1 & 1,0}
-\end{matrixgame}
-\bsk
-\raggedright
-No cell has both payoffs underlined.
-\vfill
-With only ordinal payoffs, a game need not have \textbf{any} Nash equilibrium.
-\bsk
-Fixing this requires letting players randomize, and randomizing requires
-cardinal payoffs. That's Chapter 5.
-\vspace{-0.3in}
+{\footnotesize Question: Why is \textit{exactly six} requesting \$100 not an equilibrium?}
 \end{frame}
 
 % ==============================================================
@@ -1000,7 +1112,7 @@ cardinal payoffs. That's Chapter 5.
 Infinite Strategy Sets
 \end{frame}
 
-\begin{frame}{No Table, Same Definition}
+\begin{frame}{An Example}
 Two players. Each writes down a real number $\ge 1$, so $S_1=S_2=[1,\infty)$.
 \bsk
 Player 1 writes $x$, Player 2 writes $y$:
@@ -1008,14 +1120,14 @@ $$\pi_1(x,y)=\begin{cases} x-1 & \text{if } x<y\\ 0 & \text{if } x\ge y\end{case
 \qquad
 \pi_2(x,y)=\begin{cases} y-1 & \text{if } x>y\\ 0 & \text{if } x\le y\end{cases}$$
 \bsk
-You want to write the larger\ldots\ no, the \textit{smaller} number. But not too small.
+You want to write the \textit{smaller} number... but \textbf{barely} smaller!
 \vfill
 What are the Nash equilibria? \vspace{0.7in}
 \end{frame}
 
 \begin{frame}{The Answer Is $(1,1)$, and Only $(1,1)$}
-\textbf{It is an equilibrium.} At $(1,1)$ both get 0. If Player 1 switches to any
-$x>1$, then $x\ge y=1$, so they still get 0.
+\textbf{It is an equilibrium.} At $(1,1)$ both get 0.\\
+If Player 1 switches to any $x>1$, then $x\ge y$, so they still get 0. Same for Player 2.
 \bsk
 \textbf{Nothing else is.}
 \begin{itemize}
