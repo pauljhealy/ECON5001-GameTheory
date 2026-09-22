@@ -1,7 +1,7 @@
 \input{LectureSlides/includes/metropolis_preamble}
 
 % Title page info
-\title[Perfect Information]{Chapter 3: Perfect-Information Games}
+\title[Perfect Information]{Chapter 3: Perfect-Information Games (aka Game Trees)}
 \author[ECON 5001]{ECON 5001\\Prof. Paul J. Healy\\Based on: \textit{Game Theory} by Giacomo Bonanno} \color{metrop}
 \institute[OSU]{}
 \date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
@@ -51,32 +51,37 @@ Now: players move \textbf{in turn}, and everyone sees the whole history.
 % average pair got -- the "How Far Did We Get?" frame below wants it, and
 % the "Back to the Centipede" frame near the end refers to it again.
 % ---------------------------------------------------------------------
-\begin{frame}{Log In: Take It or Leave It}
+\begin{frame}{Moblab: ``Centipede Game''}
 \begin{itemize}
-    \item MobLab, our session. You'll be paired with someone here.
-    \item A pile of money sits on the table, and it \textbf{grows} every round
-    \item On your turn: \textbf{Take} the pile, or \textbf{Pass} it back
-    \item Taking ends the game. Whoever takes gets the larger share.
+    \item MobLab time!
+    \item Two players building a firm over time
+    \item As long as players invest, firm doubles in value each day
+    \item Each ``turn'' one player chooses:
+    \begin{itemize}
+        \item \textbf{Invest}: keep the firm going.
+        \item \textbf{Cash Out}: sell the firm, take 80\% of its value. Game over.
+        \begin{itemize}
+            \item Note: If the other person cashes out, you only get 20\%!!
+        \end{itemize}
+    \end{itemize}
+    \item Alternating moves (P1, P2, P1, P2...)
+    \item If value gets to 80, P1 must Cash Out, giving $(64,14)$
 \end{itemize}
 \bsk
 \vfill
 \centering
-No talking. Play it the way you'd actually play it.
+Feel free to talk! And play it the way you'd actually play it.
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{How Far Did We Get?}
+\begin{frame}{How Far Did You Get?}
+\vspace{0.5in}
 \centering
 \begin{tabular}{lc}
-Pairs that ended at the first decision: & \underline{\hspace{1in}} \\[0.3in]
-Average round the pile was taken: & \underline{\hspace{1in}} \\[0.3in]
-Pairs that made it to the end: & \underline{\hspace{1in}} \\[0.3in]
+Most frequent \# of Turns: & \underline{\hspace{1in}} \\[0.3in]
+Groups that Cashed Out in Turn 1: & \underline{\hspace{1in}} \\[0.3in]
+Groups that made it to the end: & \underline{\hspace{1in}} \\[0.3in]
 \end{tabular}
-\bsk
-\raggedright
-\vfill
-Hold onto these numbers. We'll come back to them.
-\vspace{-0.3in}
 \end{frame}
 
 % ==============================================================
@@ -98,83 +103,128 @@ whenever it is a player's turn to move,\\ she knows every move made so far
 \vfill
 \normalsize
 \raggedright
-Chess has it. Poker does not.
+\begin{itemize}
+    \item \textbf{Perfect Information Games:}
+    \begin{itemize}
+        \item Chess, checkers, Connect Four, bargaining, sequential legislative agenda/votes
+    \end{itemize}
+    \item \textbf{Imperfect Information Games:}
+    \begin{itemize}
+        \item Stratego, Battleship, Mastermind, patent races, dynamic attacker/defender games
+        \item Any game with a hidden move by ``Nature'' (see Chapter 4)
+        \begin{itemize}
+            \item Poker, auctions, bidding wars, diplomatic negotiations w/ private info
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
 \vspace{-0.4in}
 \end{frame}
 
 \begin{frame}{Rooted Directed Trees}
-A \textbf{rooted directed tree} is a set of \textbf{nodes} joined by directed \textbf{edges}.
+We represent these games using \textbf{rooted directed trees}.
 \bsk
-Alex and Blair are out to dinner. The check arrives.
+A \textbf{rooted directed tree} is a set of \textbf{nodes} joined by directed \textbf{edges}.\\
+\hspace{1in}``Directed'' edge: \textit{from} one node \textit{to} another
+\bsk
+Ex: Alex and Blair are out to dinner. The check arrives.
 \bsk
 \centering
 \begin{gametree}[player names={Alex, Blair}, scale=0.82]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=5.8]
     {I've got this; Want to split?};
   \branch[player=2, label=135] from (w1) to[v=1.5, h=2.4]
-    {Thanks($o_1$); Add my card($o_2$)};
-  \branch[label=45] from (w2) to {Sure($o_3$); Rather not($o_4$)};
+    {Thanks($o_1$); Let's split($o_2$)};
+  \branch[label=45] from (w2) to {Sure($o_3$); Ummm... no?($o_4$)};
 \end{gametree}
 \end{frame}
 
 \begin{frame}{Rooted Directed Trees}
-A \textbf{rooted directed tree} is a set of \textbf{nodes} joined by directed \textbf{edges}:
+A \textbf{rooted directed tree} is a set of \textbf{nodes} joined by directed \textbf{edges}
 \bsk
 \begin{itemize}
-    \item the \textbf{root} has no edge leading into it
-    \item every other node has \textbf{exactly one} edge leading into it
+    \item The \textbf{root} node has no edge leading into it
+    \item Every other node has \textbf{exactly one} edge leading into it
+    \begin{itemize}
+        \item \textit{Branches out}, like a tree
+        \item Contains \textit{no cycles/loops}
+    \end{itemize}
+    \item \textbf{Terminal nodes} have no edges going out
+    \begin{itemize}
+        \item They are the various game endings
+        \item In a game, each has an outcome $o$ attached to it
+    \end{itemize}
     \item there is a \textbf{unique path} from the root to any other node
 \end{itemize}
 \bsk
-Nodes with no edges out are \textbf{terminal} ($Z$), all others
-\textbf{decision nodes} ($D$).
+Set of \textbf{terminal nodes}: $Z$. All others: ``\textbf{Decision nodes}'' $D$. Then define the set of \textbf{all nodes}:
 $$X = D\cup Z$$
+Each node $x\in X$ represents a ``history'' of the game so far
+
+\end{frame}
+
+\begin{frame}{Back to the Example}
+\begin{center}
+\begin{gametree}[player names={Alex, Blair}, scale=0.82]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=5.8]
+    {I've got this; Want to split?};
+  \branch[player=2, label=135] from (w1) to[v=1.5, h=2.4]
+    {Thanks($o_1$); Let's split($o_2$)};
+  \branch[label=45] from (w2) to {Sure($o_3$); Ummm... no?($o_4$)};
+\end{gametree}    
+\end{center}
 \bsk
-We write $x$ for a particular node, and $S(x)$ for $x$ together with everything
-that follows it.
-\vfill
-Unique paths are what make ``the history so far'' well defined.
-\vspace{-0.5in}
+$D=$\\
+$Z=$\\
+$X=$
 \end{frame}
 
 \begin{frame}{Definition: Extensive Form With Perfect Information}
 A \textbf{finite extensive form with perfect information} consists of:
 \bsk
 \begin{itemize}
-    \item a finite rooted directed tree
+    \item A finite rooted directed tree
+    \item A set of players $I=\{1,\ldots,n\}$
+    \begin{itemize}
+        \item Each decision node is assigned to one player
+    \end{itemize}
+    \item A set of actions $A$
+    \begin{itemize}
+        \item Each edge is assigned one action
+        \item Two edges from the same node $\Rightarrow$ different actions
+    \end{itemize}
     \bsk
-    \item a set of players $I=\{1,\ldots,n\}$, one at \textbf{each decision node}
-    \bsk
-    \item a set of actions $A$, one assigned to every edge, with no two edges out of
-      the same node getting the same action
-    \bsk
-    \item a set of outcomes $O$, one assigned to every terminal node
+    \item A set of outcomes $O$
+    \begin{itemize}
+        \item Each terminal node is assigned one outcome
+    \end{itemize}
 \end{itemize}
 \vfill
-Note what's missing: \textbf{preferences}. This is a frame, not a game.
+Note: no \textbf{preferences} yet! This is a frame, not a game. Outcomes only.
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Dissolving the Partnership}
-Amy and Beth are dissolving the partnership behind their Short North coffee shop.
-The assets are valued at \$100,000.
+Nocterra Brewing Company shut down.\\
+Owners: Vivian and Duncan\\
+Suppose remaining assets are valued at \$100,000. How to split it?
 \bsk
 \begin{itemize}
-    \item The charter says the senior partner, \textbf{Amy}, proposes a split
-    \item \textbf{Beth} can Accept, or Reject and take it to court
+    \item The charter says the senior partner, \textbf{Vivian}, proposes a split
+    \item \textbf{Duncan} can Accept, or Reject and take it to court
     \item In court: each side pays \$20,000 in legal fees, and the verdict
-      (no uncertainty) gives 60\% to Amy, 40\% to Beth
-    \item Amy has only two possible offers: \textbf{50-50} or \textbf{70-30}
+      will 60\% to Vivian, 40\% to Duncan (no uncertainty)
+    \item Vivian is allowed only two possible offers: \textbf{50-50} or \textbf{70-30}
 \end{itemize}
 \bsk
-So rejecting always yields Amy $\$60{,}000-\$20{,}000=\$40{,}000$ and Beth
+So rejecting yields Vivian $\$60{,}000-\$20{,}000=\$40{,}000$\\
+and Duncan
 $\$40{,}000-\$20{,}000=\$20{,}000$.
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{The Frame}
 \centering
-\begin{gametree}[player names={Amy, Beth}, scale=0.85]
+\begin{gametree}[player names={Vivian, Duncan}, scale=0.85]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=5.4]
     {Offer 50-50; Offer 70-30};
   \branch[player=2, label=135] from (w1) to[v=1.5, h=2.3]
@@ -186,70 +236,78 @@ $\$40{,}000-\$20{,}000=\$20{,}000$.
 \end{gametree}
 \bsk
 \raggedright
-{\footnotesize Top number is Amy's, bottom number is Beth's.}
-\vspace{-0.2in}
+{\footnotesize Top number is Vivian's (P1), bottom number is Duncan's (P2).}
+\bsk
+For now let's assume \textit{selfish \& greedy} preferences.
 \end{frame}
 
 \begin{frame}{Backward-Induction Reasoning}
-Start at the \textit{end} and work back toward the root.
+Let's build up a new solution concept\\
+\textbf{Backwards induction:} Start at the \textit{end} and work back toward the root.
 \bsk
+\begin{center}
+    \begin{gametree}[player names={Vivian, Duncan}, scale=0.85]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=5.4]
+    {Offer 50-50; Offer 70-30};
+  \branch[player=2, label=135] from (w1) to[v=1.5, h=2.3]
+    {Accept(\makecell{$o_1$\\ \$50{,}000\\ \$50{,}000});
+     Reject(\makecell{$o_2$\\ \$40{,}000\\ \$20{,}000})};
+  \branch[label=45] from (w2) to
+    {Accept(\makecell{$o_3$\\ \$70{,}000\\ \$30{,}000});
+     Reject(\makecell{$o_4$\\ \$40{,}000\\ \$20{,}000})};
+\end{gametree}
+\end{center}
 \begin{itemize}
-    \item Offered 50-50, Beth compares \$50,000 to \$20,000 \ $\Rightarrow$ \ accept
-      \vspace{0.25in}
-    \item Offered 70-30, Beth compares \$30,000 to \$20,000 \ $\Rightarrow$ \ accept
-      \vspace{0.25in}
-    \item Anticipating both, Amy compares \$50,000 to \$70,000 \ $\Rightarrow$ \ offer 70-30
-      \vspace{0.25in}
+    \item<2-> Duncan accepts at both nodes
+    \item<3-> Knowing this, Vivian offers 70-30
 \end{itemize}
-\vfill
-Clean. Convincing. And built on an assumption we never stated.
-\vspace{-0.3in}
+\onslide<4->{Another solution concept built on ``common knowledge of rationality''}
 \end{frame}
 
-\begin{frame}{The Same Flaw as Golden Balls}
-We assumed Beth cares only about her own money.
+\begin{frame}{Non-Selfish Preferences?}
+What if they are \textit{not} selfish \& greedy??
 \bsk
-Suppose instead Beth thinks she worked just as hard as Amy, and that the only fair
-split is 50-50. She may feel strongly enough that she would give up \$10,000 to
-refuse an unfair offer.
+Suppose instead Duncan thinks they worked just as hard as Vivian, and that the only fair split is 50-50. They may feel strongly enough that they would give up \$10,000 to refuse an unfair offer.
 \bsk
-That is: \ $o_4\succ_{\text{Beth}} o_3$.
+That is: \ $o_4\succ_{\text{Duncan}} o_3$.
 \vfill
-Then the reasoning above gives the wrong answer.
+This will change the predicted solution:\\
+Duncan Accepts 50-50 but \textit{Rejects} 70-30. So now Vivian offers 50-50.
 \bsk
 \centering
 \large
-A tree with outcomes at the leaves is a \textbf{frame}.\\
+A tree with \textit{outcomes} at the terminal nodes is a \textbf{frame}.\\
 \bsk
-Add each player's ranking and you have a \textbf{game}.
+Replace them with the players' \textit{utility values} and you have a \textbf{game}.
 \vfill
 \end{frame}
 
-\begin{frame}{Adding Preferences}
-Amy is selfish and greedy: \hspace{0.35in} $o_3\succ_1 o_1\succ_1 o_2\sim_1 o_4$
+\begin{frame}{Adding Preferences: An Example}
+Suppose Vivian is selfish and greedy: \hspace{0.35in} $o_3\succ_1 o_1\succ_1 o_2\sim_1 o_4$
 \bsk
-Beth cares about fairness: \hspace{0.2in} $o_1\succ_2 o_2\sim_2 o_4\succ_2 o_3$
+Duncan cares about fairness: \hspace{0.2in} $o_1\succ_2 o_2\sim_2 o_4\succ_2 o_3$
 \bsk
 \centering
 \begin{tabular}{c|c|c|c|c|}
 \cline{2-5}
- & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
+& $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
 \cline{2-5}
-$U_1$ (Amy) & $2$ & $1$ & $3$ & $1$ \\
+$U_1$ (Vivian) & $2$ & $1$ & $3$ & $1$ \\
 \cline{2-5}
-$U_2$ (Beth) & $3$ & $2$ & $1$ & $2$ \\
+$U_2$ (Duncan) & $3$ & $2$ & $1$ & $2$ \\
 \cline{2-5}
 \end{tabular}
+
 \bsk
 \raggedright
 \vfill
-Now replace each outcome with its payoff pair and rerun the algorithm.
+Now replace each outcome with its payoff pair to get the actual \textbf{game}
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{The Game}
 \centering
-\begin{gametree}[player names={Amy, Beth}, scale=0.9]
+\begin{gametree}[player names={Vivian, Duncan}, scale=0.9]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=4.6]
     {Offer 50-50<1->; Offer 70-30};
   \branch[player=2, label=135] from (w1) to[v=1.4, h=1.9]
@@ -258,8 +316,8 @@ Now replace each outcome with its payoff pair and rerun the algorithm.
 \end{gametree}
 \bsk
 \raggedright
-Highlighted edges are the backward-induction choices. Amy now offers \textbf{50-50}
-(she anticipates that 70-30 would be rejected).
+Colored edges show the backward-induction action choices.\\
+Vivian now anticipates 70-30 will be rejected, offers 50-50.
 \vspace{-0.2in}
 \end{frame}
 
@@ -267,32 +325,31 @@ Highlighted edges are the backward-induction choices. Amy now offers \textbf{50-
 % 3.2 BACKWARD INDUCTION
 % ==============================================================
 
-\begin{frame}[standout]
-Backward Induction
-\end{frame}
+% \begin{frame}[standout]
+% Backward Induction
+% \end{frame}
 
-\begin{frame}{The Algorithm}
-Call a node \textbf{marked} once a payoff vector is attached to it. Initially, exactly
-the terminal nodes are marked.
-\bsk
-\begin{enumerate}
-    \item Pick a decision node $x$ whose immediate successors are \textbf{all} marked.
-      Let $i$ be the player who moves at $x$.
-    \bsk
-    \item Select a choice leading to an immediate successor with the highest payoff
-      \textit{for player $i$}. Mark $x$ with that successor's whole payoff vector.
-    \bsk
-    \item Repeat until every node is marked.
-\end{enumerate}
-\vfill
-Finiteness guarantees this terminates: start at nodes followed only by terminal nodes,
-and work outward.
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{The Algorithm}
+% Call a node \textbf{marked} once a payoff vector is attached to it. Initially, exactly
+% the terminal nodes are marked.
+% \bsk
+% \begin{enumerate}
+%     \item Pick a decision node $x$ whose immediate successors are \textbf{all} marked.
+%       Let $i$ be the player who moves at $x$.
+%     \bsk
+%     \item Select a choice leading to an immediate successor with the highest payoff
+%       \textit{for player $i$}. Mark $x$ with that successor's whole payoff vector.
+%     \bsk
+%     \item Repeat until every node is marked.
+% \end{enumerate}
+% \vfill
+% Finiteness guarantees this terminates: start at nodes followed only by terminal nodes,
+% and work outward.
+% \vspace{-0.3in}
+% \end{frame}
 
-\begin{frame}{When Choices Tie}
-Step 2 says ``select a choice.'' If two choices tie for a player, the algorithm
-doesn't say which, so it can produce \textbf{several} solutions.
+\begin{frame}{Backward Induction: How to Handle Ties}
+With ties, there can be multiple backwards induction predictions:
 \bsk
 \centering
 \begin{gametree}[labels=short, scale=0.9]
@@ -307,22 +364,6 @@ doesn't say which, so it can produce \textbf{several} solutions.
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{When Choices Tie}
-Step 2 says ``select a choice.'' If two choices tie for a player, the algorithm
-doesn't say which, so it can produce \textbf{several} solutions.
-\bsk
-\centering
-\begin{gametree}[labels=short, scale=0.9]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=4.6] {a; b};
-  \branch[player=2, label=135] from (w1) to[v=1.3, h=1.9] {c(2,1,0); d(0,0,2)};
-  \branch[label=45] from (w2) to {e(3,1,0); f};
-  \branch[player=3, label=45] from (w22) to[v=1.3, h=1.7] {g(1,2,1); h(0,0,1)};
-\end{gametree}
-\bsk
-\raggedright
-{\footnotesize Payoffs in order: Player 1, Player 2, Player 3.}
-\vspace{-0.2in}
-\end{frame}
 
 % ==============================================================
 % 3.3 STRATEGIES
@@ -332,15 +373,31 @@ doesn't say which, so it can produce \textbf{several} solutions.
 Strategies
 \end{frame}
 
+\begin{frame}{Actions vs. Strategies}
+A \textbf{very} important distinction: \uline{actions} vs. \uline{strategies}
+\begin{center}
+    \begin{gametree}[labels=short, scale=0.9]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=4.6] {a; b};
+  \branch[player=2, label=135] from (w1) to[v=1.3, h=1.9] {c(2,1,0); d(0,0,2)};
+  \branch[label=45] from (w2) to {e(3,1,0); f};
+  \branch[player=3, label=45] from (w22) to[v=1.3, h=1.7] {g(1,2,1); h(0,0,1)};
+\end{gametree}
+\end{center}
+\textbf{Actions:}\\
+$A_1=$ \hspace{1in} $A_2=$ \hspace{2in} $A_3=$\\
+\textbf{Strategies:} ``complete plans of actions''\\
+$S_1=$ \hspace{1in} $S_2=$ \hspace{2in} $S_3=$
+\end{frame}
+
 \begin{frame}{A Strategy Is a Complete Plan}
 \begin{block}{Definition}
-A \textbf{strategy} for a player in a perfect-information game is a list of choices,
+A \textbf{strategy} for a player in a perfect-information game is a list of \textit{actions},
 \textbf{one for each decision node of that player}.
 \end{block}
 \bsk
-Not ``what I will do'' but ``what I would do \textit{everywhere} I might move.''
+Not ``what I will do'' but ``what I \textit{would} do \uline{everywhere} I might move.''
 \bsk
-In the game two slides back, Player 2 has two decision nodes, so a strategy is a pair.
+In the previous game, Player 2 has two decision nodes, so a strategy is a pair.
 Before the game starts she doesn't know whether Player 1 will pick $a$ or $b$,
 so she must plan for both:
 $$(c,e)\qquad (c,f)\qquad (d,e)\qquad (d,f)$$
@@ -356,7 +413,6 @@ Suppose Player 1 has three decision nodes in some game:
     \item at the second, two choices $b_1,b_2$
     \item at the third, four choices $c_1,c_2,c_3,c_4$
 \end{itemize}
-\bsk
 A strategy fills in three blanks:
 $$\Big(\underbrace{\rule{0.8in}{0.4pt}}_{\text{one of } a_1,a_2,a_3},\
 \underbrace{\rule{0.8in}{0.4pt}}_{\text{one of } b_1,b_2},\
@@ -366,13 +422,14 @@ So her strategy set is a Cartesian product of the action sets she faces:
 $$S_1=\{a_1,a_2,a_3\}\times\{b_1,b_2\}\times\{c_1,c_2,c_3,c_4\}$$
 \centering
 $3\times 2\times 4 = 24$ strategies
-\vfill
+
 \raggedright
-Strategy sets get large fast. That's the price of ``complete plan.''
+Strategy sets get large fast! Because they're a complete plan.
 \vspace{-0.4in}
 \end{frame}
 
-\begin{frame}{A Redundancy Worth Noticing}
+\begin{frame}{Don't Throw Out Impossible Strategies}
+Here, Player 1 moves twice:
 \centering
 \begin{gametree}[labels=short, scale=0.9]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=4.6] {a; b};
@@ -382,14 +439,16 @@ Strategy sets get large fast. That's the price of ``complete plan.''
 \end{gametree}
 \bsk
 \raggedright
-Strategy $(a,g)$ says: play $a$ at the root, and $g$ at my other node.
+There are 2 backwards-induction predictions:
 \bsk
-But if she plays $a$, that other node is \textbf{never reached}. Why plan for it?
+But strategy $(a,g)$ is impossible! Playing $a$ makes $g$ irrelevant.
+\bsk
+But let's keep it. Player 2's choice of $f$ depended on $g$. Backwards induction requires a specification of how you play \textit{everywhere}.
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Why Keep the Redundancy?}
-Three ways to justify it:
+\begin{frame}{Other Justifications}
+Other ways to justify specifying $(a,g)$ (not just $(a)$):
 \bsk
 \begin{enumerate}
     \item \textbf{Mistakes.} She's cautious enough to plan for the possibility that she
@@ -400,7 +459,7 @@ Three ways to justify it:
       \textit{belief} about what Player 1 would do. \vspace{0.25in}
 \end{enumerate}
 \vfill
-We'll set this aside for now and just use the definition.
+But the main reason: \textbf{Backwards induction needs it}
 \vspace{-0.3in}
 \end{frame}
 
@@ -408,12 +467,11 @@ We'll set this aside for now and just use the definition.
 A strategy profile traces one path from the root to a terminal node.
 \bsk
 \begin{itemize}
-    \item Nodes on that path are \textbf{on the path of play}
-    \item Every other node is \textbf{off the path of play}
+    \item Nodes on that path are \textbf{on the path of play} (``\textbf{on path}'')
+    \item Every other node is \textbf{off the path of play} (``\textbf{off path}'')
 \end{itemize}
 \bsk
-A strategy must still say what to do off path. Nobody ever sees those choices,
-but they are what make the on-path choices rational.
+A strategy must still say what to do off path. Even if certain actions aren't on-path, they make the on-path actions rational.
 \vfill
 \centering
 \begin{gametree}[labels=short, scale=0.72]
