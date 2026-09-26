@@ -511,8 +511,9 @@ So every perfect-information game has an \textbf{associated strategic form}.
 \end{columns}
 \bsk
 \raggedright
-The top two rows are identical. That's the redundancy showing up.
-\vspace{-0.2in}
+The top two rows are identical because $(a,g)$ and $(a,h)$ are \textit{redundant}
+\bsk
+Note: It's okay to write strategies as $ag$ and $ah$ instead of $(a,g)$ and $(a,h)$
 \end{frame}
 
 \begin{frame}{Five Equilibria, Two Solutions}
@@ -521,8 +522,8 @@ $$(ag,cf)\quad (ah,cf)\quad (bg,df)\quad (bh,ce)\quad (bh,de)$$
 \bsk
 It has \textbf{two} backward-induction solutions:
 \begin{itemize}
-    \item $\big((a,g),(c,f)\big)$ \ (because $g$ and $h$ tie for Player 1)
-    \item $\big((b,h),(c,e)\big)$
+    \item $\big(ag,cf\big)$
+    \item $\big(bh,ce\big)$
 \end{itemize}
 \bsk
 Both are Nash equilibria.\\ The other three are not backward-induction solutions.
@@ -539,8 +540,8 @@ A backward-induction \textbf{outcome} is the \textit{sequence of moves actually 
 \bsk
 \centering
 \begin{tabular}{ll}
-Solution $\big((a,g),(c,f)\big)$ & outcome $ac$, \ payoffs $(2,1)$ \\[0.15in]
-Solution $\big((b,h),(c,e)\big)$ & outcome $be$, \ payoffs $(3,1)$ \\
+Solution $\big(ag,cf\big)$ & outcome $ac$, \ payoffs $(2,1)$ \\[0.15in]
+Solution $\big(bh,ce\big)$ & outcome $be$, \ payoffs $(3,1)$ \\
 \end{tabular}
 \end{frame}
 
@@ -588,21 +589,16 @@ A student switching from F-1 to H-1B \textit{inside} the US (Path 1) is exempt.
 
 \begin{frame}{The Lawsuit}
 \begin{itemize}
-    \item \textbf{Dec.\ 2025:} 20 states, led by California and Massachusetts, sue in
-      federal court in Boston. (Ohio is not one of them.)
-    \item Their argument: the fee is really a \textbf{tax}. Taxes are set by
-      \textbf{Congress}, not the President.
-    \item \textbf{June 2026:} Judge Leo Sorokin agrees and strikes down the fee: it
-      ``imposes a tax on H-1B petitions without the requisite delegation by Congress.''
-    \item \textbf{July 2026:} The First Circuit Court of Appeals refuses to pause that ruling
-      while the government appeals.
-    \item \textbf{Sept.\ 2026:} The administration extends the policy through Sept.\ 2027.
-      The fee is still blocked. The appeal continues, likely to the Supreme Court.
+    \item \textbf{Dec.\ 2025:} 20 states, led by California and Massachusetts, sue in U.S. District Court in Boston. (Ohio is not one of them.)
+    \item Their argument: the fee is really a \textbf{tax}. Taxes are set by \textbf{Congress}, not the President.
+    \item \textbf{June 2026:} Judge Leo Sorokin agrees and strikes down the fee: it ``imposes a tax on H-1B petitions without the requisite delegation by Congress.''
+    \item \textbf{July 24, 2026:} The First Circuit Court of Appeals refuses to pause that ruling
+      while the government appeals, claiming the gov't is unlikely to win
+    \item \textbf{Sept.\ 2026:} The appeal continues, First Court likely to  likely to the Supreme Court.
 \end{itemize}
 \vfill
 \small
-To keep things simple, we'll fold the Circuit Court and the Supreme Court into one
-``appeal'' move, and assume the Supreme Court sides with the administration.
+To keep things simple, we'll fold the First Circuit Court and Supreme Court into one ``appeal'' move, and assume the Supreme Court sides with the administration.
 \vspace{-0.2in}
 \end{frame}
 
