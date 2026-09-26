@@ -594,62 +594,69 @@ A student switching from F-1 to H-1B \textit{inside} the US (Path 1) is exempt.
     \item \textbf{June 2026:} Judge Leo Sorokin agrees and strikes down the fee: it ``imposes a tax on H-1B petitions without the requisite delegation by Congress.''
     \item \textbf{July 24, 2026:} The First Circuit Court of Appeals refuses to pause that ruling
       while the government appeals, claiming the gov't is unlikely to win
-    \item \textbf{Sept.\ 2026:} The appeal continues, First Court likely to  likely to the Supreme Court.
+    \item \textbf{Sept.\ 2026:} The appeal continues in the First Circuit, and will likely go to the Supreme Court.
 \end{itemize}
 \vfill
 \small
-To keep things simple, we'll fold the First Circuit Court and Supreme Court into one ``appeal'' move, and assume the Supreme Court sides with the administration.
+To keep things simple, we'll fold the First Circuit Court and Supreme Court into one ``appeal'' move, and assume the District and Circuit Courts side with the States, while the Supreme Court is a 50-50 coin flip.
 \vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{The Game}
 \begin{columns}[c]
-\begin{column}{0.58\textwidth}
+\begin{column}{0.50\textwidth}
 \centering
-\begin{gametree}[player names={Trump, States}, scale=0.8]
+\begin{gametree}[player names={Trump, States}, scale=0.72]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=3.2]
     {Don't(0,0); Implement<2->};
   \branch[player=2, label=0] from (w2) to[v=1.5, h=3.2]
-    {Accept<2->(500,-300); Sue};
+    {Accept(500,-300); Sue<2->};
   \branch[player=1, label=0] from (w22) to[v=1.5, h=3.2]
-    {Drop(-1,-2); Appeal<2->(497,-305)};
+    {Drop(-1,-2); Appeal<2->(247,-155)};
 \end{gametree}
 \end{column}
-\begin{column}{0.40\textwidth}
+\begin{column}{0.48\textwidth}
 \footnotesize
-All payoffs in \$ millions. Rough guesses:
+Payoffs in \$ millions (rough guesses):
 \begin{itemize}
-    \item $v = 500$: Trump's value of the policy
-    \item $w = 300$: States' cost if it stands (universities, hospitals)
-    \item District court: Trump 1, States 2
-    \item Appeals: Trump 2, States 3
+    \item Fee stands: Trump $+500$, States $-300$
+    \item Fee struck down: both get $0$
+    \item Legal fees if States sue: Trump $-1$, States $-2$
+    \item Extra legal fees if Trump appeals: Trump $-2$, States $-3$
 \end{itemize}
 \medskip
-If Trump drops the appeal, the fee is gone, but both have already paid for the district-court case.
+After an appeal, the Supreme Court is a coin flip, so we average:
+\begin{itemize}
+    \item Trump: $\tfrac12(500) + \tfrac12(0) - 1 - 2 = 247$
+    \item States: $\tfrac12(-300) + \tfrac12(0) - 2 - 3 = -155$
+\end{itemize}
+\medskip
+Drop: fee struck down, but both paid for the district court case.
 \end{column}
 \end{columns}
 \vfill
 \raggedright
 \only<1>{What does backward induction predict?}%
-\only<2->{Backward induction: \textbf{Implement}, \textbf{Accept}, \textbf{Appeal}.
-The States should not sue!}
+\only<2->{Backward induction: \textbf{Implement}, \textbf{Sue}, \textbf{Appeal}.}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{But They Did Sue. Why?}
-The model says suing just burns \$5M in legal fees. What's missing?
+\begin{frame}{What If the States Expect to Lose?}
+Let $p$ be the chance the Supreme Court sides with the States.
 \bsk
 \begin{itemize}
-    \item<2-> \textbf{Uncertainty.} The Supreme Court might side with the States. If the chance
-      is $p$, suing is worth it when $300\,p > 5$, so $p > 1.7\%$ is enough.
-    \item<3-> \textbf{Delay.} The fee is blocked while the case goes on. Every month
-      blocked is worth something to the States.
-    \item<4-> \textbf{Politics.} Attorneys general gain from being \textit{seen} fighting,
-      win or lose.
+    \item<2-> Sue (and Trump appeals): $-300(1-p) - 5$
+    \item<2-> Accept: $-300$
+    \item<3-> Suing is better when $300\,p > 5$, i.e.\ $p > 1.7\%$
 \end{itemize}
 \bsk
-\uncover<5->{Changing the payoffs or adding chance moves can flip the prediction.
-\textbf{Getting the game right matters.}}
+\uncover<4->{Legal fees are tiny next to the stakes. Even a long shot is worth suing over.}
+\bsk
+\uncover<5->{The model also leaves out reasons that make suing even more attractive:
+\begin{itemize}
+    \item \textbf{Delay.} The fee is blocked while the case goes on.
+    \item \textbf{Politics.} Attorneys general gain from being \textit{seen} fighting.
+\end{itemize}}
 \vspace{-0.3in}
 \end{frame}
 
