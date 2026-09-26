@@ -549,6 +549,117 @@ Keep the distinction straight. Exam questions live here.
 \end{frame}
 
 % ==============================================================
+% REAL-WORLD EXAMPLE: THE $100K H-1B FEE
+% ==============================================================
+
+\begin{frame}{Real-World Example: Skilled Immigration to the US}
+Three typical paths to a green card for skilled workers. All three merge at the H-1B.
+\bsk
+\centering
+\begin{tikzpicture}[
+    box/.style={draw, rounded corners=3pt, align=center, font=\footnotesize,
+                minimum height=0.9cm, text width=2.3cm, fill=GrayLight!40},
+    big/.style={box, text width=1.7cm, fill=ForestGreen!15, font=\footnotesize\bfseries},
+    arr/.style={-{Latex[length=2mm]}, thick},
+    fee/.style={font=\scriptsize\bfseries, text=red!75!black, fill=white, inner sep=1pt},
+    nofee/.style={font=\scriptsize, text=ForestGreen, fill=white, inner sep=1pt},
+    path/.style={font=\scriptsize\itshape, anchor=east}]
+  \node[box] (p1) at (0, 1.5) {College in US\\(F-1 visa)};
+  \node[box] (p2) at (0, 0)   {College in US\\(F-1 visa)};
+  \node[box, text width=2.6cm] (p2b) at (3.2, 0) {Job or grad school\\abroad};
+  \node[box] (p3) at (0,-1.5) {College or job\\abroad};
+  \node[big] (h1b) at (6.6, 0) {H-1B\\job in US};
+  \node[big] (gc)  at (9.0, 0) {Green\\card};
+  \node[path] at (-1.3, 1.5) {Path 1};
+  \node[path] at (-1.3, 0)   {Path 2};
+  \node[path] at (-1.3,-1.5) {Path 3};
+  \draw[arr] (p1.east) -- node[nofee, above, sloped] {no fee} (h1b.north west);
+  \draw[arr] (p2) -- (p2b);
+  \draw[arr] (p2b) -- node[fee, above] {\$100K} (h1b);
+  \draw[arr] (p3.east) -- node[fee, below, sloped] {\$100K} (h1b.south west);
+  \draw[arr] (h1b) -- (gc);
+\end{tikzpicture}
+\bsk
+\raggedright
+\small
+Sept.\ 2025: a presidential proclamation charges employers a \textbf{\$100,000 fee}
+for a new H-1B worker who is \textit{outside} the US.
+A student switching from F-1 to H-1B \textit{inside} the US (Path 1) is exempt.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Lawsuit}
+\begin{itemize}
+    \item \textbf{Dec.\ 2025:} 20 states, led by California and Massachusetts, sue in
+      federal court in Boston. (Ohio is not one of them.)
+    \item Their argument: the fee is really a \textbf{tax}. Taxes are set by
+      \textbf{Congress}, not the President.
+    \item \textbf{June 2026:} Judge Leo Sorokin agrees and strikes down the fee: it
+      ``imposes a tax on H-1B petitions without the requisite delegation by Congress.''
+    \item \textbf{July 2026:} The First Circuit Court of Appeals refuses to pause that ruling
+      while the government appeals.
+    \item \textbf{Sept.\ 2026:} The administration extends the policy through Sept.\ 2027.
+      The fee is still blocked. The appeal continues, likely to the Supreme Court.
+\end{itemize}
+\vfill
+\small
+To keep things simple, we'll fold the Circuit Court and the Supreme Court into one
+``appeal'' move, and assume the Supreme Court sides with the administration.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Game}
+\begin{columns}[c]
+\begin{column}{0.58\textwidth}
+\centering
+\begin{gametree}[player names={Trump, States}, scale=0.8]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=3.2]
+    {Don't(0,0); Implement<2->};
+  \branch[player=2, label=0] from (w2) to[v=1.5, h=3.2]
+    {Accept<2->(500,-300); Sue};
+  \branch[player=1, label=0] from (w22) to[v=1.5, h=3.2]
+    {Drop(-1,-2); Appeal<2->(497,-305)};
+\end{gametree}
+\end{column}
+\begin{column}{0.40\textwidth}
+\footnotesize
+All payoffs in \$ millions. Rough guesses:
+\begin{itemize}
+    \item $v = 500$: Trump's value of the policy
+    \item $w = 300$: States' cost if it stands (universities, hospitals)
+    \item District court: Trump 1, States 2
+    \item Appeals: Trump 2, States 3
+\end{itemize}
+\medskip
+If Trump drops the appeal, the fee is gone, but both have already paid for the district-court case.
+\end{column}
+\end{columns}
+\vfill
+\raggedright
+\only<1>{What does backward induction predict?}%
+\only<2->{Backward induction: \textbf{Implement}, \textbf{Accept}, \textbf{Appeal}.
+The States should not sue!}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{But They Did Sue. Why?}
+The model says suing just burns \$5M in legal fees. What's missing?
+\bsk
+\begin{itemize}
+    \item<2-> \textbf{Uncertainty.} The Supreme Court might side with the States. If the chance
+      is $p$, suing is worth it when $300\,p > 5$, so $p > 1.7\%$ is enough.
+    \item<3-> \textbf{Delay.} The fee is blocked while the case goes on. Every month
+      blocked is worth something to the States.
+    \item<4-> \textbf{Politics.} Attorneys general gain from being \textit{seen} fighting,
+      win or lose.
+\end{itemize}
+\bsk
+\uncover<5->{Changing the payoffs or adding chance moves can flip the prediction.
+\textbf{Getting the game right matters.}}
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
 % 3.4 BI VS NASH
 % ==============================================================
 
