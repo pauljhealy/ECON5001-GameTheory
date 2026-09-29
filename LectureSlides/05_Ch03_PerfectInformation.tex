@@ -545,6 +545,142 @@ Solution $\big(bh,ce\big)$ & outcome $be$, \ payoffs $(3,1)$ \\
 \end{tabular}
 \end{frame}
 
+% ==============================================================
+% MOBLAB: ULTIMATUM (STRATEGY METHOD)
+% ==============================================================
+
+% ---- MobLab run: Ultimatum: Strategy Method ------------------------
+% Proposer splits $100; offers are integers $0-$100. Every student plays
+% BOTH roles: submits an offer AND a minimum acceptable offer (integers
+% $0-$100). Record the average and most common offer and the average
+% minimum acceptable offer for the "What Did You Do?" frame. The
+% minimum-acceptable-offer data drive the Nash/BI comparison below.
+% ---------------------------------------------------------------------
+\begin{frame}{MobLab: ``Ultimatum: Strategy Method''}
+\begin{itemize}
+    \item MobLab time!
+    \item A \textbf{Proposer} has \$100 to split with a \textbf{Responder}
+    \item The Proposer offers the Responder any whole-dollar amount from \$0 to \$100
+    \item The Responder \textbf{accepts} (the split happens) or \textbf{rejects} (both get \$0)
+    \item You play \textbf{both roles}:
+    \begin{itemize}
+        \item As Proposer: choose your offer
+        \item As Responder: choose the \textbf{minimum offer you'll accept}
+    \end{itemize}
+    \item Then you're matched with someone else and paid accordingly
+\end{itemize}
+\vfill
+\centering
+Play it the way you'd actually play it.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What Did You Do?}
+\vspace{0.5in}
+\centering
+\begin{tabular}{lc}
+Average offer: & \underline{\hspace{1in}} \\[0.3in]
+Most common offer: & \underline{\hspace{1in}} \\[0.3in]
+Average minimum acceptable offer: & \underline{\hspace{1in}} \\[0.3in]
+Share demanding more than \$1: & \underline{\hspace{1in}} \\[0.3in]
+\end{tabular}
+\end{frame}
+
+\begin{frame}{The Ultimatum Game}
+\centering
+\begin{tikzpicture}[scale=0.95,
+    dec/.style={circle, fill, inner sep=1.5pt},
+    act/.style={font=\scriptsize, fill=white, inner sep=1pt},
+    pay/.style={font=\scriptsize, below=2pt}]
+  \node[dec, label=above:{\small Proposer}] (P) at (0,0) {};
+  \foreach \x/\lab/\ax/\ay in {-5.4/{\$0}/100/0, -2.7/{\$1}/99/1, 1.5/{\$x}/100-x/x, 5.4/{\$100}/0/100}{
+    \node[dec, player2] (R) at (\x,-2) {};
+    \draw[thick, player1] (P) -- node[act, text=player1]{\lab} (R);
+    \draw[thick, player2] (R) -- node[act, text=player2, pos=0.55]{A} ++(-0.7,-1.5)
+      node[dec, black, inner sep=1pt]{} node[pay]{$(\ax,\ay)$};
+    \draw[thick, player2] (R) -- node[act, text=player2, pos=0.55]{R} ++(0.7,-1.5)
+      node[dec, black, inner sep=1pt]{} node[pay]{$(0,0)$};
+  }
+  \node at (-0.6,-1.4) {$\cdots$};
+  \node at (3.5,-1.4) {$\cdots$};
+\end{tikzpicture}
+\bsk
+\raggedright
+101 offers, so the Responder has \textbf{101 decision nodes}: one for every offer
+she might see. (Payoffs are (Proposer, Responder).)
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Your Minimum Offer Was a Strategy}
+A Responder strategy says \textit{accept} or \textit{reject} at each of the 101 nodes.
+\bsk
+\begin{itemize}
+    \item Number of Responder strategies: $2^{101}\approx 2.5\times10^{30}$
+    \item MobLab only let you pick a \textbf{threshold}: ``accept iff offer $\geq m$''
+    \item That's 101 of them, each a complete plan
+\end{itemize}
+\bsk
+Only \textbf{one} of your 101 choices was ever used. The other 100 were \textbf{off path}.
+\bsk
+But they still mattered: your threshold $m$ is exactly what tells the Proposer what to offer.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Backward Induction}
+Assume both players only care about their own money.
+\bsk
+\begin{itemize}
+    \item<2-> Offered $x>0$: accept gives $x$, reject gives 0. \textbf{Accept}.
+    \item<3-> Offered $x=0$: accept and reject both give 0. \textbf{A tie!}
+\end{itemize}
+\bsk
+\uncover<4->{So there are two backward-induction solutions:
+\begin{itemize}
+    \item Responder accepts everything ($m=0$), Proposer offers \textbf{\$0}: payoffs $(100,0)$
+    \item Responder rejects only \$0 ($m=1$), Proposer offers \textbf{\$1}: payoffs $(99,1)$
+\end{itemize}}
+\vfill
+\uncover<5->{Compare with our data. How many of you picked $m \leq 1$?}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Many Nash Equilibria}
+Pick any amount $x$ from \$0 to \$100. Then this is a Nash equilibrium:
+\begin{center}
+Proposer offers $x$ \qquad Responder's minimum is $m = x$
+\end{center}
+\begin{itemize}
+    \item<2-> Proposer: offering less gets rejected (0); offering more just gives money away
+    \item<3-> Responder: she gets $x$, and no other plan does better against an offer of $x$
+\end{itemize}
+\bsk
+\uncover<4->{So \textbf{every} split is a Nash equilibrium outcome. Only \$0 and \$1 survive
+backward induction.}
+\bsk
+\uncover<5->{The difference: ``I reject anything below \$40'' is an \textbf{incredible threat}.
+Offered \$10, rejecting gives you \$0.}
+\bsk
+\uncover<6->{Unless you'd \textit{really} rather have \$0 than an insulting \$10. Then
+the payoffs aren't just money, and the threat is credible.}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Ultimatum Games in the Wild}
+Take-it-or-leave-it offers are everywhere:
+\bsk
+\begin{itemize}
+    \item \textbf{Posted prices.} The store proposes; you buy or walk away.
+    \item \textbf{``Best and final'' offers} on a house or a car.
+    \item \textbf{Exploding job offers.} Accept by Friday or it's gone.
+    \item \textbf{Final offers in labor talks.} The union accepts or strikes.
+\end{itemize}
+\bsk
+Real versions are messier (repeat play, outside options, bluffing about ``final''),
+but the core tension is the same: \textbf{the proposer grabs the surplus unless the
+responder's threat to walk away is credible}.
+\vspace{-0.3in}
+\end{frame}
+
 
 
 % ==============================================================
