@@ -38,48 +38,199 @@ still works.
 \end{frame}
 
 % ==============================================================
-% MOBLAB --- PLAY FIRST
+% OPENING EXAMPLE: BATTLE OF THE SEXES WITH AN OUTSIDE OPTION
 % ==============================================================
-
-% ---- MobLab run: coordination game -----------------------------------
-% Game: "Matrix: Instructor Specified", 2x2, one shot, no chat. Payoffs:
-%   Startup/Startup 3,3   Startup/Job 0,1   Job/Startup 1,0   Job/Job 1,1
-% Label the actions "Startup" and "Corp job" if the interface allows,
-% otherwise use A and B and map them aloud.
-% Play BEFORE information sets are introduced. The same game returns twice:
-% drawn as a tree with an information set (Section 4.1), and as the
-% post-entry subgame in the SPE example (Section 4.4).
+% Hypothetical firms, real Columbus neighborhoods. Payoffs are extra annual
+% profit in $100k, (Brewery, Truck):
+%   Stay (2,0) | Fr/Fr (3,1) | SN/SN (1,3) | mismatch (0,0)
+% Forward induction (left as a discussion question): Expand+Short North
+% earns at most 1 < 2, so a Brewery that expands must be headed to
+% Franklinton, and the Truck should follow. IDWDS on the 4x2 strategic form
+% gives the same answer: (Expand Franklinton, Franklinton).
+% The neighborhood stage returns as "The Neighborhood Stage, Drawn Two Ways".
 % ---------------------------------------------------------------------
-\begin{frame}{Log In: Startup or Safe Job?}
+
+\begin{frame}{Two Columbus Businesses}
+Plenty of Columbus taprooms have no kitchen. The food comes from a truck
+parked outside.
+\bsk
 \begin{itemize}
-    \item You and a friend have an idea for an ambitious startup
-    \item It only works if \textbf{both} of you quit and go all in
-    \item The alternative is a cushy corporate job: safe, decent money
-    \item Go all in alone and the startup fails. You get nothing.
+    \item \textbf{The Brewery} has one taproom and is thinking about growing
+    \item \textbf{The Truck} wants a season-long spot outside a busy taproom
 \end{itemize}
 \bsk
-You two decide \textbf{at the same time}, with no chance to talk first.
+The Brewery decides first:
+\begin{itemize}
+    \item \textbf{Stay}: expand the current taproom. Safe, predictable.
+    \item \textbf{Expand}: open a second taproom, either in
+      \textbf{Franklinton} or in the \textbf{Short North}
+\end{itemize}
+\bsk
+If the Brewery expands, the Truck picks its home for the season:
+\textbf{Franklinton} or the \textbf{Short North}.
 \vfill
+{\footnotesize Hypothetical firms, real neighborhoods.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{What Each One Wants}
+\begin{itemize}
+    \item Both want to land in the \textbf{same} neighborhood. A new taproom with
+      no food, or a truck with no taproom, does badly.
+    \item The Brewery prefers \textbf{Franklinton}: cheaper rent, room for a patio
+    \item The Truck prefers the \textbf{Short North}: late-night foot traffic on High Street
+\end{itemize}
+\bsk
 \centering
-Pick one.
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Brewery} & \textbf{Truck} \\
+\midrule
+Brewery stays & 2 & 0 \\
+Both in Franklinton & 3 & 1 \\
+Both in the Short North & 1 & 3 \\
+Different neighborhoods & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\bsk
+\raggedright
+{\footnotesize Extra annual profit, in \$100{,}000s. The Truck's 0 is just an ordinary season.}
+\vfill
+Once the Brewery expands, this is Battle of the Sexes.
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{What We Did}
+\begin{frame}{Who Knows What}
+The Brewery posts on Instagram: \textit{``Second taproom coming next spring!''}
+\bsk
+But it keeps the address secret until the lease is signed, and the Truck has to
+lock in its spot that same week.
+\bsk
+\begin{itemize}
+    \item[{\color{ForestGreen}\faCheck}] The Truck \textbf{sees} whether the Brewery
+      chose Stay or Expand
+    \bsk
+    \item[{\color{red}\faTimes}] The Truck does \textbf{not see} which neighborhood
+      the Brewery chose
+\end{itemize}
+\vfill
 \centering
-\begin{matrixgame}[top={Startup, Corp job}, left={Startup, Corp job}, player names={You, Your friend}, br]
-  \payoffmatrix{3,3 & 0,1 \\ 1,0 & 1,1}
-\end{matrixgame}
+\Large
+The Truck knows \textit{whether}. \ It doesn't know \textit{where}.
+\vfill
+\normalsize
+\raggedright
+Neither of our tools fits. Chapter 3 assumed the Truck sees everything. A
+simultaneous game would assume it sees nothing.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Drawing It}
+\centering
+\only<1>{\begin{gametree}[player names={Brewery, Truck}, scale=0.8]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=6.0] {Stay(2,0); Expand};
+  \path (-3.6,0.6) rectangle (8.2,-5.4);
+\end{gametree}}%
+\only<2>{\begin{gametree}[player names={Brewery, Truck}, scale=0.8]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=6.0] {Stay(2,0); Expand};
+  \branch[player=1, label=0] from (w2) to[v=1.5, h=6.4] {Franklinton; Short North};
+  \path (-3.6,0.6) rectangle (8.2,-5.4);
+\end{gametree}}%
+\only<3->{\begin{gametree}[player names={Brewery, Truck}, scale=0.8]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=6.0] {Stay(2,0); Expand};
+  \branch[player=1, label=0] from (w2) to[v=1.5, h=6.4] {Franklinton; Short North};
+  \branch[player=2, label=none] from (w21) to[v=1.5, h=2.4]
+    {Franklinton(3,1); Short North(0,0)};
+  \branch from (w22) to {Franklinton(0,0); Short North(1,3)};
+  \only<4->{\node[ForestGreen, font=\small\bfseries, anchor=west, xshift=22pt, yshift=26pt] at (w2) {Truck sees this};}
+  \only<5->{\node[red, font=\small\bfseries, anchor=west, xshift=88pt, yshift=-13pt] at (w2) {Truck can't see this};}
+  \informset<6-> (w21) -- (w22);
+  \path (-3.6,0.6) rectangle (8.2,-5.4);
+\end{gametree}}
 \bsk
 \raggedright
-\begin{tabular}{lc}
-Share who went all in: & \underline{\hspace{1in}} \\[0.25in]
-Share who took the job: & \underline{\hspace{1in}} \\[0.25in]
+\only<1>{The Brewery moves first. Stay ends the game.}%
+\only<2>{After Expand, the Brewery picks a neighborhood.}%
+\only<3>{Then the Truck picks. So far this looks like a Chapter 3 tree.}%
+\only<4>{The Truck observes the Stay/Expand decision. Every Truck node comes after Expand.}%
+\only<5>{But it does not observe the neighborhood decision.}%
+\only<6>{The oval: the Truck knows it is at \textbf{one of these two nodes},
+but not which one.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{From the Truck's Seat}
+\begin{itemize}
+    \item If the Brewery stays, the Truck never moves. Nothing to decide.
+    \bsk
+    \item If the Brewery expands, the Truck is somewhere \textbf{inside the oval}.
+      It knows it is past Expand. It doesn't know which branch came after.
+    \bsk
+    \item So it picks \textbf{one} neighborhood for the whole oval. A plan like
+      \textit{``Franklinton if they chose Franklinton''} is not available. It
+      depends on something the Truck can't see.
+    \bsk
+    \item What the Truck \textit{did} see still tells it something: the Brewery
+      passed up a sure 2.
+\end{itemize}
+\vfill
+This oval has a name, and it is the main new idea of this chapter.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What If the Truck Could See Everything?}
+\centering
+\begin{gametree}[player names={Brewery, Truck}, scale=0.72]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=6.0] {Stay(2,0); Expand<2->};
+  \branch[player=1, label=0] from (w2) to[v=1.5, h=6.4] {Franklinton<2->; Short North};
+  \branch[player=2, label=135] from (w21) to[v=1.5, h=2.4]
+    {Franklinton<2->(3,1); Short North(0,0)};
+  \branch[label=45] from (w22) to {Franklinton(0,0); Short North<2->(1,3)};
+\end{gametree}
+\bsk
+\raggedright
+Suppose the address leaked. No oval: two separate Truck nodes, and we are back in Chapter 3.
+\bsk
+\onslide<2->{Backward induction: the Truck follows the Brewery wherever it goes. Knowing
+that, the Brewery expands to Franklinton and gets 3. Outcome $(3,1)$.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Somewhere in Between}
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{p{2.1in}cc}
+ & \textbf{Sees Stay vs.\ Expand?} & \textbf{Sees the neighborhood?} \\
+\hline
+Chapter 3 (perfect information) & {\color{ForestGreen}\faCheck} & {\color{ForestGreen}\faCheck} \\
+Simultaneous-move game & {\color{red}\faTimes} & {\color{red}\faTimes} \\
+\textbf{Our game} & {\color{ForestGreen}\faCheck} & {\color{red}\faTimes} \\
 \end{tabular}
 \bsk
-Two Nash equilibria: (Startup, Startup) and (Corp job, Corp job). One is
-better for everyone. Getting there requires trusting your friend.
+\raggedright
+\vfill
+Real decisions are usually in the last row. You see \textit{some} of what others
+did, not all of it.
+\bsk
+Because the Truck sees part of the history, this is \textbf{not} just a
+simultaneous $2\times2$ game, and we can't solve it by backward induction
+alone. We need new tools.
 \vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Think About It}
+You own the Truck. You just saw \textit{``Second taproom coming next spring!''}
+\bsk
+\centering
+\Large
+Franklinton or the Short North?
+\normalsize
+\bsk
+\raggedright
+\vspace{0.9in}
+Hint: the Brewery could have stayed put and earned 2 for sure. What does
+\textit{giving that up} tell you about where it's going?
+\vfill
 \end{frame}
 
 % ==============================================================
@@ -226,26 +377,27 @@ whether this is her first move or her second.
 \vspace{-0.15in}
 \end{frame}
 
-\begin{frame}{The Same Game, Drawn as a Tree}
+\begin{frame}{The Neighborhood Stage, Drawn Two Ways}
 \centering
-\only<1>{\begin{gametree}[player names={You, Your friend}, scale=0.85]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=5.0] {Startup; Corp job};
-  \branch[player=2, label=none] from (w1) to[v=1.4, h=2.0] {Startup(3,3); Corp job(0,1)};
-  \branch from (w2) to {Startup(1,0); Corp job(1,1)};
+\only<1>{\begin{gametree}[player names={Brewery, Truck}, scale=0.8]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=6.4] {Franklinton; Short North};
+  \branch[player=2, label=none] from (w1) to[v=1.4, h=2.4] {Franklinton(3,1); Short North(0,0)};
+  \branch from (w2) to {Franklinton(0,0); Short North(1,3)};
   \informset (w1) -- (w2);
 \end{gametree}}%
-\only<2>{\begin{gametree}[player names={You, Your friend}, scale=0.85]
-  \branch[player=2, root=w, label=90] from (0,0) to[v=1.3, h=5.0] {Startup; Corp job};
-  \branch[player=1, label=none] from (w1) to[v=1.4, h=2.0] {Startup(3,3); Corp job(1,0)};
-  \branch from (w2) to {Startup(0,1); Corp job(1,1)};
+\only<2>{\begin{gametree}[player names={Brewery, Truck}, scale=0.8]
+  \branch[player=2, root=w, label=90] from (0,0) to[v=1.3, h=6.4] {Franklinton; Short North};
+  \branch[player=1, label=none] from (w1) to[v=1.4, h=2.4] {Franklinton(3,1); Short North(0,0)};
+  \branch from (w2) to {Franklinton(0,0); Short North(1,3)};
   \informset (w1) -- (w2);
 \end{gametree}}
 \bsk
 \raggedright
-\onslide<1->{One of you is drawn as moving first, but the other's information set
-means she sees nothing. So this is \textbf{the same game} as the matrix.}
+\onslide<1->{Cut off the Stay/Expand move and keep what follows Expand. The Brewery is
+drawn first, but the Truck's information set means it sees nothing. So this piece
+is just the simultaneous $2\times2$ Battle of the Sexes.}
 \bsk
-\onslide<2>{Swap who moves first and nothing changes. Simultaneity is not about
+\onslide<2>{Swap who is drawn first and nothing changes. Simultaneity is not about
 time. It is about \textbf{what you know when you choose}.}
 \vspace{-0.2in}
 \end{frame}
@@ -415,7 +567,8 @@ joint campaign advertising Polaris as a furniture destination.
 \end{itemize}
 \bsk
 \vfill
-That second stage is the startup game you played earlier.
+That second stage is a coordination game too. Unlike the Brewery and the
+Truck, both stores rank its two equilibria the same way.
 \vspace{-0.3in}
 \end{frame}
 
