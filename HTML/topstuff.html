@@ -33,8 +33,23 @@
   .page-title {
     font-size: 1.5rem;
     font-weight: 700;
-    margin: 0 0 10px 0;
+    margin: 0 0 6px 0;
   }
+  .page-subtitle {
+    font-size: 1.05rem;
+    font-weight: 400;
+    margin: 0 0 4px 0;
+  }
+  .page-note {
+    font-size: 0.88rem;
+    color: var(--canvas-muted);
+    margin: 0 0 14px 0;
+  }
+  .page-note a {
+    color: var(--canvas-muted);
+    text-decoration: underline;
+  }
+  .page-note a:hover { color: var(--osu-scarlet); }
   .accent-bar {
     height: 4px;
     width: 56px;
@@ -127,7 +142,11 @@
 </head>
 
 <body>
-  <h1 class="page-title">Lecture Slides</h1>
+  <h1 class="page-title">ECON 5001 - Game Theory</h1>
+  <div class="page-subtitle">Prof. Healy's lecture slides</div>
+  <div class="page-note">Based on the text
+    <a href="https://faculty.econ.ucdavis.edu/faculty/bonanno/GT_Book.html" target="_blank" rel="noopener">Game Theory</a>
+    by <a href="https://faculty.econ.ucdavis.edu/faculty/bonanno/" target="_blank" rel="noopener">Giacomo Bonanno</a>.</div>
   <div class="accent-bar"></div>
 
   <ol class="lectures">
