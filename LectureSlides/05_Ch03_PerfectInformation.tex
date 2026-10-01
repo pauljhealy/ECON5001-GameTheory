@@ -979,12 +979,22 @@ But how does $BI(G)$ relate to $IDWDS(G)$?
 \small
 After $R$, Player 2 is \textbf{indifferent} between $d$ and $e$. So there are two BI solutions:
 \begin{itemize}
-    \item $\big(RW,ad\big)$, payoffs $(3,2)$
-    \item $\big(LW,ae\big)$, payoffs $(2,1)$
+    \item $BI = \{(RW,ad),(LW,ae)\}$
 \end{itemize}
 \medskip
 \uncover<2->{But $ae$ \textbf{weakly dominates} $ad$:\\
-$e$ is better if P1 ``trembles'' and plays $E$}
+$e$ is better if P1 ``trembles'' and plays $E$\\}
+\medskip
+\uncover<3->{New solution concept:\\
+$BI\ \cap\ IDWDS$\\
+``BI solutions that survive IDWDS''\\
+\medskip
+\begin{itemize}
+    \item $BI \cap IDWDS = \{(LW,ae)\}$
+\end{itemize}
+}
+\medskip
+\uncover<4->{\textbf{Order}: assuming \textbf{all} weakly dominated strategies are deleted at every step}
 \end{column}
 \end{columns}
 \vfill
@@ -992,7 +1002,7 @@ $e$ is better if P1 ``trembles'' and plays $E$}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{The Same Game in Strategic Form}
+\begin{frame}{$BI\ \cap\ IDWDS$}
 \centering
 \begin{matrixgame}[top={ac, ad, ae, bc, bd, be}, left={LW, LE, RW, RE}, player names={Player 1, Player 2}]
   \payoffmatrix{2,1 & 2,1 & 2,1 & 4,0 & 4,0 & 4,0 \\
@@ -1015,18 +1025,18 @@ $e$ is better if P1 ``trembles'' and plays $E$}
 \bsk
 \raggedright
 \small
-\only<1>{Green: the two backward-induction solutions, $(LW,ae)$ and $(RW,ad)$.
-Note $LW$ and $LE$ are \textbf{equivalent} rows, but they're still different strategies.}%
-\only<2>{Round 1: $RE$ is weakly dominated by $RW$; $ae$ weakly dominates every
-other column of Player 2. All are deleted at once.
-$LW$ and $LE$ are equivalent, so neither dominates the other: both stay.}%
-\only<3>{Round 2: against $ae$, $LW$ and $LE$ (2) beat $RW$ (1).
+\only<1>{Green: the two backward-induction solutions, $(LW,ae)$ and $(RW,ad)$.\\
+Note: $LW$ and $LE$ are \textbf{equivalent}, but we keep both.}%
+\only<2>{Round 1:\\ P1: $RE$ is weakly dominated by $RW$\\(Keep both LW and LE.)\\ P2: $ae$ weakly dominates every
+other column.}%
+\only<3>{Round 2: against $ae$, $RW$ is worse than $LW$ and $LE$.\\
 IDWDS leaves $(LW,ae)$ and $(LE,ae)$:
 \begin{itemize}
-    \item it \textbf{drops} the BI solution $(RW,ad)$, and
-    \item it \textbf{keeps} $(LE,ae)$ (red), which is \textbf{not} a BI solution.
-\end{itemize}}
-\vspace{-0.2in}
+    \item IDWDS \textbf{drops} the BI solution $(RW,ad)$
+    \item IDWDS \textbf{keeps} the BI solution $(LW,ae)$
+    \item So $BI\ \cap\ IDWDS = \{(LW,ae)\}$
+\end{itemize}
+\textbf{Theorem:} IDWDS always keeps \textit{at least one} BI solution ($BI(G)\cap IDWDS(G) \neq \emptyset$)}
 \end{frame}
 
 
@@ -1037,11 +1047,11 @@ What we knew:
     \item $SNE(G) \subseteq IDWDS(G) \subseteq IDSDS(G)$
 \end{itemize}
 \bsk
-Where does Backward Induction ($BI(G)$) land?
+How does Backward Induction ($BI(G)$) fit in?
 \begin{enumerate}
     \item $SNE(G)\subseteq BI(G)$ (optional: prove this)
     \item $BI(G)\subseteq NE(G)$
-    \item $BI(G)\cap IDWDS(G) \neq 0$ (optional: prove this)
+    \item $BI(G)\cap IDWDS(G) \neq \emptyset$ (previous slide)
 \end{enumerate}
 \bsk
 Thus:
@@ -1060,67 +1070,54 @@ Win, Lose, or Draw
 \end{frame}
 
 \begin{frame}{Win-Lose Games}
-Two players, two outcomes: Player 1 wins ($W_1$) or Player 2 wins ($W_2$). \textbf{No draws.}
+Two players, two outcomes: Player 1 wins ($W_1$) or Player 2 wins ($W_2$). \textbf{No ties.}\\
+\textbf{Example:} ``dots and boxes'' with an odd number of possible boxes (so no ties)
 \bsk
 Player 1 strictly prefers $W_1$; Player 2 strictly prefers $W_2$. Use payoffs
 $(1,0)$ and $(0,1)$.
 \vfill
-\centering
 \textbf{Theorem.} In every finite two-player win-lose game with perfect information,
 \textbf{one of the two players has a winning strategy.}
 \vfill
-\raggedright
 A winning strategy guarantees a win \textit{no matter what the opponent does}.
 \bsk
-Note what it doesn't say: \textit{which} player, or what the strategy is.
-\vspace{-0.3in}
+In practice that may not be helpful! May not even know which player can win.\\ 
+Ex: Dots \& boxes only solved for $3\times 3$ and $3\times 5$ (2nd player wins)D
 \end{frame}
 
-\begin{frame}{Let's Play}
-Two players take turns choosing a number from $\{1,2,\ldots,10\}$.\\
-Running total starts at 0. \textbf{First to reach 100 or more wins.}
+\begin{frame}{Race to 21 Game}
+Two player game.\\
+Total Count starts at 0.\\
+Players take turns adding 1, 2, or 3 to the Total Count.\\
+You win if you are the one to reach 21 (or more).
 \bsk
 Player 1 moves first.
 \vfill
-\centering
 How to play?
 \vfill
-\raggedright
-\vspace{0.6in}
 \end{frame}
 
-\begin{frame}{Why I Was Always Going to Lose That}
-The tree is far too big to draw: 10{,}000 nodes just for the first four moves.
-But we can reason backward anyway.
+\begin{frame}{Race to 21: Solution}
+The tree is far too big to draw. But we can still use Backward Induction (BI)
 \bsk
-Call a total a \textbf{losing position} if whoever has to move from it cannot win.
+Call a Total Count a \textbf{losing position} if whoever has to move from it cannot win.
 \bsk
 \begin{itemize}
-    \item \textbf{89} is a losing position: from 89 you can reach only $90,\ldots,99$,
-      and from any of those I can hit exactly 100 \vspace{0.2in}
-    \item \textbf{78} is the next one down: from 78 you must reach $79,\ldots,88$,
-      and from any of those I can get to 89 \vspace{0.2in}
-    \item Keep going: \ $89,\ 78,\ 67,\ 56,\ 45,\ 34,\ 23,\ 12,\ \mathbf{1}$
+    \item \textbf{17} is a losing position:\\
+    from 17 you can reach $18,19,20$, but from any of those the opponent can reach 21 \vspace{0.2in}
+    \item \textbf{13} is a losing position:\\
+    from 13 you can reach $14,15,16$,
+      but from any of those the opponent can get to 17 \vspace{0.2in}
+    \item Losing positions: \ $17,\ 13,\ 9,\ 5,\ \mathbf{1}$
 \end{itemize}
-\vspace{-0.2in}
+\textbf{Winning strategy for Player 1}:
+\begin{itemize}
+    \item Start by adding 1 (giving them a losing position)
+    \item If they add $x$, you add $4-x$ (keeping them on the losing positions)
+\end{itemize}
+Note: this is a proper strategy, giving an action at \textit{every} node
 \end{frame}
 
-\begin{frame}{Player 1's Winning Strategy}
-\vfill
-\centering
-\large
-Start with \textbf{1}.\\
-\bsk
-Then every turn, choose $\mathbf{11-n}$, where $n$ is what your opponent just chose.
-\vfill
-\normalsize
-\raggedright
-Each pair of moves adds exactly 11, so the total marches $1, 12, 23, \ldots, 89, 100$.
-\bsk
-Notice this is a genuine \textit{strategy}: it says what to do at every position
-Player 1 could face, not just the ones on the winning path.
-\vspace{-0.4in}
-\end{frame}
 
 \begin{frame}{Adding a Draw}
 Now three outcomes: $W_1$, $W_2$, and a draw $D$, with
@@ -1131,26 +1128,21 @@ Use utilities $(1,0,-1)$
 \begin{enumerate}
     \item Player 1 has a strategy guaranteeing $W_1$
     \item Player 2 has a strategy guaranteeing $W_2$
-    \item Player 1 can guarantee \textit{at least} a draw, and so can Player 2, so if
-      both play well it's a draw
+    \item Both players have a strategy that \textit{guarantees} \textbf{at least} a draw.\\(If both play it, they will draw.)
 \end{enumerate}
-\vfill
-The proof is the same backward-induction argument, with three possible markings
-instead of two.
-\vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{Which Category?}
+\begin{frame}{Popular Examples}
 \begin{itemize}
-    \item \textbf{Tic-Tac-Toe:} category 3. Solved: perfect play draws. \vspace{0.25in}
-    \item \textbf{Checkers:} category 3. Solved in 2007, after 18 years of work. \vspace{0.25in}
-    \item \textbf{Chess:} \underline{\hspace{2in}} \vspace{0.25in}
+    \item \textbf{Tic-Tac-Toe:} category 3 (draw).
+    \vspace{0.25in}
+    \item \textbf{Checkers:} category 3 (draw). Solved 1989--2007 (18 years of calculating). \vspace{0.25in}
+    \item \textbf{Chess:} ??? \vspace{0.25in}
 \end{itemize}
 \vfill
-The theorem says chess is in \textit{one} of the three categories. It does not say
-which, and nobody knows.
+Chess could have a guaranteed win for white, a guaranteed win for black, or a strategy for both that guarantees a stalemate (and nothing better).
 \bsk
-Existence proofs are like that.
+``Existence proof'' that isn't constructive 
 \vspace{-0.3in}
 \end{frame}
 
@@ -1158,39 +1150,20 @@ Existence proofs are like that.
 % BACK TO THE CENTIPEDE
 % ==============================================================
 
-\begin{frame}{Back to the Centipede}
-Apply backward induction to the game you played:
+\begin{frame}{Why Does B.I. Fail?}
+Why might B.I. fail in practice?\\
+Three possibilities:
 \bsk
 \begin{itemize}
-    \item At the \textbf{last} decision, taking beats passing. So take. \vspace{0.2in}
-    \item At the second-to-last, you know the other player will take next, so passing
-      gets you the smaller share. So take. \vspace{0.2in}
-    \item Keep unraveling \ldots \ all the way to the first move. \vspace{0.2in}
-\end{itemize}
-\bsk
-\centering
-\large
-Prediction: the very first player takes immediately.
-\vfill
-\normalsize
-\raggedright
-Our numbers said: \underline{\hspace{2.2in}}
-\vspace{-0.2in}
-\end{frame}
-
-\begin{frame}{So Who's Wrong?}
-Three honest possibilities:
-\bsk
-\begin{itemize}
-    \item The \textbf{payoffs} are wrong. Players may care about the other person or
-      about fairness, so the game isn't the one we wrote down \vspace{0.25in}
-    \item The \textbf{reasoning} is wrong. Players may not carry the unraveling through
-      that many steps \vspace{0.25in}
-    \item The \textbf{beliefs} are wrong. I might reason perfectly and still pass if I
-      doubt that \textit{you} will \vspace{0.25in}
+    \item The \textbf{payoffs} are wrong. Players aren't just selfish \& greedy. \vspace{0.25in}
+    \item \textbf{Limited depth of reasoning}: players can only perform a few rounds of B.I. \vspace{0.25in}
+    \item Players are rational but don't \textbf{believe} others are rational \vspace{0.25in}
 \end{itemize}
 \vfill
-All three are live. We'll get the machinery to separate them later.
+My research on the centipede game:\\
+Turn it into a zero-sum game and B.I. works great
+\bsk
+Other papers: limited depth of reasoning
 \vspace{-0.3in}
 \end{frame}
 
@@ -1198,46 +1171,49 @@ All three are live. We'll get the machinery to separate them later.
 % WORKED EXAMPLE
 % ==============================================================
 
-\begin{frame}[standout]
-Let's Work One Out
-\end{frame}
+% \begin{frame}[standout]
+% Let's Work One Out
+% \end{frame}
 
-\begin{frame}{Planning Spring Break}
-Ann, Ben, and Cal share a house and settle the trip in turn, each seeing every
-decision made before theirs.
-\bsk
-\centering
-\begin{gametree}[player names={Ann, Ben, Cal}, scale=0.66]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=7.4] {a; b};
-  \branch[player=2, label=135] from (w1) to[v=1.5, h=3.2] {c(2,3,1); d};
-  \branch[player=3, label=45] from (w2) to[v=1.5, h=3.2] {g(0,4,3); h};
-  \branch[player=3, label=180] from (w12) to[v=1.5, h=1.7] {e(1,1,4); f(3,2,2)};
-  \branch[player=1, label=0] from (w22) to[v=1.5, h=1.7] {i(4,0,3); j(2,2,2)};
-\end{gametree}
-\bsk
-\raggedright
-{\footnotesize Payoffs in order: Ann, Ben, Cal.}
-\vspace{-0.2in}
-\end{frame}
+% \begin{frame}{Planning Spring Break}
+% Ann, Ben, and Cal share a house and settle the trip in turn, each seeing every
+% decision made before theirs.
+% \bsk
+% \centering
+% \begin{gametree}[player names={Ann, Ben, Cal}, scale=0.66]
+%   \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=7.4] {a; b};
+%   \branch[player=2, label=135] from (w1) to[v=1.5, h=3.2] {c(2,3,1); d};
+%   \branch[player=3, label=45] from (w2) to[v=1.5, h=3.2] {g(0,4,3); h};
+%   \branch[player=3, label=180] from (w12) to[v=1.5, h=1.7] {e(1,1,4); f(3,2,2)};
+%   \branch[player=1, label=0] from (w22) to[v=1.5, h=1.7] {i(4,0,3); j(2,2,2)};
+% \end{gametree}
+% \bsk
+% \raggedright
+% {\footnotesize Payoffs in order: Ann, Ben, Cal.}
+% \vspace{-0.2in}
+% \end{frame}
 
-\begin{frame}{Planning Spring Break}
-\begin{enumerate}
-    \item How many strategies does each player have? \vspace{0.35in}
-    \item Run backward induction. Where does a player face a tie? \vspace{0.35in}
-    \item Write out \textbf{both} backward-induction solutions, as strategy
-      profiles. \vspace{0.35in}
-    \item What are the two backward-induction outcomes? \vspace{0.35in}
-\end{enumerate}
-\end{frame}
+% \begin{frame}{Planning Spring Break}
+% \begin{enumerate}
+%     \item How many strategies does each player have? \vspace{0.35in}
+%     \item Run backward induction. Where does a player face a tie? \vspace{0.35in}
+%     \item Write out \textbf{both} backward-induction solutions, as strategy
+%       profiles. \vspace{0.35in}
+%     \item What are the two backward-induction outcomes? \vspace{0.35in}
+% \end{enumerate}
+% \end{frame}
 
 \begin{frame}{What Have We Learned, Charlie Brown?}
 \begin{itemize}
-    \item Perfect-information games are drawn as \textbf{rooted trees}; a frame becomes
-      a game once preferences are added
-    \item \textbf{Backward induction} works from the leaves inward; ties give several
+    \item Perfect-information games are drawn as \textbf{rooted directed trees}
+    \item A game frame becomes
+      a \textbf{game} once preferences are added
+    \item \textbf{Backward induction} works from the terminal nodes backward
+    \item ties give several BI
       solutions
-    \item A \textbf{strategy} covers all your decision nodes, even unreachable ones
-    \item Every backward-induction solution is a \textbf{Nash equilibrium}; the extra
+    \item A \textbf{strategy} is a complete cotingent plan, even at \textit{unreachable} nodes
+    \item Every backward-induction solution is a \textbf{Nash equilibrium}
+    \item the other
       Nash equilibria typically rest on \textbf{incredible threats}
     \item In finite two-player win-lose games, \textbf{somebody} has a winning strategy
 \end{itemize}
