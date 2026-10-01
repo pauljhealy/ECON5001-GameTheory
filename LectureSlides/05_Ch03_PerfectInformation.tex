@@ -994,33 +994,38 @@ $e$ is better if P1 ``trembles'' and plays $E$}
 
 \begin{frame}{The Same Game in Strategic Form}
 \centering
-{\small ($LW$ and $LE$ are identical rows, merged here into $L$.)}
-\medskip
-
-\begin{matrixgame}[top={ac, ad, ae, bc, bd, be}, left={L, RW, RE}, player names={Player 1, Player 2}]
+\begin{matrixgame}[top={ac, ad, ae, bc, bd, be}, left={LW, LE, RW, RE}, player names={Player 1, Player 2}]
   \payoffmatrix{2,1 & 2,1 & 2,1 & 4,0 & 4,0 & 4,0 \\
+                2,1 & 2,1 & 2,1 & 4,0 & 4,0 & 4,0 \\
                 2,0 & 3,2 & 1,2 & 2,0 & 3,2 & 1,2 \\
                 2,0 & 3,2 & 0,3 & 2,0 & 3,2 & 0,3}
   \begin{scope}[on background layer]
     \shaderow[ForestGreen, opacity=0.3]{1}{3}{3}
-    \shaderow[ForestGreen, opacity=0.3]{2}{2}{2}
+    \shaderow[ForestGreen, opacity=0.3]{3}{2}{2}
+    \only<3->{\shaderow[red, opacity=0.25]{2}{3}{3}}
   \end{scope}
-  \strike<2->{h}{3}
+  \strike<2->{h}{4}
   \strike<2->{v}{1}
   \strike<2->{v}{2}
   \strike<2->{v}{4}
   \strike<2->{v}{5}
   \strike<2->{v}{6}
-  \strike<3->{h}{2}
+  \strike<3->{h}{3}
 \end{matrixgame}
 \bsk
 \raggedright
 \small
-\only<1>{Shaded: the two backward-induction solutions, $(L,ae)$ and $(RW,ad)$.}%
+\only<1>{Green: the two backward-induction solutions, $(LW,ae)$ and $(RW,ad)$.
+Note $LW$ and $LE$ are \textbf{equivalent} rows, but they're still different strategies.}%
 \only<2>{Round 1: $RE$ is weakly dominated by $RW$; $ae$ weakly dominates every
-other column of Player 2. All are deleted at once.}%
-\only<3>{Round 2: against $ae$, $L$ (2) beats $RW$ (1). IDWDS leaves only $(L,ae)$:
-\textbf{two} BI solutions, but IDWDS keeps just \textbf{one}.}
+other column of Player 2. All are deleted at once.
+$LW$ and $LE$ are equivalent, so neither dominates the other: both stay.}%
+\only<3>{Round 2: against $ae$, $LW$ and $LE$ (2) beat $RW$ (1).
+IDWDS leaves $(LW,ae)$ and $(LE,ae)$:
+\begin{itemize}
+    \item it \textbf{drops} the BI solution $(RW,ad)$, and
+    \item it \textbf{keeps} $(LE,ae)$ (red), which is \textbf{not} a BI solution.
+\end{itemize}}
 \vspace{-0.2in}
 \end{frame}
 
