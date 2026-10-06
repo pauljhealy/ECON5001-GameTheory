@@ -21,19 +21,28 @@
 
 \frame{\maketitle}
 
-\begin{frame}{What Chapter 3 Assumed}
-Last time, every player knew the entire history when it was her turn.
+\begin{frame}{Removing Perfect Information}
+Previously: every player knew the entire history at every node
 \bsk
-That ruled out almost everything interesting:
+That ruled out many important situations:
 \begin{itemize}
-    \item sealed bids
-    \item a firm choosing capacity without seeing its rival's choice
-    \item poker
-    \item any move made \textbf{at the same time} as somebody else's
+    \item Moves made \textbf{at the same time} as somebody else's
+    \begin{itemize}
+        \item Duopoly competition (choosing price or quantity)
+        \item Repeated Prisoners' Dilemma
+    \end{itemize}
+    \item Moves by ``nature'' (randomness)
+    \begin{itemize}
+        \item Poker
+        \item Sealed bid auction w/out knowing others' values
+    \end{itemize}
 \end{itemize}
 \vfill
-In this lecture we drop that assumption, then rebuild backward induction so it
-still works.
+Our goal:
+\begin{enumerate}
+    \item Drop that assumption
+    \item Redefine ``backwards induction'' for these types of games
+\end{enumerate}
 \vspace{-0.4in}
 \end{frame}
 
@@ -51,32 +60,30 @@ still works.
 % ---------------------------------------------------------------------
 
 \begin{frame}{Two Columbus Businesses}
-Plenty of Columbus taprooms have no kitchen. The food comes from a truck
-parked outside.
+Microbreweries often coordinate with food trucks.\\
+Hypothetical story:
 \bsk
 \begin{itemize}
-    \item \textbf{The Brewery} has one taproom and is thinking about growing
-    \item \textbf{The Truck} wants a season-long spot outside a busy taproom
+    \item \textbf{The Brewery} has one taproom and is thinking about opening a 2nd location
+    \item \textbf{The Truck} wants to start working with this brewery
 \end{itemize}
 \bsk
 The Brewery decides first:
 \begin{itemize}
-    \item \textbf{Stay}: expand the current taproom. Safe, predictable.
-    \item \textbf{Expand}: open a second taproom, either in
+    \item \textbf{Stay}: No new location.
+    \item \textbf{Expand}: Open a second taproom, either in
       \textbf{Franklinton} or in the \textbf{Short North}
 \end{itemize}
-\bsk
-If the Brewery expands, the Truck picks its home for the season:
-\textbf{Franklinton} or the \textbf{Short North}.
-\vfill
-{\footnotesize Hypothetical firms, real neighborhoods.}
-\vspace{-0.2in}
+The Truck sees the brewery's choice. Then both \textbf{simultaneously} pick:
+\begin{itemize}
+    \item \textbf{Franklinton}
+    \item \textbf{Short North}
+\end{itemize}
 \end{frame}
 
-\begin{frame}{What Each One Wants}
+\begin{frame}{Preferences}
 \begin{itemize}
-    \item Both want to land in the \textbf{same} neighborhood. A new taproom with
-      no food, or a truck with no taproom, does badly.
+    \item Both want to land in the \textbf{same} neighborhood.
     \item The Brewery prefers \textbf{Franklinton}: cheaper rent, room for a patio
     \item The Truck prefers the \textbf{Short North}: late-night foot traffic on High Street
 \end{itemize}
@@ -94,38 +101,23 @@ Different neighborhoods & 0 & 0 \\
 \end{tabular}
 \bsk
 \raggedright
-{\footnotesize Extra annual profit, in \$100{,}000s. The Truck's 0 is just an ordinary season.}
+{\footnotesize Extra annual profit, in \$10{,}000s.}
 \vfill
-Once the Brewery expands, this is Battle of the Sexes.
+If the Brewery expands, this is an asymmetric coordination game
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{Who Knows What}
-The Brewery posts on Instagram: \textit{``Second taproom coming next spring!''}
-\bsk
-But it keeps the address secret until the lease is signed, and the Truck has to
-lock in its spot that same week.
-\bsk
-\begin{itemize}
-    \item[{\color{ForestGreen}\faCheck}] The Truck \textbf{sees} whether the Brewery
-      chose Stay or Expand
-    \bsk
-    \item[{\color{red}\faTimes}] The Truck does \textbf{not see} which neighborhood
-      the Brewery chose
-\end{itemize}
-\vfill
-\centering
-\Large
-The Truck knows \textit{whether}. \ It doesn't know \textit{where}.
-\vfill
-\normalsize
-\raggedright
-Neither of our tools fits. Chapter 3 assumed the Truck sees everything. A
-simultaneous game would assume it sees nothing.
-\vspace{-0.3in}
+\begin{frame}{One Way To Model It}
+I could just write the associated strategic form:
+\begin{center}
+    \begin{matrixgame}[top={Frkltn, ShrtNrth}, left={Stay Frkltn, Stay ShrtNrth,Expand Frkltn,Expand ShrtNrth}, player names={Brewery, Food Truck}]
+  \payoffmatrix{2,0 & 2,0 \\ 2,0 & 2,0 \\3,1 & 0,0 \\ 0,0 & 1,3}
+\end{matrixgame}
+\end{center}
+...but that doesn't let me capture any backward-induction logic
 \end{frame}
 
-\begin{frame}{Drawing It}
+\begin{frame}{How To Draw It}
 \centering
 \only<1>{\begin{gametree}[player names={Brewery, Truck}, scale=0.8]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=6.0] {Stay(2,0); Expand};
@@ -149,89 +141,90 @@ simultaneous game would assume it sees nothing.
 \end{gametree}}
 \bsk
 \raggedright
-\only<1>{The Brewery moves first. Stay ends the game.}%
-\only<2>{After Expand, the Brewery picks a neighborhood.}%
-\only<3>{Then the Truck picks. So far this looks like a Chapter 3 tree.}%
-\only<4>{The Truck observes the Stay/Expand decision. Every Truck node comes after Expand.}%
-\only<5>{But it does not observe the neighborhood decision.}%
-\only<6>{The oval: the Truck knows it is at \textbf{one of these two nodes},
-but not which one.}
+\only<1>{ }%
+\only<2>{ }%
+\only<3>{Problem: In this tree, The Truck \textbf{can} observe the Brewery's location choice.}%
+\only<4>{The first part is okay...}%
+\only<5>{But the second part needs fixing...}%
+\only<6>{Draw an ``Information Set'': an oval indicating nodes that the Truck \textbf{cannot distinguish}.}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{From the Truck's Seat}
-\begin{itemize}
-    \item If the Brewery stays, the Truck never moves. Nothing to decide.
-    \bsk
-    \item If the Brewery expands, the Truck is somewhere \textbf{inside the oval}.
-      It knows it is past Expand. It doesn't know which branch came after.
-    \bsk
-    \item So it picks \textbf{one} neighborhood for the whole oval. A plan like
-      \textit{``Franklinton if they chose Franklinton''} is not available. It
-      depends on something the Truck can't see.
-    \bsk
-    \item What the Truck \textit{did} see still tells it something: the Brewery
-      passed up a sure 2.
-\end{itemize}
-\vfill
-This oval has a name, and it is the main new idea of this chapter.
-\vspace{-0.3in}
-\end{frame}
 
-\begin{frame}{What If the Truck Could See Everything?}
+\begin{frame}{Let's Play It}
 \centering
-\begin{gametree}[player names={Brewery, Truck}, scale=0.72]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=6.0] {Stay(2,0); Expand<2->};
-  \branch[player=1, label=0] from (w2) to[v=1.5, h=6.4] {Franklinton<2->; Short North};
-  \branch[player=2, label=135] from (w21) to[v=1.5, h=2.4]
-    {Franklinton<2->(3,1); Short North(0,0)};
-  \branch[label=45] from (w22) to {Franklinton(0,0); Short North<2->(1,3)};
+\begin{gametree}[player names={Brewery, Truck}, scale=0.8]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=6.0] {Stay(2,0); Expand};
+  \branch[player=1, label=0] from (w2) to[v=1.5, h=6.4] {Franklinton; Short North};
+  \branch[player=2, label=none] from (w21) to[v=1.5, h=2.4]
+    {Franklinton(3,1); Short North(0,0)};
+  \branch from (w22) to {Franklinton(0,0); Short North(1,3)};
+  \informset (w21) -- (w22);
+  \path (-3.6,0.6) rectangle (8.2,-5.4);
 \end{gametree}
 \bsk
 \raggedright
-Suppose the address leaked. No oval: two separate Truck nodes, and we are back in Chapter 3.
+Think about how you'd play...
 \bsk
-\onslide<2->{Backward induction: the Truck follows the Brewery wherever it goes. Knowing
-that, the Brewery expands to Franklinton and gets 3. Outcome $(3,1)$.}
+\only<1>{\textbf{Moblab} time! Uses associated strategic form, but look at the tree here...}
+\only<2>{The fact that the Brewery chose Expand tells us something...}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Somewhere in Between}
-\centering
-\renewcommand{\arraystretch}{1.6}
-\begin{tabular}{p{2.1in}cc}
- & \textbf{Sees Stay vs.\ Expand?} & \textbf{Sees the neighborhood?} \\
-\hline
-Chapter 3 (perfect information) & {\color{ForestGreen}\faCheck} & {\color{ForestGreen}\faCheck} \\
-Simultaneous-move game & {\color{red}\faTimes} & {\color{red}\faTimes} \\
-\textbf{Our game} & {\color{ForestGreen}\faCheck} & {\color{red}\faTimes} \\
-\end{tabular}
-\bsk
-\raggedright
-\vfill
-Real decisions are usually in the last row. You see \textit{some} of what others
-did, not all of it.
-\bsk
-Because the Truck sees part of the history, this is \textbf{not} just a
-simultaneous $2\times2$ game, and we can't solve it by backward induction
-alone. We need new tools.
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{What If the Truck Could See Everything?}
+% \centering
+% \begin{gametree}[player names={Brewery, Truck}, scale=0.72]
+%   \branch[player=1, root=w, label=90] from (0,0) to[v=1.5, h=6.0] {Stay(2,0); Expand<2->};
+%   \branch[player=1, label=0] from (w2) to[v=1.5, h=6.4] {Franklinton<2->; Short North};
+%   \branch[player=2, label=135] from (w21) to[v=1.5, h=2.4]
+%     {Franklinton<2->(3,1); Short North(0,0)};
+%   \branch[label=45] from (w22) to {Franklinton(0,0); Short North<2->(1,3)};
+% \end{gametree}
+% \bsk
+% \raggedright
+% What would 
+% \bsk
+% \onslide<2->{Backward induction: the Truck follows the Brewery wherever it goes. Knowing
+% that, the Brewery expands to Franklinton and gets 3. Outcome $(3,1)$.}
+% \vspace{-0.2in}
+% \end{frame}
 
-\begin{frame}{Think About It}
-You own the Truck. You just saw \textit{``Second taproom coming next spring!''}
-\bsk
-\centering
-\Large
-Franklinton or the Short North?
-\normalsize
-\bsk
-\raggedright
-\vspace{0.9in}
-Hint: the Brewery could have stayed put and earned 2 for sure. What does
-\textit{giving that up} tell you about where it's going?
-\vfill
-\end{frame}
+% \begin{frame}{Somewhere in Between}
+% \centering
+% \renewcommand{\arraystretch}{1.6}
+% \begin{tabular}{p{2.1in}cc}
+%  & \textbf{Sees Stay vs.\ Expand?} & \textbf{Sees the neighborhood?} \\
+% \hline
+% Chapter 3 (perfect information) & {\color{ForestGreen}\faCheck} & {\color{ForestGreen}\faCheck} \\
+% Simultaneous-move game & {\color{red}\faTimes} & {\color{red}\faTimes} \\
+% \textbf{Our game} & {\color{ForestGreen}\faCheck} & {\color{red}\faTimes} \\
+% \end{tabular}
+% \bsk
+% \raggedright
+% \vfill
+% Real decisions are usually in the last row. You see \textit{some} of what others
+% did, not all of it.
+% \bsk
+% Because the Truck sees part of the history, this is \textbf{not} just a
+% simultaneous $2\times2$ game, and we can't solve it by backward induction
+% alone. We need new tools.
+% \vspace{-0.3in}
+% \end{frame}
+
+% \begin{frame}{Think About It}
+% You own the Truck. You just saw \textit{``Second taproom coming next spring!''}
+% \bsk
+% \centering
+% \Large
+% Franklinton or the Short North?
+% \normalsize
+% \bsk
+% \raggedright
+% \vspace{0.9in}
+% Hint: the Brewery could have stayed put and earned 2 for sure. What does
+% \textit{giving that up} tell you about where it's going?
+% \vfill
+% \end{frame}
 
 % ==============================================================
 % 4.1 IMPERFECT INFORMATION
@@ -241,44 +234,44 @@ Hint: the Brewery could have stayed put and earned 2 for sure. What does
 Information Sets
 \end{frame}
 
-\begin{frame}{A Familiar Situation}
-To discourage copying, I print two versions of the exam, white paper and pink,
-and hand them out so neighbors never share one.
-\bsk
-Or do I? Writing genuinely different versions is extra work for me. I might be
-bluffing: same questions, different paper.
-\bsk
-A student who didn't study is sitting next to someone who did.
-\begin{itemize}
-    \item Turn in a blank exam and, given earlier grades, he gets a \textbf{C}
-    \item Copy, and if the versions are identical he gets an \textbf{A}
-    \item Copy, and if the versions differ he is caught and gets an \textbf{F}
-\end{itemize}
-\vfill
-The moves are sequential. I decide first, but he doesn't \textit{see} my decision.
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{Example: Cheating}
+% To discourage copying, I print two versions of the exam, white paper and pink,
+% and hand them out so neighbors never share one.
+% \bsk
+% Or do I? Writing genuinely different versions is extra work for me. I might be
+% bluffing: same questions, different paper.
+% \bsk
+% A student who didn't study is sitting next to someone who did.
+% \begin{itemize}
+%     \item Turn in a blank exam and, given earlier grades, he gets a \textbf{C}
+%     \item Copy, and if the versions are identical he gets an \textbf{A}
+%     \item Copy, and if the versions differ he is caught and gets an \textbf{F}
+% \end{itemize}
+% \vfill
+% The moves are sequential. I decide first, but he doesn't \textit{see} my decision.
+% \vspace{-0.3in}
+% \end{frame}
 
-\begin{frame}{Drawing What He Doesn't Know}
-\centering
-\begin{gametree}[player names={Professor, Student}, scale=0.85]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=6.2]
-    {Identical versions; Different versions};
-  \branch[player=2, label=none] from (w1) to[v=1.5, h=2.6]
-    {Copy(\makecell{Student\\ gets A}); Blank(\makecell{Student\\ gets C})};
-  \branch from (w2) to
-    {Copy(\makecell{Caught:\\ gets F}); Blank(\makecell{Student\\ gets C})};
-  \informset (w1) -- (w2);
-\end{gametree}
-\bsk
-\raggedright
-The enclosure is an \textbf{information set}: the Student knows he is at one of
-those two nodes, but not which one.
-\vspace{-0.2in}
-\end{frame}
+% \begin{frame}{Drawing What He Doesn't Know}
+% \centering
+% \begin{gametree}[player names={Professor, Student}, scale=0.85]
+%   \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=6.2]
+%     {Identical versions; Different versions};
+%   \branch[player=2, label=none] from (w1) to[v=1.5, h=2.6]
+%     {Copy(\makecell{Student\\ gets A}); Blank(\makecell{Student\\ gets C})};
+%   \branch from (w2) to
+%     {Copy(\makecell{Caught:\\ gets F}); Blank(\makecell{Student\\ gets C})};
+%   \informset (w1) -- (w2);
+% \end{gametree}
+% \bsk
+% \raggedright
+% The enclosure is an \textbf{information set}: the Student knows he is at one of
+% those two nodes, but not which one.
+% \vspace{-0.2in}
+% \end{frame}
 
 \begin{frame}{Definition: Extensive-Form Game-Frame}
-Everything from Chapter 3, plus one item:
+Starts the same as a perfect-information game frame:
 \bsk
 \begin{itemize}
     \item a finite rooted directed tree
@@ -287,21 +280,24 @@ Everything from Chapter 3, plus one item:
     \item outcomes assigned to terminal nodes
 \end{itemize}
 \bsk
+\textbf{The new piece:}
 $\star$ \ For every player $i$, a \textbf{partition} $\mathcal{D}_i$ of her decision
-nodes $D_i$. Each cell of the partition is an \textbf{information set}.
+nodes $D_i$.\\
+Each cell of the partition is an \textbf{information set} (or ``infoset'').\\
+Two nodes in the same infoset: can't be distinguished
 \bsk
 We write $H$ for a single information set, so $H\in\mathcal{D}_i$.
 \bsk
 \centering
 \textbf{Restriction:} any two nodes in the same information set must offer
-\textit{exactly the same actions}.
+\textit{the same actions}.
 \vfill
 \raggedright
 Why must that hold? \vspace{0.3in}
 \end{frame}
 
 \begin{frame}{A Note on Notation}
-Three different things, easily confused:
+Be careful with notation (Bonanno isn't):
 \bsk
 \begin{itemize}
     \item $D_i$ \ is the set of \textbf{all} decision nodes belonging to player $i$
@@ -311,9 +307,7 @@ Three different things, easily confused:
     \item $H\in\mathcal{D}_i$ \ is \textbf{one} information set, a single cell
 \end{itemize}
 \vfill
-{\footnotesize Bonanno writes $D$ and $D'$ where we write $H$ and $H'$. Watch out:
-in Chapter 3 he also used $D$ for the set of \textit{all} decision nodes in the
-tree, so the same letter does two jobs. We'll stick with $H$ for information sets.}
+{\footnotesize Bonanno uses $D$ for an infoset, but $D_i$ is also the set of all of $i$'s decision nodes. So let's use $H$ instead.}
 \vspace{-0.2in}
 \end{frame}
 
@@ -329,75 +323,63 @@ Perfect information
 \vfill
 \normalsize
 \raggedright
-So Chapter 3 was not a different theory. It was this one, with the partition
-as fine as it can be.
+Convention: No need to draw ovals around singleton infosets
 \bsk
-Convention from here: we draw an enclosure \textbf{only} around information sets
-with two or more nodes. A lone node is its own information set.
+Some books/authors use dashed lines instead of ovals
 \vspace{-0.4in}
 \end{frame}
 
-\begin{frame}{Perfect Recall: First Condition}
-Almost all of game theory assumes players don't forget.
-\bsk
-\begin{block}{Condition 1}
-No node in an information set is a \textbf{predecessor} of another node in it.
-\end{block}
-\bsk
-Below, $H=\{r,u\}$ violates it: $r$ comes before $u$, so Player 1 cannot tell
-whether she has already moved.
-\vfill
-\centering
-\begin{gametree}[labels=short, scale=0.78]
-  \branch[player=1, root=w, label=90, label text=$r$] from (0,0) to[v=1.3, h=4.0] {a; b(\ )};
-  \branch[label=180, label text=$u$] from (w1) to[v=1.3, h=1.6] {a(\ ); b(\ )};
-  \informset[curved=25, label=none] (w) -- (w1);
-\end{gametree}
-\vspace{-0.15in}
+\begin{frame}{Perfect Recall}
+We do assume ``Perfect Recall'', which means two things:
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{block}{Condition 1}
+        No node in an information set is a \textbf{predecessor} of another node in it.
+        \end{block}
+        \bsk
+        \centering
+        \begin{gametree}[labels=short, scale=0.78]
+          \branch[player=1, root=w, label=90, label text=$1$] from (0,0) to[v=1.3, h=4.0] {a; b(\ )};
+          \branch[label=180, label text=$1$] from (w1) to[v=1.3, h=1.6] {a(\ ); b(\ )};
+          \informset[curved=25, label=none] (w) -- (w1);
+        \end{gametree}    
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \begin{block}{Condition 2}
+        Players can't ``forget'' their past actions. (See book for formal def'n)
+        \end{block}
+        \bsk
+        \centering
+        \begin{gametree}[labels=short, scale=0.7]
+          \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=6.4] {a; b};
+          \branch[player=2, label=0, label text=$H$] from (w2) to[v=1.4, h=2.6] {c; d(\ )};
+          \branch[label=none] from (w1) to[v=1.4, h=1.6] {e(\ ); f(\ )};
+          \branch[label=none] from (w21) to {e(\ ); f(\ )};
+          \informset[curved=18] (w1) -- (w21) {$H'$};
+        \end{gametree}
+    \end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}{Perfect Recall: Second Condition}
-\begin{block}{Condition 2}
-If $x\in H$ leads to $y\in H'$ by action $a$, then \textbf{every} node in $H'$
-has a predecessor in $H$ reached by that same $a$.
-\end{block}
+\begin{frame}{Simultaneous Moves}
+Simultaneous-move (strategic form) games can be drawn as extensive-form games:
 \bsk
-Below, $H'$ is Player 2's lower information set. Its right node is reached via
-$H$, but its left node never passes through $H$ at all. Player 2 cannot tell
-whether this is her first move or her second.
-\vfill
 \centering
-\begin{gametree}[labels=short, scale=0.7]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=6.4] {a; b};
-  \branch[player=2, label=0, label text=$H$] from (w2) to[v=1.4, h=2.6] {c; d(\ )};
-  \branch[label=none] from (w1) to[v=1.4, h=1.6] {e(\ ); f(\ )};
-  \branch[label=none] from (w21) to {e(\ ); f(\ )};
-  \informset[curved=18] (w1) -- (w21) {$H'$};
-\end{gametree}
-\vspace{-0.15in}
-\end{frame}
-
-\begin{frame}{The Neighborhood Stage, Drawn Two Ways}
-\centering
-\only<1>{\begin{gametree}[player names={Brewery, Truck}, scale=0.8]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=6.4] {Franklinton; Short North};
-  \branch[player=2, label=none] from (w1) to[v=1.4, h=2.4] {Franklinton(3,1); Short North(0,0)};
-  \branch from (w2) to {Franklinton(0,0); Short North(1,3)};
+\only<1>{\begin{gametree}[player names={Sarah, Steven}, scale=0.8]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=6.4] {Up; Down};
+  \branch[player=2, label=none] from (w1) to[v=1.4, h=2.4] {Left(3,3); Right(1,5)};
+  \branch from (w2) to {Left(5,1); Right(2,2)};
   \informset (w1) -- (w2);
 \end{gametree}}%
-\only<2>{\begin{gametree}[player names={Brewery, Truck}, scale=0.8]
-  \branch[player=2, root=w, label=90] from (0,0) to[v=1.3, h=6.4] {Franklinton; Short North};
-  \branch[player=1, label=none] from (w1) to[v=1.4, h=2.4] {Franklinton(3,1); Short North(0,0)};
-  \branch from (w2) to {Franklinton(0,0); Short North(1,3)};
+\only<2>{\begin{gametree}[player names={Sarah, Steven}, scale=0.8]
+  \branch[player=2, root=w, label=90] from (0,0) to[v=1.3, h=6.4] {Left;Right};
+  \branch[player=1, label=none] from (w1) to[v=1.4, h=2.4] {Up(3,3); Down(5,1)};
+  \branch from (w2) to {Up(1,5); Down(2,2)};
   \informset (w1) -- (w2);
 \end{gametree}}
 \bsk
 \raggedright
-\onslide<1->{Cut off the Stay/Expand move and keep what follows Expand. The Brewery is
-drawn first, but the Truck's information set means it sees nothing. So this piece
-is just the simultaneous $2\times2$ Battle of the Sexes.}
-\bsk
-\onslide<2>{Swap who is drawn first and nothing changes. Simultaneity is not about
+\onslide<2>{Simultaneity is not about
 time. It is about \textbf{what you know when you choose}.}
 \vspace{-0.2in}
 \end{frame}
@@ -407,61 +389,59 @@ time. It is about \textbf{what you know when you choose}.}
 % ==============================================================
 
 \begin{frame}[standout]
-Strategies, Again
+What's a Strategy Now?
 \end{frame}
 
-\begin{frame}{One Choice per Information Set}
+\begin{frame}{Strategy: Definition}
 \begin{block}{Definition}
-A \textbf{strategy} for a player in an extensive-form game is a list of choices,
-one for every \textbf{information set} of that player.
+A \textbf{strategy} for a player is still a \textbf{complete contingent plan}.\\
+Now it specifies an action for every \textbf{information set} of the player.
 \end{block}
 \bsk
-Chapter 3 said ``one for every decision node.'' That was the same rule, because
-every node was its own information set.
-\vfill
-The change matters: a player can no longer make a plan that depends on
-something she cannot observe.
-\vspace{-0.4in}
+Important: You must play the same action at all nodes of an infoset
 \end{frame}
 
-\begin{frame}{A Plan You Are Not Allowed to Make}
-Two candidates, Yvonne and Fran, interview for one position. The employer says:
-``don't call me, I'll call you.'' If the first candidate turns him down, he
-immediately calls the other, never saying it's a second offer.
-\bsk
-Yvonne would love to plan:
-\textit{If he calls me first, I say Yes. If I'm the recycled offer, I say No.}
-\bsk
-\centering
-\begin{gametree}[player names={Employer, Yvonne, Fran}, scale=0.58]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=8.4]
-    {Call Yvonne; Call Fran};
-  \branch[player=2, label=none] from (w1) to[v=1.7, h=2.2] {Yes(\ ); No(\ )};
-  \branch[player=3, label=0] from (w2) to[v=1.7, h=3.0] {Yes(\ ); No};
-  \branch[player=2, label=none] from (w22) to[v=1.7, h=2.2] {Yes(\ ); No(\ )};
-  \informset[player=2, curved=16] (w1) -- (w22);
-\end{gametree}
-\bsk
-\raggedright
-Must choose the \textbf{same action at every node} of an information set.
-\vspace{-0.2in}
-\end{frame}
+% \begin{frame}{A Plan You Are Not Allowed to Make}
+% Two candidates, Yvonne and Fran, interview for one position. The employer says:
+% ``don't call me, I'll call you.'' If the first candidate turns him down, he
+% immediately calls the other, never saying it's a second offer.
+% \bsk
+% Yvonne would love to plan:
+% \textit{If he calls me first, I say Yes. If I'm the recycled offer, I say No.}
+% \bsk
+% \centering
+% \begin{gametree}[player names={Employer, Yvonne, Fran}, scale=0.58]
+%   \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=8.4]
+%     {Call Yvonne; Call Fran};
+%   \branch[player=2, label=none] from (w1) to[v=1.7, h=2.2] {Yes(\ ); No(\ )};
+%   \branch[player=3, label=0] from (w2) to[v=1.7, h=3.0] {Yes(\ ); No};
+%   \branch[player=2, label=none] from (w22) to[v=1.7, h=2.2] {Yes(\ ); No(\ )};
+%   \informset[player=2, curved=16] (w1) -- (w22);
+% \end{gametree}
+% \bsk
+% \raggedright
+% Must choose the \textbf{same action at every node} of an information set.
+% \vspace{-0.2in}
+% \end{frame}
 
-\begin{frame}{From Tree to Table, Again}
-Every strategy profile still determines a path, hence an outcome, hence payoffs.
-So every extensive-form game still has a \textbf{strategic form}.
-\bsk
-And we could just find its Nash equilibria and stop.
-\vfill
-But Chapter 3 taught us not to. Some Nash equilibria of the strategic form rest
-on threats nobody would carry out.
-\bsk
-We fixed that with backward induction, which needs a \textit{last} decision node.
-\vfill
-\centering
-\large
-What is the analogue when players move blind?
-\vspace{-0.3in}
+\begin{frame}{Tree to Table}
+\begin{columns}[T]
+    \begin{column}{0.45\textwidth}
+        We can still write any extensive-form game as its associated strategic-form game.
+        \bsk
+        Just list the strategies as rows \& columns
+        \bsk
+        And the Nash equilibrium solution concept can still be used...\\
+        but it ignores backward induction-type logic
+        \bsk
+        Next: an updated version of backward induction
+    \end{column}
+    \begin{column}{0.55\textwidth}
+        \begin{matrixgame}[top={Frkltn, ShrtNrth}, left={Stay Frkltn, Stay ShrtNrth,Expand Frkltn,Expand ShrtNrth}, player names={Brewery, Food Truck}, br]
+         \payoffmatrix{2,0 & 2,0 \\ 2,0 & 2,0 \\3,1 & 0,0 \\ 0,0 & 1,3}
+        \end{matrixgame}
+    \end{column}
+\end{columns}
 \end{frame}
 
 % ==============================================================
@@ -469,89 +449,7 @@ What is the analogue when players move blind?
 % ==============================================================
 
 \begin{frame}[standout]
-Subgames
-\end{frame}
-
-\begin{frame}{The Idea}
-A \textbf{subgame} is a piece of the tree that could stand alone as a game.
-\bsk
-Informal procedure:
-\begin{enumerate}
-    \item Pick a decision node $x$ whose information set is \textbf{just} $\{x\}$
-    \item Draw an oval around $x$ and everything that follows it
-\end{enumerate}
-\bsk
-If that oval \textbf{cuts through} an information set, the oval is illegal.
-So only call it a subgame if it cuts \textbf{no} information set.
-\bsk
-``Cutting'' means some information set has one node inside your oval and another
-node outside it.
-\vfill
-Every game is a subgame of itself. Anything smaller is a \textbf{proper} subgame.
-\vspace{-0.3in}
-\end{frame}
-
-\begin{frame}{Why Cutting Is Fatal}
-\centering
-\begin{gametree}[labels=short, scale=0.85]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=5.6] {L; R};
-  \branch[player=2, label=135] from (w1) to[v=1.5, h=1.8] {a(2,2); b(0,0)};
-  \branch[player=1, label=45] from (w2) to[v=1.5, h=2.4] {U; D(2,0)};
-  \branch[player=2, label=none] from (w21) to[v=1.5, h=1.6] {a(1,3); b(3,1)};
-  \informset[curved=15] (w1) -- (w21);
-\end{gametree}
-\bsk
-\raggedright
-Player 1's node after $R$ looks like a fine place to start. But the oval around
-it would contain \textit{one} of Player 2's two nodes.
-\bsk
-Player 2 can't tell those nodes apart, so you cannot hand her the right-hand
-piece and call it a game. Half her uncertainty is outside it.
-\vspace{-0.2in}
-\end{frame}
-
-\begin{frame}{Definition: Subgame}
-Let $S(x)$ be the set containing $x$ and all its successors.
-\bsk
-$S(x)$ is a \textbf{subgame starting at $x$} if:
-\bsk
-\begin{enumerate}
-    \item the information set containing $x$ is the singleton $\{x\}$, and
-    \bsk
-    \item for every information set $H$ in the game, \ if $H\cap S(x)\ne\emptyset$
-      \ then \ $H\subset S(x)$
-\end{enumerate}
-\bsk
-It is a \textbf{proper} subgame if $x$ is not the root.
-\vfill
-A subgame is \textbf{minimal} if it contains no other subgame strictly inside it.
-Those are the ones we solve first.
-\vspace{-0.3in}
-\end{frame}
-
-% ==============================================================
-% 4.4 SUBGAME-PERFECT EQUILIBRIUM
-% ==============================================================
-
-\begin{frame}[standout]
-Subgame-Perfect Equilibrium
-\end{frame}
-
-\begin{frame}{Definition}
-Let $s$ be a strategy profile for the whole game, and $G$ a subgame. Write
-$s|_G$ for the \textbf{restriction} of $s$ to $G$: the part of $s$ that prescribes
-choices at $G$'s information sets, and only those.
-\bsk
-\begin{block}{Definition}
-$s$ is a \textbf{subgame-perfect equilibrium} if, for \textbf{every} subgame $G$,
-the restriction $s|_G$ is a Nash equilibrium of $G$.
-\end{block}
-\bsk
-The whole game is one of its own subgames, so every subgame-perfect equilibrium
-is a Nash equilibrium.
-\vfill
-Not every Nash equilibrium is subgame perfect. That's the point.
-\vspace{-0.4in}
+But First... Subgames
 \end{frame}
 
 \begin{frame}{IKEA and Wayfair, Again}
@@ -572,7 +470,7 @@ Truck, both stores rank its two equilibria the same way.
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{The Whole Game}
+\begin{frame}{The Whole Game and a Subgame}
 \centering
 \begin{gametree}[player names={Wayfair, IKEA}, scale=0.72, subgame={depth=9mm}]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=7.6] {Out(2,10); In};
@@ -590,30 +488,114 @@ Truck, both stores rank its two equilibria the same way.
 \vspace{-0.2in}
 \end{frame}
 
+\begin{frame}{Subgames}
+A \textbf{subgame} is a piece of the tree that could stand alone as a game.
+\bsk
+Informal procedure:
+\begin{enumerate}
+    \item Pick a decision node $x$ whose information set is a singleton (e.g. $\{x\})$
+    \item Draw a big circle around $x$ and everything that follows it
+\end{enumerate}
+\bsk
+One rule: your circle can't ``cut through'' any information sets
+\vfill
+Every game is a subgame of itself.\\ Anything smaller is called a \textbf{proper} subgame.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Example}
+\centering
+\begin{gametree}[labels=short, scale=0.85]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.3, h=5.6] {L; R};
+  \branch[player=2, label=135] from (w1) to[v=1.5, h=1.8] {a(2,2); b(0,0)};
+  \branch[player=1, label=45] from (w2) to[v=1.5, h=2.4] {U; D(2,0)};
+  \branch[player=2, label=none] from (w21) to[v=1.5, h=1.6] {a(1,3); b(3,1)};
+  \informset[curved=15] (w1) -- (w21);
+\end{gametree}
+\bsk
+\raggedright
+Can we draw a subgame starting after $R$?
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Formal Definition: Subgame}
+Let $S(x)$ be the set containing $x$ and all its successors.
+\bsk
+$S(x)$ is a \textbf{subgame starting at $x$} if:
+\bsk
+\begin{enumerate}
+    \item the information set containing $x$ is the singleton $\{x\}$, and
+    \bsk
+    \item for every information set $H$ in the game, \ if $H\cap S(x)\ne\emptyset$
+      \ then \ $H\subset S(x)$
+\end{enumerate}
+\bsk
+It is a \textbf{proper} subgame if $x$ is not the root.
+\vfill
+A subgame is \textbf{minimal} if it contains no other subgame strictly inside it.
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 4.4 SUBGAME-PERFECT EQUILIBRIUM
+% ==============================================================
+
+\begin{frame}[standout]
+Subgame-Perfect (Nash) Equilibrium
+\end{frame}
+
+\begin{frame}{Definition}
+Let $s$ be a strategy profile for the whole game $G$, and $G'$ a subgame. Write
+$s|_{G'}$ for the \textbf{restriction} of $s$ to $G'$ (what actions to take inside of $G'$)
+\bsk
+\begin{block}{Definition}
+$s$ is a \textbf{subgame-perfect equilibrium} of game $G$ if, for \textbf{every} subgame $G'$ of $G$,
+the restriction $s|_{G'}$ is a Nash equilibrium of subgame $G'$.
+\end{block}
+\bsk
+$SPNE$
+\bsk
+The whole game is one of its own subgames, so $SPNE(G)\subseteq NE(G)$ (just like $BI$)
+\vfill
+$SPNE$ is a \textbf{refinement} of $NE$
+\vspace{-0.4in}
+\end{frame}
+
+
 \begin{frame}{The Algorithm}
 \begin{enumerate}
     \item Find a \textbf{minimal} subgame.
     \bsk
-    \item Solve it. Find its Nash equilibria, pick one, and note the strategies.
+    \item Solve it. Find its Nash equilibria and pick one.
     \bsk
-    \item \textbf{Mark} the subgame's starting node with that equilibrium's payoff
-      vector, exactly as in backward induction, then delete everything below it.
+    \item Replace the subgame with its NE payoff vector.
       You now have a smaller game.
     \bsk
-    \item Repeat until no proper subgames remain. Solve what's left. Patch together
-      everything you noted along the way.
+    \item Repeat until no proper subgames remain.
 \end{enumerate}
 \bsk
-{\footnotesize Same marking idea as Chapter 3. The only change: a minimal subgame may
-be a whole simultaneous game rather than a single node, so we mark it with a Nash
-equilibrium payoff instead of one player's best choice.}
 \vfill
-If a subgame had several Nash equilibria, run the procedure again with a different
-one for a different subgame-perfect equilibrium.
+If any subgame had several Nash equilibria, run the procedure again for each NE of the subgame
 \bsk
-{\footnotesize If some subgame has \textit{no} Nash equilibrium, neither does the game.}
+{\footnotesize If some subgame has \textit{no} Nash equilibrium, then the game has no $SPNE$.}
 \vspace{-0.3in}
 \end{frame}
+
+\begin{frame}{Back to The Example}
+Find the SPNE of this game:
+\centering
+\begin{gametree}[player names={Wayfair, IKEA}, scale=0.72, subgame={depth=9mm}]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=7.6] {Out(2,10); In};
+  \branch[player=1, label=0] from (w2) to[v=1.6, h=4.0] {Fund; Skip};
+  \branch[player=2, label=none] from (w21) to[v=1.6, h=1.5]
+    {Fund(3,3); Skip(0,1)};
+  \branch from (w22) to {Fund(1,0); Skip(1,1)};
+  \informset (w21) -- (w22);
+  \subgame[inner sep=4.6ex] at (w2);
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
 
 \begin{frame}{Step 1: Solve the Subgame}
 \centering
@@ -666,23 +648,21 @@ $$\big((\text{In},\text{Fund}),\ \text{Fund}\big)
 \qquad\text{and}\qquad
 \big((\text{Out},\text{Skip}),\ \text{Skip}\big)$$
 \vfill
-In the second one Wayfair never opens, \textit{because} it expects no campaign.
+In the second SPNE Wayfair never opens, \textit{because} it expects no campaign.
 \bsk
-Nothing about the market changed. The pessimism is self-confirming.
 \vfill
 \begin{itemize}
     \item Both firms would prefer the first equilibrium
-    \item Neither can get there by acting alone
+    \begin{itemize}
+        \item It Pareto dominates the second SPNE
+    \end{itemize}
     \item Subgame perfection does \textbf{not} pick between them
 \end{itemize}
-\bsk
-Refinements narrow the set of predictions. Not always to one.
 \vspace{-0.4in}
 \end{frame}
 
 \begin{frame}{The Strategic Form}
-Wayfair's strategy is a pair: what to do at the root, and what to do in the
-campaign stage.
+The associated strategic form:
 \bsk
 \centering
 {\small
@@ -694,17 +674,16 @@ campaign stage.
 \end{matrixgame}}}
 \bsk
 \raggedright
-\onslide<2>{Three cells have both payoffs underlined. Three Nash equilibria.}
+\onslide<2>{Three Nash equilibria.}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{The Nash Equilibrium We Threw Out}
-The strategic form has \textbf{three} Nash equilibria. Wayfair's strategy is a pair:
-what to do at the root, and what to do in the campaign stage.
+\begin{frame}{$SPNE$ Refines $NE$}
+The strategic form has \textbf{three} Nash equilibria. 
 \bsk
 \centering
 \begin{tabular}{lll}
-\textbf{Profile} & \textbf{Subgame play} & \textbf{Subgame perfect?} \\
+\textbf{NE Profile} & \textbf{Subgame play} & \textbf{Subgame perfect NE?} \\
 \hline
 $\big((\text{In},\text{Fund}),\text{Fund}\big)$ & (Fund, Fund) & yes \\
 $\big((\text{Out},\text{Skip}),\text{Skip}\big)$ & (Skip, Skip) & yes \\
@@ -713,26 +692,24 @@ $\big((\text{Out},\text{Fund}),\text{Skip}\big)$ & (Fund, Skip) & \textbf{no} \\
 \bsk
 \raggedright
 \vfill
-The third is a Nash equilibrium of the whole game. Wayfair staying out is a best
-reply if it believes IKEA will skip.
+The third NE: If Wayfair plays Out, then Fund and Skip don't matter, so both can be part of a NE
 \bsk
-But its plan for the subgame is incoherent: if entry happened, funding alone
-earns 0, and it would rather skip. \vspace{0.3in}
+SPNE: \textit{if the subgame were reached} (eg, Wayfair trembles) then Wayfair would Skip.
+\vspace{0.3in}
 \end{frame}
 
 \begin{frame}{Three Things Worth Remembering}
 \begin{itemize}
-    \item In a \textbf{perfect-information} game, subgame-perfect equilibrium is
-      exactly backward induction. Every decision node starts a subgame, so the
-      algorithm walks the tree from the leaves. \vspace{0.25in}
+    \item In a \textbf{perfect-information} game, $SPNE=BI$
+    \vspace{0.25in}
     \item If a game has \textbf{no proper subgames}, every Nash equilibrium is
-      subgame perfect. The refinement has nothing to bite on. \vspace{0.25in}
-    \item Otherwise subgame perfection is a strict refinement: fewer predictions,
-      all of them Nash. \vspace{0.25in}
+      subgame perfect.
+      \vspace{0.25in}
+    \item $SPNE\subseteq NE$ \vspace{0.25in}
 \end{itemize}
 \vfill
 {\footnotesize Bonanno's Figures 4.8 and 4.9 work through larger three-player trees
-with several subgames. Worth doing before the problem set.}
+with several subgames. Good practice.}
 \vspace{-0.3in}
 \end{frame}
 
@@ -741,7 +718,7 @@ with several subgames. Worth doing before the problem set.}
 % ==============================================================
 
 \begin{frame}[standout]
-Chance Moves
+Chance Moves (aka Moves By Nature)
 \end{frame}
 
 \begin{frame}{When Nobody Chose It}
