@@ -764,7 +764,7 @@ NE of this subgame: \underline{\hspace{1.5in}}
 \centering
 \begin{gametree}[player names={1, 2, 3}, scale=0.95]
   \branch[player=1, root=w, label=90] from (-0.75,0) to[v=1.0, h=8.1] {a(2,1,2); b};
-  \node[anchor=east, font=\small] at ($(w1)+(-0.55,-0.42)$) {$(\cdot,d,h)$};
+  \node[anchor=east, font=\small] at ($(w1)+(-0.55,-0.42)$) {$(d,h)$};
   \branch[player=2, label=45] from (w2) to[v=1.1, h=4.2] {e; f};
   \branch[player=3, label=none] from (w21) to[v=1.3, h=2.4] {A; B(0,2,0)};
   \branch[label=none] from (w22) to[v=1.3, h=2.0] {A(3,2,1); B(0,0,1)};
@@ -805,10 +805,10 @@ NE of this subgame: \underline{\hspace{1.5in}}
 \centering
 \begin{gametree}[player names={1, 2, 3}, scale=0.95]
   \branch[player=1, root=w, label=90] from (-0.75,0) to[v=1.0, h=8.1] {a(2,1,2); b};
-  \node[anchor=east, font=\small] at ($(w1)+(-0.55,-0.42)$) {$(\cdot,d,h)$};
+  \node[anchor=east, font=\small] at ($(w1)+(-0.55,-0.42)$) {$(d,h)$};
   \branch[player=2, label=45] from (w2) to[v=1.1, h=4.2] {e; f};
   \branch[player=3, label=none] from (w21) to[v=1.3, h=2.4] {A(1,1,1); B(0,2,0)};
-  \node[anchor=east, font=\small] at ($(w211)+(-0.55,-0.42)$) {$(C,F,\cdot)$};
+  \node[anchor=east, font=\small] at ($(w211)+(-0.55,-0.42)$) {$(C,F)$};
   \branch[label=none] from (w22) to[v=1.3, h=2.0] {A(3,2,1); B(0,0,1)};
   \informset[player=3] (w21) -- (w22);
   \path (-7.2,0.4) rectangle (7.0,-6.5);
@@ -847,8 +847,8 @@ NE of this subgame: \underline{\hspace{1.5in}}
 \centering
 \begin{gametree}[player names={1, 2, 3}, scale=1.1]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.2, h=6.0] {a(2,1,2); b(3,2,1)};
-  \node[anchor=east, font=\small] at ($(w1)+(-0.6,-0.42)$) {$(\cdot,d,h)$};
-  \node[anchor=west, font=\small, align=left] at ($(w2)+(0.6,-0.42)$) {$(\cdot,f,A)$\\$(C,F,\cdot)$};
+  \node[anchor=east, font=\small] at ($(w1)+(-0.6,-0.42)$) {$(d,h)$};
+  \node[anchor=west, font=\small, align=left] at ($(w2)+(0.6,-0.42)$) {$(f,A)$\\$(C,F)$};
 \end{gametree}
 \bsk
 \raggedright
@@ -862,7 +862,7 @@ $\Big(\ \underbrace{\big(\ \underline{\hspace{0.35in}}\ ,\ \underline{\hspace{0.
 \end{frame}
 
 \begin{frame}{The SPNE in the Whole Game}
-Draw the SPNE in the full tree: $(bC,dfF,hA)$.\quad SPNE payoffs: \underline{\hspace{0.75in}}
+Draw the SPNE in the full tree:
 
 \centering
 \begin{gametree}[player names={1, 2, 3}, scale=0.95]
@@ -935,16 +935,14 @@ Hint: this one has more than one SPNE.
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{Three Things To Remember}
+\begin{frame}{Three Things Worth Remembering}
 \begin{itemize}
     \item In a \textbf{perfect-information} game, $SPNE=BI$
-    \begin{itemize}
-        \item If it's not perfect info (because there are infosets) then $BI$ isn't well-defined
-    \end{itemize}
     \vspace{0.25in}
-    \item In general, $SPNE\subseteq NE$ \vspace{0.25in}
-    \item If a game has \textbf{no proper subgames}, $SPNE=NE$
+    \item If a game has \textbf{no proper subgames}, every Nash equilibrium is
+      subgame perfect.
       \vspace{0.25in}
+    \item $SPNE\subseteq NE$ \vspace{0.25in}
 \end{itemize}
 \vfill
 % {\footnotesize Bonanno's Figures 4.8 and 4.9 work through larger three-player trees
@@ -960,20 +958,16 @@ Hint: this one has more than one SPNE.
 Chance Moves (aka Moves By Nature)
 \end{frame}
 
-\begin{frame}{Moves By Nature}
-Randomness happens:
-\begin{itemize}
-    \item You're dealt a pair of aces
-    \item You get in a car crash
-    \item Your employee discovers a new technology...
-\end{itemize}
+\begin{frame}{When Nobody Chose It}
+Sometimes what happens isn't anyone's decision. A card is dealt, a part fails,
+a customer walks in.
 \bsk
 We model this with a fictitious player: \textbf{Nature} (or \textbf{Chance}).
 \bsk
 \begin{itemize}
     \item Nature moves at some nodes
     \item Each of Nature's actions carries a \textbf{probability}
-    \item Nature has no payoffs and no objectives, it just moves with fixed probabilities
+    \item Nature has no payoffs and no objectives, so it isn't really a player
 \end{itemize}
 \vfill
 Everything else (information sets, strategies, subgames) is unchanged.
@@ -983,23 +977,25 @@ Everything else (information sets, strategies, subgames) is unchanged.
 \begin{frame}{Three Cards}
 Three cards: one black, two red. Shuffled, face down.
 \bsk
-\textbf{Nature moves first}, draws a card: $\frac{1}{3}$ chance black, $\frac{2}{3}$ chance red. Shown only to Ann.
+\textbf{Nature moves first}, turning up the top card: black with probability
+$\tfrac{1}{3}$, red with probability $\tfrac{2}{3}$.
 \bsk
-Then the real players move:
+Then the players move:
 \begin{itemize}
-    \item Ann looks at the card
+    \item Adele looks at the top card without showing Ben
     \item She tells Ben ``black'' or ``red'', truthfully or not
     \item Ben then guesses the true color
-    \item Correct guess: Ann pays Ben \$9. Wrong: Ben pays Ann \$9.
+    \item Correct guess: Adele pays Ben \$9. Wrong: Ben pays Adele \$9.
 \end{itemize}
 \vfill
-Ben has two information sets...
+Ben has two information sets, one for each thing Adele might say, and in each
+he is unsure what the card actually is.
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{The Card Game}
 \centering
-\begin{gametree}[player names={Ann, Ben}, scale=0.58]
+\begin{gametree}[player names={Adele, Ben}, scale=0.58]
   \branch[player=0, root=w, label=90] from (0,0) to[v=1.5, h=8.6]
     {$\tfrac13$ Black; $\tfrac23$ Red};
   \branch[player=1, label=135] from (w1) to[v=1.5, h=4.2] {``B''; ``R''};
@@ -1013,47 +1009,38 @@ Ben has two information sets...
 \end{gametree}
 \bsk
 \raggedright
-{\footnotesize Ann (player 1) says ``B'' or ``R''. Ben (player 2) guesses B or R.}
+{\footnotesize Nature moves first. Adele's label is what she \textit{says}; Ben's is
+what he \textit{guesses}. First payoff Adele, second Ben.}
 \bsk
-Ben has two information sets, one for each of Ann's actions.\\
-In each, he
-knows what Ann said but not what the card is.
+Ben has two information sets, one for each thing Adele might say. In each, he
+knows what he heard but not what the card is.
 \vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{A New Difficulty}
-Suppose Ben is 100\% sure Ann always says ``$B$'' (she plays $s_1=($``$B$''$,$``$B$''$)$)\\
-Her announcement carries no information!! It's useless to Ben.
+Take the profile: Adele always tells the truth, Ben always guesses black.
 \bsk
-Ben's decision if she does say ``$B$'':
-
+What's the outcome? It depends on the card, so the outcome is itself a gamble:
+\bsk
 \centering
 \begin{tabular}{|l|c|c|}
 \hline
- & Ben Wins \$9 & Ben Pays \$9 \\
+Outcome & Adele pays \$9 & Ben pays \$9 \\
 \hline
-$B$ after ``$B$'' & $1/3$ & $2/3$ \\
-\hline
-$R$ after ``$B$'' & $2/3$ & $2/3$ \\
+Probability & $\tfrac{1}{3}$ & $\tfrac{2}{3}$ \\
 \hline
 \end{tabular}
 \bsk
 \raggedright
 \vfill
-Ben's outcomes are \textbf{lotteries}. They're random.
+We call this a \textbf{lottery}. To build a strategic form we need to know how
+players rank \textit{lotteries}, not just outcomes.
 \bsk
-What are Ben's preferences over these lotteries??
-\vfill
-{\footnotesize Later chapter: What should Ben believe if she had said ``$R$''??? That's \textit{off path}.}
-
+Chapter 5 answers that properly. For now, one shortcut.
+\vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Expected Value}
-Ben's payment for choosing $B$ after ``$B$'' is the \textbf{money lottery} $\begin{pmatrix}
-    \$9 & \$-9\\ 1/3 & 2/3
-\end{pmatrix}$\\
-On average, this pays $(1/3)(\$9)+(2/3)(-\$9) = -\$3$
-\bsk
 \begin{block}{Definition}
 The \textbf{expected value} of the money lottery
 $\begin{pmatrix} \$x_1 & \$x_2 & \cdots & \$x_n \\ p_1 & p_2 & \cdots & p_n\end{pmatrix}$
@@ -1063,8 +1050,11 @@ $$x_1p_1 + x_2p_2 + \cdots + x_np_n$$
 \bsk
 \centering
 $\begin{pmatrix} \$5 & \$15 & \$25 \\[2pt] \tfrac{1}{5} & \tfrac{2}{5} & \tfrac{2}{5}\end{pmatrix}$
-\ has expected value:
-
+\ has expected value \ \underline{\hspace{0.9in}}
+\bsk
+$\begin{pmatrix} -\$9 & \$9 \\[2pt] \tfrac{1}{3} & \tfrac{2}{3}\end{pmatrix}$
+\ has expected value \ \underline{\hspace{0.9in}}
+\vfill
 \end{frame}
 
 \begin{frame}{Risk Neutrality}
@@ -1086,7 +1076,8 @@ $L_3=\begin{pmatrix} \$0 & \$32 & \$48 \\[2pt] \tfrac{5}{8} & \tfrac{1}{8} & \tf
 \raggedright
 A risk-neutral player ranks these: \underline{\hspace{2in}}
 \vfill
-{\footnotesize Risk neutrality is a strong (and often incorrect) assumption! But let's use it to finish Chapter 4}
+{\footnotesize This is a convenience, not a claim about people. Risk neutrality
+lets us finish Chapter 4 without the machinery of Chapter 5.}
 \vspace{-0.2in}
 \end{frame}
 
@@ -1100,9 +1091,10 @@ $L_2$ and $L_3$ have the same expected value, \$16.
 \bsk
 A risk-neutral player is \textbf{indifferent} between them.
 \vfill
-Most people have $L_2\succ L_3$ because they're \textbf{risk averse}.
+Most people are not. Ask yourself which you'd take, and notice that your answer
+is information the expected value throws away.
 \bsk
-Chapter 5 will allow for risk aversion.
+Recovering it is exactly what Chapter 5 is for.
 \vspace{-0.4in}
 \end{frame}
 
@@ -1128,7 +1120,7 @@ Let's Work One Out
 \end{frame}
 
 \begin{frame}{A Three-Player Dynamic Game}
-Its strategic form. Ann has 4 strategies: $S_1=\{Out,In\}\times\{p,q\}$
+Its strategic form. Ann's strategy is a pair: the root, then her later node.
 \bsk
 \centering
 {\scriptsize
@@ -1155,11 +1147,11 @@ Its strategic form. Ann has 4 strategies: $S_1=\{Out,In\}\times\{p,q\}$
     \item An \textbf{information set} collects nodes a player cannot tell apart;
       perfect information is the case where all are singletons
     \item A \textbf{strategy} gives one choice per information set, not per node
-    \item A \textbf{subgame} starts at a singleton information set and doesn't cut any infosets
-    \item \textbf{Subgame-perfect (Nash) equilibrium}: Nash in every subgame. Solve minimal
+    \item A \textbf{subgame} starts at a singleton information set and cuts no
+      information set
+    \item \textbf{Subgame-perfect equilibrium}: Nash in every subgame. Solve minimal
       subgames first, replace, repeat
-    \item Model randomness as moves by \textbf{Nature}
-    \item Ch04: assume \textbf{risk neutrality}, meaning people only care about expected value
+    \item \textbf{Nature} handles chance; risk neutrality ranks lotteries by mean
 \end{itemize}
 \vfill
 Next: what if players aren't risk neutral?
