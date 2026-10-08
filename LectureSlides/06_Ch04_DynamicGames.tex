@@ -698,6 +698,243 @@ SPNE: \textit{if the subgame were reached} (eg, Wayfair trembles) then Wayfair w
 \vspace{0.3in}
 \end{frame}
 
+% ==============================================================
+% BIGGER EXAMPLE: BONANNO FIGURES 4.9 - 4.15
+% ==============================================================
+% Payoffs are (P1, P2, P3). SPNE: ((b,C),(d,f,F),(h,A)), payoffs (3,2,1).
+% The full tree is repeated three times (Fig 4.9, SPNE drawing, NE drawing)
+% and the reduced trees keep the same coordinates, so nothing jumps
+% between slides.
+% The subgames between P2 and P3 (Figs 4.10 and 4.14) show only two payoffs.
+% xgames colors payoffs by position, so those frames remap
+% player1/player2 to the colors of players 2 and 3 inside a group.
+% ---------------------------------------------------------------------
+
+\begin{frame}{A Bigger Example}
+Bonanno Figure 4.9. \ Find the SPNE.
+
+\centering
+\begin{gametree}[player names={1, 2, 3}, scale=0.95]
+  \branch[player=1, root=w, label=90] from (-0.75,0) to[v=1.0, h=8.1] {a; b};
+  \branch[player=2, label=135] from (w1) to[v=1.1, h=2.4] {c; d};
+  \branch[player=3, label=none] from (w11) to[v=1.3, h=1.2] {g(2,2,3); h(3,0,2)};
+  \branch[label=none] from (w12) to {g(6,3,1); h(2,1,2)};
+  \informset[player=3] (w11) -- (w12);
+  \branch[player=2, label=45] from (w2) to[v=1.1, h=4.2] {e; f};
+  \branch[player=3, label=none] from (w21) to[v=1.3, h=2.4] {A; B(0,2,0)};
+  \branch[label=none] from (w22) to[v=1.3, h=2.0] {A(3,2,1); B(0,0,1)};
+  \informset[player=3] (w21) -- (w22);
+  \branch[player=1, label=135] from (w211) to[v=1.1, h=2.4] {C; D};
+  \branch[player=2, label=none] from (w2111) to[v=1.3, h=1.2] {E(3,0,4); F(1,1,1)};
+  \branch[label=none] from (w2112) to {E(1,1,6); F(1,0,8)};
+  \informset[player=2] (w2111) -- (w2112);
+  \path (-7.2,0.4) rectangle (7.0,-6.5);
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{Figure 4.10: A Minimal Subgame}
+\begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+        \centering
+        {\colorlet{pA}{player2}\colorlet{pB}{player3}\colorlet{player1}{pA}\colorlet{player2}{pB}%
+        \begin{gametree}[player names={2, 3}]
+          \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=3.2] {c; d};
+          \branch[player=2, label=none] from (w1) to[v=1.6, h=1.5] {g(2,3); h(0,2)};
+          \branch[label=none] from (w2) to {g(3,1); h(1,2)};
+          \informset[player=2] (w1) -- (w2);
+        \end{gametree}}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \centering
+        {\colorlet{pA}{player2}\colorlet{pB}{player3}\colorlet{player1}{pA}\colorlet{player2}{pB}%
+        \begin{matrixgame}[top={g, h}, left={c, d}, player names={Player 2, Player 3}]
+          \payoffmatrix{2,3 & 0,2 \\ 3,1 & 1,2}
+        \end{matrixgame}}
+    \end{column}
+\end{columns}
+\vfill
+Only P2 and P3 move here, so only their payoffs are shown.
+\bsk
+NE of this subgame: \underline{\hspace{1.5in}}
+\vspace{0.3in}
+\end{frame}
+
+\begin{frame}{Figure 4.11: Replace the Subgame}
+\centering
+\begin{gametree}[player names={1, 2, 3}, scale=0.95]
+  \branch[player=1, root=w, label=90] from (-0.75,0) to[v=1.0, h=8.1] {a(2,1,2); b};
+  \node[anchor=east, font=\small] at ($(w1)+(-0.55,-0.42)$) {$(d,h)$};
+  \branch[player=2, label=45] from (w2) to[v=1.1, h=4.2] {e; f};
+  \branch[player=3, label=none] from (w21) to[v=1.3, h=2.4] {A; B(0,2,0)};
+  \branch[label=none] from (w22) to[v=1.3, h=2.0] {A(3,2,1); B(0,0,1)};
+  \informset[player=3] (w21) -- (w22);
+  \branch[player=1, label=135] from (w211) to[v=1.1, h=2.4] {C; D};
+  \branch[player=2, label=none] from (w2111) to[v=1.3, h=1.2] {E(3,0,4); F(1,1,1)};
+  \branch[label=none] from (w2112) to {E(1,1,6); F(1,0,8)};
+  \informset[player=2] (w2111) -- (w2112);
+  \path (-7.2,0.4) rectangle (7.0,-6.5);
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{Figure 4.12: The Next Minimal Subgame}
+\begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+        \centering
+        \begin{gametree}[player names={1, 2}]
+          \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=3.2] {C; D};
+          \branch[player=2, label=none] from (w1) to[v=1.6, h=1.5] {E(3,0); F(1,1)};
+          \branch[label=none] from (w2) to {E(1,1); F(1,0)};
+          \informset[player=2] (w1) -- (w2);
+        \end{gametree}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \centering
+        \begin{matrixgame}[top={E, F}, left={C, D}, player names={Player 1, Player 2}]
+          \payoffmatrix{3,0 & 1,1 \\ 1,1 & 1,0}
+        \end{matrixgame}
+    \end{column}
+\end{columns}
+\vfill
+NE of this subgame: \underline{\hspace{1.5in}}
+\vspace{0.3in}
+\end{frame}
+
+\begin{frame}{Figure 4.13: Replace the Subgame}
+\centering
+\begin{gametree}[player names={1, 2, 3}, scale=0.95]
+  \branch[player=1, root=w, label=90] from (-0.75,0) to[v=1.0, h=8.1] {a(2,1,2); b};
+  \node[anchor=east, font=\small] at ($(w1)+(-0.55,-0.42)$) {$(d,h)$};
+  \branch[player=2, label=45] from (w2) to[v=1.1, h=4.2] {e; f};
+  \branch[player=3, label=none] from (w21) to[v=1.3, h=2.4] {A(1,1,1); B(0,2,0)};
+  \node[anchor=east, font=\small] at ($(w211)+(-0.55,-0.42)$) {$(C,F)$};
+  \branch[label=none] from (w22) to[v=1.3, h=2.0] {A(3,2,1); B(0,0,1)};
+  \informset[player=3] (w21) -- (w22);
+  \path (-7.2,0.4) rectangle (7.0,-6.5);
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+\begin{frame}{Figure 4.14: The Last Proper Subgame}
+\begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+        \centering
+        {\colorlet{pA}{player2}\colorlet{pB}{player3}\colorlet{player1}{pA}\colorlet{player2}{pB}%
+        \begin{gametree}[player names={2, 3}]
+          \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=3.2] {e; f};
+          \branch[player=2, label=none] from (w1) to[v=1.6, h=1.5] {A(1,1); B(2,0)};
+          \branch[label=none] from (w2) to {A(2,1); B(0,1)};
+          \informset[player=2] (w1) -- (w2);
+        \end{gametree}}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \centering
+        {\colorlet{pA}{player2}\colorlet{pB}{player3}\colorlet{player1}{pA}\colorlet{player2}{pB}%
+        \begin{matrixgame}[top={A, B}, left={e, f}, player names={Player 2, Player 3}]
+          \payoffmatrix{1,1 & 2,0 \\ 2,1 & 0,1}
+        \end{matrixgame}}
+    \end{column}
+\end{columns}
+\vfill
+NE of this subgame: \underline{\hspace{1.5in}}
+\bsk
+{\footnotesize Bonanno's table labels the row player ``Player 1''. That's a typo: it's Player 2.}
+\vspace{0.1in}
+\end{frame}
+
+\begin{frame}{Figure 4.15: What's Left}
+\centering
+\begin{gametree}[player names={1, 2, 3}, scale=1.1]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.2, h=6.0] {a(2,1,2); b(3,2,1)};
+  \node[anchor=east, font=\small] at ($(w1)+(-0.6,-0.42)$) {$(d,h)$};
+  \node[anchor=west, font=\small, align=left] at ($(w2)+(0.6,-0.42)$) {$(f,A)$\\$(C,F)$};
+\end{gametree}
+\bsk
+\raggedright
+Player 1 chooses: \underline{\hspace{0.6in}}
+\vfill
+\textbf{SPNE:} \ \
+$\Big(\ \underbrace{\big(\ \underline{\hspace{0.35in}}\ ,\ \underline{\hspace{0.35in}}\ \big)}_{\text{P1}}\ ,\ \
+\underbrace{\big(\ \underline{\hspace{0.35in}}\ ,\ \underline{\hspace{0.35in}}\ ,\ \underline{\hspace{0.35in}}\ \big)}_{\text{P2}}\ ,\ \
+\underbrace{\big(\ \underline{\hspace{0.35in}}\ ,\ \underline{\hspace{0.35in}}\ \big)}_{\text{P3}}\ \Big)$
+\vspace{0.6in}
+\end{frame}
+
+\begin{frame}{The SPNE in the Whole Game}
+Draw the SPNE in the full tree:
+
+\centering
+\begin{gametree}[player names={1, 2, 3}, scale=0.95]
+  \branch[player=1, root=w, label=90] from (-0.75,0) to[v=1.0, h=8.1] {a; b};
+  \branch[player=2, label=135] from (w1) to[v=1.1, h=2.4] {c; d};
+  \branch[player=3, label=none] from (w11) to[v=1.3, h=1.2] {g(2,2,3); h(3,0,2)};
+  \branch[label=none] from (w12) to {g(6,3,1); h(2,1,2)};
+  \informset[player=3] (w11) -- (w12);
+  \branch[player=2, label=45] from (w2) to[v=1.1, h=4.2] {e; f};
+  \branch[player=3, label=none] from (w21) to[v=1.3, h=2.4] {A; B(0,2,0)};
+  \branch[label=none] from (w22) to[v=1.3, h=2.0] {A(3,2,1); B(0,0,1)};
+  \informset[player=3] (w21) -- (w22);
+  \branch[player=1, label=135] from (w211) to[v=1.1, h=2.4] {C; D};
+  \branch[player=2, label=none] from (w2111) to[v=1.3, h=1.2] {E(3,0,4); F(1,1,1)};
+  \branch[label=none] from (w2112) to {E(1,1,6); F(1,0,8)};
+  \informset[player=2] (w2111) -- (w2112);
+  \path (-7.2,0.4) rectangle (7.0,-6.5);
+\end{gametree}
+\vspace{-0.15in}
+\end{frame}
+
+% NE that is not SPNE (Bonanno p. 133): ((a,C),(d,f,E),(h,B)), path a-d-h,
+% payoffs (2,1,2). Fails in the subgame at P1's lower node: (C,E) is not a
+% NE there, since F is P2's best reply to C. It also fails in the subgame
+% at P2's right node. The <1-> suffixes are what highlight the path.
+\begin{frame}{A NE That Is Not SPNE}
+$\big((a,C),\ (d,f,E),\ (h,B)\big)$ \ is a NE. \ Why isn't it a SPNE?
+
+\centering
+\begin{gametree}[player names={1, 2, 3}, scale=0.95]
+  \branch[player=1, root=w, label=90] from (-0.75,0) to[v=1.0, h=8.1] {a<1->; b};
+  \branch[player=2, label=135] from (w1) to[v=1.1, h=2.4] {c; d<1->};
+  \branch[player=3, label=none] from (w11) to[v=1.3, h=1.2] {g(2,2,3); h(3,0,2)};
+  \branch[label=none] from (w12) to {g(6,3,1); h<1->(2,1,2)};
+  \informset[player=3] (w11) -- (w12);
+  \branch[player=2, label=45] from (w2) to[v=1.1, h=4.2] {e; f};
+  \branch[player=3, label=none] from (w21) to[v=1.3, h=2.4] {A; B(0,2,0)};
+  \branch[label=none] from (w22) to[v=1.3, h=2.0] {A(3,2,1); B(0,0,1)};
+  \informset[player=3] (w21) -- (w22);
+  \branch[player=1, label=135] from (w211) to[v=1.1, h=2.4] {C; D};
+  \branch[player=2, label=none] from (w2111) to[v=1.3, h=1.2] {E(3,0,4); F(1,1,1)};
+  \branch[label=none] from (w2112) to {E(1,1,6); F(1,0,8)};
+  \informset[player=2] (w2111) -- (w2112);
+  \path (-7.2,0.4) rectangle (7.0,-6.5);
+\end{gametree}
+\vfill
+\raggedright
+{\footnotesize Good practice question: write the associated strategic form and solve for its NE ($4\times 8\times 4$: four tables!)}
+\vspace{-0.25in}
+\end{frame}
+
+\begin{frame}{Try This One Yourself}
+Bonanno's \textbf{Figure 4.16} is another three-player game with several subgames.
+\bsk
+We won't do it in class. Work through it on your own:
+\bsk
+\begin{enumerate}
+    \item Find the proper subgames. Which are minimal?
+    \bsk
+    \item Solve each minimal subgame and replace it with its NE payoffs
+    \bsk
+    \item Write the strategic form of what's left and find its NE
+    \bsk
+    \item Patch the pieces together into full strategy profiles
+\end{enumerate}
+\vfill
+Hint: this one has more than one SPNE.
+\bsk
+{\footnotesize Bonanno solves it right after the figure (Figure 4.17), so you can check your answer.}
+\vspace{-0.3in}
+\end{frame}
+
 \begin{frame}{Three Things Worth Remembering}
 \begin{itemize}
     \item In a \textbf{perfect-information} game, $SPNE=BI$
@@ -708,8 +945,8 @@ SPNE: \textit{if the subgame were reached} (eg, Wayfair trembles) then Wayfair w
     \item $SPNE\subseteq NE$ \vspace{0.25in}
 \end{itemize}
 \vfill
-{\footnotesize Bonanno's Figures 4.8 and 4.9 work through larger three-player trees
-with several subgames. Good practice.}
+% {\footnotesize Bonanno's Figures 4.8 and 4.9 work through larger three-player trees
+% with several subgames. Good practice.}
 \vspace{-0.3in}
 \end{frame}
 
