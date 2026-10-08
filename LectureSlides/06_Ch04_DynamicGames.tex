@@ -992,14 +992,14 @@ One player: \textbf{Maverick}
     \item $\frac{51}{52}$ chance it's not
 \end{itemize}
 \bsk
-Then Maverick, who can't see the card, chooses:
+Then Maverick, who needs and Ace of Spades to win, chooses:
 \begin{itemize}
-    \item \textbf{Ace}: guess ``Ace of Spades''
+    \item \textbf{Bet}: guess ``Ace of Spades''
     \begin{itemize}
         \item Right: he wins \$500{,}000
         \item Wrong: he loses \$30{,}000
     \end{itemize}
-    \item \textbf{Not}: don't guess (stay out). He gets \$0 for sure.
+    \item \textbf{Fold}: He gets \$0 for sure.
 \end{itemize}
 \vfill
 \vspace{-0.3in}
@@ -1009,16 +1009,15 @@ Then Maverick, who can't see the card, chooses:
 \centering
 \begin{gametree}[player names={Maverick}, scale=0.9]
   \branch[player=0, root=w, label=90] from (0,0) to[v=1.6, h=6.4]
-    {$1/52$ \ Ace of Spades; $51/52$ \ Not};
-  \branch[player=1, label=none] from (w1) to[v=1.8, h=2.6] {Ace(\$500k); Not(\$0)};
-  \branch[label=none] from (w2) to {Ace($-$\$30k); Not(\$0)};
+    {$1/52$ \ $A\spadesuit$; $51/52$ \ Not $A\spadesuit$};
+  \branch[player=1, label=none] from (w1) to[v=1.8, h=2.6] {Bet(\$500k); Fold(\$0)};
+  \branch[label=none] from (w2) to {Bet($-$\$30k); Fold(\$0)};
   \informset (w1) -- (w2);
 \end{gametree}
 \bsk
 \raggedright
-Nature moves first. Maverick has one information set: he doesn't see the card.
-\bsk
-Strategies? Subgames?
+Nature moves first.\\
+Maverick has one information set: he doesn't see the card.
 \vspace{-0.2in}
 \end{frame}
 
@@ -1028,11 +1027,11 @@ Maverick's outcomes are now \textbf{random}:
 \centering
 \begin{tabular}{|l|c|c|}
 \hline
- & Ace of Spades ($1/52$) & Not ($51/52$) \\
+ & $A\spadesuit$ ($1/52$) & Not $A\spadesuit$ ($51/52$) \\
 \hline
-Guess Ace & $+\$500{,}000$ & $-\$30{,}000$ \\
+Bet & $+\$500{,}000$ & $-\$30{,}000$ \\
 \hline
-Not & \$0 & \$0 \\
+Fold & \$0 & \$0 \\
 \hline
 \end{tabular}
 \bsk
@@ -1040,17 +1039,19 @@ Not & \$0 & \$0 \\
 \vfill
 Each strategy gives Maverick a \textbf{lottery} over money.
 \bsk
-What are Maverick's preferences over these lotteries??
+What are Maverick's preferences over these lotteries??\\
+Does he prefer Bet or Fold?
 \vfill
 \end{frame}
 
 \begin{frame}{Expected Value}
-Guessing Ace is the \textbf{money lottery} $\begin{pmatrix}
+Choosing Bet gives the \textbf{money lottery} $\begin{pmatrix}
     \$500{,}000 & -\$30{,}000\\ 1/52 & 51/52
 \end{pmatrix}$\\
-\onslide<2->{On average, this pays $\frac{1}{52}(\$500{,}000)+\frac{51}{52}(-\$30{,}000) \approx -\$19{,}808$}
+\onslide<2->{On average, this pays $\frac{1}{52}(\$500{,}000)+\frac{51}{52}(-\$30{,}000) \approx -\$19{,}808$\\}
+\onslide<3->{Folding pays \$0 for sure.}
 \bsk
-\begin{block}{Definition}
+\onslide<4->{\begin{block}{Definition}
 The \textbf{expected value} of the money lottery
 $\begin{pmatrix} \$x_1 & \$x_2 & \cdots & \$x_n \\ p_1 & p_2 & \cdots & p_n\end{pmatrix}$
 is
@@ -1060,33 +1061,34 @@ $$x_1p_1 + x_2p_2 + \cdots + x_np_n$$
 \centering
 $\begin{pmatrix} \$5 & \$15 & \$25 \\[2pt] \tfrac{1}{5} & \tfrac{2}{5} & \tfrac{2}{5}\end{pmatrix}$
 \ has expected value:
-
+}
 \end{frame}
 
 \begin{frame}{How Sure Would Maverick Need To Be?}
 Suppose Maverick thinks there's a $p$ chance it's the Ace of Spades.
 \bsk
-Expected value of guessing Ace: \ \onslide<2->{$p(\$500{,}000)+(1-p)(-\$30{,}000)$}
+Expected value of Bet: \ \onslide<2->{$p(\$500{,}000)+(1-p)(-\$30{,}000)$}
 \bsk
-Expected value of Not: \ \onslide<2->{\$0}
+Expected value of Fold: \ \onslide<2->{\$0}
 \bsk
-What $p$ makes him \textbf{indifferent}?
+Assume all he cares about is expected value. What $p$ makes him \textbf{indifferent}?
 \bsk
-\onslide<3->{$500{,}000p-30{,}000(1-p)=0 \quad\Rightarrow\quad 530{,}000p=30{,}000 \quad\Rightarrow\quad p=\frac{3}{53}\approx 5.7\%$}
+\onslide<3->{He should Bet if:\\
+$500{,}000p-30{,}000(1-p)\geq 0 \quad\Rightarrow\quad 530{,}000p\geq 30{,}000 \quad\Rightarrow\quad p\geq \frac{3}{53}\approx 5.7\%$}
 \vfill
-\onslide<4->{Compare: the true chance is $\frac{1}{52}\approx 1.9\%$.\\
-He'd need to believe the Ace is about \textbf{3 times} more likely than it really is!}
+\onslide<4->{The true chance is $\frac{1}{52}\approx 1.9\%$.\\
+That's below the 5.7\% threshold, so \textbf{FOLD}!}
 \vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{Risk Neutrality}
 \begin{block}{Definition}
-A player is \textbf{risk neutral} if she considers a money lottery to be
+A player is \textbf{risk neutral} if they consider a money lottery to be
 \textit{just as good as} its expected value.
 \end{block}
 \bsk
-So a risk-neutral player ranks lotteries by their expected value, and we can use
-that number as her payoff.
+So a risk-neutral player ranks lotteries by their expected value. We can use
+that number as their payoff.
 \bsk
 \centering
 $L_1=\begin{pmatrix} \$5 & \$15 & \$25 \\[2pt] \tfrac{1}{5} & \tfrac{2}{5} & \tfrac{2}{5}\end{pmatrix}$
@@ -1096,8 +1098,7 @@ $L_2=\begin{pmatrix} \$16 \\[2pt] 1\end{pmatrix}$
 $L_3=\begin{pmatrix} \$0 & \$32 & \$48 \\[2pt] \tfrac{5}{8} & \tfrac{1}{8} & \tfrac{1}{4}\end{pmatrix}$
 \bsk
 \raggedright
-A risk-neutral player ranks these: \underline{\hspace{2in}}
-\vfill
+\vspace{1in}
 {\footnotesize Risk neutrality is a strong (and often incorrect) assumption! But let's use it to finish Chapter 4}
 \vspace{-0.2in}
 \end{frame}
@@ -1107,7 +1108,8 @@ $L_2$ and $L_3$ have the same expected value, \$16.
 \bsk
 \begin{itemize}
     \item $L_2$ pays \$16 for certain
-    \item $L_3$ pays nothing five times out of eight, and sometimes \$48
+    \item $L_3$ gives a $5/8$ chance of \$0, $1/8$ chance of \$32, and $1/4$ chance of \$48\\
+    $(5/8)\cdot(0)+(1/8)\cdot(32)+(1/4)\cdot(48) = 0 + 4 + 12 = 16$
 \end{itemize}
 \bsk
 A risk-neutral player is \textbf{indifferent} between them.
@@ -1118,33 +1120,12 @@ Chapter 5 will allow for risk aversion.
 \vspace{-0.4in}
 \end{frame}
 
-\begin{frame}{What Would You Do?}
-\centering
-\vfill
-{\Large Guess Ace of Spades, or Stay Out?}
-\bsk
-\bsk
-Show of hands!
-\bsk
-\bsk
-\begin{tabular}{lc}
-\toprule
-Guess Ace of Spades & \underline{\hspace{0.8in}} \\
-Stay Out & \underline{\hspace{0.8in}} \\
-\bottomrule
-\end{tabular}
-\vfill
-\raggedright
-{\footnotesize A risk-neutral Maverick stays out. Anyone who guesses is doing something else...}
-\vspace{-0.2in}
-\end{frame}
-
 % ==============================================================
 % WORKED EXAMPLE
 % ==============================================================
 
 \begin{frame}[standout]
-Let's Work One Out
+SPNE: A Worked Example
 \end{frame}
 
 \begin{frame}{A Three-Player Dynamic Game}
