@@ -1,0 +1,891 @@
+\input{LectureSlides/includes/metropolis_preamble}
+
+% Title page info
+\title[Mixed Strategies]{Chapter 6: Mixed Strategies}
+\author[ECON 5001]{ECON 5001\\Prof. Paul J. Healy\\Based on: \textit{Game Theory} by Giacomo Bonanno} \color{metrop}
+\institute[OSU]{}
+\date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
+
+% ---------------------------------------------------------------------
+% SCOPE AND NOTATION
+%   Same as deck 07: u(o) = outcome utility, U(L) = expected utility.
+%   pi_i(s) = payoff at a pure profile; Pi_i(sigma) = expected payoff at a
+%   mixed profile (Bonanno's notation for the second).
+%   Section 6.1's lottery-valued outcome function f: S -> L(O) is NOT
+%   taught. One slide says a cell can hold a lottery and that we then use
+%   its expected utility as the payoff. Nothing later depends on more.
+%   Section 6.4's correlated-beliefs discussion (3+ players, Aumann) is a
+%   footnote only.
+%
+% ANSWERS (all checked by support enumeration; every NE below is unique)
+%   Two-point conversion, payoffs = % chance OSU scores (Michigan: 100 - that)
+%       Run:  40 vs Stop Run, 80 vs Stop Pass
+%       Pass: 90 vs Stop Run, 30 vs Stop Pass
+%     No pure NE. OSU Run 3/5, Michigan Stop Run 1/2. OSU scores 60%.
+%     Pi_OSU(Run, q) = 80 - 40q ; Pi_OSU(Pass, q) = 30 + 60q
+%     Practice profile OSU (1/2,1/2), Michigan (0.8, 0.2):
+%       cell probs .4/.1/.4/.1 ; Pi_OSU = 16+8+36+3 = 63 ; Pi_UM = 37
+%       vs q = 0.8: Run 48, Pass 78 -> OSU should Pass for sure
+%   Goeree-Holt matching pennies (cents)
+%     Symmetric: NE 1/2, 1/2.  Asymmetric (320): Row Top 1/2 (!),
+%     Column Left 1/8. Lab: Top 96%, Left 16%.
+%   Sunday Morning (deck 03, Story A payoffs, now read as cardinal)
+%     Pure NE (B,B) = (4,3) and (H,H) = (3,4). Mixed: Alex B 1/2,
+%     Blair B 1/4, payoffs (2.5, 2.5). Both prefer either pure NE.
+%     If Alex's 4 becomes 10: Blair's mix becomes B 1/10. Alex's stays 1/2.
+%   Bonanno Fig 6.7: A=3q, B=3-3q, C=2 (q = Pr D)
+%     BR1: B if q<1/3, C if 1/3<q<2/3, A if q>2/3
+%     NE: P1 (0, 1/3, 2/3), P2 (1/3, 2/3)
+%   Deck 04's "never a best reply" M (3,3,3) vs U (4,2,4), D (0,4,0)
+%     vs (L .4, C .6, R 0): U 2.8, M 3, D 2.4 -> M is the unique BR
+%     M is a BR exactly when Pr(C) is in [1/2, 3/4], so not dominated
+%   Bonanno Fig 6.9: B (1,1) dominated by 1/3 A + 2/3 C = (4/3, 4/3)
+%   Bonanno Fig 6.10: C out (by 1/2 A + 1/2 B), F out (by 1/2 D + 1/2 E),
+%     B out (by A), E out (by D). Rationalizable: A and D.
+% ---------------------------------------------------------------------
+
+% Lottery over {Score, Fail} in a cell of the two-point table, with a strut
+% for row height (arraystretch would also stretch the pmatrix)
+\newcommand{\lot}[2]{\rule[-0.22in]{0pt}{0.55in}$\begin{pmatrix} \text{Score} & \text{Fail} \\ #1 & #2\end{pmatrix}$}
+
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{Where We Left Off}
+Chapter 2: some games have \textbf{no} Nash equilibrium
+\begin{itemize}
+    \item Matching Pennies, penalty kicks, play-calling...
+    \item Being predictable gets you exploited
+\end{itemize}
+\bsk
+Chapter 5: \textbf{expected utility} ranks lotteries
+\begin{itemize}
+    \item $u(o)$: outcome utility \qquad $U(L)$: expected utility
+\end{itemize}
+\vfill
+Our goal:
+\begin{enumerate}
+    \item Let players \textbf{randomize}
+    \item Use expected utility to evaluate random strategies
+    \item Find equilibria that always exist
+\end{enumerate}
+\vspace{-0.4in}
+\end{frame}
+
+% ==============================================================
+% MOBLAB --- PLAY FIRST
+% ==============================================================
+
+% ---- MobLab run: Matrix: Instructor Specified ------------------------
+% Goeree & Holt (2001) matching pennies, payoffs in cents. Two one-shot
+% rounds, re-paired between rounds:
+%   Round 1 (symmetric):  T: (80,40) (40,80)   B: (40,80) (80,40)
+%   Round 2 (asymmetric): T: (320,40) (40,80)  B: (40,80) (80,40)
+% Play BEFORE mixed strategies are defined. Results come back in
+% "Back to MobLab".
+% ---------------------------------------------------------------------
+\begin{frame}{MobLab: ``Matrix: Instructor Specified''}
+\begin{itemize}
+    \item MobLab time!
+    \item You'll be paired with someone. Row player or Column player
+    \item Two rounds, new partner each round. Each round played once
+\end{itemize}
+\bsk
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+\textbf{Round 1}\\[4pt]
+\begin{matrixgame}[top={Left, Right}, left={Top, Bottom}, player names={Row, Column}]
+  \payoffmatrix{80,40 & 40,80 \\ 40,80 & 80,40}
+\end{matrixgame}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\textbf{Round 2}\\[4pt]
+\begin{matrixgame}[top={Left, Right}, left={Top, Bottom}, player names={Row, Column}]
+  \payoffmatrix{320,40 & 40,80 \\ 40,80 & 80,40}
+\end{matrixgame}
+\end{column}
+\end{columns}
+\vfill
+\centering
+Feel free to talk! And play it the way you'd actually play it.
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{MobLab Results}
+\vspace{0.5in}
+\centering
+\renewcommand{\arraystretch}{2}
+\begin{tabular}{l|c|c|}
+\cline{2-3}
+ & \% of Rows playing Top & \% of Columns playing Left \\
+\hline
+\multicolumn{1}{|l|}{Round 1} & \hspace{1in} & \hspace{1in} \\
+\hline
+\multicolumn{1}{|l|}{Round 2} & & \\
+\hline
+\end{tabular}
+\end{frame}
+
+% ==============================================================
+% 6.1 STRATEGIC-FORM GAMES, REVISITED
+% ==============================================================
+
+\begin{frame}[standout]
+Strategic-Form Games, Revisited
+\end{frame}
+
+\begin{frame}{Strategic-Form Games, Again}
+Same pipeline as Chapter 2:
+\bsk
+\centering
+\begin{tikzpicture}[>=stealth, node distance=1.0cm,
+   box/.style={draw, rounded corners=3pt, minimum height=0.8cm, minimum width=2.4cm, font=\small}]
+  \node[box] (s) {strategy profile $s$};
+  \node[box, right=1.5cm of s] (o) {outcome $f(s)$};
+  \node[box, right=1.5cm of o] (u) {number $u_i(f(s))$};
+  \draw[->, thick] (s) -- node[above, font=\scriptsize] {$f$} (o);
+  \draw[->, thick] (o) -- node[above, font=\scriptsize] {$u_i$} (u);
+  \draw[->, thick, dashed] (s.south) -- ++(0,-0.9) -| node[below, pos=0.25, font=\scriptsize] {$\pi_i$} (u.south);
+\end{tikzpicture}
+\bsk
+\raggedright
+\vspace{0.2in}
+One change: $u_i$ is now an \textbf{outcome utility} (Chapter 5)
+\begin{itemize}
+    \item Numbers are \textbf{cardinal}: only linear rescaling allowed
+    \item Bonanno: ``games with cardinal payoffs''
+\end{itemize}
+\bsk
+Why do we need that? \vspace{0.2in}
+\end{frame}
+
+\begin{frame}{Example: Two-Point Conversion}
+Ohio State vs.\ Michigan. Buckeyes score a TD, go for two
+\bsk
+\begin{itemize}
+    \item Ohio State calls: \textbf{Run} or \textbf{Pass}
+    \item Michigan's defense calls: \textbf{Stop Run} or \textbf{Stop Pass}
+    \item Simultaneous: neither sees the other's call
+\end{itemize}
+\bsk
+Even after both calls, the play can work or fail
+\bsk
+\textbf{Outcome:} a \textbf{lottery} over \{Score, Fail\}
+\vfill
+{\footnotesize Probabilities are made up, for illustration.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Sometimes the Outcome Is a Lottery}
+\centering
+\begin{tabular}{r|c|c|}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{\color{player2}Stop Run} & \multicolumn{1}{c}{\color{player2}Stop Pass} \\
+\cline{2-3}
+{\color{player1}Run} & \lot{0.4}{0.6} & \lot{0.8}{0.2} \\
+\cline{2-3}
+{\color{player1}Pass} & \lot{0.9}{0.1} & \lot{0.3}{0.7} \\
+\cline{2-3}
+\end{tabular}
+\bsk
+\raggedright
+What number goes in each cell? \onslide<2->{Its \textbf{expected utility}!}
+\bsk
+\onslide<3->{Normalize: \ $u_{OSU}(\text{Score})=1$, $u_{OSU}(\text{Fail})=0$. Michigan: the reverse
+\bsk
+$U_{OSU}\begin{pmatrix} \text{Score} & \text{Fail} \\ 0.4 & 0.6\end{pmatrix}=$ \underline{\hspace{1.8in}} \ $=$ Pr(Score)}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Reduced Game}
+Multiply by 100 (linear rescaling). Payoff $=$ \% chance of each team's goal
+\bsk
+\centering
+\begin{matrixgame}[top={Stop Run, Stop Pass}, left={Run, Pass}, player names={Ohio State, Michigan}, w=1.9]
+  \payoffmatrix{40,60 & 80,20 \\ 90,10 & 30,70}
+\end{matrixgame}
+\bsk
+\raggedright
+\textbf{Rule:} Lottery in a cell? Use its expected utility as the payoff number
+\bsk
+That's it! From here on, every cell is just a number
+\vfill
+{\footnotesize Bonanno \S6.1 builds this formally (an outcome function that returns lotteries). We'll skip it.}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% 6.2 MIXED STRATEGIES
+% ==============================================================
+
+\begin{frame}[standout]
+Mixed Strategies
+\end{frame}
+
+\begin{frame}{Any Nash Equilibrium?}
+\centering
+\begin{matrixgame}[top={Stop Run, Stop Pass}, left={Run, Pass}, player names={Ohio State, Michigan}, w=1.9, br=<2->]
+  \payoffmatrix{40,60 & 80,20 \\ 90,10 & 30,70}
+\end{matrixgame}
+\bsk
+\raggedright
+\onslide<2->{No cell has both underlined. \ No (pure) Nash equilibrium!}
+\bsk
+\onslide<3->{What would \textit{you} do as the Buckeyes' coach?
+\vspace{0.5in}
+
+\textbf{Idea:} Be unpredictable. \textbf{Randomize}!}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Definition: Mixed Strategy}
+A \textbf{mixed strategy} $\sigma_i$ is a probability distribution over player $i$'s strategies
+\begin{itemize}
+    \item A lottery over your own strategies!
+\end{itemize}
+\bsk
+\textbf{Ex:} \ $\sigma_{OSU}=\begin{pmatrix} \text{Run} & \text{Pass} \\ p & 1-p\end{pmatrix}$
+\qquad
+$\sigma_{UM}=\begin{pmatrix} \text{Stop Run} & \text{Stop Pass} \\ q & 1-q\end{pmatrix}$
+\bsk
+\begin{itemize}
+    \item $\sigma_i(s_i)$: probability that $\sigma_i$ puts on $s_i$
+    \item $\Sigma_i$: set of all mixed strategies of player $i$
+    \item The old strategies $s_i\in S_i$ are now called \textbf{pure strategies}
+    \begin{itemize}
+        \item Pure strategy $=$ mixed strategy with probability 1 on one $s_i$
+    \end{itemize}
+\end{itemize}
+\vfill
+\textbf{Assume:} players randomize \textbf{independently}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Expected Payoff of a Mixed Profile}
+A mixed profile $\sigma=(\sigma_1,\sigma_2)$ is a lottery over the \textbf{cells}
+\bsk
+Probability of cell $s=(s_1,s_2)$: \quad $\sigma(s)=\sigma_1(s_1)\times\sigma_2(s_2)$ \hfill (independence)
+\bsk
+\textbf{Expected payoff:} weight each cell's payoff by the chance of landing in it
+$$\underbrace{\Pi_i(\sigma)\vphantom{\sum_{s}}}_{\text{expected payoff}}\ =\ \sum_{s\in S}\ \underbrace{\sigma(s)\vphantom{\sum_{s}}}_{\text{prob.\ of cell }s}\ \cdot\ \underbrace{\pi_i(s)\vphantom{\sum_{s}}}_{\text{payoff in cell }s}$$
+\bsk
+Capital $\Pi$: payoff from a mixed profile. Small $\pi$: from a pure profile
+\vfill
+{\footnotesize Same idea as $u$ vs.\ $U$ in Chapter 5. Bonanno's notation this time.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Example}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+\begin{matrixgame}[top={Stop Run, Stop Pass}, left={Run, Pass}, player names={Ohio State, Michigan}, w=1.9]
+  \payoffmatrix{40,60 & 80,20 \\ 90,10 & 30,70}
+\end{matrixgame}
+\end{column}
+\begin{column}{0.48\textwidth}
+OSU: \ $\begin{pmatrix} \text{Run} & \text{Pass} \\ 0.5 & 0.5\end{pmatrix}$
+\bsk
+Michigan: \ $\begin{pmatrix} \text{Stop Run} & \text{Stop Pass} \\ 0.8 & 0.2\end{pmatrix}$
+\end{column}
+\end{columns}
+\bsk
+\centering
+\renewcommand{\arraystretch}{1.6}
+\small
+\begin{tabular}{r|c|c|c|c|}
+\cline{2-5}
+Cell & (Run, Stop Run) & (Run, Stop Pass) & (Pass, Stop Run) & (Pass, Stop Pass) \\
+\cline{2-5}
+Probability & \hspace{0.5in} & \hspace{0.5in} & \hspace{0.5in} & \hspace{0.5in} \\
+\cline{2-5}
+\end{tabular}
+\normalsize
+\bsk
+\raggedright
+$\Pi_{OSU}(\sigma)=$
+\vspace{0.3in}
+
+$\Pi_{UM}(\sigma)=$
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Why We Needed Chapter 5}
+A mixed profile turns every game into a lottery over cells
+\bsk
+Ranking lotteries needs \textbf{expected utility}
+\begin{itemize}
+    \item Ordinal payoffs only rank the cells
+    \item They can't say if a 50/50 shot at 4 or 1 beats 3 for sure
+\end{itemize}
+\bsk
+\textbf{Thus:} Mixed strategies need \textbf{cardinal} payoffs
+\vfill
+The real payoff from Chapter 5:\\
+\textbf{Mixed strategies}, and \textbf{best replies} to mixed strategies
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Best Reply to a Mixed Strategy}
+Michigan plays $\begin{pmatrix} \text{Stop Run} & \text{Stop Pass} \\ q & 1-q\end{pmatrix}$. What should OSU do?
+\bsk
+\begin{columns}[T]
+\begin{column}{0.42\textwidth}
+\centering
+\begin{matrixgame}[top={Stop Run, Stop Pass}, left={Run, Pass}, player names={Ohio State, Michigan}, w=1.9]
+  \payoffmatrix{40,60 & 80,20 \\ 90,10 & 30,70}
+\end{matrixgame}
+\end{column}
+\begin{column}{0.55\textwidth}
+$\Pi_{OSU}(\text{Run},\ q)=$
+\vspace{0.45in}
+
+$\Pi_{OSU}(\text{Pass},\ q)=$
+\end{column}
+\end{columns}
+\bsk
+If $q=0.8$: \ Run gives \underline{\hspace{0.6in}}, \ Pass gives \underline{\hspace{0.6in}}
+\bsk
+OSU's best reply: \underline{\hspace{1.2in}}
+\vfill
+{\footnotesize Michigan's mix is a lottery, so each pure strategy of OSU's gets an expected payoff.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Seeing It in a Graph}
+\centering
+\begin{tikzpicture}[x=7cm, y=0.042cm, >=stealth]
+  \draw[->] (0,0) -- (1.08,0) node[right] {\small $q=$ Pr(Stop Run)};
+  \draw[->] (0,0) -- (0,104) node[above] {\small $\Pi_{OSU}$};
+  \foreach \t in {0,0.5,1}{ \draw (\t,1.5) -- (\t,-1.5) node[below] {\small \t}; }
+  \foreach \v in {30,40,60,80,90}{ \draw (0.01,\v) -- (-0.01,\v) node[left] {\small \v}; }
+  \onslide<2->{
+    \draw[blue, very thick] (0,80) -- (1,40) node[right] {\small Run: $80-40q$};
+  }
+  \onslide<3->{
+    \draw[red!80!black, very thick] (0,30) -- (1,90) node[right] {\small Pass: $30+60q$};
+  }
+  \onslide<4->{
+    \draw[dotted, thick] (0.5,0) -- (0.5,60);
+    \fill (0.5,60) circle (2.5pt);
+    \draw[line width=3pt, opacity=0.3, green!50!black] (0,80) -- (0.5,60) -- (1,90);
+  }
+\end{tikzpicture}
+\bsk
+\raggedright
+\only<1-3>{Plot each pure strategy's expected payoff against $q$}%
+\only<4>{Best reply $=$ the higher line. \ They cross at $q=$ \underline{\hspace{0.6in}}}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{OSU's Best Reply}
+$$BR_{OSU}(q)=\begin{cases}
+\text{Run} & \text{if } q<\tfrac12 \\[4pt]
+\text{\underline{\hspace{1.4in}}} & \text{if } q=\tfrac12 \\[4pt]
+\text{Pass} & \text{if } q>\tfrac12
+\end{cases}$$
+\bsk
+\textbf{Fact:} A mix of Run and Pass is a best reply \textbf{only} when Run and Pass tie
+\begin{itemize}
+    \item Otherwise, shift weight to the better one!
+\end{itemize}
+\bsk
+\textbf{Fact:} When they tie, \textbf{every} mix is a best reply
+\vfill
+\textbf{In general:} $\sigma_i$ is a best reply $\iff$ every pure strategy it uses is a best reply
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Definition: Mixed-Strategy Nash Equilibrium}
+In words: every player's mix is a best reply to the other players' mixes
+\bsk
+A mixed profile $\sigma^*=(\sigma_1^*,\ldots,\sigma_n^*)$ is a \textbf{Nash equilibrium} if, for every player $i$,
+$$\underbrace{\Pi_i(\sigma_i^*,\sigma_{-i}^*)}_{\text{payoff from equilibrium mix}}\ \ \ge\ \ \underbrace{\Pi_i(\sigma_i,\sigma_{-i}^*)}_{\text{payoff from any other mix}}\qquad\text{for all }\sigma_i\in\Sigma_i$$
+\bsk
+Same as Chapter 2: $\sigma_i^*\in BR_i(\sigma_{-i}^*)$ for every $i$
+\bsk
+\textbf{Fact:} Enough to check \textbf{pure} deviations $s_i\in S_i$
+\vfill
+{\footnotesize A pure-strategy NE is still a NE when mixing is allowed (Bonanno p.~211).}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Nash's Theorem}
+\begin{block}{Theorem (Nash, 1951)}
+Every finite game has \textbf{at least one} Nash equilibrium in mixed strategies.\\
+{\footnotesize Finite: finitely many players, each with finitely many strategies.}
+\end{block}
+\bsk
+\begin{itemize}
+    \item Matching Pennies: no pure NE, but a mixed one
+    \item Two-point conversion: no pure NE, but a mixed one
+    \item This was the big result in his 26-page thesis
+\end{itemize}
+\bsk
+Proof uses a fixed-point theorem. Not covered here
+\vfill
+Existence needs \textbf{mixing}, and mixing needs \textbf{expected utility}
+\vspace{-0.4in}
+\end{frame}
+
+% ==============================================================
+% 6.3 COMPUTING MIXED-STRATEGY NE
+% ==============================================================
+
+\begin{frame}[standout]
+Finding Mixed Equilibria
+\end{frame}
+
+\begin{frame}{The Indifference Principle}
+In words: if you mix between two strategies in equilibrium, they must pay the same
+\bsk
+If $\sigma_i^*$ puts positive probability on both $s_i$ and $s_i'$, then
+$$\underbrace{\Pi_i(s_i,\sigma_{-i}^*)}_{\text{payoff from }s_i}\ =\ \underbrace{\Pi_i(s_i',\sigma_{-i}^*)}_{\text{payoff from }s_i'}\ =\ \underbrace{\Pi_i(\sigma^*)}_{\text{equilibrium payoff}}$$
+\bsk
+Why? \vspace{0.6in}
+
+\textbf{Lesson:} My mix is set to make \textbf{you} indifferent. Yours makes \textbf{me} indifferent
+\vfill
+{\footnotesize Bonanno Theorem 6.3.1}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Recipe: Mixed NE in a $2\times 2$}
+\begin{enumerate}
+    \item Run IDSDS first. Dominated strategies get probability 0
+    \bsk
+    \item Underline. Note any pure NE
+    \bsk
+    \item P2 plays $q$ on their first strategy. Find the $q$ that makes \textbf{P1} indifferent
+    \bsk
+    \item P1 plays $p$ on their first strategy. Find the $p$ that makes \textbf{P2} indifferent
+    \bsk
+    \item Both strictly between 0 and 1? That's a mixed NE
+\end{enumerate}
+\vfill
+Bigger games: also check that unused strategies don't do better
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Solving the Two-Point Game}
+\begin{columns}[T]
+\begin{column}{0.42\textwidth}
+\centering
+\begin{matrixgame}[top={Stop Run, Stop Pass}, left={Run, Pass}, player names={Ohio State, Michigan}, w=1.9]
+  \payoffmatrix{40,60 & 80,20 \\ 90,10 & 30,70}
+\end{matrixgame}
+\end{column}
+\begin{column}{0.55\textwidth}
+\textbf{Step 1:} Michigan's $q$ makes OSU indifferent
+\vspace{1.3in}
+
+$q^*=$
+\end{column}
+\end{columns}
+\vfill
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Solving the Two-Point Game}
+\begin{columns}[T]
+\begin{column}{0.42\textwidth}
+\centering
+\begin{matrixgame}[top={Stop Run, Stop Pass}, left={Run, Pass}, player names={Ohio State, Michigan}, w=1.9]
+  \payoffmatrix{40,60 & 80,20 \\ 90,10 & 30,70}
+\end{matrixgame}
+\end{column}
+\begin{column}{0.55\textwidth}
+\textbf{Step 2:} OSU's $p$ makes Michigan indifferent
+\vspace{1.3in}
+
+$p^*=$
+\end{column}
+\end{columns}
+\bsk
+Mixed NE: \hspace{2.5in} OSU scores \underline{\hspace{0.6in}}\% of the time
+\vfill
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Back to MobLab}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+\textbf{Round 1}\\[4pt]
+\begin{matrixgame}[top={Left, Right}, left={Top, Bottom}, player names={Row, Column}]
+  \payoffmatrix{80,40 & 40,80 \\ 40,80 & 80,40}
+\end{matrixgame}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\textbf{Round 2}\\[4pt]
+\begin{matrixgame}[top={Left, Right}, left={Top, Bottom}, player names={Row, Column}]
+  \payoffmatrix{320,40 & 40,80 \\ 40,80 & 80,40}
+\end{matrixgame}
+\end{column}
+\end{columns}
+\bsk
+Round 1 mixed NE: \vspace{0.35in}
+
+Round 2 mixed NE: \vspace{0.35in}
+
+Only Row's payoff changed. Whose mix changes in the NE??
+\end{frame}
+
+\begin{frame}{Back to MobLab}
+\vspace{0.2in}
+\centering
+\renewcommand{\arraystretch}{2}
+\begin{tabular}{l|c|c|c|c|}
+\cline{2-5}
+ & \multicolumn{2}{c|}{\% Rows playing Top} & \multicolumn{2}{c|}{\% Columns playing Left} \\
+\cline{2-5}
+ & Round 1 & Round 2 & Round 1 & Round 2 \\
+\hline
+\multicolumn{1}{|l|}{Nash prediction} & 50 & 50 & 50 & 12.5 \\
+\hline
+\multicolumn{1}{|l|}{Goeree \& Holt (2001)} & $\approx$ 50 & 96 & $\approx$ 50 & 16 \\
+\hline
+\multicolumn{1}{|l|}{Our class} & \hspace{0.6in} & \hspace{0.6in} & \hspace{0.6in} & \hspace{0.6in} \\
+\hline
+\end{tabular}
+\bsk
+\raggedright
+\textbf{Lab result:} Rows chase the 320. NE says Row's own payoffs shouldn't matter!\\
+Columns anticipate it and play Left even less
+\vfill
+{\footnotesize Not in the book. Source: Goeree \& Holt (2001), ``Ten Little Treasures of Game Theory and Ten Intuitive Contradictions,'' \textit{American Economic Review} 91(5).}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% PURE AND MIXED TOGETHER
+% ==============================================================
+
+\begin{frame}[standout]
+Pure and Mixed Together
+\end{frame}
+
+\begin{frame}{Remember Sunday Morning?}
+Alex and Blair, dead phones: Buckeye Donuts or HangOverEasy?
+\bsk
+\centering
+\begin{matrixgame}[top={BuckyDs, HangOE}, left={BuckyDs, HangOE}, player names={Alex, Blair}, br=<2->]
+  \payoffmatrix{4,3 & 2,1 \\ 1,2 & 3,4}
+\end{matrixgame}
+\bsk
+\raggedright
+Now read the payoffs as \textbf{cardinal} (outcome utilities)
+\bsk
+\onslide<2->{Pure NE: \underline{\hspace{2in}}}
+\bsk
+\onslide<3->{Is there also a mixed NE?}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Sunday Morning: The Mixed NE}
+\begin{columns}[T]
+\begin{column}{0.42\textwidth}
+\centering
+\begin{matrixgame}[top={BuckyDs, HangOE}, left={BuckyDs, HangOE}, player names={Alex, Blair}]
+  \payoffmatrix{4,3 & 2,1 \\ 1,2 & 3,4}
+\end{matrixgame}
+\end{column}
+\begin{column}{0.55\textwidth}
+Blair's $q$ makes Alex indifferent:
+\vspace{0.6in}
+
+Alex's $p$ makes Blair indifferent:
+\vspace{0.6in}
+\end{column}
+\end{columns}
+\bsk
+Payoffs at the mixed NE: \ Alex \underline{\hspace{0.5in}} \ Blair \underline{\hspace{0.5in}} \ Better or worse than the pure NE?
+\bsk
+What if Alex's 4 were a 10? Same ranking. Whose mix changes? \vspace{0.3in}
+\end{frame}
+
+\begin{frame}{Indifference Isn't Enough}
+\centering
+\begin{matrixgame}[top={D, E}, left={A, B, C}, player names={Player 1, Player 2}]
+  \payoffmatrix{3,0 & 0,2 \\ 0,2 & 3,0 \\ 2,0 & 2,1}
+\end{matrixgame}
+\bsk
+\raggedright
+Try: \ P1 plays $\begin{pmatrix} A & B & C \\ \tfrac12 & \tfrac12 & 0\end{pmatrix}$, \ P2 plays $\begin{pmatrix} D & E \\ \tfrac12 & \tfrac12\end{pmatrix}$
+\bsk
+P1 indifferent between $A$ and $B$? \ $\Pi_1(A)=$ \hspace{0.6in} $\Pi_1(B)=$
+\bsk
+\onslide<2->{But $\Pi_1(C)=$ \underline{\hspace{0.5in}} \ So it's \textbf{not} a NE!}
+\vfill
+\onslide<2->{\textbf{Lesson:} Indifference is necessary, not sufficient. Check the unused strategies!}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Best Replies With Three Strategies}
+\begin{columns}[T]
+\begin{column}{0.36\textwidth}
+\centering
+\scalebox{0.85}{%
+\begin{matrixgame}[top={D, E}, left={A, B, C}, player names={Player 1, Player 2}]
+  \payoffmatrix{3,0 & 0,2 \\ 0,2 & 3,0 \\ 2,0 & 2,1}
+\end{matrixgame}}
+\bsk
+\raggedright
+$q=$ Pr($D$)
+\bsk
+$\Pi_1(A,q)=3q$\\
+$\Pi_1(B,q)=3-3q$\\
+$\Pi_1(C,q)=2$
+\end{column}
+\begin{column}{0.62\textwidth}
+\centering
+\begin{tikzpicture}[x=5cm, y=1.0cm, >=stealth]
+  \draw[->] (0,0) -- (1.15,0) node[right] {\small $q$};
+  \draw[->] (0,0) -- (0,3.4) node[above] {\small $\Pi_1$};
+  \foreach \t/\l in {0/0, 0.3333/\tfrac13, 0.6667/\tfrac23, 1/1}{ \draw (\t,0.06) -- (\t,-0.06) node[below] {\small $\l$}; }
+  \foreach \v in {1,2,3}{ \draw (0.015,\v) -- (-0.015,\v) node[left] {\small \v}; }
+  \draw[blue, very thick] (0,0) -- (1,3) node[right] {\small $A$};
+  \draw[red!80!black, very thick] (0,3) -- (1,0) node[pos=0.93, above right] {\small $B$};
+  \draw[black, very thick, dashed] (0,2) -- (1,2) node[right] {\small $C$};
+  \onslide<2->{
+    \draw[line width=4pt, opacity=0.3, green!50!black] (0,3) -- (0.3333,2) -- (0.6667,2) -- (1,3);
+    \draw[dotted] (0.3333,0) -- (0.3333,2);
+    \draw[dotted] (0.6667,0) -- (0.6667,2);
+  }
+\end{tikzpicture}
+\end{column}
+\end{columns}
+\medskip
+$BR_1(q)$: \hspace{0.3in}
+\onslide<2->{$B$ if $q<\tfrac13$ \qquad $C$ if $\tfrac13<q<\tfrac23$ \qquad $A$ if $q>\tfrac23$}
+\bsk
+\onslide<3->{So the NE must mix $B$ \& $C$ (at $q=\tfrac13$), or $A$ \& $C$ (at $q=\tfrac23$). Which works?}
+\end{frame}
+
+\begin{frame}{What Does Mixing Mean?}
+At a mixed NE you're \textbf{indifferent}. So why mix exactly 60/40???
+\bsk
+Three readings:
+\begin{enumerate}
+    \item \textbf{Literal randomizing.} Coaches, kickers, poker players
+    \bsk
+    \item \textbf{Beliefs.} $\sigma_2$ is what P1 \textit{believes} P2 will do
+    \begin{itemize}
+        \item P2 may not randomize at all. P1 just can't predict them
+    \end{itemize}
+    \bsk
+    \item \textbf{Populations.} 60\% of coaches run, 40\% pass
+\end{enumerate}
+\vfill
+Bonanno calls mixed NE ``conceptually problematic.'' Agree?
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Mixing in the Real World}
+Lots of situations boil down to ``be unpredictable'':
+\bsk
+\begin{itemize}
+    \item \textbf{Penalty kicks.} Kick left or right? Dive left or right?
+    \item \textbf{Tennis serves.} To the forehand or the backhand?
+    \item \textbf{Play-calling, pitch selection.} Run/pass. Fastball/curveball
+    \item \textbf{Poker.} Bluff with a bad hand, or fold?
+    \item \textbf{Inspections.} Tax audits, parking tickets, drug tests, fare checks
+    \item \textbf{Security.} LAX randomizes its checkpoints and patrols
+\end{itemize}
+\bsk
+\textbf{Lab/field result:} Pro soccer and tennis players mix close to NE rates
+\vfill
+{\footnotesize Not in the book. Sources: Walker \& Wooders (2001, \textit{AER}); Chiappori, Levitt \& Groseclose (2002, \textit{AER}); Palacios-Huerta (2003, \textit{REStud}); Pita et al.\ (2008, AAMAS).}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{But Those Are More Complicated}
+Real versions add:
+\begin{itemize}
+    \item More than two strategies (left, middle, right)
+    \item Repeated play: patterns can be spotted and exploited
+    \item Players differ in skill (a left-footed kicker)
+    \item Payoffs nobody knows exactly
+\end{itemize}
+\bsk
+Core idea survives: if you're predictable, you get exploited
+\vfill
+\vspace{-0.4in}
+\end{frame}
+
+% ==============================================================
+% 6.4 STRICT DOMINANCE AND RATIONALIZABILITY
+% ==============================================================
+
+\begin{frame}[standout]
+Dominance, Revisited
+\end{frame}
+
+\begin{frame}{Remember This One?}
+From Chapter 2: $M$ is never a best reply to a \textbf{pure} strategy, but isn't dominated
+\bsk
+\centering
+\begin{matrixgame}[top={L, C, R}, left={U, M, D}, player names={Player 1, Player 2}]
+  \payoffmatrix{4,1 & 2,0 & 4,2 \\
+                3,2 & 3,1 & 3,0 \\
+                0,0 & 4,2 & 0,1}
+\end{matrixgame}
+\bsk
+\raggedright
+Suppose P2 plays $\begin{pmatrix} L & C & R \\ 0.4 & 0.6 & 0\end{pmatrix}$
+\bsk
+$\Pi_1(U)=$ \hspace{0.9in} $\Pi_1(M)=$ \hspace{0.9in} $\Pi_1(D)=$
+\bsk
+\onslide<2->{$M$ \textbf{is} a best reply, to a \textbf{mixed} strategy!}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Dominated by a Mix}
+\centering
+\begin{matrixgame}[top={D, E}, left={A, B, C}, player names={Player 1, Player 2}]
+  \payoffmatrix{0,1 & 4,0 \\ 1,2 & 1,4 \\ 2,0 & 0,1}
+\end{matrixgame}
+\bsk
+\raggedright
+Is $B$ dominated by $A$? By $C$? \vspace{0.3in}
+
+Try the mix $\begin{pmatrix} A & B & C \\ \tfrac13 & 0 & \tfrac23\end{pmatrix}$:
+\hspace{0.3in} vs.\ $D$: \hspace{0.8in} vs.\ $E$:
+\bsk
+\onslide<2->{$B$ is \textbf{strictly dominated by a mixed strategy}\\
+So $B$ is never a best reply, to anything P2 might do}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Pearce's Theorem}
+\begin{block}{Theorem (Pearce, 1984)}
+In a two-player game, $s_i$ is never a best reply to any mixed strategy of the opponent
+\begin{center}
+$\iff$
+\end{center}
+$s_i$ is strictly dominated by some mixed strategy of player $i$
+\end{block}
+\bsk
+\begin{itemize}
+    \item Fixes Chapter 2's gap: ``never a best reply'' $=$ ``dominated by a mix''
+    \item Opponent's mix $=$ my \textbf{belief} about them
+    \begin{itemize}
+        \item Dominated by a mix $\iff$ irrational under \textbf{every} belief
+    \end{itemize}
+\end{itemize}
+\vfill
+{\footnotesize Three or more players: true if beliefs may be correlated (Bonanno \S6.4).}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Cardinal IDSDS}
+Same as IDSDS, but also delete strategies dominated by \textbf{mixes}
+\begin{itemize}
+    \item Survivors are called \textbf{rationalizable} strategies
+\end{itemize}
+\bsk
+\centering
+\begin{matrixgame}[top={D, E, F}, left={A, B, C}, player names={Player 1, Player 2}]
+  \payoffmatrix{3,4 & 2,1 & 1,2 \\ 0,0 & 1,3 & 4,1 \\ 1,4 & 1,4 & 2,6}
+\end{matrixgame}
+\bsk
+\raggedright
+Step 1: \hspace{1.5in} Step 2: \\[0.25in]
+Step 3: \hspace{1.5in} Step 4:
+\bsk
+\textbf{Careful:} needs players to know each other's \textbf{cardinal} payoffs. Realistic?
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% WORKED EXAMPLE
+% ==============================================================
+% Jordan (row): Pay, West, Neil.  CampusParc (col): Patrol West, Patrol Neil
+%   Pay:  (1,0) (1,0)    West: (0,2) (4,0)    Neil: (3,0) (0,1)
+% Q1 nothing dominated by a pure strategy, for either player
+% Q2 Pay dominated by 1/2 West + 1/2 Neil: (1.5, 2) > (1, 1)
+% Q3 no pure NE
+% Q4 q = Pr(Patrol West): 4(1-q) = 3q -> q = 4/7
+%    p = Pr(West):        2p = 1-p    -> p = 1/3
+%    NE: Jordan (0, 1/3, 2/3), CampusParc (4/7, 3/7). Payoffs 12/7, 2/3
+%    Pay at the NE gives 1 < 12/7, so leaving it out is fine
+% Q5 West catch worth 4 to CampusParc: 4p = 1-p -> p = 1/5; q stays 4/7
+%    Jordan's payoff unchanged at 12/7; CampusParc's rises to 4/5
+% ---------------------------------------------------------------------
+
+\begin{frame}[standout]
+Let's Work One Out
+\end{frame}
+
+\begin{frame}{Gameday Parking}
+Jordan drives to campus for the Michigan game. Three options:
+\begin{itemize}
+    \item \textbf{Pay} for a gameday lot
+    \item Park illegally in a \textbf{West} Campus lot
+    \item Park illegally on \textbf{Neil} Ave
+\end{itemize}
+CampusParc has one tow crew. It can patrol West Campus or Neil Ave
+\bsk
+\centering
+\begin{matrixgame}[top={Patrol West, Patrol Neil}, left={Pay, West, Neil}, player names={Jordan, CampusParc}, w=2.1]
+  \payoffmatrix{1,0 & 1,0 \\ 0,2 & 4,0 \\ 3,0 & 0,1}
+\end{matrixgame}
+\bsk
+\raggedright
+{\footnotesize Jordan picks the row, CampusParc the column. Payoffs: Jordan, CampusParc. Hypothetical numbers.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Gameday Parking}
+\begin{enumerate}
+    \item Is any strategy strictly dominated by a \textbf{pure} strategy? \vspace{0.2in}
+    \item Is any strategy strictly dominated by a \textbf{mixed} strategy? Delete it \vspace{0.3in}
+    \item Is there a pure-strategy NE? \vspace{0.2in}
+    \item Find the mixed NE and both players' expected payoffs. \\
+      Check that Jordan really doesn't want to Pay \vspace{0.55in}
+    \item CampusParc now earns 4 (not 2) for a tow at West Campus.\\
+      Whose mix changes? Does Jordan's payoff change? \vspace{0.3in}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{What Have We Learned, Charlie Brown?}
+\begin{itemize}
+    \item Lottery in a cell? Its expected utility is the payoff
+    \item \textbf{Mixed strategy}: a lottery over your own pure strategies
+    \item $\Pi_i(\sigma)$: weight each cell's payoff by its probability
+    \begin{itemize}
+        \item Needs \textbf{cardinal} payoffs. That's why we did Chapter 5
+    \end{itemize}
+    \item \textbf{Mixed NE}: every mix is a best reply to the others
+    \item \textbf{Nash (1951)}: every finite game has one
+    \item \textbf{Indifference principle}: my mix makes \textit{you} indifferent
+    \begin{itemize}
+        \item Necessary, not sufficient. Check unused strategies
+    \end{itemize}
+    \item \textbf{Pearce}: never a best reply $\iff$ dominated by a mix
+\end{itemize}
+\vfill
+Next: mixing in game trees (behavioral strategies)
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Reading \& Practice}
+\begin{itemize}
+    \item Bonanno, \textit{Game Theory}, Chapter 6
+    \begin{itemize}
+        \item \S6.1: skim. Lotteries in cells, done formally
+        \item \S6.2--6.4: read carefully
+    \end{itemize}
+    \item Exercises: \S6.5.2 (6.3, 6.4), \S6.5.3 (6.7, 6.8, 6.10), \S6.5.4 (6.12)
+    \begin{itemize}
+        \item 6.13 and 6.14 are harder. 6.15 (the dog in the river) is a challenge
+    \end{itemize}
+    \item Solutions in \S6.6. Try them first
+\end{itemize}
+\vfill
+\end{frame}
+
+\end{document}
