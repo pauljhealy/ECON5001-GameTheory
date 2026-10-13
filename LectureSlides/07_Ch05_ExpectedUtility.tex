@@ -605,7 +605,7 @@ Logan chooses: \underline{\hspace{1in}}
 \centering
 \begin{tikzpicture}[x=0.56cm, y=4.2cm, >=stealth]
   \draw[->] (0,0) -- (17.6,0) node[right] {\small \$1,000s};
-  \draw[->] (0,0) -- (0,1.13) node[above] {\small outcome utility};
+  \draw[->] (0,0) -- (0,1.13) node[above] {\small rescaled $u(o)$};
   \foreach \d in {1,16}{ \draw (\d,0.02) -- (\d,-0.02) node[below] {\small \d}; }
   \draw (0.12,1) -- (-0.12,1) node[left] {\small 1};
   \node[left] at (-0.12,0) {\small 0};
@@ -620,7 +620,7 @@ Logan chooses: \underline{\hspace{1in}}
     % \draw (12.25,0.02) -- (12.25,-0.02) node[below] {\small 12.25};
     % \draw[dotted, thick] (12.25,0) -- (12.25,0.75);
     \draw[dashed, thick] (0,0.75) -- (16.6,0.75);
-    \node[left] at (-0.12,0.75) {\small $U(\text{No ins.})=0.75$};
+    \node[left] at (-0.12,0.75) {\small $\textcolor{blue}{U_R}=\textcolor{red!80!black}{U_L}=0.75$};
     % \fill (12.25,0.75) circle (2.4pt);
   }
   \onslide<3->{
@@ -635,10 +635,10 @@ Logan chooses: \underline{\hspace{1in}}
 \end{tikzpicture}
 \bsk
 \raggedright
-\only<1>{Both rescaled so that $u(1)=0$ and $u(16)=1$. (Linear rescaling: allowed!)\\
+\only<1>{Both rescaled so that $u(1)=0$ and $u(16)=1$: \ \textcolor{blue}{$(\sqrt{o}-1)/3$} \ and \ \textcolor{red!80!black}{$\ln(o)/\ln(16)$}. \ (Linear rescaling: allowed!)\\
 Logan's curve bends more: Logan is \textbf{more} risk averse than Ruth.}%
 \only<2>{No insurance: 75\% chance of the best, 25\% chance of the worst.\\
-So $U(\text{No ins.})=0.75$ for \textbf{both} of them: the dashed line.}%
+So $U(\text{No ins.})=0.75$ for \textbf{both} of them: the dashed line. \ (Before rescaling: \textcolor{blue}{3.25} and \textcolor{red!80!black}{2.08})}%
 \only<3>{Insurance gives 10 for sure. Is $u(10)$ above or below the dashed line?\\
 \textbf{Ruth:} below, so no insurance. \quad \textbf{Logan:} above, so buy insurance.}
 \vfill
