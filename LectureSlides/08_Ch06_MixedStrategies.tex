@@ -744,7 +744,8 @@ Payoffs at the mixed NE: \ Alex \underline{\hspace{0.5in}} \ Blair \underline{\h
 \vspace{0.3in}
 \end{frame}
 
-\begin{frame}{Indifference Isn't Enough}
+\begin{frame}{Indifference Does Not Imply Nash Equilibrium}
+With more than 2 strategies, indifference $\not\Rightarrow$ Nash equilibrium
 \centering
 \begin{matrixgame}[top={D, E}, left={A, B, C}, player names={Player 1, Player 2}]
   \payoffmatrix{3,0 & 0,2 \\ 0,2 & 3,0 \\ 2,0 & 2,1}
@@ -797,15 +798,18 @@ $\Pi_1(C,q_D)=2$
 \end{column}
 \end{columns}
 \medskip
-$BR_1(q_D)$: \hspace{0.3in}
-\onslide<2->{$B$ if $q_D<\tfrac13$ \qquad $C$ if $\tfrac13<q_D<\tfrac23$ \qquad $A$ if $q_D>\tfrac23$}
-\bsk
-\onslide<3->{No pure strategy NE $\Rightarrow$ Must be mixing $\Rightarrow$ Must have $q_D=1/3$ (mix $B$ and $C$) or $q_D=2/3$ (mix $A$ and $C$)}
+\only<2>{$BR_1(q_D)$: \hspace{0.3in}$B$ if $q_D<\tfrac13$ \qquad $C$ if $\tfrac13<q_D<\tfrac23$ \qquad $A$ if $q_D>\tfrac23$}
+
+\only<3->{No pure strategy NE $\Rightarrow$ Must be mixing $\Rightarrow$ $q_D$ needs to make P1 indifferent\\
+Possible solution \#1: {\color{orange} Set $q_D=2/3$, so P1 mixes between $A$ \& $C$, setting $p_B=0$.}\\
+Possible solution \#2: {\color{purple} Set $q_D=1/3$, so P1 mixes between $B$ \& $C$, setting $p_A=0$.}}
 \end{frame}
 
-\begin{frame}{Best Replies With Three Strategies}
+\begin{frame}{What is P1's MSNE Strategy?}
 \begin{columns}[T]
 \begin{column}{0.5\textwidth}
+\raggedright
+How should P1 mix in the MSNE??
 \centering
 \scalebox{0.85}{%
 \begin{matrixgame}[top={D, E}, left={A, B, C}, player names={Player 1, Player 2}]
@@ -817,23 +821,28 @@ Pr($A$) $=p_A$\\
 Pr($B$) $=p_B$\\
 Pr($C$) $=p_C=1-p_A-p_B$
 \bsk
+P1 MUST make P2 indifferent:\\
 $\Pi_2(D,(p_A,p_B,p_C))=2p_B$\\
 $\Pi_2(E,(p_A,p_B,p_C))=2p_A+1p_C=2p_A+(1-p_A-p_B)=1+p_A-p_B$
 \end{column}
 \begin{column}{0.5\textwidth}
-P2 will mix when
-\begin{align*}
-    2p_B &= 1+p_A-p_B \\
-    3p_B &= 1+p_A
-\end{align*}
-Can't be true if P1 is mixing between $A$ \& $C$ (since $p_B=0$). So P1 must be mixing between $B$ \& $C$ (setting $p_A=0$). Indifference principle:
-\begin{align*}
-    \Pi_2(D,(p_A,p_B,p_C))&=\Pi_2(E,(p_A,p_B,p_C))\\
-    3p_B &= 1+p_A\\
-    3p_B &= 1+0 \\
-    p_B &= \frac{1}{3}
-\end{align*}
-
+Make P2 indifferent (cont.):\\
+$2p_B = 1+p_A-p_B$\\
+$\mathbf{3p_B=1+p_A}$ \quad $\leftarrow$ P1 should satisfy this
+\bsk
+\onslide<2->{Recall the 2 possible solutions...\\
+Try possible solution \#1: {\color{orange} $p_B=0$}:\\
+$3\cdot0 = 1+p_A$\\
+$p_A=-1$ \quad IMPOSSIBLE!
+\bsk}
+\onslide<3->{Try possible solution \#2: {\color{purple} $p_A=0$}:\\
+$3\cdot p_B = 1 + 0$\\
+$p_B=1/3$ \quad POSSIBLE!
+\bsk}
+\onslide<4->{Solution for P1:\\
+$p_A=0$\\
+$p_B=1/3$\\
+$p_C=2/3$ \ \ since $p_A+p_B+p_C=1$}
 \end{column}
 \end{columns}
 \end{frame}
@@ -845,29 +854,25 @@ Can't be true if P1 is mixing between $A$ \& $C$ (since $p_B=0$). So P1 must be 
 \end{matrixgame}
 \end{center}
 \bsk
-Mixed-Strategy Nash equilibrium:
+Mixed-Strategy Nash equilibrium $\sigma^*=(\sigma_1^*,\sigma_2^*)$:
 \bsk
-P1: $(p_A,p_B,p_C)=(0,1/3,2/3)$ (to make P2 indiff. between D and E)
+$\sigma_1^*=(p_A^*,p_B^*,p_C^*)=(0,1/3,2/3)$ (to make P2 indiff. between D and E)
 \bsk
-P2: $(q_D,q_E)=(1/3,2/3)$ (to make P1 indiff. between B and C)
+$\sigma_2^*=(q_D^*,q_E^*)=(1/3,2/3)$ (to make P1 indiff. between B and C)
+\bsk
+Let's write the expected payoffs next to each strategy to verify...
 \end{frame}
 
 \begin{frame}{What Does Mixing Mean?}
 At a mixed NE you're \textbf{indifferent}. So why mix exactly 1/3???
 \bsk
-Three readings:
-\begin{enumerate}
-    \item \textbf{Literal randomizing.} Coaches, kickers, poker players
-    \bsk
-    \item \textbf{Beliefs.} $\sigma_2$ is what P1 \textit{believes} P2 will do
-    \begin{itemize}
-        \item P2 may not randomize at all. P1 just can't predict them
-    \end{itemize}
-    \bsk
-    \item \textbf{Populations.} 60\% of coaches run, 40\% pass
-\end{enumerate}
+It's \textbf{not} because of any strict incentive to do so...
+\bsk
+it's just the only ``stable state'' of the system.
+\bsk
+\textbf{Equivalently:} at any \textit{other} strategy profile, someone \textbf{will} deviate.
 \vfill
-Bonanno calls mixed NE ``conceptually problematic.''
+Bonanno calls mixed NE ``conceptually problematic.'' Most agree.
 \vspace{-0.4in}
 \end{frame}
 
@@ -889,13 +894,25 @@ Lots of situations boil down to ``be unpredictable'':
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{But Those Are More Complicated}
-Real versions add:
+\begin{frame}{Complications In Real Examples}
+Real settings have:
 \begin{itemize}
-    \item More than two strategies (left, middle, right)
+    \item More than two strategies
+    \begin{itemize}
+        \item<2-> We can handle that! Though it gets harder to solve...
+    \end{itemize}
     \item Repeated play: patterns can be spotted and exploited
+    \begin{itemize}
+        \item<3-> ``Repeated Games'' are important, though not covered in Bonanno
+    \end{itemize}
     \item Players differ in skill (a left-footed kicker)
-    \item Payoffs nobody knows exactly
+    \begin{itemize}
+        \item<4-> Adjust the ``payoffs'' in the matrix to be Prob. of success. Then re-solve MSNE.
+    \end{itemize}
+    \item Players don't payoffs of others, can't make indifferent
+    \begin{itemize}
+        \item<5-> Part IV of Bonanno: Games of ``Incomplete information''
+    \end{itemize}
 \end{itemize}
 \bsk
 Core idea survives: if you're predictable, you get exploited
