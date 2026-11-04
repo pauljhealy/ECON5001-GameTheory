@@ -14,24 +14,27 @@
 %   L(O) attached to a frame) is NOT taught. Same rule as deck 08: a
 %   lottery (or a Nature node) at the end of a branch gets replaced by its
 %   expected utility. Nothing later depends on more.
-%   Bonanno's Figs 7.1-7.6 example is replaced by the running Ohio State
-%   vs. Michigan example. Fig 7.4 (no perfect recall), Fig 7.7 (three-player
+%   Bonanno's Figs 7.1-7.6 example is replaced by the running example:
+%   The Game 2013, Michigan's last-second two-point try. Fig 7.4 (no perfect recall), Fig 7.7 (three-player
 %   SPNE) and Fig 7.12 (Selten's horse) are the book's own.
 %   Behavioral profiles are written Bonanno's way: one matrix per player,
 %   a vertical bar between that player's information sets.
 %
 % ANSWERS (all checked numerically)
-%   Last play: OSU down 1 after a TD, no time left. u(Win)=100, u(Lose)=0
-%   for OSU; Michigan gets 100 minus that. Kick: good .95, then overtime
-%   is a 50-50 coin flip. Go for 2: deck 08's Run/Pass table.
+%   The Game 2013: Michigan (player 1, offense) down 42-41 after a TD with
+%   32 sec left. OSU is player 2 (defense). Payoffs are (Michigan, OSU),
+%   u(Win)=100, u(Lose)=0. Kick: good .95, then overtime is 50-50.
+%   Go for 2: deck 08's Run/Pass table with Michigan on offense.
+%   Proper subgames, counting Nature's nodes: 3 (Kick's Nature node, the
+%     OT node, the Go-for-2 node). Not counting them: 1.
 %     Overtime node -> (50,50). Kick -> .95(50) + .05(0) = 47.5 -> (47.5, 52.5)
-%     Subgame: no pure NE. Mixed NE OSU Run 3/5, Michigan Stop Run 1/2,
-%       payoffs (60,40). OSU goes for 2 (60 > 47.5).
-%     SPNE: OSU (Kick 0, Go 1 | Run 3/5, Pass 2/5), Michigan (SR 1/2, SP 1/2)
-%   OSU has 4 pure strategies (KR, KP, GR, GP): mixed needs 3 numbers,
-%     behavioral needs 2. Michigan has one infoset: mixed = behavioral.
+%     Subgame: no pure NE. Mixed NE Michigan Run 3/5, OSU Stop Run 1/2,
+%       payoffs (60,40). Michigan goes for 2 (60 > 47.5). Hoke did.
+%     SPNE: Michigan (Kick 0, Go 1 | Run 3/5, Pass 2/5), OSU (SR 1/2, SP 1/2)
+%   Michigan has 4 pure strategies (KR, KP, GR, GP): mixed needs 3 numbers,
+%     behavioral needs 2. OSU has one infoset: mixed = behavioral.
 %   Mixed (KR .1, KP .3, GR .36, GP .24) -> behavioral (Go .6 | Run .6).
-%     KR/KP split doesn't matter. Vs Michigan's NE mix it earns 55.
+%     KR/KP split doesn't matter. Vs OSU's NE mix it earns 55.
 %   Counting: 3 infosets x 2 choices -> 8 pure, mixed 7, behavioral 3
 %   Fig 7.4: (a,c) 1/2, (b,d) 1/2 gives z1 1/2, z4 1/2. Behavioral (p, q):
 %     P(z2) = p(1-q) = 0 forces p=0 (so P(z1)=0) or q=1 (so P(z4)=0)
@@ -56,9 +59,10 @@
 % column spec given as optional arg, e.g. \beh[cc|cc]{a & b & e & f}{...}
 \newcommand{\beh}[3][cc]{\left(\begin{array}{#1} #2 \\ #3 \end{array}\right)}
 
-% Same tree, drawn several times: the last play of the game
+% Same tree, drawn several times: The Game 2013, Michigan's last play.
+% Payoffs are (Michigan, OSU)
 \newcommand{\lastplaytree}[1][0.78]{%
-\begin{gametree}[player names={OSU, Michigan}, scale=#1]
+\begin{gametree}[player names={Michigan, OSU}, scale=#1]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.25, h=7.4] {Kick; Go for 2};
   \branch[player=0, label=150] from (w1) to[v=1.35, h=3.2] {Good\ $.95$; Miss\ $.05$(0,100)};
   \branch[player=0, label=150, label text=OT] from (w11) to[v=1.35, h=2.0] {Win\ $\frac12$(100,0); Lose\ $\frac12$(0,100)};
@@ -241,7 +245,7 @@ Subgame-Perfect Equilibrium: Allowing Mixing
 \begin{columns}[c]
 \begin{column}{0.45\textwidth}
 \centering
-\begin{gametree}[player names={OSU, Michigan}, scale=0.78]
+\begin{gametree}[player names={Michigan, OSU}, scale=0.78]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.35, h=3.6] {Run; Pass};
   \branch[player=2, label=none] from (w1) to[v=1.35, h=1.75] {SR(40,60); SP(80,20)};
   \branch[label=none] from (w2) to {SR(90,10); SP(30,70)};
@@ -250,21 +254,21 @@ Subgame-Perfect Equilibrium: Allowing Mixing
 \end{column}
 \begin{column}{0.53\textwidth}
 \centering
-\begin{matrixgame}[top={Stop Run, Stop Pass}, left={Run, Pass}, player names={OSU, Michigan}, w=1.9, br=<2->]
+\begin{matrixgame}[top={Stop Run, Stop Pass}, left={Run, Pass}, player names={Michigan, OSU}, w=1.9, br=<2->]
   \payoffmatrix{40,60 & 80,20 \\ 90,10 & 30,70}
 \end{matrixgame}
 \end{column}
 \end{columns}
 \bsk
 \onslide<2->{No pure NE. \ Chapter 4 (ordinal payoffs): algorithm \textbf{halts}. No SPNE!\\}
-\onslide<3->{Chapter 6 (cardinal payoffs): mixed NE. \ OSU Run \underline{\hspace{0.5in}}, \ Michigan Stop Run \underline{\hspace{0.5in}}\\[6pt]
+\onslide<3->{Chapter 6 (cardinal payoffs): mixed NE. \ Michigan Run \underline{\hspace{0.5in}}, \ OSU Stop Run \underline{\hspace{0.5in}}\\[6pt]
 Payoffs: \ (\underline{\hspace{0.45in}}, \underline{\hspace{0.45in}})}
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Step 2: Replace and Solve}
 \centering
-\begin{gametree}[player names={OSU, Michigan}, scale=1.0]
+\begin{gametree}[player names={Michigan, OSU}, scale=1.0]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=6.0] {Kick(47.5,52.5); Go for 2(60,40)};
 \end{gametree}
 \bsk
@@ -272,7 +276,7 @@ Payoffs: \ (\underline{\hspace{0.45in}}, \underline{\hspace{0.45in}})}
 Kick: Nature's lottery, replaced by its expected utility\\
 Go for 2: the subgame, replaced by its \textbf{mixed} NE payoffs
 \bsk
-OSU chooses: \underline{\hspace{1in}}
+Michigan chooses: \underline{\hspace{1in}}
 \vfill
 \onslide<2->{Real coaches carry a chart for exactly this decision}
 \vspace{-0.3in}
@@ -282,15 +286,38 @@ OSU chooses: \underline{\hspace{1in}}
 Write a probability at \textbf{every} decision point:
 \bsk
 \centering
-OSU: \ $\beh[cc|cc]{\text{Kick} & \text{Go} & \text{Run} & \text{Pass}}{\underline{\hspace{0.3in}} & \underline{\hspace{0.3in}} & \underline{\hspace{0.3in}} & \underline{\hspace{0.3in}}}$
+Michigan: \ $\beh[cc|cc]{\text{Kick} & \text{Go} & \text{Run} & \text{Pass}}{\underline{\hspace{0.3in}} & \underline{\hspace{0.3in}} & \underline{\hspace{0.3in}} & \underline{\hspace{0.3in}}}$
 \qquad
-Michigan: \ $\beh{\text{SR} & \text{SP}}{\underline{\hspace{0.3in}} & \underline{\hspace{0.3in}}}$
+OSU: \ $\beh{\text{SR} & \text{SP}}{\underline{\hspace{0.3in}} & \underline{\hspace{0.3in}}}$
 \bsk
 \raggedright
 \only<2->{\textbf{Notice:} we didn't write a probability for each \textbf{strategy}\\
 We wrote one probability distribution per \textbf{information set}\\}
 \only<3->{\bsk That's called a \textbf{behavioral strategy}}
 \vspace{-0.3in}
+\end{frame}
+
+% Photo: Shelby Lum, The Lantern, 2 Dec 2013 ("One play, two points, no
+% chance: Ohio State still undefeated", by Dan Hope)
+\begin{frame}{What Actually Happened}
+\begin{columns}[c]
+\begin{column}{0.58\textwidth}
+\centering
+\includegraphics[width=\textwidth]{LectureSlides/graphics/powell_2013.jpg}\\[2pt]
+{\tiny Photo: Shelby Lum, \textit{The Lantern}}
+\end{column}
+\begin{column}{0.4\textwidth}
+Hoke went for 2. Just like the SPNE says!
+\bsk
+Michigan passed\\
+Tyvis Powell (23) intercepted\\
+OSU wins 42--41
+\bsk
+\onslide<2->{Good decision, bad outcome?\\
+A 60\% chance still loses 40\% of the time}
+\end{column}
+\end{columns}
+\vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{Selten's Theorem}
@@ -320,11 +347,11 @@ Cardinal payoffs: SPNE always exists
 Behavioral Strategies
 \end{frame}
 
-\begin{frame}{OSU's Strategies}
+\begin{frame}{Michigan's Strategies}
 A strategy: one choice at every information set (Chapter 4)
 \bsk
-OSU has two information sets, two choices each:
-$$S_{OSU}=\{\ (\text{Kick},\text{Run}),\ (\text{Kick},\text{Pass}),\ (\text{Go},\text{Run}),\ (\text{Go},\text{Pass})\ \}$$
+Michigan has two information sets, two choices each:
+$$S_{MI}=\{\ (\text{Kick},\text{Run}),\ (\text{Kick},\text{Pass}),\ (\text{Go},\text{Run}),\ (\text{Go},\text{Pass})\ \}$$
 \vspace{-0.1in}
 \begin{itemize}
     \item (Kick, Run) and (Kick, Pass) are different strategies. Don't combine them!
@@ -379,7 +406,7 @@ $$\begin{pmatrix} (\text{Kick},\text{Run}) & (\text{Kick},\text{Pass}) & (\text{
 \end{column}
 \end{columns}
 \bsk
-OSU behavioral: \ $\beh[cc|cc]{\text{Kick} & \text{Go} & \text{Run} & \text{Pass}}{p & 1-p & q & 1-q}$ \quad Needs \underline{\hspace{0.4in}} numbers
+Michigan behavioral: \ $\beh[cc|cc]{\text{Kick} & \text{Go} & \text{Run} & \text{Pass}}{p & 1-p & q & 1-q}$ \quad Needs \underline{\hspace{0.4in}} numbers
 \vspace{-0.3in}
 \end{frame}
 
@@ -397,13 +424,13 @@ How many numbers? \ Ex: 3 information sets, 2 choices at each
 \bsk
 \onslide<2->{\textbf{Fact:} Mixed grows by \textbf{multiplying}, behavioral grows by \textbf{adding}}
 \vfill
-\onslide<3->{\textbf{Fact:} One information set? Then mixed $=$ behavioral (like Michigan)}
+\onslide<3->{\textbf{Fact:} One information set? Then mixed $=$ behavioral (like OSU)}
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Are They the Same?}
-Suppose OSU's coach uses this mixed strategy:
-$$\sigma_{OSU}=\begin{pmatrix} (\text{Kick},\text{Run}) & (\text{Kick},\text{Pass}) & (\text{Go},\text{Run}) & (\text{Go},\text{Pass}) \\ 0.1 & 0.3 & 0.36 & 0.24\end{pmatrix}$$
+Suppose Michigan's coach uses this mixed strategy:
+$$\sigma_{MI}=\begin{pmatrix} (\text{Kick},\text{Run}) & (\text{Kick},\text{Pass}) & (\text{Go},\text{Run}) & (\text{Go},\text{Pass}) \\ 0.1 & 0.3 & 0.36 & 0.24\end{pmatrix}$$
 \bsk
 Find a behavioral strategy that does the same thing:
 \bsk
