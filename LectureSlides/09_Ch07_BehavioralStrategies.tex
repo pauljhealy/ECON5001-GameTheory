@@ -182,11 +182,11 @@ How to draw this tree?
 \begin{frame}{Drawing the Tree}
 \centering
 \only<1>{\begin{gametree}[player names={Michigan,OSU}, scale=0.78]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.25, h=7.4] {Kick; Go for 2};
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.25, h=7.4] {Kick; GoFor2};
   \path (-6.4,0.5) rectangle (7.0,-4.9);
 \end{gametree}}%
 \only<2>{\begin{gametree}[player names={Michigan,OSU}, scale=0.78]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.25, h=7.4] {Kick; Go for 2};
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.25, h=7.4] {Kick; GoFor2};
   \branch[player=0, label=150] from (w1) to[v=1.35, h=3.2] {Good\ $.95$; Miss\ $.05$(0,100)};
   \branch[player=0, label=150, label text=OT] from (w11) to[v=1.35, h=2.0] {Win\ $\frac12$(100,0); Lose\ $\frac12$(0,100)};
   \path (-6.4,0.5) rectangle (7.0,-4.9);
@@ -196,7 +196,7 @@ How to draw this tree?
 \raggedright
 \only<1>{Michigan moves first}%
 \only<2>{\textbf{Kick:} two moves by ``Nature''. Each branch has a probability}%
-\only<3>{\textbf{Go for 2:} a simultaneous-move game hanging off the tree}%
+\only<3>{\textbf{GoFor2:} a simultaneous-move game hanging off the tree}%
 \only<4>{How many proper subgames? (Include moves by Nature.) \underline{\hspace{0.6in}}}
 \vspace{-0.2in}
 \end{frame}
@@ -241,7 +241,7 @@ $U(\text{Kick})=$ \underline{\hspace{1in}}
 Subgame-Perfect Equilibrium: Allowing Mixing
 \end{frame}
 
-\begin{frame}{Step 1: Solve the Subgame}
+\begin{frame}{Step 1: Solve the Subgame After ``Go for 2''}
 \begin{columns}[c]
 \begin{column}{0.45\textwidth}
 \centering
@@ -256,39 +256,71 @@ Subgame-Perfect Equilibrium: Allowing Mixing
 \centering
 \begin{matrixgame}[top={Stop Run, Stop Pass}, left={Run, Pass}, player names={Michigan, OSU}, w=1.9, br=<2->]
   \payoffmatrix{40,60 & 80,20 \\ 90,10 & 30,70}
-\end{matrixgame}
+\end{matrixgame}\\
+Payoffs = Expected utility = Prob. of Win
 \end{column}
 \end{columns}
 \bsk
-\onslide<2->{No pure NE. \ Chapter 4 (ordinal payoffs): algorithm \textbf{halts}. No SPNE!\\}
-\onslide<3->{Chapter 6 (cardinal payoffs): mixed NE. \ Michigan Run \underline{\hspace{0.5in}}, \ OSU Stop Run \underline{\hspace{0.5in}}\\[6pt]
-Payoffs: \ (\underline{\hspace{0.45in}}, \underline{\hspace{0.45in}})}
-\vspace{-0.3in}
+\onslide<2->{Chapter 4: ``there's no SPNE''\quad Chapter 6: We can find MSNE...\\}
+\onslide<3->{Chapter 7: let's include subgame MSNE in our definition of SPNE.\\}
+\onslide<4->{Michigan's $p$ on Run that makes OSU indifferent:\\
+$U(SR)=60p+10(1-p)$\quad $U(SP)=20p+70(1-p)$ \quad $U(SR)=U(SP)\Rightarrow p^*=3/5$\\}
+\onslide<5->{OSU's $q$ on SR that makes Michigan indifferent:\\
+$U(Run)=40q+80(1-q)$\quad $U(Pass)=90q+30(1-q)$\quad $U(Run)=U(Pass)\Rightarrow q^*=1/2$.\\}
+\bsk
+\onslide<6->{Expected Payoffs in MSNE:\\
+Michigan: 60 (percent chance of winning)\\
+OSU: 40 (percent chance of winning)}
 \end{frame}
 
 \begin{frame}{Step 2: Replace and Solve}
 \centering
 \begin{gametree}[player names={Michigan, OSU}, scale=1.0]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=6.0] {Kick(47.5,52.5); Go for 2(60,40)};
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.6, h=6.0] {Kick(47.5,52.5); GoFor2(60,40)};
 \end{gametree}
 \bsk
 \raggedright
-Kick: Nature's lottery, replaced by its expected utility\\
+\textbf{Kick:} replace that subgame by its expected utility\\
 Go for 2: the subgame, replaced by its \textbf{mixed} NE payoffs
 \bsk
 Michigan chooses: \underline{\hspace{1in}}
-\vfill
-\onslide<2->{Real coaches carry a chart for exactly this decision}
-\vspace{-0.3in}
+\end{frame}
+
+
+% Photo: Shelby Lum, The Lantern, 2 Dec 2013 ("One play, two points, no
+% chance: Ohio State still undefeated", by Dan Hope)
+\begin{frame}{What Actually Happened in 2013}
+\begin{columns}[c]
+\begin{column}{0.58\textwidth}
+\centering
+\includegraphics[width=\textwidth]{LectureSlides/graphics/powell_2013.jpg}\\[2pt]
+{\tiny Photo: Shelby Lum, \textit{The Lantern}}
+\end{column}
+\begin{column}{0.4\textwidth}
+\textbf{The Decision:}\\
+Hoke went for 2.\\
+Consistent with SPNE!
+\bsk
+\onslide<2->{\textbf{The Play:}\\
+Michigan passed\\
+Tyvis Powell (23) intercepted\\
+OSU wins 42--41}
+\bsk
+\onslide<3->{\textbf{Did Hoke make a bad choice?}}\\
+\onslide<4->{A 60\% chance still\\
+loses 40\% of the time}
+\end{column}
+\end{columns}
+\vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{The SPNE}
-Write a probability at \textbf{every} decision point:
+The SPNE is fully specified by giving the probability of every action at \textbf{every} decision node:
 \bsk
 \centering
-Michigan: \ $\beh[cc|cc]{\text{Kick} & \text{Go} & \text{Run} & \text{Pass}}{\underline{\hspace{0.3in}} & \underline{\hspace{0.3in}} & \underline{\hspace{0.3in}} & \underline{\hspace{0.3in}}}$
+Michigan: \ $\sigma_1^*=\beh[cc|cc]{\text{Kick} & \text{GoFor2} & \text{Run} & \text{Pass}}{\underline{\hspace{0.3in}} & \underline{\hspace{0.3in}} & \underline{\hspace{0.3in}} & \underline{\hspace{0.3in}}}$
 \qquad
-OSU: \ $\beh{\text{SR} & \text{SP}}{\underline{\hspace{0.3in}} & \underline{\hspace{0.3in}}}$
+OSU: \ $\sigma_2^*=\beh{\text{SR} & \text{SP}}{\underline{\hspace{0.3in}} & \underline{\hspace{0.3in}}}$
 \bsk
 \raggedright
 \only<2->{\textbf{Notice:} we didn't write a probability for each \textbf{strategy}\\
@@ -297,43 +329,20 @@ We wrote one probability distribution per \textbf{information set}\\}
 \vspace{-0.3in}
 \end{frame}
 
-% Photo: Shelby Lum, The Lantern, 2 Dec 2013 ("One play, two points, no
-% chance: Ohio State still undefeated", by Dan Hope)
-\begin{frame}{What Actually Happened}
-\begin{columns}[c]
-\begin{column}{0.58\textwidth}
-\centering
-\includegraphics[width=\textwidth]{LectureSlides/graphics/powell_2013.jpg}\\[2pt]
-{\tiny Photo: Shelby Lum, \textit{The Lantern}}
-\end{column}
-\begin{column}{0.4\textwidth}
-Hoke went for 2. Just like the SPNE says!
-\bsk
-Michigan passed\\
-Tyvis Powell (23) intercepted\\
-OSU wins 42--41
-\bsk
-\onslide<2->{Good decision, bad outcome?\\
-A 60\% chance still loses 40\% of the time}
-\end{column}
-\end{columns}
-\vspace{-0.2in}
-\end{frame}
 
 \begin{frame}{Selten's Theorem}
 \begin{block}{Theorem (Selten, 1965)}
-Every finite extensive-form game with cardinal payoffs has \textbf{at least one} SPNE in mixed strategies
+Every finite extensive-form game with cardinal payoffs has \textbf{at least one} SPNE (possibly involving mixed strategies).
 \end{block}
+(\textbf{Finite game:} Finite \# players, finite \# of actions, tree doesn't go forever.)
 \bsk
 Why?
 \begin{itemize}
     \item Every subgame is a finite game
     \item Nash: every finite game has a (mixed) NE
-    \item So the SPNE algorithm \textbf{never halts}
+    \item So the SPNE algorithm can give a prediction at every subgame
+    \item And the game is finite, so the algorithm doesn't run forever
 \end{itemize}
-\bsk
-Ordinal payoffs: SPNE might not exist\\
-Cardinal payoffs: SPNE always exists
 \vfill
 {\footnotesize Reinhard Selten shared the 1994 Nobel Prize with John Nash and John Harsanyi.}
 \vspace{-0.2in}
@@ -351,20 +360,19 @@ Behavioral Strategies
 A strategy: one choice at every information set (Chapter 4)
 \bsk
 Michigan has two information sets, two choices each:
-$$S_{MI}=\{\ (\text{Kick},\text{Run}),\ (\text{Kick},\text{Pass}),\ (\text{Go},\text{Run}),\ (\text{Go},\text{Pass})\ \}$$
+$$S_{MI}=\{\ (\text{Kick},\text{Run}),\ (\text{Kick},\text{Pass}),\ (\text{GoFor2},\text{Run}),\ (\text{GoFor2},\text{Pass})\ \}$$
 \vspace{-0.1in}
 \begin{itemize}
-    \item (Kick, Run) and (Kick, Pass) are different strategies. Don't combine them!
+    \item (Kick, Run) and (Kick, Pass) are different strategies, even though Kick precludes the Run/Pass decision.
 \end{itemize}
 \bsk
 Mixed strategy (Chapter 6): a probability for each of the 4 strategies
-$$\begin{pmatrix} (\text{Kick},\text{Run}) & (\text{Kick},\text{Pass}) & (\text{Go},\text{Run}) & (\text{Go},\text{Pass}) \\ p & q & r & 1-p-q-r\end{pmatrix}$$
+$$\begin{pmatrix} (\text{Kick},\text{Run}) & (\text{Kick},\text{Pass}) & (\text{GoFor2},\text{Run}) & (\text{GoFor2},\text{Pass}) \\ p & q & r & 1-p-q-r\end{pmatrix}$$
 \vspace{-0.1in}
 \begin{itemize}
     \item Needs \underline{\hspace{0.4in}} numbers
 \end{itemize}
 \vfill
-\onslide<2->{Soooo... why would a coach ever plan (Kick, Run)???}
 \vspace{-0.3in}
 \end{frame}
 
@@ -399,48 +407,41 @@ $$\begin{pmatrix} (\text{Kick},\text{Run}) & (\text{Kick},\text{Pass}) & (\text{
 \centering
 \begin{tikzpicture}[scale=0.85]
   \draw[thick, fill=gray!15] (0,0) circle (0.7);
-  \node[font=\scriptsize, align=center] at (0,0) {Kick\\or Go?};
+  \node[font=\scriptsize, align=center] at (0,0) {Kick\\or GoFor2?};
   \draw[thick, fill=gray!15] (2.2,0) circle (0.7);
   \node[font=\scriptsize, align=center] at (2.2,0) {Run\\or Pass?};
 \end{tikzpicture}
 \end{column}
 \end{columns}
 \bsk
-Michigan behavioral: \ $\beh[cc|cc]{\text{Kick} & \text{Go} & \text{Run} & \text{Pass}}{p & 1-p & q & 1-q}$ \quad Needs \underline{\hspace{0.4in}} numbers
+Behavioral strategy: \ $\beh[cc|cc]{\text{Kick} & \text{GoFor2} & \text{Run} & \text{Pass}}{p & 1-p & q & 1-q}$ \quad Needs \underline{\hspace{0.4in}} numbers
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Formal Definition: Behavioral Strategy}
 \begin{block}{Definition (Bonanno 7.1.1)}
-A \textbf{behavioral strategy} for a player is a list of probability distributions, one for every information set of that player. Each one is over the choices at that information set.
+A \textbf{behavioral strategy} for a player is a list of probability distributions, one for every information set of that player. These give the probability the player plays each action at each information set.
 \end{block}
 \bsk
-How many numbers? \ Ex: 3 information sets, 2 choices at each
-\begin{itemize}
-    \item Pure strategies: \underline{\hspace{0.4in}}
-    \item Mixed strategy: \underline{\hspace{0.4in}} numbers
-    \item Behavioral strategy: \underline{\hspace{0.4in}} numbers
-\end{itemize}
-\bsk
-\onslide<2->{\textbf{Fact:} Mixed grows by \textbf{multiplying}, behavioral grows by \textbf{adding}}
 \vfill
-\onslide<3->{\textbf{Fact:} One information set? Then mixed $=$ behavioral (like OSU)}
+\onslide<3->{\textbf{Fact:} If a player has only one information set then mixed $=$ behavioral (like OSU)}
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Are They the Same?}
 Suppose Michigan's coach uses this mixed strategy:
-$$\sigma_{MI}=\begin{pmatrix} (\text{Kick},\text{Run}) & (\text{Kick},\text{Pass}) & (\text{Go},\text{Run}) & (\text{Go},\text{Pass}) \\ 0.1 & 0.3 & 0.36 & 0.24\end{pmatrix}$$
+$$\sigma_1=\begin{pmatrix} (\text{Kick},\text{Run}) & (\text{Kick},\text{Pass}) & (\text{GoFor2},\text{Run}) & (\text{GoFor2},\text{Pass}) \\ 0.1 & 0.3 & 0.36 & 0.24\end{pmatrix}$$
 \bsk
 Find a behavioral strategy that does the same thing:
 \bsk
-Pr(Go) $=$ \underline{\hspace{1.8in}}
+Pr(Kick) $=$ \underline{\hspace{1in}}\quad Pr(GoFor2) $=$ \underline{\hspace{1in}}
 \bsk
-Pr(Run $\mid$ Go) $=$ \underline{\hspace{1.8in}}
+Pr(Run $\mid$ GoFor2) $=$ \underline{\hspace{1in}}\quad Pr(Pass $\mid$ GoFor2) $=$ \underline{\hspace{1in}}
 \bsk
-\onslide<2->{Check: Pr(Go and Run) $=$ \underline{\hspace{1.2in}} \ $=0.36$ \ \checkmark}
+\only<1>{\textbf{Notation}: Pr(A $\mid$ B) means ``Probability of A, given $B$ already occurred.''\\This is called a \textit{conditional probability}.}
+\onslide<2->{Check: Pr(GoFor2 and Run) $=$ \underline{\hspace{1.2in}} \ $=0.36$ \ \checkmark}
 \vfill
-\onslide<3->{\textbf{Lesson:} The 0.1 vs.\ 0.3 split never matters. Many mixed strategies $\to$ one behavioral}
+\onslide<3->{\textbf{Lesson:} The 0.1 vs.\ 0.3 split never matters. The behavioral strategy doesn't require it.}
 \vspace{-0.3in}
 \end{frame}
 
@@ -449,53 +450,53 @@ Pr(Run $\mid$ Go) $=$ \underline{\hspace{1.8in}}
 In games with \textbf{perfect recall}, for every mixed strategy there is a behavioral strategy that gives the same probability over terminal nodes
 \end{block}
 \bsk
-(No matter what the other players do)
-\bsk
-\textbf{Thus:} Use behavioral strategies. Simpler, and nothing is lost
-\bsk
 Recall perfect recall (Chapter 4):
 \begin{itemize}
     \item Never forget what you knew
     \item Never forget what you did
 \end{itemize}
+\bsk
+\textbf{Takeaway:} Use behavioral strategies. They're simpler, and nothing is lost
+\bsk
+\textbf{Notation:} We'll use $\sigma_i$ to describe either a mixed or behavioral strategy
 \vfill
 {\footnotesize Bonanno works through his own example (Figure 7.3) on pp.~239--241.}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Without Perfect Recall}
-\begin{columns}[T]
-\begin{column}{0.42\textwidth}
-\centering
-\begin{gametree}[player names={1}, scale=0.8]
-  \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=4.4] {a; b};
-  \branch[player=1, label=none] from (w1) to[v=1.4, h=1.8] {c($z_1$); d($z_2$)};
-  \branch[label=none] from (w2) to {c($z_3$); d($z_4$)};
-  \informset (w1) -- (w2);
-\end{gametree}
-\bsk
-\raggedright
-P1 forgets whether they chose $a$ or $b$
-\end{column}
-\begin{column}{0.56\textwidth}
-Mixed: \ $\begin{pmatrix} (a,c) & (a,d) & (b,c) & (b,d) \\ \tfrac12 & 0 & 0 & \tfrac12\end{pmatrix}$
-\bsk
-Gives \ $z_1$: $\tfrac12$, \ $z_4$: $\tfrac12$
-\bsk
-Behavioral: \ $\beh[cc|cc]{a & b & c & d}{p & 1-p & q & 1-q}$
-\bsk
-Need $\Pr(z_2)=$ \underline{\hspace{0.7in}} $=0$
-\bsk
-\onslide<2->{$\Rightarrow p=0$ \ or \ $q=1$\\[4pt]
-$\Rightarrow \Pr(z_1)=0$ \ or \ $\Pr(z_4)=0$}
-\bsk
-\onslide<3->{Can't be done!}
-\end{column}
-\end{columns}
-\vfill
-\onslide<4->{\textbf{Ex:} ``Player 1'' is a team that can't talk once play starts. A pre-game coin flip keeps them coordinated. Separate coin flips can't (not in the book)}
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{Without Perfect Recall}
+% \begin{columns}[T]
+% \begin{column}{0.42\textwidth}
+% \centering
+% \begin{gametree}[player names={1}, scale=0.8]
+%   \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=4.4] {a; b};
+%   \branch[player=1, label=none] from (w1) to[v=1.4, h=1.8] {c($z_1$); d($z_2$)};
+%   \branch[label=none] from (w2) to {c($z_3$); d($z_4$)};
+%   \informset (w1) -- (w2);
+% \end{gametree}
+% \bsk
+% \raggedright
+% P1 forgets whether they chose $a$ or $b$
+% \end{column}
+% \begin{column}{0.56\textwidth}
+% Mixed: \ $\begin{pmatrix} (a,c) & (a,d) & (b,c) & (b,d) \\ \tfrac12 & 0 & 0 & \tfrac12\end{pmatrix}$
+% \bsk
+% Gives \ $z_1$: $\tfrac12$, \ $z_4$: $\tfrac12$
+% \bsk
+% Behavioral: \ $\beh[cc|cc]{a & b & c & d}{p & 1-p & q & 1-q}$
+% \bsk
+% Need $\Pr(z_2)=$ \underline{\hspace{0.7in}} $=0$
+% \bsk
+% \onslide<2->{$\Rightarrow p=0$ \ or \ $q=1$\\[4pt]
+% $\Rightarrow \Pr(z_1)=0$ \ or \ $\Pr(z_4)=0$}
+% \bsk
+% \onslide<3->{Can't be done!}
+% \end{column}
+% \end{columns}
+% \vfill
+% \onslide<4->{\textbf{Ex:} ``Player 1'' is a team that can't talk once play starts. A pre-game coin flip keeps them coordinated. Separate coin flips can't (not in the book)}
+% \vspace{-0.3in}
+% \end{frame}
 
 \begin{frame}{Two Ways To Be Unpredictable}
 Randomize \textbf{as you go} (behavioral):
@@ -519,21 +520,21 @@ Kuhn: with perfect recall, the two are equally powerful
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{But Those Are More Complicated}
-Real versions add:
-\begin{itemize}
-    \item Many information sets, many choices at each
-    \item Opponents who learn from what you did earlier
-    \item Organizations that \textbf{forget}: no perfect recall!
-    \begin{itemize}
-        \item New staff, lost notes, no one knows last week's schedule
-    \end{itemize}
-\end{itemize}
-\bsk
-Core idea survives: one coin at each decision point is enough, \textbf{if} you remember
-\vfill
-\vspace{-0.4in}
-\end{frame}
+% \begin{frame}{But Those Are More Complicated}
+% Real versions add:
+% \begin{itemize}
+%     \item Many information sets, many choices at each
+%     \item Opponents who learn from what you did earlier
+%     \item Organizations that \textbf{forget}: no perfect recall!
+%     \begin{itemize}
+%         \item New staff, lost notes, no one knows last week's schedule
+%     \end{itemize}
+% \end{itemize}
+% \bsk
+% Core idea survives: one coin at each decision point is enough, \textbf{if} you remember
+% \vfill
+% \vspace{-0.4in}
+% \end{frame}
 
 % ==============================================================
 % BIGGER EXAMPLE: BONANNO FIGURES 7.7 - 7.11
