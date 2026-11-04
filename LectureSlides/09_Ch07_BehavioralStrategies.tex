@@ -120,23 +120,26 @@
 \begin{frame}{Where We Left Off}
 Chapter 4: game trees with \textbf{information sets}, solved by SPNE
 \begin{itemize}
-    \item Solve the smallest subgames first, replace, repeat
-    \item Problem: a subgame might have \textbf{no} NE $\Rightarrow$ no SPNE!
+    \item Solve the smallest subgames first, work backwards
+    \begin{itemize}
+        \item A generalization of backwards induction
+    \end{itemize}
+    \item We said if a subgame has \textbf{no} NE, then there's \textbf{no SPNE}
 \end{itemize}
-\bsk
 Chapter 6: \textbf{mixed strategies}
 \begin{itemize}
-    \item Nash: every finite game has a (mixed) NE
+    \item \textbf{Nash's Theorem}: every finite game (or subgame) has a (possibly mixed) NE
+    \item So the ``no NE in a subgame'' problem can be fixed up
+    \item But we have to allow mixing inside a game tree
 \end{itemize}
 \vfill
-Our goal:
+\textbf{Chapter 7:}
 \begin{enumerate}
     \item Put lotteries and mixing into game trees
     \item Find a \textbf{simpler} way to mix in trees: behavioral strategies
     \item Show that a SPNE always exists
     \item See what SPNE still gets wrong
 \end{enumerate}
-\vspace{-0.4in}
 \end{frame}
 
 % ==============================================================
@@ -147,38 +150,38 @@ Our goal:
 Lotteries in Game Trees
 \end{frame}
 
-\begin{frame}{The Last Play of The Game}
-Ohio State at Michigan. OSU scores a touchdown as time runs out
+\begin{frame}{``The Game'' 2013}
+2013 OSU @ Michigan. Urban Meyer vs. Brady Hoke. 1,129 total offensive yards\\
+Was 42-35. With 32 sec left, MI scores TD. Now 42-41.
 \begin{itemize}
-    \item Now down by \textbf{1}. One more play
+    \item Brady Hoke: \textbf{Kick} to tie/OT or \textbf{Go for 2} to win
 \end{itemize}
 \bsk
-OSU chooses:
 \begin{itemize}
-    \item \textbf{Kick} the extra point. Good 95\% of the time $\Rightarrow$ tie $\Rightarrow$ overtime
+    \item \textbf{Kick}: Good 95\% of the time, almost surely leads to overtime
     \begin{itemize}
-        \item Overtime: call it a 50-50 coin flip
+        \item Overtime: let's say it's 50-50 who wins
     \end{itemize}
-    \item \textbf{Go for 2}. Then the Chapter 6 game:
+    \item \textbf{Go for 2}: Model it as a $2\times 2$ subgame
     \begin{itemize}
-        \item OSU: \textbf{Run} or \textbf{Pass}
-        \item Michigan (doesn't see OSU's call): \textbf{Stop Run (SR)} or \textbf{Stop Pass (SP)}
+        \item Michigan: \textbf{Run} or \textbf{Pass}
+        \item OSU: \textbf{Stop Run (SR)} or \textbf{Stop Pass (SP)}
     \end{itemize}
 \end{itemize}
 \bsk
-Payoffs: \ $u(\text{Win})=100$, $u(\text{Lose})=0$ for OSU. Michigan: the opposite
-\vfill
-{\footnotesize Hypothetical numbers. Two-point success rates are the same as Chapter 6.}
+Outcome Payoffs: \ $u(\text{Win})=100$, $u(\text{Lose})=0$ for both teams
+\bsk
+How to draw this tree?
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Draw It}
+\begin{frame}{Drawing the Tree}
 \centering
-\only<1>{\begin{gametree}[player names={OSU, Michigan}, scale=0.78]
+\only<1>{\begin{gametree}[player names={Michigan,OSU}, scale=0.78]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.25, h=7.4] {Kick; Go for 2};
   \path (-6.4,0.5) rectangle (7.0,-4.9);
 \end{gametree}}%
-\only<2>{\begin{gametree}[player names={OSU, Michigan}, scale=0.78]
+\only<2>{\begin{gametree}[player names={Michigan,OSU}, scale=0.78]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.25, h=7.4] {Kick; Go for 2};
   \branch[player=0, label=150] from (w1) to[v=1.35, h=3.2] {Good\ $.95$; Miss\ $.05$(0,100)};
   \branch[player=0, label=150, label text=OT] from (w11) to[v=1.35, h=2.0] {Win\ $\frac12$(100,0); Lose\ $\frac12$(0,100)};
@@ -187,42 +190,42 @@ Payoffs: \ $u(\text{Win})=100$, $u(\text{Lose})=0$ for OSU. Michigan: the opposi
 \only<3->{\lastplaytree}
 \bsk
 \raggedright
-\only<1>{OSU moves first}%
-\only<2>{Kick: two moves by Nature. Each branch has a probability}%
-\only<3>{Go for 2: a simultaneous-move game hanging off the tree}%
-\only<4>{How many proper subgames? \underline{\hspace{0.6in}}}
+\only<1>{Michigan moves first}%
+\only<2>{\textbf{Kick:} two moves by ``Nature''. Each branch has a probability}%
+\only<3>{\textbf{Go for 2:} a simultaneous-move game hanging off the tree}%
+\only<4>{How many proper subgames? (Include moves by Nature.) \underline{\hspace{0.6in}}}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Nature Gives a Lottery}
+\begin{frame}{Nature Gives a Lottery Over Outcomes}
 \begin{columns}[T]
 \begin{column}{0.45\textwidth}
 \centering
-After OSU chooses Kick:
+After Michigan chooses Kick:
 \bsk
-\begin{gametree}[player names={OSU, Michigan}, scale=0.85]
+\begin{gametree}[player names={Michigan, OSU}, scale=0.85]
   \branch[player=0, root=w, label=90] from (0,0) to[v=1.4, h=3.6] {Good\ $.95$; Miss\ $.05$(0,100)};
   \branch[player=0, label=150, label text=OT] from (w1) to[v=1.4, h=2.4] {Win\ $\frac12$(100,0); Lose\ $\frac12$(0,100)};
 \end{gametree}
 \end{column}
 \begin{column}{0.53\textwidth}
-Overtime gives OSU
+Overtime gives Michigan
 $\begin{pmatrix} \text{Win} & \text{Lose} \\ \tfrac12 & \tfrac12\end{pmatrix}$
 \bsk
 $U(\text{OT})=$ \underline{\hspace{1in}}
 \bsk
-Kick gives OSU
+Kick gives Michigan
 $\begin{pmatrix} \text{OT} & \text{Lose} \\ .95 & .05\end{pmatrix}$
 \bsk
 $U(\text{Kick})=$ \underline{\hspace{1in}}
 \end{column}
 \end{columns}
 \bsk
-\textbf{Rule:} Same as Chapter 6. A lottery at the end of a branch? Use its expected utility
+\textbf{Rule:} Same as Chapter 6. Use expected utilities
 \bsk
-\onslide<2->{So: replace the whole Kick branch with \underline{\hspace{0.9in}}}
+\onslide<2->{So: replace the entire Kick branch with \underline{\hspace{0.9in}}}
 \vfill
-{\footnotesize Bonanno (\S7.1) also writes the lottery right at the terminal node instead of drawing Nature. Same thing.}
+{\footnotesize Bonanno (\S7.1) writes the lottery as the payoff instead of drawing Nature. Using Nature is more standard.}
 \vspace{-0.2in}
 \end{frame}
 
@@ -231,7 +234,7 @@ $U(\text{Kick})=$ \underline{\hspace{1in}}
 % ==============================================================
 
 \begin{frame}[standout]
-Subgame-Perfect Equilibrium, Revisited
+Subgame-Perfect Equilibrium: Allowing Mixing
 \end{frame}
 
 \begin{frame}{Step 1: Solve the Subgame}
