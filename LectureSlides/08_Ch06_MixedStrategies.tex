@@ -925,7 +925,7 @@ Core idea survives: if you're predictable, you get exploited
 % ==============================================================
 
 \begin{frame}[standout]
-Dominance, Revisited
+Dominance With Mixed Strategies
 \end{frame}
 
 \begin{frame}{Remember This One?}
@@ -1005,7 +1005,7 @@ $s_i$ is strictly dominated by some mixed strategy of player $i$
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Cardinal IDSDS}
+\begin{frame}{Updated Version of IDSDS: Cardinal IDSDS aka ``Rationalizability''}
 Same as IDSDS, but also delete strategies dominated by \textbf{mixes}
 \begin{itemize}
     \item Survivors are called \textbf{rationalizable} strategies
@@ -1017,11 +1017,24 @@ Same as IDSDS, but also delete strategies dominated by \textbf{mixes}
 \end{matrixgame}
 \bsk
 \raggedright
-Step 1: \hspace{1.5in} Step 2: \\[0.25in]
-Step 3: \hspace{1.5in} Step 4:
+\textbf{Step 1:} \onslide<2->{$C$ dom. by $(\frac{1}{2},\frac{1}{2},0)$\ }\hspace{0.3in}\textbf{Step 2}: \onslide<3->{$F$ dom. by $(\frac{1}{2},\frac{1}{2},0)$}\\[0.25in]
+\textbf{Step 3:} \onslide<4->{$B$ dom. by $A$}\hspace{0.7in} \textbf{Step 4}: \onslide<5->{$E$ dom. by $D$}
+\end{frame}
+
+
+\begin{frame}{Updated Version of IDSDS: Cardinal IDSDS}
+New solution concept: Rationalizable strategies
 \bsk
-\textbf{Careful:} needs players to know each other's \textbf{cardinal} payoffs. Realistic?
-\vspace{-0.3in}
+\centering
+\begin{matrixgame}[top={D, E, F}, left={A, B, C}, player names={Player 1, Player 2}]
+  \payoffmatrix{3,4 & 2,1 & 1,2 \\ 0,0 & 1,3 & 4,1 \\ 1,4 & 1,4 & 2,6}
+\end{matrixgame}
+\bsk
+\raggedright
+IDSDS: $\{A,B,C\}\times\{D,E,F\}$ (nothing is eliminated)
+\bsk
+Rationalizable strategies: $\{(A,D)\}$ (unique prediction)
+
 \end{frame}
 
 % ==============================================================
@@ -1057,11 +1070,17 @@ CampusParc has one tow crew. It can patrol West Campus or Neil Ave
 \begin{matrixgame}[top={Patrol West, Patrol Neil}, left={Pay, West, Neil}, player names={Jordan, CampusParc}, w=2.1]
   \payoffmatrix{1,0 & 1,0 \\ 0,2 & 4,0 \\ 3,0 & 0,1}
 \end{matrixgame}
-\bsk
-\raggedright
-{\footnotesize Jordan picks the row, CampusParc the column. Payoffs: Jordan, CampusParc. Hypothetical numbers.}
-\vspace{-0.2in}
 \end{frame}
+
+
+\begin{frame}{Gameday Parking}
+\centering
+\begin{matrixgame}[top={Patrol West, Patrol Neil}, left={Pay, West, Neil}, player names={Jordan, CampusParc}, w=2.1]
+  \payoffmatrix{1,0 & 1,0 \\ 0,2 & 4,0 \\ 3,0 & 0,1}
+\end{matrixgame}
+\vfill
+\end{frame}
+
 
 \begin{frame}{Gameday Parking}
 \begin{enumerate}
