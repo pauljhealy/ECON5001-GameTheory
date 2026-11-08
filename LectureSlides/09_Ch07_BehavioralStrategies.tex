@@ -59,6 +59,11 @@
 % column spec given as optional arg, e.g. \beh[cc|cc]{a & b & e & f}{...}
 \newcommand{\beh}[3][cc]{\left(\begin{array}{#1} #2 \\ #3 \end{array}\right)}
 
+% Blank on overlay 1, answer in its place from overlay 2 on:
+% \ans{width}{answer}. Same box size either way, so nothing moves.
+% Works in text and math mode
+\newcommand{\ans}[2]{\alt<2->{\makebox[#1]{\alert{#2}}}{\makebox[#1]{\vphantom{#2}\underline{\hspace{#1}}}}}
+
 % Same tree, drawn several times: The Game 2013, Michigan's last play.
 % Payoffs are (Michigan, OSU)
 \newcommand{\lastplaytree}[1][0.78]{%
@@ -556,7 +561,7 @@ Find the SPNE
 \end{gametree}
 \bsk
 \raggedright
-How many proper subgames? \underline{\hspace{0.6in}} \ Any pure NE in them?
+How many proper subgames? \ans{0.6in}{2} \ Any pure NE in them? \only<2->{\alert{No!}}
 \vspace{-0.3in}
 \end{frame}
 
@@ -581,10 +586,19 @@ How many proper subgames? \underline{\hspace{0.6in}} \ Any pure NE in them?
     \end{column}
 \end{columns}
 \bsk
-$q=\Pr(C)$ makes P2 indifferent: \hspace{1.2in} $p=\Pr(A)$ makes P3 indifferent:
-\vspace{0.5in}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+$q=\Pr(C)$ makes P2 indifferent:\\[4pt]
+\uncover<2->{\alert{$3q = 1-q \ \Rightarrow\ q=\dfrac14$}}
+\end{column}
+\begin{column}{0.48\textwidth}
+$p=\Pr(A)$ makes P3 indifferent:\\[4pt]
+\uncover<2->{\alert{$p+3(1-p) = 2 \ \Rightarrow\ p=\dfrac12$}}
+\end{column}
+\end{columns}
+\vspace{0.25in}
 
-Payoffs (P1, P2, P3): \ (\underline{\hspace{0.5in}}, \underline{\hspace{0.5in}}, \underline{\hspace{0.5in}}) \hfill {\footnotesize P1's payoffs come from the tree}
+Payoffs (P1, P2, P3): \ (\ans{0.5in}{$\dfrac98$}, \ans{0.5in}{$\dfrac34$}, \ans{0.5in}{$2$}) \hfill {\footnotesize P1's payoffs come from the tree}
 \vspace{-0.3in}
 \end{frame}
 
@@ -609,10 +623,19 @@ Payoffs (P1, P2, P3): \ (\underline{\hspace{0.5in}}, \underline{\hspace{0.5in}},
     \end{column}
 \end{columns}
 \bsk
-$q=\Pr(G)$ makes P2 indifferent: \hspace{1.2in} $p=\Pr(E)$ makes P3 indifferent:
-\vspace{0.5in}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+$q=\Pr(G)$ makes P2 indifferent:\\[4pt]
+\uncover<2->{\alert{$1-q = 2q \ \Rightarrow\ q=\dfrac13$}}
+\end{column}
+\begin{column}{0.48\textwidth}
+$p=\Pr(E)$ makes P3 indifferent:\\[4pt]
+\uncover<2->{\alert{$3p+(1-p) = 2p+3(1-p) \ \Rightarrow\ p=\dfrac23$}}
+\end{column}
+\end{columns}
+\vspace{0.25in}
 
-Payoffs (P1, P2, P3): \ (\underline{\hspace{0.5in}}, \underline{\hspace{0.5in}}, \underline{\hspace{0.5in}})
+Payoffs (P1, P2, P3): \ (\ans{0.5in}{$1$}, \ans{0.5in}{$\dfrac23$}, \ans{0.5in}{$\dfrac73$})
 \vspace{-0.3in}
 \end{frame}
 
@@ -623,16 +646,16 @@ Payoffs (P1, P2, P3): \ (\underline{\hspace{0.5in}}, \underline{\hspace{0.5in}},
 \end{gametree}
 \bsk
 \raggedright
-Player 1 chooses: \underline{\hspace{0.6in}}
+Player 1 chooses: \ans{0.6in}{$L$}
 \bsk
 \textbf{SPNE}, in behavioral strategies:
 \bsk
 \centering
-P1: $\beh{L & R}{\underline{\hspace{0.25in}} & \underline{\hspace{0.25in}}}$
+P1: $\beh{L & R}{\ans{0.25in}{$1$} & \ans{0.25in}{$0$}}$
 \qquad
-P2: $\beh[cc|cc]{A & B & E & F}{\underline{\hspace{0.25in}} & \underline{\hspace{0.25in}} & \underline{\hspace{0.25in}} & \underline{\hspace{0.25in}}}$
+P2: $\beh[cc|cc]{A & B & E & F}{\ans{0.25in}{$\dfrac12$} & \ans{0.25in}{$\dfrac12$} & \ans{0.25in}{$\dfrac23$} & \ans{0.25in}{$\dfrac13$}}$
 \\[10pt]
-P3: $\beh[cc|cc]{C & D & G & H}{\underline{\hspace{0.25in}} & \underline{\hspace{0.25in}} & \underline{\hspace{0.25in}} & \underline{\hspace{0.25in}}}$
+P3: $\beh[cc|cc]{C & D & G & H}{\ans{0.25in}{$\dfrac14$} & \ans{0.25in}{$\dfrac34$} & \ans{0.25in}{$\dfrac13$} & \ans{0.25in}{$\dfrac23$}}$
 \vspace{-0.3in}
 \end{frame}
 
