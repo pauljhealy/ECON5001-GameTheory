@@ -792,8 +792,9 @@ The fix: Every choice should be sensible, \textbf{even off the path of play}
 % Source: Manea, "Equilibrium Refinements," MIT 14.16 (2016), slides
 % 13-14, posted on Carmen. Simplified definition: one epsilon for all
 % strategies, strict inequality. The 2x2 game is Manea's slide 13.
-%   2x2: NE (U,L) and (D,R). Completely mixed => Pi_1(U) = sigma_2(L) > 0
-%   = Pi_1(D), so sigma_1(D) < eps; same for sigma_2(R). Only THPE (U,L).
+%   2x2: NE (U,L) and (D,R). p = Pr(U), q = Pr(L). Completely mixed =>
+%   Pi_1(U,q) = q > 0 = Pi_1(D,q), so 1-p < eps; same for P2: 1-q < eps.
+%   Only THPE (U,L).
 %   Horse: completely mixed => P3's infoset reached with prob > 0, so
 %   Pi_3(c) > Pi_3(d) and sigma_3(d) < eps. (b,f,d) is not a THPE.
 %   Also: Pi_1(a)-Pi_1(b) = sigma_2(f)(2 sigma_3(c)-1) > 0 rules out
@@ -882,17 +883,19 @@ So: find $\varepsilon$ quasi-equilibria $\sigma^\varepsilon$, shrink $\varepsilo
 \end{matrixgame}
 \end{column}
 \begin{column}{0.58\textwidth}
-Any $\varepsilon$ quasi-equilibrium is completely mixed, so $\sigma_2(L)>0$
+Let $p=\Pr(U)$ and $q=\Pr(L)$
 \bsk
-$\Pi_1(U,\sigma_2)=$ \ans{0.7in}{$\sigma_2(L)$}\\[4pt]
-$\Pi_1(D,\sigma_2)=$ \ans{0.7in}{$0$}
+Any $\varepsilon$ quasi-equilibrium is completely mixed, so $q>0$
 \bsk
-\onslide<3->{$U$ is strictly better, so $\sigma_1(D)<\varepsilon$\\[4pt]
-Same for P2: \ $\sigma_2(R)<\varepsilon$}
+$\Pi_1(U,q)=$ \ans{0.7in}{$q$}\\[4pt]
+$\Pi_1(D,q)=$ \ans{0.7in}{$0$}
+\bsk
+\onslide<3->{$U$ is strictly better, so $1-p<\varepsilon$\\[4pt]
+Same for P2: \ $1-q<\varepsilon$}
 \end{column}
 \end{columns}
 \bsk
-\onslide<4->{As $\varepsilon\to0$: \ $\sigma_1(D)\to0$ and $\sigma_2(R)\to0$\\[4pt]
+\onslide<4->{As $\varepsilon\to0$: \ $p\to1$ and $q\to1$\\[4pt]
 \textbf{Result:} The only THPE is $(U,L)$. \ $(D,R)$ is ruled out}
 \bsk
 \onslide<5->{\textbf{Lesson:} THPE puts no weight on \textbf{weakly dominated} strategies}
