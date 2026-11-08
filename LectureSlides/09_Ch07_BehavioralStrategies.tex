@@ -728,14 +728,16 @@ Are they all reasonable???
 \horse
 \end{column}
 \begin{column}{0.48\textwidth}
+Consider the $(a,f,c)$ SPNE
+\bsk
 P1 plays $a$. \ P2 never moves
 \bsk
-So P2's plan $f$ costs P2 nothing
+So P2 playing $f$ is technically a best reply!
 \bsk
 \onslide<2->{But \textbf{if} P2 had to move?\\[4pt]
 $e$ gives \underline{\hspace{0.4in}} \quad $f$ gives \underline{\hspace{0.4in}}}
 \bsk
-\onslide<3->{$f$ is a bad plan. SPNE doesn't notice}
+\onslide<3->{$f$ is a bad plan. But there's no subgame at P2's node so SPNE doesn't rule this out.}
 \end{column}
 \end{columns}
 \vspace{-0.3in}
@@ -785,6 +787,157 @@ The fix: Every choice should be sensible, \textbf{even off the path of play}
 \end{frame}
 
 % ==============================================================
+% TREMBLING-HAND PERFECT EQUILIBRIUM (NOT IN BONANNO)
+% ==============================================================
+% Source: Manea, "Equilibrium Refinements," MIT 14.16 (2016), slides
+% 13-14, posted on Carmen. Simplified definition: one epsilon for all
+% strategies, strict inequality. The 2x2 game is Manea's slide 13.
+%   2x2: NE (U,L) and (D,R). Completely mixed => Pi_1(U) = sigma_2(L) > 0
+%   = Pi_1(D), so sigma_1(D) < eps; same for sigma_2(R). Only THPE (U,L).
+%   Horse: completely mixed => P3's infoset reached with prob > 0, so
+%   Pi_3(c) > Pi_3(d) and sigma_3(d) < eps. (b,f,d) is not a THPE.
+%   Also: Pi_1(a)-Pi_1(b) = sigma_2(f)(2 sigma_3(c)-1) > 0 rules out
+%   (b,e,c); Pi_2(e)-Pi_2(f) = sigma_1(b)(2 sigma_3(c)-1) > 0 rules out
+%   (a,f,c). Only (a,e,c) survives.
+% ---------------------------------------------------------------------
+
+\begin{frame}[standout]
+Trembling-Hand Perfect Equilibrium
+\end{frame}
+
+\begin{frame}{Not in Bonanno!}
+This part is \textbf{not} in Bonanno
+\begin{itemize}
+    \item He mentions it in one paragraph (\S12.3, pp.~452--453) and calls it ``outside the scope of this book''
+\end{itemize}
+\bsk
+Read: Manea, ``Equilibrium Refinements'' (MIT lecture slides), slides 13--14
+\begin{itemize}
+    \item \textbf{Now on Carmen!}
+\end{itemize}
+\bsk
+The idea (Selten, 1975. Same paper as the horse):
+\begin{itemize}
+    \item Players sometimes make tiny mistakes. Their hands ``tremble''
+    \item A sensible equilibrium should survive tiny mistakes
+\end{itemize}
+\vfill
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Example}
+\centering
+\begin{matrixgame}[top={$L$, $R$}, left={$U$, $D$}, player names={Player 1, Player 2}, w=1.6, br=<2->]
+  \payoffmatrix{1,1 & 0,0 \\ 0,0 & 0,0}
+\end{matrixgame}
+\bsk
+\raggedright
+\onslide<2->{NE: \ $(U,L)$ \ and \ $(D,R)$}
+\bsk
+\onslide<3->{Is $(D,R)$ sensible???\\[4pt]
+If P2 might \textbf{accidentally} play $L$, P1 should play \underline{\hspace{0.4in}}}
+\vfill
+{\footnotesize Manea, slide 13.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{$\varepsilon$ Quasi-Equilibrium}
+\begin{block}{Definition}
+A mixed strategy profile $\sigma$ is an \textbf{$\varepsilon$ quasi-equilibrium} if
+\begin{enumerate}
+    \item It's \textbf{completely mixed}: $\sigma_i(s_i)>0$ for every $i$ and every $s_i$
+    \item If $\Pi_i(s_i',\sigma_{-i})>\Pi_i(s_i,\sigma_{-i})$, then $\sigma_i(s_i)<\varepsilon$
+\end{enumerate}
+\end{block}
+\bsk
+In words: everything gets played. Worse strategies only by mistake (prob.\ $<\varepsilon$)
+\bsk
+\onslide<2->{\textbf{Fact:} Set $\varepsilon=0$. Worse strategies get probability 0. That's just NE!}
+\vfill
+{\footnotesize Ignoring a detail: with $\varepsilon=0$ the ``$<$'' would have to be ``$\le$'', and the profile can't be completely mixed.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Formal Definition: THPE}
+\begin{block}{Definition}
+$\sigma^*$ is a \textbf{trembling-hand perfect equilibrium (THPE)} if it is the limit of $\varepsilon$ quasi-equilibria as $\varepsilon\to 0$
+\end{block}
+\bsk
+So: find $\varepsilon$ quasi-equilibria $\sigma^\varepsilon$, shrink $\varepsilon$, see where $\sigma^\varepsilon$ ends up
+\bsk
+\textbf{Fact:} Every THPE is a NE
+\bsk
+\textbf{Theorem (Selten, 1975):} Every finite game has at least one THPE
+\vfill
+{\footnotesize The correct definition lets $\varepsilon$ be different for each $s_i$ (Manea, slide 14: ``$\varepsilon$-perfect equilibrium''). We'll ignore that.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Example: Find the THPE}
+\begin{columns}[c]
+\begin{column}{0.4\textwidth}
+\centering
+\begin{matrixgame}[top={$L$, $R$}, left={$U$, $D$}, player names={Player 1, Player 2}, w=1.4]
+  \payoffmatrix{1,1 & 0,0 \\ 0,0 & 0,0}
+\end{matrixgame}
+\end{column}
+\begin{column}{0.58\textwidth}
+Any $\varepsilon$ quasi-equilibrium is completely mixed, so $\sigma_2(L)>0$
+\bsk
+$\Pi_1(U,\sigma_2)=$ \ans{0.7in}{$\sigma_2(L)$}\\[4pt]
+$\Pi_1(D,\sigma_2)=$ \ans{0.7in}{$0$}
+\bsk
+\onslide<3->{$U$ is strictly better, so $\sigma_1(D)<\varepsilon$\\[4pt]
+Same for P2: \ $\sigma_2(R)<\varepsilon$}
+\end{column}
+\end{columns}
+\bsk
+\onslide<4->{As $\varepsilon\to0$: \ $\sigma_1(D)\to0$ and $\sigma_2(R)\to0$\\[4pt]
+\textbf{Result:} The only THPE is $(U,L)$. \ $(D,R)$ is ruled out}
+\bsk
+\onslide<5->{\textbf{Lesson:} THPE puts no weight on \textbf{weakly dominated} strategies}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Back to Selten's Horse: $(b,f,d)$}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\horse
+\end{column}
+\begin{column}{0.48\textwidth}
+Any $\varepsilon$ quasi-equilibrium is completely mixed\\
+$\Rightarrow$ P3's infoset is reached with prob.\ $>0$
+\bsk
+\onslide<2->{At both nodes: $c$ gives 2, $d$ gives 0\\[4pt]
+So $\Pi_3(c,\sigma_{-3})>\Pi_3(d,\sigma_{-3})$}
+\bsk
+\onslide<3->{$\Rightarrow \sigma_3(d)<\varepsilon$\\[4pt]
+$\Rightarrow \sigma_3(d)\to 0$ as $\varepsilon\to0$}
+\bsk
+\onslide<4->{$(b,f,d)$ is \textbf{not} a THPE!}
+\end{column}
+\end{columns}
+\bsk
+\onslide<5->{\textbf{Lesson:} Trembles reach \textbf{every} infoset. No hiding off the path of play}
+\vfill
+\onslide<6->{{\footnotesize Similar arguments rule out $(a,f,c)$ and $(b,e,c)$. Only $(a,e,c)$ is a THPE.}}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Remember: Not in Bonanno!}
+THPE is \textbf{not} in Bonanno
+\bsk
+Study it from Manea's notes, \textbf{on Carmen}
+\begin{itemize}
+    \item Slide 13: the example
+    \item Slide 14: the full definition
+\end{itemize}
+\vfill
+\vspace{-0.4in}
+\end{frame}
+
+% ==============================================================
 % WORKED EXAMPLE
 % ==============================================================
 % Deck 08's Gameday Parking game becomes the subgame after Drive.
@@ -816,14 +969,34 @@ Jordan first decides how to get to the game:
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{Gameday Parking, Part 2}
-\begin{enumerate}
-    \item List Jordan's pure strategies. How many numbers for a mixed strategy? A behavioral one? \vspace{0.3in}
-    \item What is Jordan's expected payoff from Bus? \vspace{0.25in}
-    \item Solve the parking subgame (recall Chapter 6). Payoffs? \vspace{0.35in}
-    \item Find the SPNE. Write it in behavioral strategies \vspace{0.35in}
-    \item How reliable must the bus be before Jordan takes it? \vspace{0.25in}
-\end{enumerate}
+\begin{frame}{Gameday Parking: The Drive Subgame}
+\centering
+\begin{matrixgame}[top={Patrol West, Patrol Neil}, left={Pay, West, Neil}, player names={Jordan, CampusParc}, w=2.1, br=<2->]
+  \payoffmatrix{1,0 & 1,0 \\ 0,2 & 4,0 \\ 3,0 & 0,1}
+\end{matrixgame}
+\bsk
+\raggedright
+\only<1>{The subgame after Drive. Same as Chapter 6's parking game}%
+\only<2->{No cell is fully underlined: no pure NE. Need the mixed NE (Chapter 6)}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Gameday Parking, Part 2: Answers}
+\small
+Jordan's pure strategies: \ans{0.3in}{6} \quad Numbers for a mixed strategy: \ans{0.3in}{5} \quad Behavioral: \ans{0.3in}{3}
+\bsk
+Expected payoff from Bus: \ans{0.5in}{$\dfrac32$}
+\bsk
+Subgame NE: \ Jordan $\begin{pmatrix}\text{Pay} & \text{West} & \text{Neil}\\ \ans{0.3in}{$0$} & \ans{0.3in}{$\dfrac13$} & \ans{0.3in}{$\dfrac23$}\end{pmatrix}$
+\quad CampusParc $\begin{pmatrix}\text{PW} & \text{PN}\\ \ans{0.3in}{$\dfrac47$} & \ans{0.3in}{$\dfrac37$}\end{pmatrix}$
+\\[6pt]
+Subgame payoffs: (\ans{0.4in}{$\dfrac{12}{7}$}, \ans{0.4in}{$\dfrac23$}) \qquad Jordan chooses: \ans{0.6in}{Drive}
+\bsk
+SPNE: \ Jordan $\beh[cc|ccc]{\text{Bus} & \text{Drive} & \text{Pay} & \text{West} & \text{Neil}}{\ans{0.3in}{$0$} & \ans{0.3in}{$1$} & \ans{0.3in}{$0$} & \ans{0.3in}{$\dfrac13$} & \ans{0.3in}{$\dfrac23$}}$
+\quad CampusParc $\beh{\text{PW} & \text{PN}}{\ans{0.3in}{$\dfrac47$} & \ans{0.3in}{$\dfrac37$}}$
+\bsk
+Bus is worth it if it's on time with chance at least \ans{0.5in}{$\dfrac67$}
+\vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{What Have We Learned, Charlie Brown?}
@@ -839,6 +1012,7 @@ Jordan first decides how to get to the game:
         \item Solve subgames with mixed NE when there's no pure one
     \end{itemize}
     \item SPNE can still allow silly choices at unreached infosets (Selten's horse)
+    \item \textbf{THPE} (not in Bonanno): equilibria that survive tiny mistakes
 \end{itemize}
 \vfill
 \vspace{-0.4in}
