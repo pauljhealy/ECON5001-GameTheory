@@ -1,0 +1,624 @@
+\input{LectureSlides/includes/metropolis_preamble}
+
+% Title page info
+\title[Incomplete Information: Static]{Chapter 14: Incomplete Information, Static Games}
+\author[ECON 5001]{ECON 5001\\Prof. Paul J. Healy\\Based on: \textit{Game Theory} by Giacomo Bonanno} \color{metrop}
+\institute[OSU]{}
+\date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
+
+% ---------------------------------------------------------------------
+% SCOPE AND NOTATION
+%   Builds on deck 11 (states, partitions, beliefs, common prior) and
+%   deck 12 (Bayesian updating, sequential rationality). Bonanno's
+%   "state-space" approach; types only informally (Ch 16 not covered).
+%   Bonanno's Figure 14.3 has the two matrices swapped (see errata).
+%   The slides draw it correctly: type a = Figure 14.2, type b =
+%   Figure 14.1 (the true game, state beta).
+%   Section 14.4 (three players) gets one footnote.
+%
+% ANSWERS (all checked numerically)
+%   One-sided (Bonanno 14.1-14.5). P2 believes type a with prob 2/3.
+%     Type a (Fig 14.2): T: (0,3) (3,9)   B: (3,3) (0,0)
+%     Type b (Fig 14.1): T: (6,3) (0,9)   B: (3,3) (3,0)   <- true
+%     Strategic form (row = P1 "if a, if b"):
+%       TT: (2,3) (2,9)   TB: (1,3) (3,6)   BT: (4,3) (0,3)   BB: (3,3) (1,0)
+%     BNE: ((T,B), R) and ((B,T), L). Both separating, no pooling.
+%     ((T,B),R) at true state beta: play (B,R), not a NE of the true game.
+%     Type-by-type check of ((B,T),L): P2 beliefs 2/3 on (a,B), 1/3 on
+%       (b,T): L 3, R 3. Type a vs L: B 3 > T 0. Type b vs L: T 6 > B 3.
+%   Cournot (Bonanno's numbers, Shell/Speedway): P = 34 - Q, Shell c=6,
+%     Speedway c=9 (true, prob 1/3) or c=3 (prob 2/3).
+%     Complete info: q_Shell = 31/3 = 10.33, q_Speedway = 22/3 = 7.33.
+%     BNE: q_Shell = 9, q_H = 8, q_L = 11.
+%   Lemons logic (Akerlof; numbers styled on MobLab's defaults): seller
+%     values evenly spread on [500, 5000], buyer values 1.5x. At price p
+%     only cars worth <= p are offered; average buyer value
+%     .75(500 + p) >= p iff p <= 1500. Only (1500-500)/4500 = 22% of cars
+%     can trade, though every trade would be efficient.
+%   Two-sided (Bonanno 14.8-14.9). States alpha, beta (game G), gamma
+%   (game G'). P1: {alpha}, {beta, gamma} (1/2, 1/2).
+%   P2: {alpha, beta} (2/3, 1/3), {gamma}.
+%     G:  A: C(1,3) D(0,1)   B: C(0,0) D(3,1)
+%     G': A: C(1,0) D(0,2)   B: C(0,0) D(3,1)
+%     Common prior (1/2, 1/4, 1/4).
+%     BNE: P1 "A at alpha, B at {beta,gamma}", P2 "C at {alpha,beta},
+%       D at {gamma}". P2 beliefs left: alpha-A 2/3, beta-B 1/3:
+%       C 2, D 1. Right: D 1 > C 0. P1 at alpha: A 1 > B 0.
+%       P1 at {beta,gamma}: A 1/2, B 3/2.
+%   Worked example (Who Brings the Grill?): benefit 4 each if at least
+%   one grill. Cost Low 1, High 5. Independent, Pr(Low) = 1/2 each.
+%     4 states LL, LH, HL, HH, prior 1/4 each. True state LL.
+%     Pure strategies in the Harsanyi game: 4 each.
+%     High never brings (4 - 5 < 0).
+%     Unique pure BNE: Low brings, High doesn't (both players).
+%       Low: bring 3 vs not 4(1/2) = 2.
+%     At LL both bring. True game (both Low): (B,B) (3,3), (B,N) (3,4),
+%       (N,B) (4,3), (N,N) (0,0). NE (B,N), (N,B). (B,B) is not.
+%     Pr(Low) = .9: Low's not = 3.6 > 3, so the old BNE fails.
+%       BNE: Jordan-Low brings and Casey never brings, or vice versa.
+% ---------------------------------------------------------------------
+
+% The two possible games in the one-sided example
+\newcommand{\gamea}[1][]{%
+\begin{matrixgame}[top={L, R}, left={T, B}, player names={1, 2}, #1]
+  \payoffmatrix{0,3 & 3,9 \\ 3,3 & 0,0}
+\end{matrixgame}}
+\newcommand{\gameb}[1][]{%
+\begin{matrixgame}[top={L, R}, left={T, B}, player names={1, 2}, #1]
+  \payoffmatrix{6,3 & 0,9 \\ 3,3 & 3,0}
+\end{matrixgame}}
+
+% Knowledge-belief structure for the one-sided example
+\newcommand{\onesided}{%
+\begin{tikzpicture}[x=1.4in, y=0.55in]
+  \node at (0, 0.75) {$\alpha$ (type $a$)}; \node at (1, 0.75) {$\beta$ (type $b$)};
+  \node[anchor=east, text=player1] at (-0.3, 0) {1:};
+  \node[anchor=east, text=player2] at (-0.3, -1) {2:};
+  \foreach \x in {0,1} {\fill (\x, 0) circle (2pt); \fill (\x, -1) circle (2pt);}
+  \draw[player1, thick, rounded corners=7pt] (-0.15, -0.25) rectangle (0.15, 0.25);
+  \draw[player1, thick, rounded corners=7pt] (0.85, -0.25) rectangle (1.15, 0.25);
+  \draw[player2, thick, rounded corners=7pt] (-0.15, -1.25) rectangle (1.15, -0.75);
+  \node[anchor=west, font=\footnotesize] at (0.04, -1) {$\tfrac23$};
+  \node[anchor=west, font=\footnotesize] at (1.04, -1) {$\tfrac13$};
+  \draw[->, thick] (1, -1.9) -- (1, -1.4); \node[font=\scriptsize] at (1, -2.05) {true state};
+\end{tikzpicture}}
+
+% Harsanyi transformation of the one-sided example (Bonanno Fig 14.4)
+\newcommand{\harsanyitree}[1][0.82]{%
+\begin{gametree}[player names={1, 2}, labels=short, scale=#1]
+  \branch[player=0, root=w, label=90] from (0,0) to[v=1.2, h=5.0] {type $a$\ $\frac23$; type $b$\ $\frac13$};
+  \branch[player=1, label=180] from (w1) to[v=1.3, h=2.4] {T; B};
+  \branch[player=1, label=0] from (w2) to {T; B};
+  \branch[player=2, label=none] from (w11) to[v=1.4, h=1.1] {L(0,3); R(3,9)};
+  \branch[label=none] from (w12) to {L(3,3); R(0,0)};
+  \branch[label=none] from (w21) to {L(6,3); R(0,9)};
+  \branch[label=none] from (w22) to {L(3,3); R(3,0)};
+  \informset[player=2] (w11) -- (w22);
+\end{gametree}}
+
+% Two-sided example (Bonanno Fig 14.9)
+\newcommand{\twosidedtree}[1][0.66]{%
+\begin{gametree}[player names={1, 2}, labels=short, scale=#1]
+  \branch[player=0, root=w, label=90] from (0,0) to[v=1.2, h=5.6] {$\alpha$\ $\frac24$; $\beta$\ $\frac14$; $\gamma$\ $\frac14$};
+  \branch[player=1, label=180] from (w1) to[v=1.3, h=2.6] {A; B};
+  \branch[player=1, label=none] from (w2) to {A; B};
+  \branch[player=1, label=none] from (w3) to {A; B};
+  \branch[player=2, label=none] from (w11) to[v=1.4, h=1.25] {C(1,3); D(0,1)};
+  \branch[label=none] from (w12) to {C(0,0); D(3,1)};
+  \branch[label=none] from (w21) to {C(1,3); D(0,1)};
+  \branch[label=none] from (w22) to {C(0,0); D(3,1)};
+  \branch[label=none] from (w31) to {C(1,0); D(0,2)};
+  \branch[label=none] from (w32) to {C(0,0); D(3,1)};
+  \informset[player=1] (w2) -- (w3);
+  \informset[player=2] (w11) -- (w22);
+  \informset[player=2] (w31) -- (w32);
+\end{gametree}}
+
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{Where We're Going}
+So far: the game is \textbf{common knowledge}
+\bsk
+Now: some player isn't sure \textbf{which game} they're playing
+\begin{itemize}
+    \item Usually: unsure about someone else's \textbf{payoffs}
+    \item ``Is my rival's cost high or low?''
+\end{itemize}
+\bsk
+Tools we have:
+\begin{itemize}
+    \item Knowledge-belief structures (deck 11): who knows what
+    \item Bayesian updating (deck 12): beliefs from strategies
+\end{itemize}
+\bsk
+New tool: the \textbf{Harsanyi transformation}
+\vspace{-0.3in}
+\end{frame}
+
+% ---- MobLab run: Market for Lemons ------------------------------------
+% Markets topic, two-sided version. Fixed pairs, Fixed Role. Seller
+% values 500 to 5000 (default); Beta = 150 (buyer value = 1.5 x seller
+% value). MobLab doesn't show Beta to students: the slide announces it.
+% Asymmetric information treatment. Don't announce the number of
+% periods. Results come back in "Back to MobLab".
+% ---------------------------------------------------------------------
+\begin{frame}{MobLab: ``Market for Lemons''}
+\begin{itemize}
+    \item MobLab time!
+    \item You're a \textbf{seller} or a \textbf{buyer} of a used car
+    \item Seller knows what the car is worth to them: between \$500 and \$5{,}000
+    \item Seller names a price. Buyer accepts or rejects
+    \item Buyer doesn't see the car's value until after
+    \item The car is worth 50\% more to the buyer than to the seller
+\end{itemize}
+\vfill
+\centering
+Feel free to talk! And play it the way you'd actually play it.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Imperfect vs.\ Incomplete Information}
+\textbf{Imperfect information} (Chapter 4)
+\begin{itemize}
+    \item You don't know what others \textbf{did} earlier
+    \item Information sets with more than one node
+\end{itemize}
+\bsk
+\textbf{Incomplete information} (now)
+\begin{itemize}
+    \item You don't know what \textbf{game} you're playing
+    \item Someone's payoffs (or actions, or...) are uncertain
+\end{itemize}
+\bsk
+\textbf{Ex:} someone says you owe them money and threatens to sue
+\begin{itemize}
+    \item Will they really sue? Depends on their \textbf{type}: aggressive or not
+    \item You don't know their type. They do
+\end{itemize}
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% 14.2 ONE-SIDED INCOMPLETE INFORMATION
+% ==============================================================
+
+\begin{frame}[standout]
+One-Sided Incomplete Information
+\end{frame}
+
+\begin{frame}{Example: Two Possible Games}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+\textbf{P1 is type $a$}\\[4pt]
+\gamea
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\textbf{P1 is type $b$} (the true game)\\[4pt]
+\gameb
+\end{column}
+\end{columns}
+\bsk
+\begin{itemize}
+    \item Only P1's payoffs differ
+    \item P1 knows which game it is
+    \item P2 thinks: type $a$ with prob.\ $\tfrac23$, type $b$ with prob.\ $\tfrac13$
+    \item All of this is common knowledge
+\end{itemize}
+\vfill
+{\footnotesize Bonanno Figures 14.1--14.2.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Knowledge-Belief Structure}
+\centering
+\onesided
+\bsk
+\raggedright
+Each state comes with a \textbf{game}: $\alpha\to$ type $a$'s game, $\beta\to$ type $b$'s game
+\bsk
+What's common knowledge? (Constant across states!)
+\begin{itemize}
+    \item \underline{\hspace{1.5in}} \quad \underline{\hspace{1.5in}} \quad \underline{\hspace{1.5in}}
+\end{itemize}
+\vfill
+{\footnotesize Bonanno Figure 14.3 draws the two games swapped. This is the correct version.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Harsanyi Transformation}
+\begin{columns}[c]
+\begin{column}{0.55\textwidth}
+\centering
+\harsanyitree
+\end{column}
+\begin{column}{0.43\textwidth}
+\begin{enumerate}
+    \item \textbf{Nature} picks the state
+    \begin{itemize}
+        \item Prob.\ $=$ P2's beliefs
+    \end{itemize}
+    \item P1 learns it, chooses T or B
+    \item P2 chooses L or R \textbf{without} seeing either
+\end{enumerate}
+\end{column}
+\end{columns}
+\bsk
+Now it's a regular game! Imperfect information, but \textbf{complete}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{John Harsanyi (1920--2000)}
+\begin{columns}
+\begin{column}{0.40\textwidth}
+    \begin{center}
+        \IfFileExists{LectureSlides/graphics/history/HarsanyiMug.png}{%
+        \includegraphics[height=1.3in]{LectureSlides/graphics/history/HarsanyiMug.png}}{%
+        \fbox{\parbox[c][1.3in][c]{1in}{\centering\footnotesize (photo)}}}
+    \end{center}
+\end{column}
+\begin{column}{0.60\textwidth}
+\begin{itemize}
+    \item Budapest. Same high school as von Neumann
+    \item 1944: escaped a deportation train at the station
+    \item 1950: snuck across a marsh into Austria
+    \item Sydney: factory job by day, economics at night
+    \item Games of incomplete information: 1967--68, three papers
+    \item 1994 Nobel Prize, with Nash and Selten
+\end{itemize}
+\end{column}
+\end{columns}
+\vfill
+{\footnotesize Not in the book. Harsanyi's Nobel autobiography (nobelprize.org).}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Strategies and the Strategic Form}
+P1 has two information sets (one per type) $\Rightarrow$ strategy $=$ (choice if $a$, choice if $b$)
+\bsk
+\centering
+\only<1>{\begin{matrixgame}[top={L, R}, left={TT, TB, BT, BB}, player names={Player 1, Player 2}, w=1.9]
+  \payoffmatrix{2,3 & 2,9 \\ {}, & {}, \\ {}, & {}, \\ 3,3 & 1,0}
+\end{matrixgame}}%
+\only<2->{\begin{matrixgame}[top={L, R}, left={TT, TB, BT, BB}, player names={Player 1, Player 2}, w=1.9, br=<3->]
+  \payoffmatrix{2,3 & 2,9 \\ 1,3 & 3,6 \\ 4,3 & 0,3 \\ 3,3 & 1,0}
+\end{matrixgame}}
+\bsk
+\raggedright
+Payoffs are \textbf{expected} payoffs. \ \textbf{Ex:} TT vs.\ L, P1 gets $\tfrac23(0)+\tfrac13(6)=2$\\[4pt]
+\onslide<1>{Fill in TB and BT}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Bayesian Nash Equilibrium}
+\begin{block}{Definition}
+A \textbf{Bayesian Nash equilibrium} (BNE) is a NE of the game from the Harsanyi transformation
+\end{block}
+\bsk
+``Bayesian'' just reminds us it came from incomplete information
+\bsk
+Our example: pure BNE are \underline{\hspace{1.1in}} and \underline{\hspace{1.1in}}
+\bsk
+\onslide<2->{\textbf{Fact:} the Harsanyi game is finite $\Rightarrow$ a BNE always exists (maybe mixed)}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What Does a BNE Mean?}
+Take the BNE $((T,B),R)$. The true state is $\beta$ (type $b$)
+\begin{itemize}
+    \item What actually gets played? \underline{\hspace{0.8in}}
+    \item Is that a NE of the true game? \underline{\hspace{0.8in}}
+\end{itemize}
+\bsk
+\textbf{Lesson:} a BNE need not be a NE of the game actually being played
+\bsk
+\onslide<2->{But P1 \textbf{knows} she's type $b$. Why plan for type $a$??
+\begin{itemize}
+    \item Her strategy $(T,B)$ $=$ what she actually does ($B$)\\
+    $+$ what P2 \textbf{thinks} type $a$ would do ($T$)
+\end{itemize}}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Pooling vs.\ Separating}
+\begin{block}{Definition (Bonanno 14.2.1)}
+In a pure BNE, the informed player is
+\begin{itemize}
+    \item \textbf{Pooling} if every type makes the \textbf{same} choice
+    \item \textbf{Separating} if different types make \textbf{different} choices
+\end{itemize}
+\end{block}
+\bsk
+Our BNE: $((T,B),R)$ is \underline{\hspace{1in}} \quad $((B,T),L)$ is \underline{\hspace{1in}}
+\bsk
+\onslide<2->{Separating: P1's choice would \textbf{reveal} her type, if P2 could see it}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Shortcut: Check Type by Type}
+\begin{columns}[c]
+\begin{column}{0.52\textwidth}
+\centering
+\harsanyitree[0.72]
+\end{column}
+\begin{column}{0.46\textwidth}
+Is $((B,T),L)$ a BNE?
+\bsk
+\textbf{P2's beliefs} (Bayes):\\
+(type $a$, B): \underline{\hspace{0.4in}} \ (type $b$, T): \underline{\hspace{0.4in}}
+\bsk
+P2: L gives \underline{\hspace{0.3in}} \ R gives \underline{\hspace{0.3in}}
+\bsk
+\textbf{Type $a$} vs.\ L: \ T \underline{\hspace{0.25in}} \ B \underline{\hspace{0.25in}}\\[4pt]
+\textbf{Type $b$} vs.\ L: \ T \underline{\hspace{0.25in}} \ B \underline{\hspace{0.25in}}
+\end{column}
+\end{columns}
+\bsk
+This is WSE logic: Bayesian updating $+$ best replies. Bonanno uses it a lot
+\vfill
+{\footnotesize WSE $\Rightarrow$ NE (Theorem 11.3.1), so a WSE of the Harsanyi game gives a BNE.}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% COURNOT WITH UNKNOWN COSTS
+% ==============================================================
+
+\begin{frame}{Shell vs.\ Speedway, Again}
+Cournot (deck 04): Shell and Speedway choose gallons $q_1$, $q_2$. \ $P=34-Q$
+\begin{itemize}
+    \item Shell's cost: \$6/gallon. Common knowledge
+    \item Speedway's cost: really \$9/gallon (High)
+    \item But Shell thinks: High ($\tfrac13$) or a new low-cost tech, \$3 (Low, $\tfrac23$)
+    \item Speedway knows its own cost
+\end{itemize}
+\bsk
+\textbf{Benchmark}, complete info (both know $c_2=9$):
+\begin{itemize}
+    \item Shell: $\max_{q_1}\ (34-q_1-q_2)q_1-6q_1$ \quad Speedway: $\max_{q_2}\ (34-q_1-q_2)q_2-9q_2$
+    \item $q_1=$ \underline{\hspace{0.5in}} \qquad $q_2=$ \underline{\hspace{0.5in}}
+\end{itemize}
+\vfill
+{\footnotesize Bonanno \S14.2. Uses calculus, like deck 04.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Cournot BNE}
+Strategy for Speedway: one output \textbf{per type}: $q_H$ and $q_L$
+\bsk
+\textbf{High Speedway:} $\max_{q_H}\ (34-q_1-q_H)q_H-9q_H \ \Rightarrow$ \underline{\hspace{1.5in}}
+\bsk
+\textbf{Low Speedway:} $\max_{q_L}\ (34-q_1-q_L)q_L-3q_L \ \Rightarrow$ \underline{\hspace{1.5in}}
+\bsk
+\textbf{Shell}, who doesn't know the type:
+$$\max_{q_1}\ \tfrac13\big[(34-q_1-q_H)q_1-6q_1\big]+\tfrac23\big[(34-q_1-q_L)q_1-6q_1\big]$$
+$\Rightarrow$ \underline{\hspace{1.5in}}
+\bsk
+\onslide<2->{Solve: \ $q_1=$ \underline{\hspace{0.4in}} \quad $q_H=$ \underline{\hspace{0.4in}} \quad $q_L=$ \underline{\hspace{0.4in}}}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Compare}
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|l|c|c|}
+\hline
+ & Complete info & Incomplete info \\
+\hline
+Shell & 10.33 & \hspace{0.8in} \\
+Speedway (really High) & 7.33 & \\
+\hline
+\end{tabular}
+\bsk
+\raggedright
+\onslide<2->{Shell fears a low-cost (aggressive) rival $\Rightarrow$ Shell produces \underline{\hspace{0.6in}}\\[4pt]
+So High Speedway faces less competition $\Rightarrow$ produces \underline{\hspace{0.6in}}}
+\bsk
+\onslide<3->{\textbf{Lesson:} beliefs about your type change what others do, even when they're wrong}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{This Is Everywhere}
+Bayesian games: you know your own type, not theirs
+\begin{itemize}
+    \item \textbf{Auctions:} you know your value for the item, not others'
+    \item \textbf{Used cars:} the seller knows if it's a lemon
+    \item \textbf{Insurance:} you know how risky you are. The insurer doesn't
+    \item \textbf{Job interviews:} you know how good you are
+    \item \textbf{Poker:} you know your cards
+    \item \textbf{Negotiation:} you know your walk-away price
+\end{itemize}
+\bsk
+Real versions: many types, continuous types, many players, repeated play
+\begin{itemize}
+    \item Same idea: each type best-responds to beliefs about others' types
+\end{itemize}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Back to MobLab: Lemons}
+\centering
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{|l|c|}
+\hline
+\% of cars sold & \hspace{1in} \\
+\hline
+\% of buyers who lost money & \\
+\hline
+\end{tabular}
+\bsk
+\raggedright
+\textbf{Akerlof's logic:} say seller values are spread evenly from \$500 to \$5{,}000
+\begin{itemize}
+    \item At price $p$: only cars worth $\le p$ to their seller get offered
+    \item Avg.\ value to the buyer: $1.5\times\frac{500+p}{2}$. Worth paying $p$ only if $p\le$ \underline{\hspace{0.5in}}
+    \item Only \underline{\hspace{0.4in}}\% of cars trade, though \textbf{every} trade would help both!
+\end{itemize}
+\vfill
+{\footnotesize Not in the book. Akerlof (1970, \textit{QJE}). 2001 Nobel Prize.}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% 14.3 TWO-SIDED INCOMPLETE INFORMATION
+% ==============================================================
+
+\begin{frame}[standout]
+Two-Sided Incomplete Information
+\end{frame}
+
+\begin{frame}{Example: Both Players Unsure}
+\begin{columns}[c]
+\begin{column}{0.58\textwidth}
+\centering
+\begin{tikzpicture}[x=0.95in, y=0.55in]
+  \foreach \x/\s/\g in {0/\alpha/G, 1/\beta/G, 2/\gamma/G'} {\node at (\x, 0.75) {$\s$}; \node[font=\footnotesize] at (\x, 1.2) {game $\g$};}
+  \node[anchor=east, text=player1] at (-0.3, 0) {1:};
+  \node[anchor=east, text=player2] at (-0.3, -1) {2:};
+  \foreach \x in {0,1,2} {\fill (\x, 0) circle (2pt); \fill (\x, -1) circle (2pt);}
+  \draw[player1, thick, rounded corners=7pt] (-0.18, -0.25) rectangle (0.18, 0.25);
+  \draw[player1, thick, rounded corners=7pt] (0.82, -0.25) rectangle (2.18, 0.25);
+  \draw[player2, thick, rounded corners=7pt] (-0.18, -1.25) rectangle (1.18, -0.75);
+  \draw[player2, thick, rounded corners=7pt] (1.82, -1.25) rectangle (2.18, -0.75);
+  \foreach \x/\y/\b in {1/0/\tfrac12, 2/0/\tfrac12, 0/-1/\tfrac23, 1/-1/\tfrac13}
+    {\node[anchor=west, font=\footnotesize] at (\x+0.04, \y) {$\b$};}
+  \draw[->, thick] (0, -1.9) -- (0, -1.4); \node[font=\scriptsize] at (0, -2.05) {true state};
+\end{tikzpicture}
+\end{column}
+\begin{column}{0.4\textwidth}
+\centering
+Game $G$\\[2pt]
+\begin{matrixgame}[top={C, D}, left={A, B}, player names={1, 2}, w=1.3, h=0.65]
+  \payoffmatrix{1,3 & 0,1 \\ 0,0 & 3,1}
+\end{matrixgame}\\[6pt]
+Game $G'$\\[2pt]
+\begin{matrixgame}[top={C, D}, left={A, B}, player names={1, 2}, w=1.3, h=0.65]
+  \payoffmatrix{1,0 & 0,2 \\ 0,0 & 3,1}
+\end{matrixgame}
+\end{column}
+\end{columns}
+\bsk
+At $\alpha$: both know it's $G$. But P2 isn't sure P1 knows!
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Which Probabilities for Nature?}
+One-sided: use the uninformed player's beliefs. Two-sided: \textbf{two} sets of beliefs!
+\begin{itemize}
+    \item P1 puts $\tfrac12$ on $\beta$. P2 puts $\tfrac13$ on $\beta$. Which one?
+\end{itemize}
+\bsk
+\onslide<2->{Neither! Use the \textbf{common prior} (deck 11): one $p$ that gives both players' beliefs
+\vspace{0.6in}
+
+$p(\alpha)=$ \underline{\hspace{0.4in}} \quad $p(\beta)=$ \underline{\hspace{0.4in}} \quad $p(\gamma)=$ \underline{\hspace{0.4in}}}
+\bsk
+\onslide<3->{\textbf{No common prior?} Then no Harsanyi transformation (Bonanno Exercise 14.6)}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Harsanyi Game}
+\centering
+\twosidedtree
+\bsk
+\raggedright
+P1 knows if the state is $\alpha$. P2 knows if the state is $\gamma$
+\vfill
+{\footnotesize Bonanno Figure 14.9.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Checking a BNE}
+\centering
+\twosidedtree[0.5]
+\bsk
+\raggedright
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+Candidate:\\
+P1: A at $\alpha$, B at $\{\beta,\gamma\}$\\
+P2: C at $\{\alpha,\beta\}$, D at $\{\gamma\}$
+\end{column}
+\begin{column}{0.5\textwidth}
+P2's left info set. Beliefs: \underline{\hspace{0.8in}}\\[3pt]
+P2: C gives \underline{\hspace{0.3in}}, D gives \underline{\hspace{0.3in}}\\[3pt]
+P1 at $\{\beta,\gamma\}$: A \underline{\hspace{0.3in}}, B \underline{\hspace{0.3in}}
+\end{column}
+\end{columns}
+\vfill
+{\footnotesize Three or more players (\S14.4): same steps, more bookkeeping.}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% WORKED EXAMPLE
+% ==============================================================
+% Answers are in the header comment.
+% ---------------------------------------------------------------------
+
+\begin{frame}[standout]
+Let's Work One Out
+\end{frame}
+
+\begin{frame}{Who Brings the Grill?}
+Jordan and Casey tailgate before the game. Each chooses: \textbf{Bring} a grill or \textbf{Not}
+\begin{itemize}
+    \item If at least one grill shows up: each gets 4. Otherwise 0
+    \item Bringing costs 1 if you own a grill (\textbf{Low} type), 5 if you'd rent one (\textbf{High} type)
+    \item You know your own type. Each is Low with prob.\ $\tfrac12$, independently
+    \item Actually both are Low
+\end{itemize}
+\bsk
+\textbf{Ex:} Jordan Low brings, Casey doesn't: Jordan gets $4-1=3$, Casey gets 4
+\vfill
+{\footnotesize Choices are simultaneous.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Who Brings the Grill?}
+\begin{enumerate}
+    \item Draw the knowledge-belief structure (4 states). What's the common prior? \vspace{0.3in}
+    \item How many pure strategies does each player have in the Harsanyi game? \vspace{0.2in}
+    \item Show that a High type never brings a grill \vspace{0.2in}
+    \item Find all pure BNE. Pooling or separating? \vspace{0.3in}
+    \item What happens at the true state? Is it a NE of the true game? \vspace{0.3in}
+    \item Now Pr(Low) $=0.9$. Is your BNE still a BNE? If not, find one \vspace{0.1in}
+\end{enumerate}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What Have We Learned, Charlie Brown?}
+\begin{itemize}
+    \item \textbf{Incomplete info}: unsure which game. \textbf{Imperfect}: unsure what others did
+    \item Model it with a knowledge-belief structure: one game per state
+    \item \textbf{Harsanyi transformation}: Nature picks the state using the common prior
+    \item \textbf{BNE} $=$ NE of the Harsanyi game
+    \begin{itemize}
+        \item Strategy: one choice per type. Check type by type
+        \item Pooling vs.\ separating
+    \end{itemize}
+    \item A BNE may not be a NE of the true game
+    \item Two-sided: needs a common prior
+\end{itemize}
+\vfill
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Reading \& Practice}
+\begin{itemize}
+    \item Bonanno, Chapter 14
+    \begin{itemize}
+        \item \S14.1--14.3: read. \S14.4: skim
+        \item Figure 14.3 has the two games swapped (see errata)
+    \end{itemize}
+    \item Exercises: \S14.5.1 (14.1, 14.2), \S14.5.2 (14.3--14.5), \S14.5.3 (14.6)
+    \item Skip 14.7 (three players) and 14.8 (challenging)
+    \item Solutions in \S14.6. Try them first
+\end{itemize}
+\vfill
+\end{frame}
+
+\end{document}
