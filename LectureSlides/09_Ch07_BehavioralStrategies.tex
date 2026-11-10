@@ -721,47 +721,48 @@ Are they all reasonable???
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Problem 1: $(a,f,c)$}
-\begin{columns}[c]
-\begin{column}{0.5\textwidth}
-\centering
-\horse
-\end{column}
-\begin{column}{0.48\textwidth}
-Consider the $(a,f,c)$ SPNE
-\bsk
-P1 plays $a$. \ P2 never moves
-\bsk
-So P2 playing $f$ is technically a best reply!
-\bsk
-\onslide<2->{But \textbf{if} P2 had to move?\\[4pt]
-$e$ gives \underline{\hspace{0.4in}} \quad $f$ gives \underline{\hspace{0.4in}}}
-\bsk
-\onslide<3->{$f$ is a bad plan. But there's no subgame starting at P2's decision node, so SPNE doesn't rule this out.}
-\end{column}
-\end{columns}
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{Problem 1: $(a,f,c)$}
+% \begin{columns}[c]
+% \begin{column}{0.5\textwidth}
+% \centering
+% \horse
+% \end{column}
+% \begin{column}{0.48\textwidth}
+% Consider the $(a,f,c)$ SPNE
+% \bsk
+% P1 plays $a$. \ P2 never moves
+% \bsk
+% So P2 playing $f$ is technically a best reply!
+% \bsk
+% \onslide<2->{But \textbf{if} P2 had to move?\\[4pt]
+% $e$ gives \underline{\hspace{0.4in}} \quad $f$ gives \underline{\hspace{0.4in}}}
+% \bsk
+% \onslide<3->{$f$ is a bad plan. But there's no subgame starting at P2's decision node, so SPNE doesn't rule this out.}
+% \end{column}
+% \end{columns}
+% \vspace{-0.3in}
+% \end{frame}
 
-\begin{frame}{Problem 2: $(b,f,d)$}
+\begin{frame}{Problem: the $(b,f,d)$ SPNE}
 \begin{columns}[c]
 \begin{column}{0.5\textwidth}
 \centering
 \horse
 \end{column}
 \begin{column}{0.48\textwidth}
+Consider the $(b,f,d)$ SPNE\\[4pt]
 P1 plays $b$, P2 plays $f$. \ P3 never moves
 \bsk
 \onslide<2->{But \textbf{if} P3 had to move?\\[4pt]
 Left node: $c$ \underline{\hspace{0.3in}} vs.\ $d$ \underline{\hspace{0.3in}}\\[4pt]
 Right node: $c$ \underline{\hspace{0.3in}} vs.\ $d$ \underline{\hspace{0.3in}}}
 \bsk
-\onslide<3->{$d$ is \textbf{strictly dominated} at P3's infoset!}
+\onslide<3->{$d$ is \textbf{strictly dominated} at P3's infoset!\\[4pt]}
+\onslide<4->{If 2 knows 3 will play $d$, 2 switches to $e$}
 \end{column}
 \end{columns}
 \bsk
-\onslide<4->{\textbf{Lesson:} $d$ is dominated as a \textbf{choice}, not as a \textbf{strategy}\\
-Unreached infosets escape the test}
+\onslide<4->{\textbf{Problem:} Player 3's info set isn't the root of a subgame. In this SPNE it's never reached, so anything is a best reply}
 \vfill
 {\footnotesize Bonanno typo, p.~249: for $(b,f,d)$ it says ``Player 1 plays $a$''. Should be $b$.}
 \vspace{-0.2in}
@@ -771,16 +772,12 @@ Unreached infosets escape the test}
 SPNE checks for rationality only in \textbf{subgames}
 \begin{itemize}
     \item A subgame can't cut an information set
-    \item So choices at big infosets are only checked if they're on the path of play
+    \item Maybe that's not strict enough?
 \end{itemize}
 \bsk
-The fix: Every choice should be sensible, \textbf{even off the path of play}
-\begin{itemize}
-    \item P3 doesn't know which node she's at\\
-    $\Rightarrow$ she needs a \textbf{belief} about where she is
-\end{itemize}
+The fix: Check that strategies are rational at \textbf{every} infoset (not just subgames)
 \bsk
-\textbf{Thus:} \ $\{\text{better equilibria}\}\subseteq SPNE\subseteq NE$
+\textbf{Goal:} \ $\{\text{better solution concept}\}\subseteq SPNE\subseteq NE$
 \vfill
 {\footnotesize Bonanno Part IV (Chapters 11--13): weak sequential, sequential, and perfect Bayesian equilibrium.}
 \vspace{-0.2in}
@@ -807,20 +804,20 @@ Trembling-Hand Perfect Equilibrium
 \end{frame}
 
 \begin{frame}{Not in Bonanno!}
-This part is \textbf{not} in Bonanno
+\textbf{Not} in Bonanno, but required for this class
 \begin{itemize}
-    \item He mentions it in one paragraph (\S12.3, pp.~452--453) and calls it ``outside the scope of this book''
+    \item He mentions it briefly in one paragraph (\S12.3, pp.~452--453)
 \end{itemize}
 \bsk
 Read: Manea, ``Equilibrium Refinements'' (MIT lecture slides), slides 13--14
 \begin{itemize}
-    \item \textbf{Now on Carmen!}
+    \item Uploaded to Carmen
 \end{itemize}
 \bsk
-The idea (Selten, 1975. Same paper as the horse):
+The idea (Selten, 1975):
 \begin{itemize}
     \item Players sometimes make tiny mistakes. Their hands ``tremble''
-    \item A sensible equilibrium should survive tiny mistakes
+    \item Any equilibrium that assumes \textbf{zero mistakes} should be ruled out
 \end{itemize}
 \vfill
 \vspace{-0.4in}
@@ -836,35 +833,69 @@ The idea (Selten, 1975. Same paper as the horse):
 \onslide<2->{NE: \ $(U,L)$ \ and \ $(D,R)$}
 \bsk
 \onslide<3->{Is $(D,R)$ sensible???\\[4pt]
-If P2 might \textbf{accidentally} play $L$, P1 should play \underline{\hspace{0.4in}}}
+If P2 might \textbf{accidentally} play $L$ (even with 1\% chance), P1 should play \underline{\hspace{0.4in}}}
 \vfill
 {\footnotesize Manea, slide 13.}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{$\varepsilon$ Quasi-Equilibrium}
+\begin{frame}{Completely Mixed $\varepsilon$-Perfect Equilibrium}
+Some definitions: A strategy profile $\sigma=(\sigma_1,\ldots,\sigma_n)$ is...
+\begin{itemize}
+    \item \textbf{completely mixed} if $\sigma_i(s_i)>0$ for every $i$ and $s_i$
+    \begin{itemize}
+        \item ``Every pure strategy is played with positive probability''
+        \item Allows that ``1\% chance''
+    \end{itemize}
+    \item a \textbf{Nash equilibrium} if $\Pi_i(s_i',\sigma_{-i})>\Pi_i(s_i,\sigma_{-i})$ implies that $\sigma_i(s_i)=0$
+    \begin{itemize}
+        \item ``Any $s_i$ that's not a best reply is played with zero probability''
+    \end{itemize}
+    \item an $\bm{\epsilon}$\textbf{-perfect equilibrium} if $\Pi_i(s_i',\sigma_{-i})>\Pi_i(s_i,\sigma_{-i})$ implies that $\sigma_i(s_i)\leq\epsilon$
+    \begin{itemize}
+        \item ``Any $s_i$ that's not a best reply is played with no more than $\epsilon$ probability''
+    \end{itemize}
+\end{itemize}
+\bsk
+\textbf{Fact}: Nash equilibrium is just $\epsilon$-perfect equilibrium with $\epsilon=0$
+\bsk
 \begin{block}{Definition}
-A mixed strategy profile $\sigma$ is an \textbf{$\varepsilon$ quasi-equilibrium} if
-\begin{enumerate}
-    \item It's \textbf{completely mixed}: $\sigma_i(s_i)>0$ for every $i$ and every $s_i$
-    \item If $\Pi_i(s_i',\sigma_{-i})>\Pi_i(s_i,\sigma_{-i})$, then $\sigma_i(s_i)<\varepsilon$
-\end{enumerate}
+A mixed strategy profile $\sigma$ is a \textbf{completely mixed} $\bm{\varepsilon}$\textbf{-perfect equilibrium} if it is both completely mixed and an $\epsilon$-perfect equilibrium.
 \end{block}
-\bsk
-In words: everything gets played. Worse strategies only by mistake (prob.\ $<\varepsilon$)
-\bsk
-\onslide<2->{\textbf{Fact:} Set $\varepsilon=0$. Worse strategies get probability 0. That's just NE!}
-\vfill
-{\footnotesize Ignoring a detail: with $\varepsilon=0$ the ``$<$'' would have to be ``$\le$'', and the profile can't be completely mixed.}
-\vspace{-0.2in}
+{\footnotesize Literature: Usually ``$\epsilon$-perfect equilibrium'' already requires that it be completely mixed. I don't.}
 \end{frame}
+
+\begin{frame}{Example}
+\centering
+\begin{matrixgame}[top={$L$, $R$}, left={$U$, $D$}, player names={Player 1, Player 2}, w=1.6, br=<2->]
+  \payoffmatrix{1,1 & 0,0 \\ 0,0 & 0,0}
+\end{matrixgame}
+\bsk
+\raggedright
+What are the completely mixed $\epsilon$-perfect equilibria?
+\bsk
+\only<2>{``Close'' to $(U,L)$ is $\sigma=((0.99,0.01),(0.99,0.01))$
+\begin{itemize}
+    \item Completely mixed? $\checkmark$
+    \item $\epsilon$-perfect? $U$ is BR, so $\sigma_i(D)$ should be small. $\checkmark$
+\end{itemize}
+}
+\only<3->{``Close'' to $(D,R)$ is $\sigma=((0.01,0.99),(0.01,0.99))$
+\begin{itemize}
+    \item Completely mixed? $\checkmark$
+    \item $\epsilon$-perfect? $U$ is BR, so $\sigma_i(D)$ should be small. $\times$
+\end{itemize}
+}
+\only<4->{So, the only completely mixed $\epsilon$-perfect equilibria are close to $(U,L)$}
+\end{frame}
+
 
 \begin{frame}{Formal Definition: THPE}
 \begin{block}{Definition}
-$\sigma^*$ is a \textbf{trembling-hand perfect equilibrium (THPE)} if it is the limit of $\varepsilon$ quasi-equilibria as $\varepsilon\to 0$
+$\sigma^*$ is a \textbf{trembling-hand perfect equilibrium (THPE)} if it is the limit of completely mixed $\varepsilon$-perfect equilibria as $\varepsilon\to 0$
 \end{block}
 \bsk
-So: find $\varepsilon$ quasi-equilibria $\sigma^\varepsilon$, shrink $\varepsilon$, see where $\sigma^\varepsilon$ ends up
+So: find completely mixed $\varepsilon$-perfect equilibria $\sigma^\varepsilon$, shrink $\varepsilon$, see where $\sigma^\varepsilon$ ends up
 \bsk
 \textbf{Fact:} Every THPE is a NE
 \bsk
@@ -885,13 +916,15 @@ So: find $\varepsilon$ quasi-equilibria $\sigma^\varepsilon$, shrink $\varepsilo
 \begin{column}{0.58\textwidth}
 Let $p=\Pr(U)$ and $q=\Pr(L)$
 \bsk
-Any $\varepsilon$ quasi-equilibrium is completely mixed, so $q>0$
+Any completely mixed $\varepsilon$-perfect equilibrium has $p,q>0$
 \bsk
 $\Pi_1(U,q)=$ \ans{0.7in}{$q$}\\[4pt]
 $\Pi_1(D,q)=$ \ans{0.7in}{$0$}
 \bsk
 \onslide<3->{$U$ is strictly better, so $1-p<\varepsilon$\\[4pt]
-Same for P2: \ $1-q<\varepsilon$}
+\quad or, $1-\varepsilon < p$\\[4pt]
+Same for P2: \ $1-q<\varepsilon$\\[4pt]
+\quad or, $1-\varepsilon<q$}
 \end{column}
 \end{columns}
 \bsk
@@ -909,7 +942,7 @@ Same for P2: \ $1-q<\varepsilon$}
 \horse
 \end{column}
 \begin{column}{0.48\textwidth}
-Any $\varepsilon$ quasi-equilibrium is completely mixed\\
+Let $\sigma$ be a completely mixed $\varepsilon$-perfect equilibrium\\
 $\Rightarrow$ P3's infoset is reached with prob.\ $>0$
 \bsk
 \onslide<2->{At both nodes: $c$ gives 2, $d$ gives 0\\[4pt]
