@@ -1,0 +1,393 @@
+\input{LectureSlides/includes/metropolis_preamble}
+
+% Title page info
+\title[Knowledge and Beliefs]{Knowledge and Beliefs}
+\subtitle{Chapters 8--9, Lite}
+\author[ECON 5001]{ECON 5001\\Prof. Paul J. Healy\\Based on: \textit{Game Theory} by Giacomo Bonanno} \color{metrop}
+\institute[OSU]{}
+\date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
+
+% ---------------------------------------------------------------------
+% SCOPE AND NOTATION
+%   A short tour of Ch 8-9, just what Ch 14-16 need: states, information
+%   partitions, the true state, K_i E, common knowledge via reachability,
+%   beliefs on information sets, Bayes' rule, common prior.
+%   Skipped: belief relations / common belief (8.4-8.5), belief revision
+%   and plausibility orders (9.4.2), agreeing to disagree (9.6),
+%   Chapter 10 entirely.
+%   Notation follows Bonanno Ch 8: W = set of states, I_i(w) = Player i's
+%   information set containing w, K_i E = {w : I_i(w) is inside E},
+%   CK E. Chapter 14 uses alpha, beta, gamma for states; so do we.
+%
+% ANSWERS (all checked numerically)
+%   Quiz example. alpha: quiz, Alex texted, Blair got it. beta: quiz,
+%   Alex texted, text lost. gamma: no quiz, no text. True state alpha.
+%     Alex: {alpha, beta}, {gamma}. Blair: {alpha}, {beta, gamma}.
+%     Q = quiz = {alpha, beta}. K_A Q = {alpha, beta}. K_B Q = {alpha}.
+%     K_A K_B Q = empty (Alex never knows Blair knows).
+%     K_B K_A Q = {alpha} (at alpha Blair knows Alex knows).
+%     Reachable from alpha: alpha -> beta (Alex) -> gamma (Blair).
+%     So Q is not CK anywhere. Only CK event: W itself.
+%     "Alex knows whether there's a quiz" = W, so it IS common knowledge.
+%   Beliefs: Pr(quiz) = 1/2, text arrives 90%.
+%     Prior p = (alpha .45, beta .05, gamma .50).
+%     Alex at {alpha, beta}: (9/10, 1/10).
+%     Blair at {beta, gamma}: Pr(beta) = .05/.55 = 1/11.
+%     Common prior from (9/10 | 1/11): p(alpha) = 9 p(beta),
+%     p(gamma) = 10 p(beta) -> p = (9/20, 1/20, 10/20). Same as above.
+%   Monty Hall (you pick door 1). States (car, door Monty opens):
+%     (1,2) 1/6, (1,3) 1/6, (2,3) 1/3, (3,2) 1/3.
+%     Monty opens 3: your info set {(1,3), (2,3)}, prob 1/2.
+%     Pr(car 1 | opens 3) = 1/3. Pr(car 2 | opens 3) = 2/3. Switch.
+%   Worked example: W = {a,b,c,d}, kickoff at noon in N = {a,b,c}.
+%     Jordan: {a,b}, {c,d}. Casey: {a}, {b,c}, {d}.
+%     Prior (.1, .2, .3, .4).
+%     K_J N = {a,b}. K_C N = {a,b,c}. K_J K_C N = {a,b}: yes at a.
+%     K_C K_J N = {a}.
+%     Reachable from a: a-b (J), b-c (C), c-d (J): all of W. Not CK.
+%     Beliefs: Jordan {a,b}: (1/3, 2/3); {c,d}: (3/7, 4/7).
+%       Casey {b,c}: (2/5, 3/5).
+%     If Casey's belief at {b,c} were (1/2, 1/2): common prior still
+%       exists: p = (3/23, 6/23, 6/23, 8/23).
+% ---------------------------------------------------------------------
+
+% The quiz example. #1 = width of one step, #2 = extra tikz drawn on top
+\newcommand{\quizparts}[2][1.15in]{%
+\begin{tikzpicture}[x=#1, y=0.62in]
+  \foreach \x/\s in {0/\alpha, 1/\beta, 2/\gamma} {\node at (\x, 0.75) {$\s$};}
+  \node[anchor=east, text=player1] at (-0.35, 0) {Alex:};
+  \node[anchor=east, text=player2] at (-0.35, -1) {Blair:};
+  \foreach \x in {0,1,2} {\fill (\x, 0) circle (2pt); \fill (\x, -1) circle (2pt);}
+  \draw[player1, thick, rounded corners=8pt] (-0.22, -0.25) rectangle (1.22, 0.25);
+  \draw[player1, thick, rounded corners=8pt] (1.78, -0.25) rectangle (2.22, 0.25);
+  \draw[player2, thick, rounded corners=8pt] (-0.22, -1.25) rectangle (0.22, -0.75);
+  \draw[player2, thick, rounded corners=8pt] (0.78, -1.25) rectangle (2.22, -0.75);
+  #2
+\end{tikzpicture}}
+
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{Where We're Going}
+So far: everyone knows the game
+\begin{itemize}
+    \item Payoffs, strategies, who moves when
+    \item And everyone knows that everyone knows it, and...
+\end{itemize}
+\bsk
+Coming up (Chapter 14): players \textbf{unsure} about the game itself
+\begin{itemize}
+    \item Is my rival's cost high or low?
+    \item Is the entrant tough or weak?
+    \item Does my rival know what I know?
+\end{itemize}
+\bsk
+We need a picture of \textbf{who knows what}, and \textbf{who believes what}
+\vfill
+{\footnotesize Lite version of Chapters 8--9. Just what we need for Chapters 14--15.}
+\vspace{-0.2in}
+\end{frame}
+
+% ---- MobLab run: Monty Hall --------------------------------------------
+% Decision Making topic. Three doors (MobLab suggests a second play with
+% 20 doors). Play BEFORE Bayes' rule. Results come back in
+% "Back to Monty Hall".
+% ---------------------------------------------------------------------
+\begin{frame}{MobLab: ``Monty Hall''}
+\begin{itemize}
+    \item MobLab time!
+    \item Three doors. A car behind one, goats behind the other two
+    \item You pick a door
+    \item Monty (who knows where the car is) opens a \textbf{different} door with a goat
+    \item Stay or switch?
+\end{itemize}
+\vfill
+\centering
+Feel free to talk! And play it the way you'd actually play it.
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{States}
+\textbf{State} $w$: a complete description of everything relevant
+\begin{itemize}
+    \item $W=$ set of all states
+    \item \textbf{Event} $E\subseteq W$: a set of states (``it rains tomorrow'')
+    \item \textbf{True state}: the one that actually happened
+\end{itemize}
+\bsk
+\textbf{Information set} $I_i(w)$: the states Player $i$ can't tell apart when the truth is $w$
+\begin{itemize}
+    \item The info sets split up $W$: a \textbf{partition}
+    \item Coarse partition: knows little. Fine partition: knows a lot
+\end{itemize}
+\vfill
+{\footnotesize Same word as ``information set'' in game trees. Same idea: ``where could I be?''}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Example: Quiz Tomorrow?}
+Alex was in class. Blair skipped. Alex texts Blair if there's a quiz\\ Texts sometimes get lost
+\bsk
+\begin{columns}[c]
+\begin{column}{0.48\textwidth}
+\begin{itemize}
+    \item $\alpha$: quiz, Blair got the text
+    \item $\beta$: quiz, text got lost
+    \item $\gamma$: no quiz (no text)
+\end{itemize}
+\bsk
+True state: $\alpha$
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\quizparts[0.68in]{}
+\end{column}
+\end{columns}
+\bsk
+\onslide<2->{Alex can't tell $\alpha$ from $\beta$. Why? \underline{\hspace{1.2in}}\\[4pt]
+Blair can't tell $\beta$ from $\gamma$. Why? \underline{\hspace{1.2in}}}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Knowledge}
+\textbf{In words:} $i$ knows $E$ at $w$ if \textbf{every} state $i$ thinks is possible is in $E$
+$$w\in K_iE \iff \underbrace{I_i(w)}_{\text{what $i$ thinks is possible}}\ \subseteq\ \underbrace{E\vphantom{I_i(w)}}_{\text{the event}}$$
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\quizparts[0.68in]{}
+\end{column}
+\begin{column}{0.48\textwidth}
+$Q=$ ``quiz'' $=\{\alpha,\beta\}$
+\bsk
+$K_A Q=$ \underline{\hspace{0.8in}}\\[6pt]
+$K_B Q=$ \underline{\hspace{0.8in}}
+\bsk
+At $\alpha$, who knows about the quiz?
+\end{column}
+\end{columns}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Knowing What Others Know}
+``Blair knows $Q$'' is itself an event: $K_BQ=\{\alpha\}$
+\bsk
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\quizparts[0.68in]{}
+\end{column}
+\begin{column}{0.48\textwidth}
+Does Alex know Blair knows?\\
+$K_A K_B Q=$ \underline{\hspace{0.8in}}
+\bsk
+Does Blair know Alex knows?\\
+$K_B K_A Q=$ \underline{\hspace{0.8in}}
+\end{column}
+\end{columns}
+\bsk
+\onslide<2->{So at $\alpha$: both know there's a quiz. Blair knows Alex knows\\
+But Alex \textbf{doesn't} know Blair knows!}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Common Knowledge}
+$E$ is \textbf{common knowledge} if: everyone knows $E$, everyone knows everyone knows $E$, everyone knows everyone knows everyone knows $E$, ... \textbf{forever}
+\bsk
+Infinitely many things to check?? No:
+\bsk
+\textbf{Reachable:} $w'$ is reachable from $w$ if you can get there in steps, where each step stays inside \textbf{someone's} information set
+\bsk
+\begin{block}{Fact (Bonanno \S8.3)}
+$E$ is common knowledge at $w$ $\iff$ every state reachable from $w$ is in $E$
+\end{block}
+\bsk
+Notation: $CK\,E$ $=$ states where $E$ is common knowledge
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Is the Quiz Common Knowledge?}
+\centering
+\only<1>{\quizparts{}}%
+\only<2>{\quizparts{\draw[->, very thick, red!70] (0.08, 0.32) to[bend left=30] node[above, font=\small] {Alex} (0.92, 0.32);}}%
+\only<3->{\quizparts{\draw[->, very thick, red!70] (0.08, 0.32) to[bend left=30] node[above, font=\small] {Alex} (0.92, 0.32);
+  \draw[->, very thick, red!70] (1.08, -1.32) to[bend right=30] node[below, font=\small] {Blair} (1.92, -1.32);}}
+\bsk
+\raggedright
+Starting at $\alpha$, which states are reachable? \underline{\hspace{1.2in}}
+\bsk
+\onslide<3->{$\gamma\notin Q$ $\Rightarrow$ the quiz is \textbf{not} common knowledge. Anywhere!}
+\bsk
+\onslide<4->{\textbf{Fact:} anything true at \textbf{every} state is common knowledge\\
+\textbf{Ex:} ``Alex knows whether there's a quiz'' \ \textbf{Ex:} the game's rules (Ch.~14!)}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Common Knowledge Is Rare, and Powerful}
+Things that work because they create common knowledge:
+\begin{itemize}
+    \item \textbf{Public announcements:} ``Not all hats are white'' (Bonanno \S8.2)
+    \item \textbf{Bank runs:} everyone sees the line around the block
+    \item \textbf{Super Bowl ads:} you know everyone else saw it too
+    \item \textbf{Read receipts:} ``Delivered'' vs.\ ``Read''
+    \item \textbf{Protests:} I'll go if I know others will go...
+\end{itemize}
+\bsk
+Private messages give knowledge. Public events give \textbf{common} knowledge
+\vfill
+{\footnotesize Not in the book. Chwe, \textit{Rational Ritual} (2001).}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Adding Beliefs}
+Each player puts \textbf{probabilities} on the states in each of their info sets
+\bsk
+\centering
+\quizparts{\foreach \x/\y/\b in {0/0/{\tfrac{9}{10}}, 1/0/{\tfrac{1}{10}}, 2/0/1, 0/-1/1, 1/-1/?, 2/-1/?}
+  {\node[anchor=east, font=\footnotesize, inner sep=1pt] at (\x-0.05, \y) {$\b$};}}
+\bsk
+\raggedright
+\begin{columns}[T]
+\begin{column}{0.45\textwidth}
+Alex: texts arrive 90\% of the time
+\end{column}
+\begin{column}{0.53\textwidth}
+Blair, with no text: Pr(quiz)?
+\begin{itemize}
+    \item Need to know: Pr(quiz) at all
+    \item Say Pr(quiz) $=\tfrac12$
+\end{itemize}
+\end{column}
+\end{columns}
+\vfill
+{\footnotesize Interactive knowledge-belief structure (Bonanno Def.~9.5.1): partitions plus beliefs.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Bayes' Rule}
+\textbf{In words:} chance of $A$ once you learn $B$ $=$ share of $B$'s probability where $A$ is true
+$$P(A\mid B)=\frac{\overbrace{P(A\cap B)}^{\text{$A$ and $B$}}}{\underbrace{P(B)}_{\text{all of $B$}}}$$
+\bsk
+Prior: $P(\alpha)=$ \underline{\hspace{0.4in}} \quad $P(\beta)=$ \underline{\hspace{0.4in}} \quad $P(\gamma)=$ \underline{\hspace{0.4in}}
+\bsk
+Blair gets no text, so learns $\{\beta,\gamma\}$:
+$$P(\text{quiz}\mid\text{no text})=P(\beta\mid\{\beta,\gamma\})=\underline{\hspace{1.4in}}$$
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Back to Monty Hall}
+You pick door 1. A state: (where the car is, which door Monty opens)
+\bsk
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|}
+\hline
+State & Prior prob. & Monty opens \\
+\hline
+(Car 1, opens 2) & \hspace{0.6in} & 2 \\
+(Car 1, opens 3) & & 3 \\
+(Car 2, opens 3) & & 3 \\
+(Car 3, opens 2) & & 2 \\
+\hline
+\end{tabular}
+\bsk
+\raggedright
+Monty opens 3. Your info set: \underline{\hspace{1.5in}}\\[4pt]
+$P(\text{car 1}\mid\text{opens 3})=$ \underline{\hspace{0.8in}} \quad Switch? \underline{\hspace{0.5in}}
+\bsk
+MobLab: \underline{\hspace{0.5in}}\% switched
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Common Prior}
+\textbf{Common prior}: one probability $p$ on $W$ that gives \textbf{everyone's} beliefs by Bayes' rule
+\bsk
+\textbf{Ex:} Alex at $\{\alpha,\beta\}$: $(\tfrac{9}{10},\tfrac{1}{10})$. \ Blair at $\{\beta,\gamma\}$: $(\tfrac{1}{11},\tfrac{10}{11})$. Find $p$:
+\vspace{0.75in}
+
+\onslide<2->{\textbf{Why we care:} in Chapter 14, the common prior tells ``Nature'' how often to pick each state}
+\bsk
+\onslide<3->{\textbf{Fact:} a common prior doesn't always exist}
+\vfill
+{\footnotesize Bonanno Def.~9.5.2. Existence of a common prior is also called \textbf{Harsanyi consistency}.}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% WORKED EXAMPLE
+% ==============================================================
+% Answers are in the header comment.
+% ---------------------------------------------------------------------
+
+\begin{frame}[standout]
+Let's Work One Out
+\end{frame}
+
+\begin{frame}{Kickoff Time}
+\begin{columns}[c]
+\begin{column}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[x=0.65in, y=0.55in]
+  \foreach \x/\s/\p in {0/a/.1, 1/b/.2, 2/c/.3, 3/d/.4} {\node at (\x, 0.75) {$\s$}; \node[font=\scriptsize, text=gray] at (\x, -1.75) {\p};}
+  \node[anchor=east, text=player1] at (-0.35, 0) {Jordan:};
+  \node[anchor=east, text=player2] at (-0.35, -1) {Casey:};
+  \foreach \x in {0,1,2,3} {\fill (\x, 0) circle (2pt); \fill (\x, -1) circle (2pt);}
+  \draw[player1, thick, rounded corners=7pt] (-0.25, -0.25) rectangle (1.25, 0.25);
+  \draw[player1, thick, rounded corners=7pt] (1.75, -0.25) rectangle (3.25, 0.25);
+  \draw[player2, thick, rounded corners=7pt] (-0.25, -1.25) rectangle (0.25, -0.75);
+  \draw[player2, thick, rounded corners=7pt] (0.75, -1.25) rectangle (2.25, -0.75);
+  \draw[player2, thick, rounded corners=7pt] (2.75, -1.25) rectangle (3.25, -0.75);
+  \node[font=\scriptsize, text=gray, anchor=east] at (-0.35, -1.75) {prior:};
+\end{tikzpicture}
+\bsk
+\raggedright
+{\footnotesize Kickoff is at noon in $N=\{a,b,c\}$. True state $a$}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{enumerate}
+    \item Find $K_J N$ and $K_C N$ \vspace{0.2in}
+    \item At $a$, does Jordan know that Casey knows $N$? \vspace{0.2in}
+    \item Is $N$ common knowledge at $a$? \vspace{0.2in}
+    \item Use the prior to find each player's beliefs \vspace{0.25in}
+    \item If Casey's beliefs at $\{b,c\}$ were $(\tfrac12,\tfrac12)$, is there still a common prior? \vspace{0.1in}
+\end{enumerate}
+\end{column}
+\end{columns}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What Have We Learned, Charlie Brown?}
+\begin{itemize}
+    \item \textbf{States} and \textbf{information partitions}: who can tell what apart
+    \item $i$ knows $E$ at $w$ $\iff$ $I_i(w)\subseteq E$
+    \item \textbf{Common knowledge}: every reachable state is in $E$
+    \begin{itemize}
+        \item True at every state $\Rightarrow$ common knowledge
+    \end{itemize}
+    \item \textbf{Beliefs}: probabilities on each information set
+    \item \textbf{Bayes' rule}: $P(A\mid B)=P(A\cap B)/P(B)$
+    \item \textbf{Common prior}: one $p$ that generates everyone's beliefs
+\end{itemize}
+\vfill
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Reading \& Practice}
+\begin{itemize}
+    \item Bonanno, Chapter 8
+    \begin{itemize}
+        \item \S8.1--8.3: read. Skip \S8.4--8.5 (belief relations)
+    \end{itemize}
+    \item Bonanno, Chapter 9
+    \begin{itemize}
+        \item \S9.1--9.3 and \S9.4.1: read (probability, Bayes' rule)
+        \item \S9.5: read (common prior). Skip \S9.4.2 and \S9.6--9.7
+    \end{itemize}
+    \item Exercises: \S8.6.1--8.6.3, \S9.8.3
+    \item Solutions in \S8.7 and \S9.9. Try them first
+\end{itemize}
+\vfill
+\end{frame}
+
+\end{document}
