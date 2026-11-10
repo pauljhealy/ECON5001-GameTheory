@@ -69,7 +69,7 @@
 
 % Deck 03's food-truck price war
 \newcommand{\truckpd}[1][]{%
-\begin{matrixgame}[top={Normal, Discount}, left={Normal, Discount}, player names={Dos Hermanos, Pitabilities}, #1]
+\begin{matrixgame}[top={Normal, Discount}, left={Normal, Discount}, #1]
   \payoffmatrix{2,2 & 0,3 \\ 3,0 & 1,1}
 \end{matrixgame}}
 
@@ -78,17 +78,18 @@
 \frame{\maketitle}
 
 \begin{frame}{Where We Left Off}
-Deck 03: Dos Hermanos vs.\ Pitabilities
+Prisoners' Dilemma:
 \bsk
 \centering
-\truckpd
+\begin{matrixgame}[top={Cooperate, Defect}, left={Cooperate, Defect}]
+  \payoffmatrix{2,2 & 0,3 \\ 3,0 & 1,1}
+\end{matrixgame}
 \bsk
 \raggedright
-Discount is strictly dominant. \ NE: (Discount, Discount)
 \bsk
-But these trucks park on the same block \textbf{every day}
 \begin{itemize}
-    \item Can tomorrow change what happens today?
+    \item Play once: D is strictly dominant
+    \item Play repeatedly: Can we enforce Cooperation?
 \end{itemize}
 \vspace{-0.3in}
 \end{frame}
@@ -111,11 +112,11 @@ But these trucks park on the same block \textbf{every day}
 \begin{frame}{MobLab: ``Prisoner's Dilemma (Matrix)''}
 \begin{itemize}
     \item MobLab time!
-    \item Same partner for a whole game. Payoffs on your screen
-    \item \textbf{Game 1:} exactly 4 rounds
-    \item \textbf{Game 2:} new partner. After each round, 25\% chance the game ends
+    \item Twice-repeated PD game
+    \item Play the PD game twice with the same partner
+    \item Repeat with a new partner
     \begin{itemize}
-        \item Nobody knows which round is the last one
+        \item They can't see how you played previously
     \end{itemize}
 \end{itemize}
 \vfill
@@ -129,7 +130,7 @@ Feel free to talk! And play it the way you'd actually play it.
 % ==============================================================
 
 \begin{frame}[standout]
-Play a Game Twice
+Playing Twice Can Introduce New Nash Equilibria
 \end{frame}
 
 \begin{frame}{Example}
@@ -142,7 +143,7 @@ Play a Game Twice
 \begin{column}{0.48\textwidth}
 Pure NE: \underline{\hspace{1.2in}}
 \bsk
-Best for both: \underline{\hspace{0.8in}}
+``Best'' Outcome: \underline{\hspace{0.8in}}
 \bsk
 \onslide<3->{Is $(M,C)$ a NE? \underline{\hspace{0.6in}}}
 \end{column}
@@ -166,7 +167,7 @@ Best for both: \underline{\hspace{0.8in}}
 \stagegame
 \end{column}
 \begin{column}{0.48\textwidth}
-\textbf{Period 1:} P1 plays $M$, P2 plays $C$
+\textbf{Period 1:} Play $(M,C)$
 \bsk
 \textbf{Period 2:}
 \begin{itemize}
@@ -184,27 +185,24 @@ Check P1 in period 1:
     \item Deviate ($T$): \ \underline{\hspace{0.3in}} $+$ \underline{\hspace{0.3in}} $=$ \underline{\hspace{0.3in}}
 \end{itemize}
 \bsk
-\onslide<2->{Period 2? \ Every period-2 subgame plays a \underline{\hspace{1.2in}}}
+\onslide<2->{Period 2? \ Playing a NE either way, no incentive to deviate}
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Every Period-2 Subgame}
-After period 1, there are \underline{\hspace{0.3in}} possible histories. Each starts a subgame
+After period 1, there are \underline{\hspace{0.3in}} possible \textbf{histories}.
 \bsk
-\centering
-\renewcommand{\arraystretch}{1.6}
-\begin{tabular}{c|ccc}
-Period 1 outcome & $L$ & $C$ & $R$ \\
-\hline
-$T$ & & & \\
-$M$ & & & \\
-$B$ & & & \\
-\end{tabular}
+\textbf{History:} What's happened so far in the game ($(T,L)$, $(T,C)$, $(M,B)$, etc.)
 \bsk
-\raggedright
-Fill in: what's played in period 2 after each one?
+Period 2: Strategies can respond to the history
 \bsk
-\onslide<2->{\textbf{Lesson:} Multiple stage NE $\Rightarrow$ can \textbf{punish} \& \textbf{reward}}
+After history $(M,C)$: play $(B,R)$\\
+After any other history: play $(T,L)$
+\bsk
+SPNE: Solve via backward induction.
+\bsk
+\onslide<2->{\textbf{Lesson:} Period 2 can be used to \textbf{punish} \& \textbf{reward} period 1 behavior\\}
+\onslide<3->{\textbf{BUT}... what happens in Period 2 better be a NE. Otherwise, not credible}
 \vspace{-0.3in}
 \end{frame}
 
@@ -257,10 +255,12 @@ $$h_t=(a^1,a^2,\dots,a^{t-1})$$
     \item $H_t=$ set of all possible histories at the start of period $t$
 \end{itemize}
 \bsk
-\textbf{Ex:} In our $3\times 3$ game:
+\textbf{Ex:} Suppose the $3\times 3$ game is played 4 times:
 \begin{itemize}
-    \item $h_2=(M,C)$ is one history
-    \item $|H_2|=$ \underline{\hspace{0.4in}} \qquad $|H_3|=$ \underline{\hspace{0.4in}}
+    \item $h_2=(M,C)$ is one history at start of period 2
+    \item $h_3=((M,C),(T,L))$ is a possible history at start of period 3
+    \item $h_4=((M,C),(T,L),(M,C))$ is a possible period-4 history
+    \item $|H_2|=$ \underline{\hspace{0.4in}} \qquad $|H_3|=$ \underline{\hspace{0.8in}} \qquad $|H_4|=$ \underline{\hspace{1in}}
 \end{itemize}
 \bsk
 \onslide<2->{Each history starts a \textbf{subgame} (it's a singleton node in the tree)}
@@ -272,15 +272,19 @@ $$h_t=(a^1,a^2,\dots,a^{t-1})$$
 A \textbf{pure strategy} for Player $i$ is a function $s_i$ that maps every history to an action: \ $s_i(h_t)\in A_i$ for every $h_t$ in every $H_t$
 \end{block}
 \bsk
-Back to our 2-period game. Our threat strategy for P1:
+Back to our 2-period $3\times 3$ game. Our threat strategy for P1:
 \begin{align*}
 s_1(\emptyset)&=\underline{\hspace{0.5in}}\\
-s_1\big((M,C)\big)&=\underline{\hspace{0.5in}}\\
-s_1(h_2)&=\underline{\hspace{0.5in}} \quad \text{for every other } h_2
+s_1\big((M,C)\big)&=\underline{\hspace{0.5in}} \quad \text{when } h_2=(M,C)\\
+s_1(h_2)&=\underline{\hspace{0.5in}} \quad \text{for every other } h_2\neq (M,C)
 \end{align*}
 \bsk
-\onslide<2->{How many choices to specify? \ $1+\underline{\hspace{0.3in}}=\underline{\hspace{0.3in}}$ \\
-\# of pure strategies: \ \underline{\hspace{0.8in}}}
+\onslide<2->{P1 moves after how many different histories? \ $1+\underline{\hspace{0.3in}}=\underline{\hspace{0.3in}}$ \\
+\# of pure strategies: \ }
+\onslide<3->{$3^{10}=59,049$
+\bsk
+}
+\onslide<4->{Imagine chess...}
 \vspace{-0.3in}
 \end{frame}
 
@@ -298,7 +302,8 @@ s_1(h_2)&=\underline{\hspace{0.5in}} \quad \text{for every other } h_2
 \bsk
 \textbf{Ex:} our threat strategies are a SPNE of $G^2$
 \begin{itemize}
-    \item But period-1 play $(M,C)$ is \textbf{not} a stage-game NE!
+    \item Period-1 play of $(M,C)$ is part of a SPNE
+    \item Even though $(M,C)$ is \textbf{not} a stage-game NE!
 \end{itemize}
 \vfill
 \vspace{-0.3in}
@@ -313,7 +318,7 @@ Let $a^*$ be a NE of the stage game $G$. Then ``play $a^*$ in every period, no m
 Why?
 \begin{itemize}
     \item Future play doesn't depend on what I do today
-    \item So today, only today's payoff matters
+    \item Only today's payoff matters
     \item $a^*$ is a stage NE $\Rightarrow$ no profitable deviation today
 \end{itemize}
 \bsk
@@ -327,7 +332,7 @@ Why?
 % ==============================================================
 
 \begin{frame}[standout]
-The Trucks, Twice
+Twice-Repeated Prisoners' Dilemma
 \end{frame}
 
 \begin{frame}{Two-Period Price War}
@@ -337,9 +342,11 @@ The Trucks, Twice
 \truckpd
 \end{column}
 \begin{column}{0.5\textwidth}
-Try the same trick:
+Normal Price = Cooperate\\
+Discounted Price = Defect\\[6pt]
+Try a punishment strategy:
 \begin{itemize}
-    \item Period 1: Normal
+    \item Period 1: (Normal,Normal)
     \item Period 2: reward if both played Normal, punish otherwise
 \end{itemize}
 \bsk
@@ -350,24 +357,24 @@ Try the same trick:
 \onslide<3->{\textbf{Period 2:} every subgame is a one-shot PD $\Rightarrow$ \underline{\hspace{1.3in}}\\[4pt]
 \textbf{Period 1:} period 2 is the same no matter what $\Rightarrow$ \underline{\hspace{1.3in}}}
 \bsk
-\onslide<4->{\textbf{Problem:} only \textbf{one} stage NE. Nothing to punish with}
+\onslide<4->{\textbf{Problem:} only \textbf{one} stage-game NE: $(D,D)$. No credible punishment/reward.}
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Any Finite Number of Periods}
 \begin{itemize}
     \item Period $T$: last period. Play \underline{\hspace{0.9in}}
-    \item Period $T-1$: period $T$ is locked in. Play \underline{\hspace{0.9in}}
+    \item Period $T-1$: can't affect period $T$ play. Play \underline{\hspace{0.9in}}
     \item Period $T-2$: ...
     \item ...
     \item Period 1: \underline{\hspace{0.9in}}
 \end{itemize}
 \bsk
 \onslide<2->{\begin{block}{Theorem}
-If $G$ has a unique NE and $T$ is finite, the only SPNE of $G^T$: play that NE every period.
+If $G$ has a unique NE and $T$ is finite, the only SPNE of $G^T$ is to play that NE every period.
 \end{block}}
 \bsk
-\onslide<3->{Cooperation \textbf{unravels} from the end. Same as the centipede game!}
+\onslide<3->{The game \textbf{unravels} from the end.}
 \vspace{-0.3in}
 \end{frame}
 
@@ -384,8 +391,6 @@ If $G$ has a unique NE and $T$ is finite, the only SPNE of $G^T$: play that NE e
     \item A little doubt about the other's \textbf{type}...
     \item We'll see this in Chapter 15!
 \end{itemize}
-\bsk
-Our MobLab Game 1: \underline{\hspace{2in}}
 \vfill
 {\footnotesize Source: Caplan, \textit{A Practicum in Behavioral Economics}, \S3, p.~176.\\ Selten \& Stoecker (1986, \textit{JEBO}); Andreoni \& Miller (1993, \textit{EJ}).}
 \vspace{-0.2in}
@@ -396,23 +401,24 @@ Our MobLab Game 1: \underline{\hspace{2in}}
 % ==============================================================
 
 \begin{frame}[standout]
-Play Forever
+Infinitely Repeated Games
 \end{frame}
 
 \begin{frame}{No Last Period}
-Unraveling needs a \textbf{known last period}
-\bsk
-What if there isn't one?
-\begin{itemize}
+What if the game doesn't have a known end date?
+\begin{enumerate}
     \item $T=\infty$, or
-    \item The game ends at a random time (MobLab Game 2)
-\end{itemize}
+    \item The game ends at a random time (more realistic)
+\end{enumerate}
 \bsk
-\onslide<2->{\textbf{Problem:} payoffs add up to infinity
+\textbf{Problem 1:} Can't apply backward induction/SPNE
+\bsk
+\onslide<2->{\textbf{Problem 2:} payoffs add up to infinity
 \begin{itemize}
-    \item Always Normal: \ $2+2+2+\cdots=\infty$
-    \item Discount once, then both Discount: \ $3+1+1+\cdots=\infty$
+    \item Always Cooperate: \ $2+2+2+\cdots=\infty$
+    \item Defect once, then get Defected on forever: \ $3+1+1+\cdots=\infty$
 \end{itemize}
+Which would you prefer?\\
 Can't compare $\infty$ to $\infty$!}
 \bsk
 \onslide<3->{\textbf{Fix:} future payoffs count \textbf{less} than today's}
@@ -422,34 +428,36 @@ Can't compare $\infty$ to $\infty$!}
 \begin{frame}{Discounting: Money Now vs.\ Later}
 Interest rate $r=10\%$:
 \begin{itemize}
-    \item \$90.91 today grows to $\$90.91\times 1.10=\$100$ next year
+    \item At 10\% interest, \$90.91 today grows to $\$90.91\times 1.10=\$100$ next year
     \item So \$100 next year is worth \underline{\hspace{0.6in}} today
-    \item And \$100 in two years? \ \underline{\hspace{0.6in}}
+    \item \$82.64 today grows to $\$82.64\times 1.10=\$90.91$ next year, then to \$100 in 2 years
+    \item So \$100 in two years is worth \underline{\hspace{0.6in}} today
 \end{itemize}
 \bsk
-\textbf{Discount factor:} what \$1 next period is worth today
-$$\delta=\frac{1}{1+r}=\frac{1}{1.10}=0.9091$$
-\bsk
-\onslide<2->{\textbf{Also:} if the game continues with probability $p$, then $\delta=p$\\
-\begin{itemize}
-    \item MobLab Game 2: $\delta=$ \underline{\hspace{0.5in}}
-\end{itemize}}
-\vfill
-{\footnotesize With both: $\delta=p/(1+r)$.}
-\vspace{-0.2in}
+General: What amount today will grow to \$100 in $t$ periods?
+\begin{align*}
+    x\,(1+r)^t &= 100\\
+    x &= \big(\frac{1}{1+r}\big)^t 100 \\
+    x &= \delta^t 100
+\end{align*}
+\textbf{Discount factor} $\bm{\delta}$: how much we discount future payoffs per period: $\delta = 1/(1+r)$\\
+\onslide<2->{Skip the $r$ and just work with $\delta$.\\}
+\onslide<3->{\textbf{Patient:} don't discount much. $\delta$ near 1\\}
+\onslide<4->{\textbf{Impatient:} discount a lot. $\delta$ near 0}
 \end{frame}
 
 \begin{frame}{Utility of a Stream of Payoffs}
-Payoff $u_i^1$ today, $u_i^2$ next period, $u_i^3$ after that, ...
+``Stream'' of payoffs: $u_i^1$ today, $u_i^2$ next period, $u_i^3$ after that, \textit{etc.}
 \bsk
-\textbf{Exponential discounting:} add them up, discounting each period by another $\delta$
+\textbf{``Exponential'' discounting:} add them up, discounting each period by another $\delta$.\\
+Total value of the stream of payoffs:
 $$U_i=u_i^1+\delta u_i^2+\delta^2 u_i^3+\cdots=\sum_{t=1}^{\infty}\delta^{t-1}u_i^t$$
 \bsk
 \onslide<2->{\textbf{Fact:} if $0\le\delta<1$, this is \textbf{finite}}
 \bsk
-\onslide<3->{\textbf{Ex:} $x$ every period forever:
-$$S=x+\delta x+\delta^2x+\cdots \qquad \delta S=\underline{\hspace{1.2in}}$$
-$$S-\delta S=\underline{\hspace{0.3in}} \quad\Rightarrow\quad S=\underline{\hspace{0.6in}}$$}
+\onslide<3->{\textbf{Important Example:} Suppose the stream pays $x$ every period forever:
+$$U_i=x+\delta x+\delta^2x+\delta^3x+\cdots \qquad \delta U_i=\underline{\hspace{1.2in}}$$
+$$U_i-\delta U_i=(1-\delta)U_i=\underline{\hspace{0.3in}} \quad\Rightarrow\quad U_i=\underline{\hspace{0.6in}}$$}
 \vspace{-0.3in}
 \end{frame}
 
@@ -468,11 +476,11 @@ One SPNE we already know:
 \end{column}
 \end{columns}
 \bsk
-\onslide<2->{\textbf{Grim Trigger:}
+\onslide<2->{Powerful strategy: \textbf{Grim Trigger:}
 \begin{itemize}
-    \item Period 1: play Normal
+    \item Period 1: play Normal (``cooperate'')
     \item Keep playing Normal as long as \textbf{everyone} always has
-    \item Once anyone plays Discount: Discount \textbf{forever}
+    \item Once anyone plays Discount: you play Discount \textbf{forever}
 \end{itemize}}
 \bsk
 \onslide<3->{As a function of histories: \ $s_i(h_t)=$ Normal if $h_t$ is all (N,N), otherwise $s_i(h_t)=$ Discount}
@@ -491,50 +499,57 @@ Two kinds of subgames:
 \textbf{2. Everyone always played Normal}
 \begin{itemize}
     \item Conform: \ $2+2\delta+2\delta^2+\cdots=$ \underline{\hspace{0.8in}}
-    \item Deviate (Discount today):
+    \item Deviate (Discount today, triggering the Grim Trigger response tomorrow):
     \begin{itemize}
         \item Today: \underline{\hspace{0.3in}}
-        \item Then punished forever: \ $\delta+\delta^2+\cdots=$ \underline{\hspace{0.8in}}
+        \item Then punished forever starting tomorrow: \ $\delta1+\delta^21+\delta^31+\cdots$
+        \item Total payoff from this plan:\\
+        $3+\delta1+\delta^21+\delta^31+\cdots$\\
+        $2+\big(1+\delta1+\delta^21+\delta^31+\cdots\big)$\\
+        $2+\frac{1}{1-\delta}1$
     \end{itemize}
 \end{itemize}
-\vfill
-{\footnotesize Enough to check deviating once: after you deviate, Discount forever is your best reply anyway.}
 \vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{The Threshold}
 \textbf{In words:} cooperating forever must beat grabbing 3 today and getting punished forever
 \bsk
-$$\underbrace{\frac{2}{1-\delta}}_{\text{cooperate forever}}\ \ \ge\ \ \underbrace{3\vphantom{\frac{2}{1-\delta}}}_{\text{grab today}}\ +\ \underbrace{\frac{\delta}{1-\delta}}_{\text{punished forever}}$$
+$$\underbrace{2\frac{1}{1-\delta}}_{\text{cooperate forever}}\ \ \ge\ \ \underbrace{2+\frac{1}{1-\delta}1}_{\text{grab today, punished forever}}$$
 \bsk
-Solve for $\delta$: \vspace{0.6in}
-
-\onslide<2->{\textbf{Result:} Grim Trigger is a SPNE $\iff \delta\ge$ \underline{\hspace{0.4in}}}
-\bsk
-\onslide<3->{In interest rates: \ $r\le$ \underline{\hspace{0.5in}} \qquad Patient enough $\Rightarrow$ cooperation!}
-\vspace{-0.3in}
+Solve for $\delta$:
+\onslide<2->{
+\begin{align*}
+    2 &\geq 2(1-\delta) + 1\\
+    1 &\geq 2(1-\delta)\\
+    1 &\geq 2-2\delta\\
+    2\delta &\geq 1\\
+    \delta &\geq 1/2
+\end{align*}
+}
+\onslide<3->{\textbf{Result:} Grim Trigger is a SPNE $\iff \delta\ge$ \underline{\hspace{0.4in}}. In other words, if they're \uline{patient enough}}
 \end{frame}
 
-\begin{frame}{Back to MobLab}
-\vspace{0.1in}
-\centering
-\renewcommand{\arraystretch}{2}
-\begin{tabular}{l|c|c|c|c|c|}
-\cline{2-6}
- & Round 1 & Round 2 & Round 3 & Round 4 & Round 5+ \\
-\hline
-\multicolumn{1}{|l|}{Game 1: \% cooperate} & \hspace{0.45in} & \hspace{0.45in} & \hspace{0.45in} & \hspace{0.45in} & --- \\
-\hline
-\multicolumn{1}{|l|}{Game 2: \% cooperate} & & & & & \\
-\hline
-\end{tabular}
-\bsk
-\raggedright
-Game 2: $\delta=$ \underline{\hspace{0.5in}}. MobLab's payoffs: Grim Trigger works iff $\delta\ge\tfrac12$
-\vfill
-{\footnotesize Lab result: cooperation rises with $\delta$. Dal B\'o (2005, \textit{AER}); Dal B\'o \& Fr\'echette (2011, \textit{AER}).}
-\vspace{-0.2in}
-\end{frame}
+% \begin{frame}{Back to MobLab}
+% \vspace{0.1in}
+% \centering
+% \renewcommand{\arraystretch}{2}
+% \begin{tabular}{l|c|c|c|c|c|}
+% \cline{2-6}
+%  & Round 1 & Round 2 & Round 3 & Round 4 & Round 5+ \\
+% \hline
+% \multicolumn{1}{|l|}{Game 1: \% cooperate} & \hspace{0.45in} & \hspace{0.45in} & \hspace{0.45in} & \hspace{0.45in} & --- \\
+% \hline
+% \multicolumn{1}{|l|}{Game 2: \% cooperate} & & & & & \\
+% \hline
+% \end{tabular}
+% \bsk
+% \raggedright
+% Game 2: $\delta=$ \underline{\hspace{0.5in}}. MobLab's payoffs: Grim Trigger works iff $\delta\ge\tfrac12$
+% \vfill
+% {\footnotesize Lab result: cooperation rises with $\delta$. Dal B\'o (2005, \textit{AER}); Dal B\'o \& Fr\'echette (2011, \textit{AER}).}
+% \vspace{-0.2in}
+% \end{frame}
 
 \begin{frame}{Other Strategies}
 \begin{itemize}
@@ -545,7 +560,7 @@ Game 2: $\delta=$ \underline{\hspace{0.5in}}. MobLab's payoffs: Grim Trigger wor
     \end{itemize}
     \item \textbf{Always Normal}, no matter what
     \begin{itemize}
-        \item Is (Always Normal, Always Normal) a SPNE? \underline{\hspace{0.8in}}
+        \item Is playing ``Normal at every history'' a SPNE? \underline{\hspace{0.8in}}
     \end{itemize}
     \item \textbf{Always Discount}: always a SPNE
 \end{itemize}
@@ -564,25 +579,29 @@ Repeated PDs, with cooperate / defect in each:
     \item \textbf{Trade:} countries: keep tariffs low / raise tariffs
     \item \textbf{Roommates:} do your chores / let them pile up
     \item \textbf{Online sellers:} ship what you promised / ship junk
-    \item \textbf{WWI trenches:} shoot to miss / shoot to kill
+    \item \textbf{WWI trenches:} live and let live / non-stop combat
 \end{itemize}
 \bsk
 In each: the \textbf{future} keeps people honest today
 \vfill
-{\footnotesize Trenches: ``live and let live,'' Axelrod (1984), Ch.~4.}
+{\footnotesize Trenches: ``live and let live,'' Axelrod (1984). Many historians disagree.}
 \vspace{-0.2in}
 \end{frame}
 
 \begin{frame}{But Those Are More Complicated}
 Real versions add:
 \begin{itemize}
-    \item \textbf{Imperfect monitoring:} secret discounts. Was that a cut or bad luck?
-    \item \textbf{Many players:} who do you punish?
-    \item \textbf{Entry:} new players who weren't part of the deal
-    \item \textbf{Renegotiation:} after a cut, both want to ``let bygones be bygones''
+    \item \textbf{Imperfect monitoring:} you can't directly see what your opponent did
+    \begin{itemize}
+        \item e.g., you don't see their price cut, but you see a drop in your demand
+    \end{itemize}
+    \item \textbf{Many players:} whom do you punish?
+    \item \textbf{Entry:} new players who weren't part of the original agreement
+    \item \textbf{Renegotiation:} after a price war, both want to ``let bygones be bygones''
 \end{itemize}
 \bsk
-Core tension survives: today's gain vs.\ tomorrow's punishment
+Core tension survives: today's gain vs.\ tomorrow's punishment.\\
+And, is tomorrow's punishment even credible?
 \vspace{-0.3in}
 \end{frame}
 
