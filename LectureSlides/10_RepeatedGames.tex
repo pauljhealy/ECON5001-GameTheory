@@ -1,0 +1,736 @@
+\input{LectureSlides/includes/metropolis_preamble}
+
+% Title page info
+\title[Repeated Games]{Repeated Games}
+\author[ECON 5001]{ECON 5001\\Prof. Paul J. Healy\\Not in Bonanno} \color{metrop}
+\institute[OSU]{}
+\date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
+
+% ---------------------------------------------------------------------
+% SCOPE AND NOTATION
+%   Not in Bonanno. Complete information, perfect monitoring, pure
+%   strategies only. Uses only SPNE / backward induction (Ch 3-4, 7).
+%   a^t = action profile in period t. h_t = (a^1,...,a^{t-1}), h_1 = empty.
+%   s_i(h_t) = Player i's action after history h_t.
+%   Two-period game: payoffs are summed (no discounting).
+%   Infinite game: U_i = sum_t delta^{t-1} u_i(a^t). Folk theorem stated
+%   in per-period average terms, (1-delta) U_i.
+%
+% ANSWERS (all checked numerically)
+%   Stage game G (two-period example): rows T,M,B; cols L,C,R
+%       L    C    R
+%   T  1,1  5,0  0,0
+%   M  0,5  4,4  0,0
+%   B  0,0  0,0  3,3
+%     Pure stage NE: (T,L) = (1,1) and (B,R) = (3,3). (M,C) is not a NE
+%     (T beats M vs C: 5 > 4).
+%     Punishment strategy: period 1 play M (P1) / C (P2). Period 2:
+%     (B,R) if period 1 was (M,C), else (T,L).
+%       Conform: 4 + 3 = 7. Best deviation (T): 5 + 1 = 6. So SPNE.
+%     Period-2 histories: 9. A strategy = 1 + 9 = 10 choices.
+%     Pure strategies per player: 3^10 = 59,049.
+%   Food-truck PD (deck 03): Normal/Discount, (2,2) (0,3) (3,0) (1,1)
+%     Two periods: period 2 is (D,D) after every history, so period 1
+%     is (D,D) too. Any finite T: Discount always (unique SPNE).
+%     Grim trigger: 2/(1-d) >= 3 + d/(1-d)  <=>  d >= 1/2.
+%     At d = .9: conform 20, deviate 3 + 9 = 12.
+%     r = 10%: $90.91 today = $100 next year; d = 1/1.1 = .909.
+%     $100 in two years is worth $82.64 today.
+%     Always Cooperate vs Always Cooperate is NOT an SPNE (defect forever
+%     against an unconditional cooperator: 3/(1-d) > 2/(1-d)).
+%     Minmax = 1 for each truck.
+%   MobLab: PD (Matrix). Game 1 = exactly 4 rounds. Game 2 = Minimum
+%     Rounds 1, Ending Probability 25% (continue .75, expected length 4).
+%     MobLab says its default payoffs support grim trigger iff ending
+%     probability <= 50%, i.e. d >= 1/2, same threshold as the trucks.
+%   Worked example (Shell vs Speedway, prices High/Low):
+%            H      L
+%     H   6,4    1,6
+%     L   8,1    3,2
+%     Both have L dominant; stage NE (L,L) = (3,2).
+%     Minmax: Shell 3, Speedway 2 (pure; mixing doesn't lower them).
+%     Grim: Shell 6 >= 8(1-d) + 3d -> d >= 2/5. Speedway 4 >= 6(1-d)+2d
+%       -> d >= 1/2. Grim is an SPNE iff d >= 1/2 (Speedway binds).
+%       d = 1/2 <-> r = 100%.
+%     Cut noticed one period late: Shell 6 >= 8(1-d^2) + 3d^2 ->
+%       d^2 >= 2/5, d >= .632. Speedway 4 >= 6(1-d^2) + 2d^2 ->
+%       d^2 >= 1/2, d >= .707.
+%     (4,3): feasible (at y=3 the feasible x-range is [2.5, 6.67]) and
+%       above minmax (3,2), so folk theorem: yes for d near 1.
+%     (2,5): feasible (x-range at y=5 is [1.5, 3.5]) but Shell 2 < 3: no.
+%   Practice: (N,N) = (2.5,2.5): 2.5 >= 3(1-d) + d  ->  d >= 1/4.
+% ---------------------------------------------------------------------
+
+% The two-period stage game, drawn several times
+\newcommand{\stagegame}[1][]{%
+\begin{matrixgame}[top={L, C, R}, left={T, M, B}, player names={Player 1, Player 2}, #1]
+  \payoffmatrix{1,1 & 5,0 & 0,0 \\ 0,5 & 4,4 & 0,0 \\ 0,0 & 0,0 & 3,3}
+\end{matrixgame}}
+
+% Deck 03's food-truck price war
+\newcommand{\truckpd}[1][]{%
+\begin{matrixgame}[top={Normal, Discount}, left={Normal, Discount}, player names={Dos Hermanos, Pitabilities}, #1]
+  \payoffmatrix{2,2 & 0,3 \\ 3,0 & 1,1}
+\end{matrixgame}}
+
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{Where We Left Off}
+Deck 03: Dos Hermanos vs.\ Pitabilities
+\bsk
+\centering
+\truckpd
+\bsk
+\raggedright
+Discount is strictly dominant. \ NE: (Discount, Discount)
+\bsk
+But these trucks park on the same block \textbf{every day}
+\begin{itemize}
+    \item Can tomorrow change what happens today?
+\end{itemize}
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% MOBLAB --- PLAY FIRST
+% ==============================================================
+
+% ---- MobLab run: Prisoner's Dilemma (Matrix) ------------------------
+% Two games in one playlist, same partner within a game, new partner
+% between games:
+%   Game 1: exactly 4 rounds (students are told it's 4).
+%   Game 2: Minimum Rounds = 1, Ending Probability = 25%
+%           (75% chance of another round; expected length 4).
+% MobLab's guide: with default payoffs, grim trigger supports
+% cooperation iff the ending probability is <= 50%. If the config lets
+% you enter payoffs, 8,8 / 0,12 / 12,0 / 4,4 (the trucks x 4) keeps
+% the deck's numbers. Results come back in "Back to MobLab".
+% ---------------------------------------------------------------------
+\begin{frame}{MobLab: ``Prisoner's Dilemma (Matrix)''}
+\begin{itemize}
+    \item MobLab time!
+    \item Same partner for a whole game. Payoffs on your screen
+    \item \textbf{Game 1:} exactly 4 rounds
+    \item \textbf{Game 2:} new partner. After each round, 25\% chance the game ends
+    \begin{itemize}
+        \item Nobody knows which round is the last one
+    \end{itemize}
+\end{itemize}
+\vfill
+\centering
+Feel free to talk! And play it the way you'd actually play it.
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% TWO PERIODS
+% ==============================================================
+
+\begin{frame}[standout]
+Play a Game Twice
+\end{frame}
+
+\begin{frame}{Example}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\centering
+\only<1>{\stagegame}%
+\only<2->{\stagegame[br]}
+\end{column}
+\begin{column}{0.48\textwidth}
+Pure NE: \underline{\hspace{1.2in}}
+\bsk
+Best for both: \underline{\hspace{0.8in}}
+\bsk
+\onslide<3->{Is $(M,C)$ a NE? \underline{\hspace{0.6in}}}
+\end{column}
+\end{columns}
+\bsk
+\onslide<4->{Now play it \textbf{twice}:
+\begin{itemize}
+    \item Period 1: play the game. Everyone sees what happened
+    \item Period 2: play it again
+    \item Total payoff $=$ period 1 payoff $+$ period 2 payoff
+\end{itemize}}
+\bsk
+\onslide<5->{Can $(M,C)$ happen in period 1???}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{A Strategy With a Threat}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\centering
+\stagegame
+\end{column}
+\begin{column}{0.48\textwidth}
+\textbf{Period 1:} P1 plays $M$, P2 plays $C$
+\bsk
+\textbf{Period 2:}
+\begin{itemize}
+    \item If $(M,C)$ happened: play $(B,R)$
+    \item Otherwise: play $(T,L)$
+\end{itemize}
+\end{column}
+\end{columns}
+\bsk
+Reward with the good NE. Punish with the bad NE
+\bsk
+Check P1 in period 1:
+\begin{itemize}
+    \item Conform ($M$): \ \underline{\hspace{0.3in}} $+$ \underline{\hspace{0.3in}} $=$ \underline{\hspace{0.3in}}
+    \item Deviate ($T$): \ \underline{\hspace{0.3in}} $+$ \underline{\hspace{0.3in}} $=$ \underline{\hspace{0.3in}}
+\end{itemize}
+\bsk
+\onslide<2->{Period 2? \ Every period-2 subgame plays a \underline{\hspace{1.2in}}}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Every Period-2 Subgame}
+After period 1, there are \underline{\hspace{0.3in}} possible histories. Each starts a subgame
+\bsk
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{c|ccc}
+Period 1 outcome & $L$ & $C$ & $R$ \\
+\hline
+$T$ & & & \\
+$M$ & & & \\
+$B$ & & & \\
+\end{tabular}
+\bsk
+\raggedright
+Fill in: what's played in period 2 after each one?
+\bsk
+\onslide<2->{\textbf{Lesson:} Multiple stage NE $\Rightarrow$ can \textbf{punish} \& \textbf{reward}}
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% FORMALISM
+% ==============================================================
+
+\begin{frame}[standout]
+Formalizing Repeated Games
+\end{frame}
+
+\begin{frame}{Stage Game vs.\ Supergame}
+\begin{itemize}
+    \item \textbf{Stage game} $G$: the game played each period
+    \begin{itemize}
+        \item Our $3\times 3$ game, or the trucks' PD
+    \end{itemize}
+    \item \textbf{Supergame} $G^T$: play $G$ in periods $t=1,2,\dots,T$
+    \begin{itemize}
+        \item Everyone sees all past play
+        \item $T$ can be finite or $\infty$
+    \end{itemize}
+\end{itemize}
+\bsk
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\textbf{Action:} what you do in \textbf{one} period
+\begin{itemize}
+    \item $a_i^t\in A_i$ (eg, $M$)
+    \item Profile: $a^t=(a_1^t,a_2^t)$
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Strategy:} a complete plan for $G^T$
+\begin{itemize}
+    \item What to do in \textbf{every} period
+    \item ...after \textbf{everything} that could happen
+\end{itemize}
+\end{column}
+\end{columns}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Histories}
+\textbf{History} at the start of period $t$: everything that happened before $t$
+$$h_t=(a^1,a^2,\dots,a^{t-1})$$
+\vspace{-0.15in}
+\begin{itemize}
+    \item $h_1=\emptyset$ \ (nothing has happened yet)
+    \item $H_t=$ set of all possible histories at the start of period $t$
+\end{itemize}
+\bsk
+\textbf{Ex:} In our $3\times 3$ game:
+\begin{itemize}
+    \item $h_2=(M,C)$ is one history
+    \item $|H_2|=$ \underline{\hspace{0.4in}} \qquad $|H_3|=$ \underline{\hspace{0.4in}}
+\end{itemize}
+\bsk
+\onslide<2->{Each history starts a \textbf{subgame} (it's a singleton node in the tree)}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Pure Strategy in a Repeated Game}
+\begin{block}{Definition}
+A \textbf{pure strategy} for Player $i$ is a function $s_i$ that maps every history to an action: \ $s_i(h_t)\in A_i$ for every $h_t$ in every $H_t$
+\end{block}
+\bsk
+Back to our 2-period game. Our threat strategy for P1:
+\begin{align*}
+s_1(\emptyset)&=\underline{\hspace{0.5in}}\\
+s_1\big((M,C)\big)&=\underline{\hspace{0.5in}}\\
+s_1(h_2)&=\underline{\hspace{0.5in}} \quad \text{for every other } h_2
+\end{align*}
+\bsk
+\onslide<2->{How many choices to specify? \ $1+\underline{\hspace{0.3in}}=\underline{\hspace{0.3in}}$ \\
+\# of pure strategies: \ \underline{\hspace{0.8in}}}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Two Kinds of Equilibrium}
+\textbf{Stage-game NE:} a NE of $G$ (one period)
+\begin{itemize}
+    \item $(T,L)$ and $(B,R)$ in our example
+\end{itemize}
+\bsk
+\textbf{Equilibrium of the supergame:} a NE or SPNE of $G^T$
+\begin{itemize}
+    \item A profile of \textbf{strategies} $(s_1,s_2)$, not actions
+    \item SPNE: a NE in the subgame after \textbf{every} history
+\end{itemize}
+\bsk
+\textbf{Ex:} our threat strategies are a SPNE of $G^2$
+\begin{itemize}
+    \item But period-1 play $(M,C)$ is \textbf{not} a stage-game NE!
+\end{itemize}
+\vfill
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Stage NE Every Period Is Always Safe}
+\begin{block}{Theorem}
+Let $a^*$ be a NE of the stage game $G$. Then ``play $a^*$ in every period, no matter what happened'' is a SPNE of $G^T$.
+\end{block}
+{\footnotesize Same for any \textbf{sequence} of stage NE that ignores history: $a^{1*}, a^{2*}, \dots$}
+\bsk
+Why?
+\begin{itemize}
+    \item Future play doesn't depend on what I do today
+    \item So today, only today's payoff matters
+    \item $a^*$ is a stage NE $\Rightarrow$ no profitable deviation today
+\end{itemize}
+\bsk
+\textbf{Thus:} $SPNE(G^T)$ is never empty if $G$ has a NE
+\vfill
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% FINITE PD
+% ==============================================================
+
+\begin{frame}[standout]
+The Trucks, Twice
+\end{frame}
+
+\begin{frame}{Two-Period Price War}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+\truckpd
+\end{column}
+\begin{column}{0.5\textwidth}
+Try the same trick:
+\begin{itemize}
+    \item Period 1: Normal
+    \item Period 2: reward if both played Normal, punish otherwise
+\end{itemize}
+\bsk
+\onslide<2->{Reward with what?\\ Punish with what?}
+\end{column}
+\end{columns}
+\bsk
+\onslide<3->{\textbf{Period 2:} every subgame is a one-shot PD $\Rightarrow$ \underline{\hspace{1.3in}}\\[4pt]
+\textbf{Period 1:} period 2 is the same no matter what $\Rightarrow$ \underline{\hspace{1.3in}}}
+\bsk
+\onslide<4->{\textbf{Problem:} only \textbf{one} stage NE. Nothing to punish with}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Any Finite Number of Periods}
+\begin{itemize}
+    \item Period $T$: last period. Play \underline{\hspace{0.9in}}
+    \item Period $T-1$: period $T$ is locked in. Play \underline{\hspace{0.9in}}
+    \item Period $T-2$: ...
+    \item ...
+    \item Period 1: \underline{\hspace{0.9in}}
+\end{itemize}
+\bsk
+\onslide<2->{\begin{block}{Theorem}
+If $G$ has a unique NE and $T$ is finite, the only SPNE of $G^T$: play that NE every period.
+\end{block}}
+\bsk
+\onslide<3->{Cooperation \textbf{unravels} from the end. Same as the centipede game!}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{But In the Lab...}
+\textbf{Lab result:} people \textbf{do} cooperate in finitely repeated PDs
+\begin{itemize}
+    \item Lots of cooperation early
+    \item Collapses in the last few rounds (``end-game effect'')
+    \item With experience, the collapse starts earlier
+\end{itemize}
+\bsk
+\textbf{More cooperation} when players aren't sure the other is purely selfish
+\begin{itemize}
+    \item A little doubt about the other's \textbf{type}...
+    \item We'll see this in Chapter 15!
+\end{itemize}
+\bsk
+Our MobLab Game 1: \underline{\hspace{2in}}
+\vfill
+{\footnotesize Source: Caplan, \textit{A Practicum in Behavioral Economics}, \S3, p.~176.\\ Selten \& Stoecker (1986, \textit{JEBO}); Andreoni \& Miller (1993, \textit{EJ}).}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% INFINITE HORIZON
+% ==============================================================
+
+\begin{frame}[standout]
+Play Forever
+\end{frame}
+
+\begin{frame}{No Last Period}
+Unraveling needs a \textbf{known last period}
+\bsk
+What if there isn't one?
+\begin{itemize}
+    \item $T=\infty$, or
+    \item The game ends at a random time (MobLab Game 2)
+\end{itemize}
+\bsk
+\onslide<2->{\textbf{Problem:} payoffs add up to infinity
+\begin{itemize}
+    \item Always Normal: \ $2+2+2+\cdots=\infty$
+    \item Discount once, then both Discount: \ $3+1+1+\cdots=\infty$
+\end{itemize}
+Can't compare $\infty$ to $\infty$!}
+\bsk
+\onslide<3->{\textbf{Fix:} future payoffs count \textbf{less} than today's}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Discounting: Money Now vs.\ Later}
+Interest rate $r=10\%$:
+\begin{itemize}
+    \item \$90.91 today grows to $\$90.91\times 1.10=\$100$ next year
+    \item So \$100 next year is worth \underline{\hspace{0.6in}} today
+    \item And \$100 in two years? \ \underline{\hspace{0.6in}}
+\end{itemize}
+\bsk
+\textbf{Discount factor:} what \$1 next period is worth today
+$$\delta=\frac{1}{1+r}=\frac{1}{1.10}=0.9091$$
+\bsk
+\onslide<2->{\textbf{Also:} if the game continues with probability $p$, then $\delta=p$\\
+\begin{itemize}
+    \item MobLab Game 2: $\delta=$ \underline{\hspace{0.5in}}
+\end{itemize}}
+\vfill
+{\footnotesize With both: $\delta=p/(1+r)$.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Utility of a Stream of Payoffs}
+Payoff $u_i^1$ today, $u_i^2$ next period, $u_i^3$ after that, ...
+\bsk
+\textbf{Exponential discounting:} add them up, discounting each period by another $\delta$
+$$U_i=u_i^1+\delta u_i^2+\delta^2 u_i^3+\cdots=\sum_{t=1}^{\infty}\delta^{t-1}u_i^t$$
+\bsk
+\onslide<2->{\textbf{Fact:} if $0\le\delta<1$, this is \textbf{finite}}
+\bsk
+\onslide<3->{\textbf{Ex:} $x$ every period forever:
+$$S=x+\delta x+\delta^2x+\cdots \qquad \delta S=\underline{\hspace{1.2in}}$$
+$$S-\delta S=\underline{\hspace{0.3in}} \quad\Rightarrow\quad S=\underline{\hspace{0.6in}}$$}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{The Infinitely Repeated Price War}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+\truckpd
+\end{column}
+\begin{column}{0.5\textwidth}
+One SPNE we already know:
+\begin{itemize}
+    \item Always Discount, no matter what
+    \item Why? \underline{\hspace{1.2in}}
+\end{itemize}
+\end{column}
+\end{columns}
+\bsk
+\onslide<2->{\textbf{Grim Trigger:}
+\begin{itemize}
+    \item Period 1: play Normal
+    \item Keep playing Normal as long as \textbf{everyone} always has
+    \item Once anyone plays Discount: Discount \textbf{forever}
+\end{itemize}}
+\bsk
+\onslide<3->{As a function of histories: \ $s_i(h_t)=$ Normal if $h_t$ is all (N,N), otherwise $s_i(h_t)=$ Discount}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Is Grim Trigger a SPNE?}
+Two kinds of subgames:
+\bsk
+\textbf{1. Someone already played Discount}
+\begin{itemize}
+    \item Both play Discount forever: stage NE every period
+    \item Theorem $\Rightarrow$ no profitable deviation \checkmark
+\end{itemize}
+\bsk
+\textbf{2. Everyone always played Normal}
+\begin{itemize}
+    \item Conform: \ $2+2\delta+2\delta^2+\cdots=$ \underline{\hspace{0.8in}}
+    \item Deviate (Discount today):
+    \begin{itemize}
+        \item Today: \underline{\hspace{0.3in}}
+        \item Then punished forever: \ $\delta+\delta^2+\cdots=$ \underline{\hspace{0.8in}}
+    \end{itemize}
+\end{itemize}
+\vfill
+{\footnotesize Enough to check deviating once: after you deviate, Discount forever is your best reply anyway.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Threshold}
+\textbf{In words:} cooperating forever must beat grabbing 3 today and getting punished forever
+\bsk
+$$\underbrace{\frac{2}{1-\delta}}_{\text{cooperate forever}}\ \ \ge\ \ \underbrace{3\vphantom{\frac{2}{1-\delta}}}_{\text{grab today}}\ +\ \underbrace{\frac{\delta}{1-\delta}}_{\text{punished forever}}$$
+\bsk
+Solve for $\delta$: \vspace{0.6in}
+
+\onslide<2->{\textbf{Result:} Grim Trigger is a SPNE $\iff \delta\ge$ \underline{\hspace{0.4in}}}
+\bsk
+\onslide<3->{In interest rates: \ $r\le$ \underline{\hspace{0.5in}} \qquad Patient enough $\Rightarrow$ cooperation!}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Back to MobLab}
+\vspace{0.1in}
+\centering
+\renewcommand{\arraystretch}{2}
+\begin{tabular}{l|c|c|c|c|c|}
+\cline{2-6}
+ & Round 1 & Round 2 & Round 3 & Round 4 & Round 5+ \\
+\hline
+\multicolumn{1}{|l|}{Game 1: \% cooperate} & \hspace{0.45in} & \hspace{0.45in} & \hspace{0.45in} & \hspace{0.45in} & --- \\
+\hline
+\multicolumn{1}{|l|}{Game 2: \% cooperate} & & & & & \\
+\hline
+\end{tabular}
+\bsk
+\raggedright
+Game 2: $\delta=$ \underline{\hspace{0.5in}}. MobLab's payoffs: Grim Trigger works iff $\delta\ge\tfrac12$
+\vfill
+{\footnotesize Lab result: cooperation rises with $\delta$. Dal B\'o (2005, \textit{AER}); Dal B\'o \& Fr\'echette (2011, \textit{AER}).}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Other Strategies}
+\begin{itemize}
+    \item \textbf{Tit-for-Tat:} start Normal, then copy what they did last period
+    \begin{itemize}
+        \item Won Axelrod's computer tournaments (1980)
+        \item Nice, retaliatory, forgiving
+    \end{itemize}
+    \item \textbf{Always Normal}, no matter what
+    \begin{itemize}
+        \item Is (Always Normal, Always Normal) a SPNE? \underline{\hspace{0.8in}}
+    \end{itemize}
+    \item \textbf{Always Discount}: always a SPNE
+\end{itemize}
+\bsk
+\onslide<2->{\textbf{Lesson:} cooperation needs a credible \textbf{threat}}
+\vfill
+{\footnotesize Not in the book. Axelrod, \textit{The Evolution of Cooperation} (1984). Tit-for-Tat was submitted by Anatol Rapoport.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{This Is Everywhere}
+Repeated PDs, with cooperate / defect in each:
+\begin{itemize}
+    \item \textbf{Cartels:} OPEC members: stick to quota / pump more
+    \item \textbf{Price wars:} airlines on a route: hold fares / slash fares
+    \item \textbf{Trade:} countries: keep tariffs low / raise tariffs
+    \item \textbf{Roommates:} do your chores / let them pile up
+    \item \textbf{Online sellers:} ship what you promised / ship junk
+    \item \textbf{WWI trenches:} shoot to miss / shoot to kill
+\end{itemize}
+\bsk
+In each: the \textbf{future} keeps people honest today
+\vfill
+{\footnotesize Trenches: ``live and let live,'' Axelrod (1984), Ch.~4.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{But Those Are More Complicated}
+Real versions add:
+\begin{itemize}
+    \item \textbf{Imperfect monitoring:} secret discounts. Was that a cut or bad luck?
+    \item \textbf{Many players:} who do you punish?
+    \item \textbf{Entry:} new players who weren't part of the deal
+    \item \textbf{Renegotiation:} after a cut, both want to ``let bygones be bygones''
+\end{itemize}
+\bsk
+Core tension survives: today's gain vs.\ tomorrow's punishment
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% FOLK THEOREM
+% ==============================================================
+
+\begin{frame}[standout]
+How Much Can Repetition Do?
+\end{frame}
+
+\begin{frame}{Minmax Payoff}
+\textbf{In words:} the worst the others can hold you to, if you always best respond
+$$v_i=\underbrace{\min_{a_{-i}}}_{\text{others hurt you}}\ \ \underbrace{\max_{a_i}\ u_i(a_i,a_{-i})}_{\text{you best respond}}$$
+\bsk
+\textbf{Ex:} the trucks
+\begin{itemize}
+    \item If Pitabilities plays Normal, Dos Hermanos's best: \underline{\hspace{0.4in}}
+    \item If Pitabilities plays Discount, Dos Hermanos's best: \underline{\hspace{0.4in}}
+    \item So $v_{DH}=$ \underline{\hspace{0.4in}}
+\end{itemize}
+\bsk
+\onslide<2->{\textbf{Fact:} You can always get at least $v_i$. No equilibrium can give you less}
+\vfill
+{\footnotesize Others could also mix to hold you down. We'll ignore that.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Feasible Payoffs}
+\begin{columns}[c]
+\begin{column}{0.52\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.15]
+  \draw[->] (0,0) -- (3.6,0) node[right] {$u_{DH}$};
+  \draw[->] (0,0) -- (0,3.6) node[above] {$u_{P}$};
+  \foreach \x in {1,2,3} {\draw (\x,0.06) -- (\x,-0.06) node[below] {\small \x};}
+  \foreach \y in {1,2,3} {\draw (0.06,\y) -- (-0.06,\y) node[left] {\small \y};}
+  \only<2->{\fill[blue!12] (0,3) -- (2,2) -- (3,0) -- (1,1) -- cycle;
+            \draw[blue!60, thick] (0,3) -- (2,2) -- (3,0) -- (1,1) -- cycle;}
+  \only<3->{\fill[red!25] (1,1) -- (1,2.5) -- (2,2) -- (2.5,1) -- cycle;
+            \draw[red!70, dashed] (1,0) -- (1,3.3);
+            \draw[red!70, dashed] (0,1) -- (3.3,1);}
+  \fill (2,2) circle (1.6pt) node[above right, font=\scriptsize] {(N,N)};
+  \fill (0,3) circle (1.6pt) node[right=2pt, font=\scriptsize] {(N,D)};
+  \fill (3,0) circle (1.6pt) node[above right, font=\scriptsize] {(D,N)};
+  \fill (1,1) circle (1.6pt) node[below left, font=\scriptsize] {(D,D)};
+\end{tikzpicture}
+\end{column}
+\begin{column}{0.46\textwidth}
+Per-period average payoffs
+\bsk
+\onslide<2->{\textbf{Feasible:} any mix of the four outcomes (take turns, etc.)}
+\bsk
+\onslide<3->{\textbf{Above minmax:} both get more than $v_i=1$}
+\end{column}
+\end{columns}
+\vfill
+{\footnotesize Average payoff: $(1-\delta)U_i$. Getting $x$ forever gives an average of $x$.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Folk Theorem}
+\begin{block}{Folk Theorem (stated without proof)}
+In an infinitely repeated game, \textbf{any} feasible payoff giving every player more than\\ their minmax $v_i$ is the average payoff of some SPNE, if $\delta$ is close enough to 1.
+\end{block}
+\bsk
+\begin{itemize}
+    \item ``Folk'': everyone knew it before anyone published it
+    \item Trucks: anything in the red region. Including (2,2)!
+    \item Also including \underline{\hspace{0.6in}} \ (barely better than always Discount)
+\end{itemize}
+\vfill
+{\footnotesize Not in the book. Friedman (1971); Fudenberg \& Maskin (1986, \textit{Econometrica}). Some technical conditions apply.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{So... Anything Goes?}
+\centering
+\vspace{0.3in}
+{\Large If almost \textbf{any} outcome is an equilibrium,\\[6pt] does game theory predict \textbf{anything}?}
+\vspace{0.5in}
+
+\raggedright
+\onslide<2->{\textbf{Yes, still useful:}
+\begin{itemize}
+    \item \textbf{When} cooperation is possible: patience, no known end, seeing what others did
+    \item \textbf{Comparative statics:} higher $\delta$ $\Rightarrow$ more cooperation. The lab agrees
+    \item Explains \textbf{institutions}: reviews, credit scores, cartel meetings
+\end{itemize}}
+\onslide<3->{\textbf{New question:} which equilibrium? Focal points, talking, culture...}
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% WORKED EXAMPLE
+% ==============================================================
+% Answers are in the header comment.
+% ---------------------------------------------------------------------
+
+\begin{frame}[standout]
+Let's Work One Out
+\end{frame}
+
+\begin{frame}{Gas on Lane Avenue}
+Shell and Speedway face each other at the same intersection. Every day each posts a \textbf{High} or \textbf{Low} price. Shell has the bigger brand
+\bsk
+\centering
+\begin{matrixgame}[top={High, Low}, left={High, Low}, player names={Shell, Speedway}]
+  \payoffmatrix{6,4 & 1,6 \\ 8,1 & 3,2}
+\end{matrixgame}
+\bsk
+\raggedright
+{\footnotesize Shell picks the row, Speedway the column. Payoffs (Shell, Speedway) in \$100s per day\\ They play forever, discount factor $\delta$}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Gas on Lane Avenue}
+\begin{enumerate}
+    \item Find the stage-game NE and each station's minmax payoff \vspace{0.3in}
+    \item For which $\delta$ is Grim Trigger (High until anyone goes Low) a SPNE?\\ Whose incentive binds? \vspace{0.45in}
+    \item Now a price cut is only noticed \textbf{one day late}. New threshold? \vspace{0.45in}
+    \item Folk theorem: can average payoffs $(4,3)$ be a SPNE for $\delta$ near 1? What about $(2,5)$? \vspace{0.3in}
+\end{enumerate}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What Have We Learned, Charlie Brown?}
+\begin{itemize}
+    \item \textbf{Stage game} vs.\ \textbf{supergame}. Actions vs.\ strategies
+    \item Strategy: a map from \textbf{histories} to actions
+    \item Stage NE every period: always a SPNE
+    \item Multiple stage NE: reward and punish, even with $T$ finite
+    \item Unique stage NE and $T$ finite: \textbf{unraveling}
+    \item $T=\infty$: discount with $\delta$. Grim Trigger works if $\delta$ is big enough
+    \item \textbf{Folk theorem}: anything above minmax, if patient enough
+\end{itemize}
+\vfill
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Reading \& Practice}
+\begin{itemize}
+    \item Not in Bonanno. These slides are the reading
+    \item Optional: Osborne, \textit{An Introduction to Game Theory}, Chapters 14--15
+    \item Optional: Caplan, \S3, p.~176 (finitely repeated PD)
+    \item Practice: redo the trucks with $(N,N)=(2.5,2.5)$. New threshold?
+\end{itemize}
+\vfill
+\end{frame}
+
+\end{document}
