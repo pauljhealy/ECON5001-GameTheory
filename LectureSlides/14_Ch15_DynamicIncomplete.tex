@@ -1,0 +1,547 @@
+\input{LectureSlides/includes/metropolis_preamble}
+
+% Title page info
+\title[Incomplete Information: Dynamic]{Chapter 15: Incomplete Information, Dynamic Games}
+\author[ECON 5001]{ECON 5001\\Prof. Paul J. Healy\\Based on: \textit{Game Theory} by Giacomo Bonanno} \color{metrop}
+\institute[OSU]{}
+\date[]{\vfill {\tiny Updated \today\ at\ \DTMcurrenttime}}
+
+% ---------------------------------------------------------------------
+% SCOPE AND NOTATION
+%   Builds on decks 11-13. Solution concept: WSE of the Harsanyi game.
+%   Section 15.1's three examples: the small perfect-info example
+%   (Figs 15.1-15.5), reputation (chain store), and signaling (strikes),
+%   plus truth-in-advertising in words. Section 15.2 (multi-sided,
+%   bargaining) gets one footnote.
+%   Chain store is re-skinned with deck 05's IKEA/Wayfair numbers:
+%   out (1,5), fight (0,0), share (2,2); a hotheaded IKEA gets 3 from
+%   fighting. Bonanno uses share (1.5,1.5), hotheaded fight 2, and gets
+%   p >= 1/3. With deck 05's numbers the threshold is p >= 1/2.
+%   Payoffs in the chain store are (entrant, IKEA) per city.
+%
+% ANSWERS (all checked numerically)
+%   Example (Bonanno 15.1-15.5): P1 thinks alpha (P2's payoffs: D 2,
+%   A 1) with prob 1/3, beta (D 1, A 2) with prob 2/3. True state alpha.
+%     Strategic form, P2 strategy = (at alpha, at beta):
+%       B: (1,0) for every P2 strategy
+%       T: DD (0, 4/3)  DA (4/3, 2)  AD (2/3, 1)  AA (2, 5/3)
+%     BNE: (B, DD), (B, AD), (T, DA). Only (T, DA) is a SPNE / WSE.
+%     True game alpha: BI is B. But (T, DA) plays T then D.
+%   Chain store (deck 05 numbers): candidate WSE
+%     Wayfair (Columbus): Out. IKEA (either type): fight entry in Columbus.
+%     Living Spaces (Cincinnati): out after Out, in after Share,
+%       out after Fight. Beliefs Pr(hotheaded): p, 0, 1.
+%     After Out: in gives 2(1-p), out gives 1 -> out iff p >= 1/2.
+%     Rational IKEA: fight 0 + 5 = 5 > share 2 + 2 = 4.
+%     Hotheaded IKEA: fight 3 + 5 = 8 > share 2 + 3 = 5.
+%     Wayfair: in -> fought -> 0 < out 1.
+%   Strikes (Bonanno's numbers): piH = 100, piL = 55, wH = 60, wL = 50,
+%   alpha = Pr(high) = .7, delta = .6.
+%     Separating WSE: ask wH; high firm accepts, low rejects; then ask
+%     wL, accepted.
+%     Union in period 2 after a rejection: p = Pr(low) = 1 by Bayes.
+%       Needs p >= 1 - wL/wH = 1/6.
+%     High firm won't mimic: 100 - 60 = 40 >= .6(100 - 50) = 30.
+%     Low firm: reject gives .6(5) = 3 > 55 - 60 = -5.
+%     Union period 1: .7(60) + .3(.6)(50) = 42 + 9 = 51 >= 50.
+%     True state: low profit -> a strike happens.
+%   Worked example (Honors signal). Pr(Star) = 1/3. Worker: Manager job
+%   5, Analyst job 2, minus honors cost (Star 1, Average 4).
+%   Nationwide: Manager to Star 4, Manager to Average 0, Analyst 2.
+%     Nationwide hires Manager iff mu(Star) >= 1/2.
+%     Separating WSE: Star takes Honors, Average doesn't. Honors ->
+%       Manager (mu = 1), No -> Analyst (mu = 0).
+%       Star: 4 > 2. Average: 2 > 1.
+%     Pooling WSE (nobody takes Honors): No -> Analyst (mu = 1/3).
+%       After Honors (off path): Analyst, needs mu(Star | Honors) <= 1/2.
+%     Reasonable? No: Average's Honors payoff is at most 1 < 2, so only
+%       a Star would ever take it. Belief should be mu = 1.
+%     No pooling on Honors (Star would deviate to No).
+%     Average's cost 2 instead of 4: no separating WSE (Average would
+%       mimic: 5 - 2 = 3 > 2). Only the pooling one survives.
+% ---------------------------------------------------------------------
+
+% The two possible games in the opening example (xgames won't take
+% macro arguments inside payoff lists, so they're written out)
+\newcommand{\minigamealpha}{%
+\begin{gametree}[player names={1, 2}, labels=short, scale=0.85]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.2, h=2.4] {B(1,0); T};
+  \branch[player=2, label=0] from (w2) to[v=1.2, h=1.8] {D(0,2); A(2,1)};
+\end{gametree}}
+\newcommand{\minigamebeta}{%
+\begin{gametree}[player names={1, 2}, labels=short, scale=0.85]
+  \branch[player=1, root=w, label=90] from (0,0) to[v=1.2, h=2.4] {B(1,0); T};
+  \branch[player=2, label=0] from (w2) to[v=1.2, h=1.8] {D(0,1); A(2,2)};
+\end{gametree}}
+
+% Harsanyi transformation of the opening example (Bonanno Fig 15.4)
+\newcommand{\examplegame}[1][0.72]{%
+\begin{gametree}[player names={1, 2}, labels=short, scale=#1]
+  \branch[player=0, root=w, label=90] from (0,0) to[v=1.2, h=5.8] {$\alpha$\ $\frac13$; $\beta$\ $\frac23$};
+  \branch[player=1, label=none] from (w1) to[v=1.3, h=2.2] {B(1,0); T};
+  \branch[label=none] from (w2) to {T; B(1,0)};
+  \branch[player=2, label=180] from (w12) to[v=1.3, h=1.5] {D(0,2); A(2,1)};
+  \branch[player=2, label=0] from (w21) to {D(0,1); A(2,2)};
+  \informset[player=1] (w1) -- (w2);
+\end{gametree}}
+
+% Chain store knowledge-belief structure
+\newcommand{\chainks}{%
+\begin{tikzpicture}[x=1.5in, y=0.5in]
+  \node at (0, 0.8) {$\alpha$: rational}; \node at (1, 0.8) {$\beta$: hotheaded};
+  \foreach \y/\n/\c in {0/IKEA/player2, -1/Wayfair/player1, -2/Living Spaces/player3}
+    {\node[anchor=east, text=\c] at (-0.3, \y) {\n:};
+     \fill (0, \y) circle (2pt); \fill (1, \y) circle (2pt);}
+  \foreach \y/\c in {0/player2, -1/player1}
+    {\draw[\c, thick, rounded corners=7pt] (-0.15, \y-0.25) rectangle (0.15, \y+0.25);
+     \draw[\c, thick, rounded corners=7pt] (0.85, \y-0.25) rectangle (1.15, \y+0.25);}
+  \draw[player3, thick, rounded corners=7pt] (-0.15, -2.25) rectangle (1.15, -1.75);
+  \node[anchor=west, font=\footnotesize] at (0.04, -2) {$1-p$};
+  \node[anchor=west, font=\footnotesize] at (1.04, -2) {$p$};
+  \draw[->, thick] (0, -2.9) -- (0, -2.4); \node[font=\scriptsize] at (0, -3.05) {true state};
+\end{tikzpicture}}
+
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{Where We Left Off}
+Chapter 14: static games with incomplete information
+\begin{itemize}
+    \item Harsanyi transformation $\to$ a game with Nature
+    \item Solution: BNE $=$ NE of that game
+\end{itemize}
+\bsk
+Chapter 15: \textbf{dynamic} games with incomplete information
+\begin{itemize}
+    \item Same Harsanyi transformation
+    \item But NE allows silly choices off the path (Chapter 4!)
+    \item So use \textbf{WSE} (or SPNE) of the Harsanyi game
+\end{itemize}
+\bsk
+Big applications: \textbf{reputation} and \textbf{signaling}
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% OPENING EXAMPLE (Bonanno Figs 15.1-15.5)
+% ==============================================================
+
+\begin{frame}{Example: Unsure of P2's Payoffs}
+P1 knows her own payoffs. P1 thinks P2's payoffs are one of these:
+\bsk
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+$\alpha$ (prob.\ $\tfrac13$)\\
+\minigamealpha
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+$\beta$ (prob.\ $\tfrac23$)\\
+\minigamebeta
+\end{column}
+\end{columns}
+\bsk
+P2 knows which one. True state: $\alpha$
+\bsk
+Backward induction if P1 knew: at $\alpha$ play \underline{\hspace{0.3in}}. At $\beta$ play \underline{\hspace{0.3in}}
+\vfill
+{\footnotesize Bonanno Figures 15.1--15.3.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Harsanyi Game}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\examplegame
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\begin{matrixgame}[top={DD, DA, AD, AA}, left={B, T}, player names={1, 2}, w=1.15]
+  \payoffmatrix{1,0 & 1,0 & 1,0 & 1,0 \\ 0,\tfrac43 & \tfrac43,2 & \tfrac23,1 & 2,\tfrac53}
+\end{matrixgame}\\[4pt]
+{\footnotesize P2's strategy: (at $\alpha$, at $\beta$)}
+\end{column}
+\end{columns}
+\bsk
+\onslide<2->{BNE: \ \underline{\hspace{0.7in}} \ \underline{\hspace{0.7in}} \ \underline{\hspace{0.7in}}}
+\bsk
+\onslide<3->{Which ones have P2 doing something silly at a node? \underline{\hspace{1in}}}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Use WSE Instead}
+In dynamic games: BNE can rely on \textbf{incredible threats}
+\begin{itemize}
+    \item P2 is at a \textbf{singleton} node. P2 knows the state!
+    \item $(B,DD)$: at $\beta$, P2 ``plans'' D: 1 instead of 2. Silly
+    \item $(B,AD)$: silly at \textbf{both} nodes
+\end{itemize}
+\bsk
+\textbf{From now on:} WSE (here it's the same as SPNE) \ $\Rightarrow$ \ \underline{\hspace{0.8in}}
+\bsk
+\onslide<2->{True state $\alpha$: what actually gets played? \underline{\hspace{0.8in}}\\
+Backward induction in the true game says \underline{\hspace{0.3in}}}
+\bsk
+\onslide<3->{\textbf{Lesson:} P1's uncertainty can lead to play that looks ``wrong'' in the true game}
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% REPUTATION: THE CHAIN STORE
+% ==============================================================
+
+\begin{frame}[standout]
+Reputation
+\end{frame}
+
+% ---- MobLab run: Centipede (replay) -----------------------------------
+% Same settings as deck 05's run, deliberately replayed: students now
+% know backward induction says Cash Out at once. Results come back in
+% "Back to the Centipede", next to deck 05's numbers.
+% ---------------------------------------------------------------------
+\begin{frame}{MobLab: ``Centipede Game'', Again!}
+\begin{itemize}
+    \item MobLab time!
+    \item Same game as Chapter 3: Invest or Cash Out
+    \item You now know what backward induction says
+    \item Play it the way you'd actually play it
+\end{itemize}
+\bsk
+Write down: what did you expect your partner to do?
+\vfill
+\centering
+Feel free to talk!
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Recall: The Chain Store (Chapter 3)}
+IKEA at Polaris. Wayfair decides whether to open across I-71
+\begin{itemize}
+    \item Out: Wayfair 1, IKEA 5. \ Fight: (0, 0). \ Share: (2, 2)
+\end{itemize}
+\bsk
+Then the same thing in Cincinnati, with another entrant
+\bsk
+IKEA's argument: ``Fight in Columbus. Cincinnati is watching!''
+\begin{itemize}
+    \item Fight, scare off Cincy: $0+5=5$ \quad Share, Cincy enters: $2+2=4$
+\end{itemize}
+\bsk
+\onslide<2->{Backward induction: Cincy is the last city, so IKEA shares there no matter what. So fighting in Columbus buys nothing. \textbf{Both enter}}
+\bsk
+\onslide<3->{Deck 05: ``The reputation story needs \textbf{uncertainty}... Chapter 15''}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Add a Little Doubt}
+Two possible types of IKEA:
+\begin{itemize}
+    \item \textbf{Rational}: fight gives 0, share gives 2 (as before)
+    \item \textbf{Hotheaded}: \textbf{likes} fighting. Fight gives 3, share gives 2
+\end{itemize}
+\bsk
+\begin{columns}[c]
+\begin{column}{0.58\textwidth}
+\centering
+\chainks
+\end{column}
+\begin{column}{0.4\textwidth}
+\begin{itemize}
+    \item IKEA really is rational
+    \item Wayfair knows it
+    \item Living Spaces (Cincy) isn't sure: hotheaded with prob.\ $p$
+\end{itemize}
+\end{column}
+\end{columns}
+\vfill
+{\footnotesize Bonanno \S15.1 (Figures 15.6--15.11) uses slightly different numbers.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Solving It: Start in Cincinnati}
+If Living Spaces enters Cincinnati:
+\begin{itemize}
+    \item Rational IKEA: \underline{\hspace{0.6in}} \qquad Hotheaded IKEA: \underline{\hspace{0.6in}}
+\end{itemize}
+\bsk
+Living Spaces sees what happened in Columbus. Three possible histories:
+\bsk
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|l|c|c|}
+\hline
+In Columbus... & Pr(hotheaded) & Living Spaces \\
+\hline
+Wayfair stayed Out & \hspace{0.8in} & \hspace{0.8in} \\
+Wayfair In, IKEA Shared & & \\
+Wayfair In, IKEA Fought & & \\
+\hline
+\end{tabular}
+\bsk
+\raggedright
+Candidate: IKEA (both types) would fight in Columbus. Wayfair stays out
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Checking the WSE}
+\textbf{Living Spaces after Out:} belief $=$ prior $p$ (Bayes)
+$$\underbrace{p(0)+(1-p)(2)}_{\text{enter}}\ \le\ \underbrace{1\vphantom{()}}_{\text{stay out}} \iff p\ \ge\ \underline{\hspace{0.4in}}$$
+\textbf{After Share / Fight:} off the path. WSE allows any beliefs. These are sensible
+\bsk
+\textbf{IKEA}, if Wayfair entered Columbus:
+\begin{itemize}
+    \item Rational: fight \underline{\hspace{0.6in}} vs.\ share \underline{\hspace{0.6in}}
+    \item Hotheaded: fight \underline{\hspace{0.6in}} vs.\ share \underline{\hspace{0.6in}}
+\end{itemize}
+\textbf{Wayfair:} in \underline{\hspace{0.3in}} vs.\ out \underline{\hspace{0.3in}}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Reputation Works!}
+If Living Spaces thinks IKEA might be hotheaded ($p\ge\tfrac12$):
+\begin{itemize}
+    \item IKEA's threat to fight in Columbus is \textbf{credible}
+    \item Even though Wayfair and IKEA both \textbf{know} IKEA is rational!
+    \item IKEA fights to protect a reputation it doesn't deserve
+\end{itemize}
+\bsk
+\onslide<2->{Compare Repeated Games: finite PD unravels with \textbf{complete} info}
+\begin{itemize}
+    \item<2-> A small chance of a ``crazy'' type can stop the unraveling
+    \item<2-> Same idea explains passing in the centipede game
+\end{itemize}
+\bsk
+\onslide<3->{It's also a \textbf{sequential equilibrium} (Bonanno Exercise 15.2)}
+\vfill
+{\footnotesize Not in the book: Kreps \& Wilson (1982); Milgrom \& Roberts (1982); Kreps, Milgrom, Roberts \& Wilson (1982).}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Back to the Centipede}
+\vspace{0.3in}
+\centering
+\renewcommand{\arraystretch}{2}
+\begin{tabular}{l|c|c|}
+\cline{2-3}
+ & Chapter 3 (before BI) & Today (after BI) \\
+\hline
+\multicolumn{1}{|l|}{Avg.\ turns before Cash Out} & \hspace{1in} & \hspace{1in} \\
+\hline
+\multicolumn{1}{|l|}{\% Cash Out right away} & & \\
+\hline
+\end{tabular}
+\bsk
+\raggedright
+If a few people \textbf{like} to invest, even selfish players should invest for a while
+\vfill
+{\footnotesize Not in the book. McKelvey \& Palfrey (1992, \textit{Econometrica}).}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{This Is Everywhere}
+Building a reputation for toughness:
+\begin{itemize}
+    \item \textbf{Predatory pricing}: fight early entrants to scare later ones
+    \item \textbf{Hostages}: ``we never negotiate with kidnappers''
+    \item \textbf{Bosses}: fire the first slacker to keep the rest in line
+    \item \textbf{Central banks}: fight inflation hard to be believed next time
+    \item \textbf{Parents}: follow through on the threat... this time
+\end{itemize}
+\bsk
+Real versions: many periods, many types, people learning slowly
+\begin{itemize}
+    \item Same core: act tough now so others' \textbf{beliefs} about you change
+\end{itemize}
+\vspace{-0.3in}
+\end{frame}
+
+% ==============================================================
+% SIGNALING: STRIKES
+% ==============================================================
+
+\begin{frame}[standout]
+Signaling
+\end{frame}
+
+\begin{frame}{Why Do Strikes Happen?}
+A firm and a union negotiate wages. Then they strike. Then they agree
+\begin{itemize}
+    \item Strikes are costly for \textbf{both}: lost wages, lost production
+    \item Why not just agree on day one?
+\end{itemize}
+\bsk
+\onslide<2->{Bonanno's answer: \textbf{incomplete information}
+\begin{itemize}
+    \item The firm knows its profits. The union doesn't
+    \item Enduring a strike is a \textbf{credible signal} that profits are low
+\end{itemize}}
+\vfill
+{\footnotesize Bonanno \S15.1, Figures 15.12--15.15.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Setup}
+\begin{itemize}
+    \item Union asks for a high wage $w_H=60$ or low wage $w_L=50$
+    \item Firm says Yes (contract signed) or No
+    \item No $\Rightarrow$ strike for one period. Then the union asks again
+    \item No again $\Rightarrow$ no deal. Both get 0
+    \item Waiting is costly: $\delta=0.6$
+\end{itemize}
+\bsk
+Firm's profit (before wages): \textbf{High} $\pi_H=100$ (prob.\ $0.7$) or \textbf{Low} $\pi_L=55$
+\begin{itemize}
+    \item Firm knows. Union doesn't. Actually: Low
+    \item Low firm can't afford the high wage: $55-60<0$
+\end{itemize}
+\bsk
+\textbf{Last period is easy:} firm accepts any wage it can afford
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{A Separating WSE}
+\textbf{Candidate:} Union asks 60. High firm says Yes. Low firm says No (strike!)\\
+Then union asks 50. Low firm says Yes
+\bsk
+\textbf{Union after a strike:} by Bayes, Pr(Low) $=$ \underline{\hspace{0.4in}} $\Rightarrow$ ask 50 \checkmark
+\bsk
+\textbf{High firm} won't fake being Low:
+$$\underbrace{100-60}_{\text{pay 60 now}}\ \ \ge\ \ \underbrace{0.6\,(100-50)}_{\text{strike, then pay 50}} \qquad \underline{\hspace{0.4in}}\ \ge\ \underline{\hspace{0.4in}}\ \checkmark$$
+\textbf{Low firm:} Yes to 60 gives \underline{\hspace{0.3in}}. \ No gives $0.6(55-50)=$ \underline{\hspace{0.3in}}
+\bsk
+\textbf{Union, first offer:} ask 50 $\to$ 50. \ Ask 60 $\to$ \ $0.7(60)+0.3(0.6)(50)=$ \underline{\hspace{0.4in}}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What Happened?}
+The true firm is Low $\Rightarrow$ \textbf{a strike actually happens}
+\bsk
+\begin{itemize}
+    \item Inefficient: both lose from the delay
+    \item But it's how the Low firm \textbf{proves} it's Low
+    \item A High firm wouldn't sit through a strike just to save 10
+\end{itemize}
+\bsk
+\textbf{Separating:} types choose differently, so actions reveal types
+\bsk
+\textbf{Signal:} works only if it's \textbf{too costly to fake} for the other type
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Signals Everywhere}
+Costly actions that are cheaper for the ``good'' type:
+\begin{itemize}
+    \item \textbf{Education}: a degree is easier for productive workers (Spence)
+    \item \textbf{Warranties}: cheap to offer if your product rarely breaks
+    \item \textbf{Ads}: only worth paying for if customers come back
+    \item \textbf{Engagement rings}: expensive on purpose
+    \item \textbf{Peacocks}: a big tail is only survivable if you're strong
+\end{itemize}
+\bsk
+Real versions: continuous signals, many types, noisy signals
+\begin{itemize}
+    \item Same core: the cost has to differ across types
+\end{itemize}
+\vfill
+{\footnotesize Not in the book. Spence (1973, \textit{QJE}). 2001 Nobel Prize.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{Truth in Advertising}
+Gas station sign: ``Octane: at least 85.'' The truth is 89. True, but vague
+\begin{itemize}
+    \item Law: no false claims. But vague claims are legal
+    \item Seller knows quality. Buyer doesn't
+\end{itemize}
+\bsk
+\textbf{Skeptical buyer:} assume the \textbf{worst} quality consistent with the claim
+\begin{itemize}
+    \item ``At least 85'' $\Rightarrow$ ``it's 85''
+    \item So a seller with 89 wants to say ``89''
+    \item And then 88 does too, and 87...
+\end{itemize}
+\bsk
+\textbf{WSE:} buyer ends up as if fully informed. No news is bad news!
+\vfill
+{\footnotesize Bonanno \S15.1 (Milgrom \& Roberts, 1986). See Exercise 15.4 for a naive buyer.}
+\vspace{-0.2in}
+\end{frame}
+
+% ==============================================================
+% WORKED EXAMPLE
+% ==============================================================
+% Answers are in the header comment.
+% ---------------------------------------------------------------------
+
+\begin{frame}[standout]
+Let's Work One Out
+\end{frame}
+
+\begin{frame}{The Honors Section}
+A senior is a \textbf{Star} (prob.\ $\tfrac13$) or \textbf{Average}. They know which
+\begin{itemize}
+    \item First: take a hard \textbf{Honors} capstone, or \textbf{Not}
+    \item Honors costs a Star 1, an Average student 4 (more stress, worse grade)
+\end{itemize}
+\bsk
+Nationwide sees the transcript (Honors or not), not the type
+\begin{itemize}
+    \item Hires as \textbf{Manager} or \textbf{Analyst}
+    \item Student gets 5 as Manager, 2 as Analyst, minus Honors cost
+    \item Nationwide: Manager pays off 4 with a Star, 0 with Average. Analyst: 2 either way
+\end{itemize}
+\vfill
+{\footnotesize Honors doesn't make anyone better at the job. It's only a signal.}
+\vspace{-0.2in}
+\end{frame}
+
+\begin{frame}{The Honors Section}
+\begin{enumerate}
+    \item Draw the Harsanyi tree. How many info sets does Nationwide have? \vspace{0.25in}
+    \item For which beliefs does Nationwide hire a Manager? \vspace{0.25in}
+    \item Find a \textbf{separating} WSE. Check every type and info set \vspace{0.35in}
+    \item Find a \textbf{pooling} WSE where nobody takes Honors. What beliefs after Honors? \vspace{0.3in}
+    \item Are those beliefs reasonable? Would an Average student ever take Honors? \vspace{0.2in}
+    \item If Honors cost an Average student only 2, which WSE survive? \vspace{0.1in}
+\end{enumerate}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{What Have We Learned, Charlie Brown?}
+\begin{itemize}
+    \item Dynamic + incomplete info: Harsanyi game, then \textbf{WSE}
+    \begin{itemize}
+        \item BNE alone allows incredible threats
+    \end{itemize}
+    \item \textbf{Reputation}: a little doubt about your type makes threats credible
+    \begin{itemize}
+        \item Fixes the chain-store paradox
+    \end{itemize}
+    \item \textbf{Signaling}: costly actions reveal types, if too costly to fake
+    \begin{itemize}
+        \item Strikes, education, warranties
+    \end{itemize}
+    \item Skeptical buyers + no lying $\Rightarrow$ full disclosure
+\end{itemize}
+\vfill
+\vspace{-0.4in}
+\end{frame}
+
+\begin{frame}{Reading \& Practice}
+\begin{itemize}
+    \item Bonanno, Chapter 15
+    \begin{itemize}
+        \item \S15.1: read
+        \item \S15.2 (bargaining, two-sided): skim
+    \end{itemize}
+    \item Exercises: \S15.3.1 (15.1, 15.3a, 15.5), \S15.3.2 (15.6)
+    \item 15.2 and 15.3b need sequential equilibrium (Ch.~12). 15.7 is a challenge
+    \item Solutions in \S15.4. Try them first
+\end{itemize}
+\vfill
+\end{frame}
+
+\end{document}
