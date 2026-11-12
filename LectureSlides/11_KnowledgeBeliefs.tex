@@ -69,10 +69,10 @@
 \frame{\maketitle}
 
 \begin{frame}{Where We're Going}
-So far: everyone knows the game
+So far: the structure of the game is ``common knowledge''
 \begin{itemize}
     \item Payoffs, strategies, who moves when
-    \item And everyone knows that everyone knows it, and...
+    \item Everyone knows it, knows that everyone knows it, knows that...
 \end{itemize}
 \bsk
 Coming up (Chapter 14): players \textbf{unsure} about the game itself
@@ -107,19 +107,49 @@ Feel free to talk! And play it the way you'd actually play it.
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{States}
-\textbf{State} $w$: a complete description of everything relevant
+\begin{frame}{States, Events, and Infosets}
+\begin{center}
+\begin{tikzpicture}[x=0.45cm, y=1cm, font=\footnotesize]
+  \path (58.3,0.95) rectangle (81.7,-1.1); % fixed size so overlays don't shift the picture
+  % number line
+  \draw[latex-latex, thick] (58.3,0) -- (81.7,0);
+  \foreach \t in {61,...,79} \draw (\t,0.06) -- (\t,-0.06);
+  \foreach \t in {60,65,...,80} {
+    \draw (\t,0.12) -- (\t,-0.12);
+    \node[below] at (\t,-0.1) {$\t^\circ$F};
+  }
+  % state
+  \fill<2->[red] (67,0) circle (2.5pt);
+  \node<2->[above, red] at (67,0.08) {$w=67^\circ$F};
+  % event
+  \draw<3->[blue, line width=2pt, -latex] (75,0.4) -- (81.7,0.4);
+  \fill<3->[blue] (75,0.4) circle (2.5pt);
+  \node<3->[above, blue] at (78.3,0.45) {$E$: at least $75^\circ$F};
+  % partition
+  \fill<4->[red!15] (65.12,-0.6) rectangle (69.88,-1.05);
+  \foreach \a [evaluate=\a as \b using int(\a+5)] in {60,65,70,75} {
+    \draw<4-> (\a+0.12,-0.6) rectangle (\a+4.88,-1.05);
+    \node<4-> at (\a+2.5,-0.825) {$[\a,\b)$};
+  }
+  \node<4-> at (59.1,-0.825) {$\cdots$};
+  \node<4-> at (80.9,-0.825) {$\cdots$};
+\end{tikzpicture}
+\end{center}
+\textbf{State (of the world)} $w$: a complete description of everything relevant
 \begin{itemize}
-    \item $W=$ set of all states
-    \item \textbf{Event} $E\subseteq W$: a set of states (``it rains tomorrow'')
-    \item \textbf{True state}: the one that actually happened
+    \item<1-> $W=$ set of all states \quad Ex: all temperatures
+    \item<2-> \textbf{True state}: the one that actually happened \quad Ex: $67^\circ$F
+    \item<3-> \textbf{Event} $E\subseteq W$: a set of states \quad Ex: ``at least $75^\circ$F''
 \end{itemize}
 \bsk
-\textbf{Information set} $I_i(w)$: the states Player $i$ can't tell apart when the truth is $w$
+\onslide<4->{
+\textbf{Information set} $I_i(w)$: the states Player $i$ thinks are possible when the truth is $w$
 \begin{itemize}
     \item The info sets split up $W$: a \textbf{partition}
+    \item Ex: P1's thermometer only shows $5^\circ$ bands: $I_1(67^\circ)=[65,70)$
     \item Coarse partition: knows little. Fine partition: knows a lot
 \end{itemize}
+}
 \vfill
 {\footnotesize Same word as ``information set'' in game trees. Same idea: ``where could I be?''}
 \vspace{-0.2in}
