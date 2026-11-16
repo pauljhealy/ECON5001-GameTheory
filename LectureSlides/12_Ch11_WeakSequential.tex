@@ -11,14 +11,30 @@
 %   Lite Chapter 11: assessment (sigma, mu), sequential rationality,
 %   Bayesian updating at reachable info sets, WSE, WSE => NE, existence,
 %   WSE is not always SPNE (Venn diagram). Sequential equilibrium
-%   (Ch 12) is only previewed, never defined.
+%   (Ch 12) is covered informally only: the idea, no formal definition.
+%   Students are pointed to the text for the full formal development.
+%   The Herding MobLab and its debrief now live at the end of deck 11.
+%
+% LANGUAGE (set up on the first two frames; keep it in later decks)
+%   An ACTION is strictly dominated AT AN INFO SET (worse at every node
+%   in it, so worse for any belief). That is not the same as the whole
+%   STRATEGY being strictly dominated in the strategic form. In Selten's
+%   horse the action d is strictly dominated at P3's info set, but the
+%   strategy d is only weakly dominated (c and d tie at (b,f), where P3
+%   never moves).
+%   "Candidate WSE" = a strategy profile we are testing. It is a "real
+%   WSE" once validated. Off-path info sets: we pick the belief, and ONE
+%   belief that works is enough.
+%   Short names after the intro frame: Dodo (Dodo Donuts, the entrant)
+%   and BuckyDs (Buckeye Donuts, the incumbent).
 %   Bonanno's formal pi_i(H | sigma, mu) notation is skipped.
 %   Bayesian updating uses Bayes' rule from deck 11.
 %
 % ANSWERS (all checked numerically)
-%   Donut Truck. Truck (entrant): Out, Cart, Premium. Buckeye Donuts
-%   (incumbent) sees entry, not the plan: Fight or Accommodate.
-%   Payoffs (Truck, Buckeye):
+%   Donut Truck. Dodo Donuts (entrant): Out, Cart (small), Premium
+%   (big). Buckeye Donuts (incumbent) knows Dodo is coming, but not
+%   whether it's big or small: Fight or Accommodate.
+%   Payoffs (Dodo, BuckyDs):
 %     Out (0,4). Cart: F (-1,3), A (1,2). Premium: F (-2,0), A (3,1).
 %   No proper subgames, so SPNE = NE = {(Out, Fight), (Premium, Acc)}.
 %   mu = Pr(Cart | entry). Fight: 3 mu. Acc: 2 mu + 1(1-mu) = 1 + mu.
@@ -26,10 +42,11 @@
 %   Mix Out 1/2, Cart 1/10, Premium 2/5: mu = (1/10)/(1/2) = 1/5.
 %   WSE: (Premium, Acc) with mu = 0. (Out, Fight) with any mu >= 1/2.
 %   Selten's horse WSE: (a,e,c) and (b,e,c). Not (a,f,c): f gives P2
-%     1 < 2 from e. Not (b,f,d): d strictly dominated at P3's info set.
-%   Herding (60% majority, equal priors, players follow own signal):
-%     P2 after Blue guess + own blue: .36/(.36+.16) = 9/13 = .69.
-%     P3 after Blue, Blue + own red: .6 -> guess Blue anyway (cascade).
+%     1 < 2 from e. Not (b,f,d): the action d is strictly dominated at
+%     P3's info set (2 > 0 at both nodes).
+%     Strategic form, P3's payoffs: c gives 2,2,2,0 and d gives 0,0,0,0
+%     over (a,e),(a,f),(b,e),(b,f). Tie at (b,f): strategy d is weakly,
+%     not strictly, dominated.
 %   Worked example (Dead Phones). Alex: Cancel (2,2), or go to
 %   Cazuela's / Yoshi. Blair can't tell which: C, M (Massey's), Y, H.
 %     At Cazuela's: C (4,3)  M (1,2)  Y (0,0)  H (0,1)
@@ -37,7 +54,9 @@
 %     Pure NE: (Cancel, M), (Cancel, H), (Caz, C), (Yoshi, Y).
 %     mu = Pr(Caz). Blair: C 3mu, M 2, Y 3(1-mu), H 1.
 %     WSE: (Caz, C) mu=1; (Yoshi, Y) mu=0; (Cancel, M) mu in [1/3,2/3].
-%     (Cancel, H) is never part of a WSE (H < M always).
+%     (Cancel, H) is never part of a WSE: the action H is strictly
+%       dominated by M at Blair's info set (1 < 2 at both nodes). The
+%       strategy H is only weakly dominated (tie when Alex cancels).
 %     Alex mixes Cancel 1/2, Caz 1/3, Yoshi 1/6: mu = 2/3.
 %       Blair: C 2, M 2, Y 1, H 1 -> C or M (tie).
 % ---------------------------------------------------------------------
@@ -74,7 +93,7 @@
 
 % The Donut Truck. #1 = scale, #2 = extra options/overlays on the tree
 \newcommand{\donuttree}[2][0.85]{%
-\begin{gametree}[player names={Truck, Buckeye Donuts}, scale=#1]
+\begin{gametree}[player names={Dodo, BuckyDs}, scale=#1]
   \branch[player=1, root=w, label=90] from (0,0) to[v=1.4, h=3.6] {Out(0,4); Cart; Premium};
   \branch[player=2, label=none] from (w2) to[v=1.6, h=1.7] {Fight(-1,3); Acc(1,2)};
   \branch[label=none] from (w3) to {Fight(-2,0); Acc(3,1)};
@@ -91,9 +110,76 @@
   \informset (w2) -- (w3);
 \end{gametree}}
 
+% Blank first, answer in its place one click later (same idea as deck 09):
+% \ans[overlay]{width}{answer}. The answer shows from <overlay> on
+% (default 2). Same box size either way, so nothing moves.
+\newcommand{\ans}[3][2]{\alt<#1->{\makebox[#2]{\alert{#3}}}{\makebox[#2]{\vphantom{#3}\underline{\hspace{#2}}}}}
+
 \begin{document}
 
 \frame{\maketitle}
+
+% ==============================================================
+% STRATEGY vs. ACTION
+% ==============================================================
+% Sets the language for the rest of the course: an ACTION is strictly
+% dominated AT AN INFO SET. Not the same as a strictly dominated STRATEGY.
+% ---------------------------------------------------------------------
+\begin{frame}{Selten's Horse: Tree and Matrix}
+\begin{columns}[c]
+\begin{column}{0.36\textwidth}
+\centering
+\scalebox{0.75}{\horse[{\draw<3->[red, very thick, rounded corners=9pt] ($(x)+(-0.55,0.45)$) rectangle ($(y)+(0.55,-0.45)$);}]}
+\end{column}
+\begin{column}{0.63\textwidth}
+\centering
+\scalebox{0.88}{%
+\begin{matrixgame}[top={$e$, $f$}, left={$a$, $b$}, bottom={P3: $c$, P3: $d$}, player names={P1, P2, P3}]
+  \payoffmatrix{2,2,2 & 2,2,2 \\ 2,2,2 & 1,1,0}
+  \payoffmatrix[pos={4.7,0}]{0,0,0 & 0,0,0 \\ 0,0,0 & 1,1,0}
+  \begin{scope}[on background layer]
+    \only<2->{\shaderow[blue!70, opacity=0.25]{2}{2}{2}
+      \pgfmathsetmacro{\hxl}{\pmtwii[1]}\pgfmathsetmacro{\hxr}{\pmtwii[2]}
+      \pgfmathsetmacro{\hyt}{\pmthii[1]}\pgfmathsetmacro{\hyb}{\pmthii[2]}
+      \fill[blue!70, opacity=0.25] ($(pmt2-tl)+(\hxl,-\hyt)$) rectangle ($(pmt2-tl)+(\hxr,-\hyb)$);}
+  \end{scope}
+\end{matrixgame}}
+\end{column}
+\end{columns}
+\bsk
+Is the \textbf{strategy} $d$ strictly dominated by $c$? \ans{0.4in}{No!}\\[4pt]
+\onslide<2->{At $(b,f)$ P3 never moves: $0=0$. \ Only \textbf{weakly} dominated}
+\bsk
+\onslide<3->{\textbf{If} P3's info set is reached: is the \textbf{action} $d$ strictly dominated by $c$? \ans[4]{0.4in}{Yes!}}\\[4pt]
+\onslide<4->{Left node: $2>0$. \ Right node: $2>0$. \ Bad for \textbf{any} belief}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Dominated Strategy vs.\ Dominated Action}
+A \textbf{strategy} is strictly dominated \hfill {\footnotesize (Chapter 2)}
+\begin{itemize}
+    \item Compare whole strategies in the strategic form
+    \item Strictly worse against \textbf{every} strategy profile of the others
+\end{itemize}
+\bsk
+An \textbf{action} is strictly dominated \textbf{at an info set} \hfill {\footnotesize (new)}
+\begin{itemize}
+    \item Suppose the info set \textbf{is} reached
+    \item Strictly worse at \textbf{every} node in it. So worse for \textbf{any} belief
+\end{itemize}
+\bsk
+\onslide<2->{\textbf{Selten's horse:} the action $d$ is strictly dominated at P3's info set\\
+But the strategy $d$ is only weakly dominated
+\begin{itemize}
+    \item Why? If the info set is never reached, the action there doesn't matter
+\end{itemize}}
+\bsk
+\onslide<3->{\textbf{From now on:} ``the \textbf{action} $d$ is strictly dominated \textbf{at} P3's info set''\\
+\textbf{Not:} ``the strategy $d$ is strictly dominated''}
+\vfill
+{\footnotesize If more moves follow the info set: compare payoffs given how play continues.}
+\vspace{-0.2in}
+\end{frame}
 
 \begin{frame}{Where We Left Off: Selten's Horse}
 \begin{columns}[c]
@@ -112,35 +198,10 @@ SPNE only checks \textbf{subgames}
     \item So bad choices there go unchecked
 \end{itemize}
 \bsk
-\onslide<2->{\textbf{Fix:} give P3 a \textbf{belief} about where she is. Check every choice against it}
+\onslide<2->{\textbf{Fix:} give P3 a \textbf{belief} about where they are. Check every choice against it}
 \end{column}
 \end{columns}
 \vspace{-0.3in}
-\end{frame}
-
-% ---- MobLab run: Herding (Information Cascade) ------------------------
-% Macro and Finance topic. Default majority 60%. Groups of 5-6, random
-% order. A few periods. Play BEFORE beliefs are defined. Results come
-% back in "Back to Herding".
-% ---------------------------------------------------------------------
-\begin{frame}{MobLab: ``Herding (Information Cascade)''}
-\begin{itemize}
-    \item MobLab time!
-    \item A jar is either mostly \textbf{Blue} or mostly \textbf{Red} (equally likely)
-    \begin{itemize}
-        \item Mostly $=$ 60\% of the balls
-    \end{itemize}
-    \item You privately draw one ball (it goes back in)
-    \item One at a time, in random order, guess: Blue jar or Red jar?
-    \begin{itemize}
-        \item You see everyone's \textbf{guesses} before you. Not their balls
-    \end{itemize}
-    \item Paid for a correct guess
-\end{itemize}
-\vfill
-\centering
-Feel free to talk! And play it the way you'd actually play it.
-\vspace{-0.2in}
 \end{frame}
 
 % ==============================================================
@@ -152,18 +213,20 @@ Beliefs at Information Sets
 \end{frame}
 
 \begin{frame}{Example: The Donut Truck}
-A new donut truck thinks about parking near Buckeye Donuts on High St
+\textbf{Dodo Donuts} thinks about parking a donut truck near \textbf{Buckeye Donuts} on High St
 \begin{itemize}
     \item \textbf{Out}: stay away
-    \item \textbf{Cart}: a cheap little cart (weak)
-    \item \textbf{Premium}: a full truck with a big menu (strong)
+    \item \textbf{Cart}: a cheap little cart (small)
+    \item \textbf{Premium}: a full truck with a big menu (big)
 \end{itemize}
 \bsk
-Buckeye Donuts sees \textbf{that} the truck showed up, not \textbf{which} plan
+Buckeye Donuts knows \textbf{that} Dodo is coming, but not sure whether it's \textbf{big or small}
 \begin{itemize}
     \item \textbf{Fight}: price war. \ \textbf{Acc}: accommodate
-    \item Fighting a weak cart pays. Fighting a strong truck doesn't
+    \item Fighting a small cart pays. Fighting a big truck doesn't
 \end{itemize}
+\bsk
+Players: \textbf{Dodo} and \textbf{BuckyDs}
 \vspace{-0.3in}
 \end{frame}
 
@@ -175,36 +238,36 @@ Buckeye Donuts sees \textbf{that} the truck showed up, not \textbf{which} plan
 \end{column}
 \begin{column}{0.48\textwidth}
 \centering
-\begin{matrixgame}[top={Fight, Acc}, left={Out, Cart, Premium}, player names={Truck, Buckeye}, br=<2->]
+\begin{matrixgame}[top={Fight, Acc}, left={Out, Cart, Premium}, player names={Dodo, BuckyDs}, br=<2->]
   \payoffmatrix{0,4 & 0,4 \\ -1,3 & 1,2 \\ -2,0 & 3,1}
 \end{matrixgame}
 \end{column}
 \end{columns}
 \bsk
-Proper subgames? \underline{\hspace{0.5in}} \ So $SPNE=NE$
+Proper subgames? \ans{0.5in}{None} \ So $SPNE=NE$
 \bsk
-\onslide<2->{NE: \underline{\hspace{1in}} \quad \underline{\hspace{1in}}}
+\onslide<2->{NE: \ans[3]{1in}{(Out, Fight)} \quad \ans[3]{1.1in}{(Premium, Acc)}}
 \bsk
-\onslide<3->{Is (Out, Fight) reasonable? \ \textbf{It depends on what Buckeye believes}}
+\onslide<4->{Is (Out, Fight) reasonable? \ \textbf{It depends on what BuckyDs believes}}
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{What Should Buckeye Believe?}
+\begin{frame}{What Should BuckyDs Believe?}
 \begin{columns}[c]
 \begin{column}{0.48\textwidth}
 \centering
 \donuttree[0.78]{\node[font=\small] at ($(w2)+(-0.15,0.35)$) {$\mu$}; \node[font=\small] at ($(w3)+(0.4,0.35)$) {$1-\mu$};}
 \end{column}
 \begin{column}{0.5\textwidth}
-$\mu=$ Pr(Cart $\mid$ truck showed up)
+$\mu=$ Pr(Cart $\mid$ Dodo is coming)
 \bsk
-Fight: \underline{\hspace{1.1in}}\\[6pt]
-Acc: \ \ \underline{\hspace{1.1in}}
+Fight: \ans{1.1in}{$3\mu$}\\[6pt]
+Acc: \ \ \ans{1.1in}{$2\mu+1(1-\mu)$}
 \end{column}
 \end{columns}
 \bsk
-\textbf{In words:} fight when the truck is likely enough to be a weak cart
-$$\underbrace{3\mu\vphantom{(}}_{\text{payoff from Fight}}\ \ge\ \underbrace{2\mu+1(1-\mu)}_{\text{payoff from Acc}} \quad\iff\quad \mu\ \ge\ \underline{\hspace{0.4in}}$$
+\onslide<2->{\textbf{In words:} fight when Dodo is likely enough to be a small cart
+$$\underbrace{3\mu\vphantom{(}}_{\text{payoff from Fight}}\ \ge\ \underbrace{2\mu+1(1-\mu)}_{\text{payoff from Acc}} \quad\iff\quad \mu\ \ge\ \ans[3]{0.4in}{$\tfrac12$}$$}
 \vspace{-0.3in}
 \end{frame}
 
@@ -236,8 +299,14 @@ $\mu$: ``if I ever got here, where would I think I am?''
 \bsk
 \textbf{2. Bayesian updating} (Bonanno 11.2.2)
 \begin{itemize}
-    \item If $\sigma$ reaches an info set with positive probability: beliefs come from $\sigma$ by Bayes' rule
-    \item If $\sigma$ never reaches it: \textbf{any} beliefs are OK
+    \item \textbf{On-path}: $\sigma$ reaches the info set with positive probability
+    \begin{itemize}
+        \item Beliefs come from $\sigma$ by Bayes' rule. No choice
+    \end{itemize}
+    \item \textbf{Off-path}: $\sigma$ never reaches it
+    \begin{itemize}
+        \item \textbf{Any} beliefs are OK
+    \end{itemize}
 \end{itemize}
 \vfill
 {\footnotesize Sequential rationality also means you can't gain by changing your choice here \textbf{and} later choices too.}
@@ -251,15 +320,15 @@ $\mu$: ``if I ever got here, where would I think I am?''
 \donuttree[0.78]{}
 \end{column}
 \begin{column}{0.5\textwidth}
-Truck mixes:
+Dodo mixes:
 $$\begin{pmatrix} \text{Out} & \text{Cart} & \text{Premium} \\ \tfrac12 & \tfrac{1}{10} & \tfrac25\end{pmatrix}$$
-Pr(Buckeye's info set reached) $=$ \underline{\hspace{0.5in}}
+Pr(BuckyDs's info set reached) $=$ \ans{0.5in}{$\tfrac12$}
 \bsk
-$\mu=P(\text{Cart}\mid\text{reached})=$ \underline{\hspace{0.9in}}
+$\mu=P(\text{Cart}\mid\text{reached})=$ \ans{0.9in}{$\dfrac{1/10}{1/2}=\dfrac15$}
 \end{column}
 \end{columns}
 \bsk
-\onslide<2->{If the truck plays \textbf{Out} for sure: info set never reached\\
+\onslide<3->{If Dodo plays \textbf{Out} for sure: info set never reached (off-path)\\
 $\Rightarrow$ Bayes' rule says nothing ($\tfrac{0}{0}$). Any $\mu$ allowed}
 \vspace{-0.3in}
 \end{frame}
@@ -275,84 +344,108 @@ A \textbf{weak sequential equilibrium} (WSE) is an assessment $(\sigma,\mu)$ tha
 \bsk
 How to find them:
 \begin{enumerate}
-    \item Delete choices that are strictly dominated at an info set (bad for \textbf{any} belief)
-    \item Guess the first mover's strategy
-    \item Bayes' rule gives beliefs where it can
-    \item Check sequential rationality everywhere. Repeat
+    \item Delete \textbf{actions} that are strictly dominated \textbf{at an info set} (bad for \textbf{any} belief)
+    \item Guess a \textbf{candidate WSE}: a strategy profile $\sigma$
+    \item On-path info sets: Bayes' rule gives $\mu$. \ Off-path: \textbf{we} pick $\mu$
+    \item Sequentially rational everywhere? Then it's a \textbf{real WSE}. Repeat
 \end{enumerate}
 \vfill
 {\footnotesize Also called ``weak perfect Bayesian equilibrium'' in other books.}
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Donut Truck: WSE \#1}
+\begin{frame}{Donut Truck: Candidate WSE \#1}
 \begin{columns}[c]
 \begin{column}{0.48\textwidth}
 \centering
 \donuttree[0.78]{}
 \end{column}
 \begin{column}{0.5\textwidth}
-Try $\sigma=$ (Premium, Acc)
+\textbf{Candidate WSE:} $\sigma=$ (Premium, Acc)
 \bsk
-Info set reached? \underline{\hspace{0.5in}}\\[4pt]
-Bayes: $\mu=$ \underline{\hspace{0.5in}}
+Info set reached? \ans{0.4in}{Yes} \onslide<2->{(on-path)}\\[4pt]
+So Bayes forces $\mu=$ \ans{0.4in}{$0$}
 \bsk
-Buckeye: Acc optimal given $\mu$? \underline{\hspace{0.4in}}\\[4pt]
-Truck: Premium optimal? \underline{\hspace{0.4in}}
+BuckyDs: Acc optimal given $\mu$? \ans{0.4in}{Yes}\\[4pt]
+Dodo: Premium optimal? \ans{0.4in}{Yes}
 \end{column}
 \end{columns}
 \bsk
-\onslide<2->{WSE: \ (Premium, Acc) with $\mu=$ \underline{\hspace{0.5in}}}
+\onslide<3->{Validated! \ (Premium, Acc) with $\mu=0$ is a \textbf{real WSE}}
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{Donut Truck: WSE \#2?}
+\begin{frame}{Donut Truck: Candidate WSE \#2}
 \begin{columns}[c]
 \begin{column}{0.48\textwidth}
 \centering
 \donuttree[0.78]{}
 \end{column}
 \begin{column}{0.5\textwidth}
-Try $\sigma=$ (Out, Fight)
+\textbf{Candidate WSE:} $\sigma=$ (Out, Fight)
 \bsk
-Info set reached? \underline{\hspace{0.5in}}\\[4pt]
-So Bayes says: \underline{\hspace{1in}}
+Info set reached? \ans{0.4in}{No} \onslide<2->{(off-path)}\\[4pt]
+So Bayes says: \ans{0.8in}{Nothing!}
 \bsk
-Buckeye: Fight optimal iff \underline{\hspace{0.7in}}\\[4pt]
-Truck: Out optimal? \underline{\hspace{0.4in}}
+BuckyDs: Fight optimal iff \ans{0.6in}{$\mu\ge\tfrac12$}\\[4pt]
+Dodo: Out optimal? \ans{0.4in}{Yes}
 \end{column}
 \end{columns}
 \bsk
-\onslide<2->{WSE: \ (Out, Fight) with any $\mu\ge$ \underline{\hspace{0.5in}}}
+\onslide<3->{Off-path, so \textbf{we} get to pick the belief. \textbf{Any} belief! \ Pick $\mu=1$. Fight is optimal}\\[4pt]
+\onslide<4->{\textbf{One} belief that works is enough \ $\Rightarrow$ \ (Out, Fight) is a \textbf{real WSE}}
 \bsk
-\onslide<3->{The threat works only if Buckeye \textbf{believes} a surprise entrant is weak}
+\onslide<5->{The threat works only if BuckyDs \textbf{believes} a surprise entrant is small}
+\vspace{-0.3in}
+\end{frame}
+
+\begin{frame}{Validating a Candidate WSE}
+\textbf{Candidate WSE:} a strategy profile $\sigma$ we want to test. Is it a \textbf{real WSE}?
+\bsk
+\textbf{On-path} info sets
+\begin{itemize}
+    \item Bayes' rule pins down $\mu$. No freedom
+    \item The action there must be optimal for \textbf{that} $\mu$
+\end{itemize}
+\bsk
+\textbf{Off-path} info sets
+\begin{itemize}
+    \item Bayes' rule says nothing. \textbf{We} get to pick $\mu$. \textbf{Any} belief!
+    \item Find \textbf{one} belief that makes the action there optimal. That's enough
+\end{itemize}
+\bsk
+\onslide<2->{\textbf{One such belief exists} \ $\Rightarrow$ \ the candidate is validated at that info set}\\[6pt]
+\onslide<3->{\textbf{No such belief exists} \ $\Rightarrow$ \ not a WSE. \ \textbf{Ex:} an action strictly dominated at that info set}
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Back to Selten's Horse}
 \begin{columns}[c]
-\begin{column}{0.5\textwidth}
+\begin{column}{0.44\textwidth}
 \centering
-\horse
+\scalebox{0.9}{\horse}
 \end{column}
-\begin{column}{0.48\textwidth}
-Which NE can be part of a WSE?
+\begin{column}{0.55\textwidth}
+Which candidates are real WSE?
 \bsk
 \renewcommand{\arraystretch}{1.5}
+{\small
 \begin{tabular}{|c|c|c|}
 \hline
 NE & WSE? & Why / beliefs \\
 \hline
-$(a,e,c)$ & \hspace{0.3in} & \hspace{0.8in} \\
-$(a,f,c)$ & & \\
-$(b,e,c)$ & & \\
-$(b,f,d)$ & & \\
+$(a,e,c)$ & \ans{0.3in}{Yes} & \ans{1.55in}{Bayes: left node. $c$ optimal} \\
+$(a,f,c)$ & \ans{0.3in}{No} & \ans{1.55in}{At P2's node, $e$ beats $f$} \\
+$(b,e,c)$ & \ans{0.3in}{Yes} & \ans{1.55in}{Bayes: right node. $c$ optimal} \\
+$(b,f,d)$ & \ans{0.3in}{No} & \ans{1.55in}{No belief makes $d$ optimal} \\
 \hline
-\end{tabular}
+\end{tabular}}
 \end{column}
 \end{columns}
 \bsk
-\onslide<2->{\textbf{Lesson:} WSE kills the silly SPNE from Chapter 7}
+\onslide<2->{$(b,f,d)$: P3's info set is off-path, so we may pick any belief. But the \textbf{action} $d$ is strictly dominated \textbf{at} that info set. Nothing works}
+\bsk
+\onslide<3->{\textbf{Lesson:} WSE kills the silly SPNE from Chapter 7}
 \vspace{-0.3in}
 \end{frame}
 
@@ -378,8 +471,14 @@ $(b,f,d)$ & & \\
 \bsk
 \textbf{But:} a WSE need not be a SPNE!
 \begin{itemize}
-    \item Silly beliefs at unreached info sets can support silly play inside a subgame
+    \item Silly beliefs at off-path info sets can support silly play inside a subgame
 \end{itemize}
+\bsk
+\onslide<2->{\textcolor{green!40!black}{\textbf{SE}}: \textbf{sequential equilibrium}
+\begin{itemize}
+    \item Another solution concept. Inside both SPNE and WSE
+    \item Resolves the SPNE-WSE conflict
+\end{itemize}}
 \end{column}
 \end{columns}
 \vfill
@@ -387,10 +486,10 @@ $(b,f,d)$ & & \\
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Coming Attraction: Sequential Equilibrium}
+\begin{frame}{Sequential Equilibrium: The Idea}
 WSE's weak spot: \textbf{anything goes} off the path of play
 \bsk
-\textbf{Sequential equilibrium} (Chapter 12) adds a rule for surprises:
+\textbf{Sequential equilibrium} (SE) adds a rule for surprises:
 \begin{itemize}
     \item Pretend everyone makes tiny mistakes (``trembles'')
     \item Then every info set is reached, so Bayes' rule always works
@@ -401,24 +500,7 @@ WSE's weak spot: \textbf{anything goes} off the path of play
 \bsk
 \onslide<2->{Donut truck: SE doesn't help. Some tremble gives any $\mu$}
 \vfill
-{\footnotesize Not covered in this class. Kreps \& Wilson (1982, \textit{Econometrica}).}
-\vspace{-0.2in}
-\end{frame}
-
-\begin{frame}{Back to Herding}
-Suppose everyone guesses their own ball's color... until it stops making sense
-\bsk
-\textbf{Player 2} sees ``Blue'', draws blue:\\
-$P(\text{Blue jar})=\dfrac{(.6)(.6)}{(.6)(.6)+(.4)(.4)}=$ \underline{\hspace{0.6in}}
-\bsk
-\textbf{Player 3} sees ``Blue, Blue'', draws \textbf{red}:\\
-Two blue balls revealed, one red. $P(\text{Blue jar})=$ \underline{\hspace{0.6in}} \ Guess? \underline{\hspace{0.5in}}
-\bsk
-\onslide<2->{\textbf{Cascade:} from now on, guesses reveal nothing. Everyone herds}\\
-\onslide<3->{This is Bayesian updating \textbf{along the path of play}: guesses reveal balls\\
-Our groups: \underline{\hspace{0.4in}} cascades, \underline{\hspace{0.4in}} on the wrong color}
-\vfill
-{\footnotesize Anderson \& Holt (1997, \textit{AER}). Not in the book.}
+{\footnotesize We cover SE only informally. For the full formal development, see Bonanno Chapter 12. Kreps \& Wilson (1982, \textit{Econometrica}).}
 \vspace{-0.2in}
 \end{frame}
 
@@ -457,26 +539,48 @@ Alex and Blair have dinner plans. Alex either \textbf{Cancels} (Blair knows), or
 \vspace{-0.3in}
 \end{frame}
 
+% Answers appear on <2-> so they can be checked against the live solution.
 \begin{frame}{Dead Phones, Again}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
 \begin{enumerate}
-    \item Write the strategic form. Find the pure NE. Any proper subgames? \vspace{0.35in}
-    \item Let $\mu=$ Pr(Cazuela's) at Blair's info set. Blair's expected payoff from C, M, Y, H? \vspace{0.35in}
-    \item Which NE are part of a WSE? With what beliefs? \vspace{0.4in}
-    \item If Alex mixes Cancel $\tfrac12$, Cazuela's $\tfrac13$, Yoshi $\tfrac16$: Blair's belief? Best reply? \vspace{0.2in}
+    \item Write the strategic form. Find the pure NE. Any proper subgames?\\[3pt]
+    \onslide<2->{\alert{(Cancel, M), (Cancel, H)\\ (Caz, C), (Yoshi, Y)\\ No proper subgames}}
+\end{enumerate}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\visible<2->{\scalebox{0.76}{%
+\begin{matrixgame}[top={C, M, Y, H}, left={Cancel, Caz, Yoshi}, player names={Alex, Blair}, br=<2->]
+  \payoffmatrix{2,2 & 2,2 & 2,2 & 2,2 \\ 4,3 & 1,2 & 0,0 & 0,1 \\ 0,0 & 1,2 & 3,3 & 0,1}
+\end{matrixgame}}}
+\end{column}
+\end{columns}
+\begin{enumerate}
+    \setcounter{enumi}{1}
+    \item Let $\mu=$ Pr(Cazuela's) at Blair's info set. Blair's expected payoff from C, M, Y, H?\\[3pt]
+    \onslide<2->{\alert{C: $3\mu$ \qquad M: $2$ \qquad Y: $3(1-\mu)$ \qquad H: $1$}}\vspace{0.08in}
+    \item Which NE are part of a WSE? With what beliefs?\\[3pt]
+    \onslide<2->{\alert{(Caz, C) with $\mu=1$ \qquad (Yoshi, Y) with $\mu=0$ \qquad (Cancel, M) with any $\mu\in[\tfrac13,\tfrac23]$\\
+    (Cancel, H): never. The action H is strictly dominated by M at Blair's info set}}\vspace{0.08in}
+    \item If Alex mixes Cancel $\tfrac12$, Cazuela's $\tfrac13$, Yoshi $\tfrac16$: Blair's belief? Best reply?\\[3pt]
+    \onslide<2->{\alert{$\mu=\frac{1/3}{1/2}=\tfrac23$ \qquad C: 2, \ M: 2, \ Y: 1, \ H: 1 \ $\Rightarrow$ \ C or M (tie)}}
 \end{enumerate}
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{What Have We Learned, Charlie Brown?}
 \begin{itemize}
+    \item An \textbf{action} can be strictly dominated \textbf{at an info set}, even when the strategy isn't
     \item \textbf{Assessment} $(\sigma,\mu)$: strategies plus beliefs at every info set
     \item \textbf{Sequential rationality}: best choice at every info set, given beliefs
     \item \textbf{Bayesian updating}: beliefs from $\sigma$ by Bayes' rule, when reachable
     \begin{itemize}
-        \item Unreached info sets: any beliefs
+        \item Off-path info sets: we pick the belief. \textbf{One} that works is enough
     \end{itemize}
     \item \textbf{WSE} $=$ both. Kills Selten's horse's silly SPNE
-    \item WSE $\Rightarrow$ NE, but not always SPNE. Fix: sequential equilibrium
+    \item \textbf{Candidate WSE}: a strategy profile to test. Validated $\Rightarrow$ real WSE
+    \item WSE $\Rightarrow$ NE, but not always SPNE. Fix: sequential equilibrium (informally)
 \end{itemize}
 \vfill
 \vspace{-0.4in}
@@ -488,7 +592,7 @@ Alex and Blair have dinner plans. Alex either \textbf{Cancels} (Blair knows), or
     \begin{itemize}
         \item \S11.1--11.3: read. Skim the $\pi_i(H\mid\sigma,\mu)$ notation
     \end{itemize}
-    \item Optional: Chapter 12 for sequential equilibrium
+    \item Sequential equilibrium: we covered only the idea. Chapter 12 has the full formal development (optional)
     \item Exercises: \S11.4.1 (11.1, 11.2), \S11.4.2 (11.4), \S11.4.3 (11.6, 11.7)
     \item Solutions in \S11.5. Try them first
 \end{itemize}
