@@ -647,18 +647,18 @@ How Much Can Repetition Do?
     \item<4-> No! You'd switch to $D$ and get 1, not zero
 \end{itemize}
 \bsk
-\onslide<5->{\textbf{Minmax Payoff:} the lowest payoff that others can force you to accept}
+\onslide<5->{\textbf{Minmax Payoff:} the lowest payoff that others can \textit{force} you to accept (when you know that's what they're trying to do)}
 \bsk
 \onslide<6->{In this game: Your minmax payoff is 1}
 \end{frame}
 
 \begin{frame}{Minmax Payoff}
 \textbf{In words:} the worst the others can hold you to, if you always best respond
-$$v_i=\underbrace{\min_{a_{-i}}}_{\text{others hurt you}}\ \ \underbrace{\max_{a_i}\ u_i(a_i,a_{-i})}_{\text{you best respond}}$$
+$$v_i=\underbrace{\min_{a_{-i}}}_{\text{others try to hurt you}}\ \ \big(\underbrace{\max_{a_i}\ u_i(a_i,a_{-i})}_{\text{you best respond}}\big)$$
 \bsk
 \textbf{Ex:} in the previous slide, $v_i=1$ for both players
 \bsk
-\onslide<2->{\textbf{Fact:} You can always get at least $v_i$. Thus, no SPNE can give you less than $v_i$}
+\onslide<2->{\textbf{Fact:} You can always get at least $v_i$ just by best responding. Thus, no SPNE can give you less than $v_i$}
 \end{frame}
 
 \begin{frame}{Feasible Payoffs}
@@ -691,8 +691,8 @@ Per-period average payoffs
 \end{columns}
 \vfill
 \onslide<4->{\textbf{What payoffs are obtainable in SPNE?}\\
-SPNE \#1: Grim Trigger gives payoffs $(2,2)$\\
-SPNE \#2: Always Defect gives payoffs $(1,1)$\bsk}
+SPNE \#1: Grim Trigger gives payoffs $(2,2)$ every period\\
+SPNE \#2: Always Defect gives payoffs $(1,1)$ every period\bsk}
 \onslide<5->{Other SPNE?? What payoffs do they achieve? }\onslide<6->{\textbf{Answer}: the red shape above}
 %{\footnotesize Average payoff: $(1-\delta)U_i$. Getting $x$ forever gives an average of $x$.}
 \vspace{-0.2in}
@@ -700,14 +700,20 @@ SPNE \#2: Always Defect gives payoffs $(1,1)$\bsk}
 
 \begin{frame}{The Folk Theorem}
 \begin{block}{Folk Theorem (stated without proof)}
-In an infinitely repeated game, \textbf{any} feasible payoff giving every player more than\\ their minmax $v_i$ is the average payoff of some SPNE, if $\delta$ is close enough to 1.
+In an infinitely repeated game, \textbf{any} feasible payoff giving every player more than\\ their minmax $v_i$ is the average payoff of \textbf{some} SPNE, if $\delta$ is close enough to 1.
 \end{block}
 \bsk
 \begin{itemize}
     \item ``Folk'': everyone knew it before anyone published it
     \item PD: anything in the red region. Including (2,2)
 \end{itemize}
-\vfill
+\bsk
+\textbf{Sketch of Proof:} (not required for this class)
+\begin{enumerate}
+    \item Pick any point in the red region, and some strategy that gives those payoffs on avg
+    \item If some player $i$ deviates, minmax them for a while, then return to original plan, except now $i$ gets a penny less forever (tiny permanent punishment)
+    \item If any $j\neq i$ deviates from minmaxing, start phase 2 over, but now punish $j$ instead of $i$
+\end{enumerate}
 {\footnotesize Not in the book. Friedman (1971); Fudenberg \& Maskin (1986, \textit{Econometrica}). Some technical conditions apply.}
 \vspace{-0.2in}
 \end{frame}
