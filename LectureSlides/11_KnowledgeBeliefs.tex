@@ -157,12 +157,12 @@ Feel free to talk! And play it the way you'd actually play it.
 \begin{itemize}
     \item<1-> 10 doors. A car behind one. Each door: $\tfrac{1}{10}$
     \item<2-> You pick door 3. Chance you're right: $\tfrac{1}{10}$
-    \item<3-> Monty \textbf{knows} the car is behind door 7
+    \item<3-> Monty \textbf{knows} the car is behind door 7 (\textit{e.g.})
     \item<4-> Monty opens every door except yours and door 7. All goats
-    \item<4-> Your door: still $\tfrac{1}{10}$. Door 7 ``absorbs'' the other $\tfrac{9}{10}$. \ \textbf{Switch!}
+    \item<4-> Your door: still $\tfrac{1}{10}$. Door 7 ``absorbs'' the other $\tfrac{8}{10}$. \ \textbf{Switch!}
 \end{itemize}
 \vfill
-\onslide<4->{\footnotesize If you did pick the car ($\tfrac{1}{10}$ chance), Monty leaves one goat door closed at random. Switching loses only then.}
+%\onslide<4->{\footnotesize If you did pick the car ($\tfrac{1}{10}$ chance), Monty leaves one goat door closed at random. Switching loses only then.}
 \vspace{-0.2in}
 \end{frame}
 
@@ -176,7 +176,7 @@ Feel free to talk! And play it the way you'd actually play it.
     \item<2-> You pick door 2. Chance you're right: $\tfrac{1}{3}$
     \item<3-> Monty \textbf{knows} the car is behind door 3
     \item<4-> Monty opens door 1. A goat
-    \item<4-> Your door: still $\tfrac{1}{3}$. Door 3 ``absorbs'' the other $\tfrac{2}{3}$. \ \textbf{Switch!}
+    \item<4-> Your door: still $\tfrac{1}{3}$. Door 3 ``absorbs'' the other $\tfrac{1}{3}$. \ \textbf{Switch!}
 \end{itemize}
 \vfill
 \onslide<4->{\footnotesize Same logic as 10 doors. It's just harder to see with only one door opened.}
@@ -211,15 +211,18 @@ Feel free to talk! And play it the way you'd actually play it.
   \node<4-> at (80.9,-0.825) {$\cdots$};
 \end{tikzpicture}
 \end{center}
-\textbf{State (of the world)} $w$: a complete description of everything relevant
+\textbf{State (of the world)} $w$: a complete description of everything relevant (eg, temp outside)
 \begin{itemize}
     \item<1-> $W=$ set of all states \quad Ex: all temperatures
     \item<2-> \textbf{True state}: the one that actually happened \quad Ex: $67^\circ$F
     \item<3-> \textbf{Event} $E\subseteq W$: a set of states \quad Ex: ``at least $75^\circ$F''
+    \begin{itemize}
+        \item<3-> In this case, $E$ was false (did not happen)
+    \end{itemize}
 \end{itemize}
 \bsk
 \onslide<4->{
-\textbf{Information set} $I_i(w)$: the states Player $i$ thinks are possible when the truth is $w$
+\textbf{Information set} $I_i(w)$: the states Player $i$ can't tell apart when the true state is $w$
 \begin{itemize}
     \item The info sets split up $W$: a \textbf{partition}
     \item Ex: P1's thermometer only shows $5^\circ$ bands: $I_1(67^\circ)=[65,70)$
@@ -232,17 +235,18 @@ Feel free to talk! And play it the way you'd actually play it.
 \end{frame}
 
 \begin{frame}{Example: Quiz Tomorrow?}
-Alex was in class. Blair skipped. Alex texts Blair if there's a quiz\\ Texts sometimes get lost
+Alex was in class. Blair skipped. Alex texts Blair if (and only if) there's a quiz tomorrow\\ Texts sometimes get lost
 \bsk
 \begin{columns}[c]
 \begin{column}{0.48\textwidth}
+Three possible states:
 \begin{itemize}
-    \item $\alpha$: quiz, Blair got the text
-    \item $\beta$: quiz, text got lost
-    \item $\gamma$: no quiz (no text)
+    \item $\alpha$: quiz tomorrow, Blair got the text
+    \item $\beta$: quiz tomorrow, text got lost
+    \item $\gamma$: no quiz tomorrow, so no text
 \end{itemize}
 \bsk
-True state: $\alpha$
+Suppose true state is $\alpha$
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
@@ -264,7 +268,7 @@ $$w\in K_iE \iff \underbrace{I_i(w)}_{\text{what $i$ thinks is possible}}\ \subs
 \quizparts[0.68in]{}
 \end{column}
 \begin{column}{0.48\textwidth}
-$Q=$ ``quiz'' $=\{\alpha,\beta\}$
+Event $Q=$ ``quiz tomorrow'' $=\{\alpha,\beta\}$
 \bsk
 $K_A Q=$ \ans{0.8in}{$\{\alpha,\beta\}$}\\[6pt]
 $K_B Q=$ \ans{0.8in}{$\{\alpha\}$}
@@ -276,7 +280,7 @@ At $\alpha$, who knows about the quiz? \only<2->{\alert{Both!}}
 \end{frame}
 
 \begin{frame}{Knowing What Others Know}
-``Blair knows $Q$'' is itself an event: $K_BQ=\{\alpha\}$
+``Blair knows $Q$'' is itself an event: $K_BQ=\{\alpha\}$. So is ``Alex knows $Q$'': $K_AQ=\{\alpha,\beta\}$
 \bsk
 \begin{columns}[c]
 \begin{column}{0.5\textwidth}
@@ -284,11 +288,11 @@ At $\alpha$, who knows about the quiz? \only<2->{\alert{Both!}}
 \quizparts[0.68in]{}
 \end{column}
 \begin{column}{0.48\textwidth}
-Does Alex know Blair knows?\\
-$K_A K_B Q=$ \ans{0.8in}{$\emptyset$}
-\bsk
 Does Blair know Alex knows?\\
-$K_B K_A Q=$ \ans{0.8in}{$\{\alpha\}$}
+$K_B (K_A Q)=K_B (\{\alpha,\beta\})=$ \ans{0.8in}{$\{\alpha\}$}
+\bsk
+Does Alex know Blair knows?\\
+$K_A (K_B Q)=K_A(\{\alpha\})=$ \ans{0.8in}{$\emptyset$}
 \end{column}
 \end{columns}
 \bsk
