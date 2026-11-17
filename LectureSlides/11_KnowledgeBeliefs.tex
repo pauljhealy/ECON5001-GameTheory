@@ -259,95 +259,96 @@ Blair can't tell $\beta$ from $\gamma$. Why? \ans[3]{2.4in}{No text either way}}
 \vspace{-0.3in}
 \end{frame}
 
-\begin{frame}{Knowledge}
-\textbf{In words:} $i$ knows $E$ at $w$ if \textbf{every} state $i$ thinks is possible is in $E$
-$$w\in K_iE \iff \underbrace{I_i(w)}_{\text{what $i$ thinks is possible}}\ \subseteq\ \underbrace{E\vphantom{I_i(w)}}_{\text{the event}}$$
-\begin{columns}[c]
-\begin{column}{0.5\textwidth}
-\centering
-\quizparts[0.68in]{}
-\end{column}
-\begin{column}{0.48\textwidth}
-Event $Q=$ ``quiz tomorrow'' $=\{\alpha,\beta\}$
-\bsk
-$K_A Q=$ \ans{0.8in}{$\{\alpha,\beta\}$}\\[6pt]
-$K_B Q=$ \ans{0.8in}{$\{\alpha\}$}
-\bsk
-At $\alpha$, who knows about the quiz? \only<2->{\alert{Both!}}
-\end{column}
-\end{columns}
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{Knowledge}
+% \textbf{In words:} $i$ knows $E$ at $w$ if \textbf{every} state $i$ thinks is possible is in $E$
+% $$w\in K_iE \iff \underbrace{I_i(w)}_{\text{what $i$ thinks is possible}}\ \subseteq\ \underbrace{E\vphantom{I_i(w)}}_{\text{the event}}$$
+% \begin{columns}[c]
+% \begin{column}{0.5\textwidth}
+% \centering
+% \quizparts[0.68in]{}
+% \end{column}
+% \begin{column}{0.48\textwidth}
+% Event $Q=$ ``quiz tomorrow'' $=\{\alpha,\beta\}$
+% \bsk
+% $K_A Q=$ \ans{0.8in}{$\{\alpha,\beta\}$}\\[6pt]
+% $K_B Q=$ \ans{0.8in}{$\{\alpha\}$}
+% \bsk
+% At $\alpha$, who knows about the quiz? \only<2->{\alert{Both!}}
+% \end{column}
+% \end{columns}
+% \vspace{-0.3in}
+% \end{frame}
 
-\begin{frame}{Knowing What Others Know}
-``Blair knows $Q$'' is itself an event: $K_BQ=\{\alpha\}$. So is ``Alex knows $Q$'': $K_AQ=\{\alpha,\beta\}$
-\bsk
-\begin{columns}[c]
-\begin{column}{0.5\textwidth}
-\centering
-\quizparts[0.68in]{}
-\end{column}
-\begin{column}{0.48\textwidth}
-Does Blair know Alex knows?\\
-$K_B (K_A Q)=K_B (\{\alpha,\beta\})=$ \ans{0.8in}{$\{\alpha\}$}
-\bsk
-Does Alex know Blair knows?\\
-$K_A (K_B Q)=K_A(\{\alpha\})=$ \ans{0.8in}{$\emptyset$}
-\end{column}
-\end{columns}
-\bsk
-\onslide<3->{So at $\alpha$: both know there's a quiz. Blair knows Alex knows\\
-But Alex \textbf{doesn't} know Blair knows!}
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{Knowing What Others Know}
+% ``Blair knows $Q$'' is itself an event: $K_BQ=\{\alpha\}$. So is ``Alex knows $Q$'': $K_AQ=\{\alpha,\beta\}$
+% \bsk
+% \begin{columns}[c]
+% \begin{column}{0.5\textwidth}
+% \centering
+% \quizparts[0.68in]{}
+% \end{column}
+% \begin{column}{0.48\textwidth}
+% Does Blair know Alex knows?\\
+% $K_B (K_A Q)=K_B (\{\alpha,\beta\})=$ \ans{0.8in}{$\{\alpha\}$}
+% \bsk
+% Does Alex know Blair knows?\\
+% $K_A (K_B Q)=K_A(\{\alpha\})=$ \ans{0.8in}{$\emptyset$}
+% \end{column}
+% \end{columns}
+% \bsk
+% \onslide<3->{So at $\alpha$: both know there's a quiz. Blair knows Alex knows\\
+% But Alex \textbf{doesn't} know Blair knows!}
+% \vspace{-0.3in}
+% \end{frame}
 
-\begin{frame}{Common Knowledge}
-$E$ is \textbf{common knowledge} if: everyone knows $E$, everyone knows everyone knows $E$, everyone knows everyone knows everyone knows $E$, ... \textbf{forever}
-\bsk
-Infinitely many things to check?? No:
-\bsk
-\textbf{Reachable:} $w'$ is reachable from $w$ if you can get there in steps, where each step stays inside \textbf{someone's} information set
-\bsk
-\begin{block}{Fact (Bonanno \S8.3)}
-$E$ is common knowledge at $w$ $\iff$ every state reachable from $w$ is in $E$
-\end{block}
-\bsk
-Notation: $CK\,E$ $=$ states where $E$ is common knowledge
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{Common Knowledge}
+% $E$ is \textbf{common knowledge} if: everyone knows $E$, everyone knows everyone knows $E$, everyone knows everyone knows everyone knows $E$, ... \textbf{forever}
+% \bsk
+% Infinitely many things to check?? No:
+% \bsk
+% \textbf{Reachable:} $w'$ is reachable from $w$ if you can get there in steps, where each step stays inside \textbf{someone's} information set
+% \bsk
+% \begin{block}{Fact (Bonanno \S8.3)}
+% $E$ is common knowledge at $w$ $\iff$ every state reachable from $w$ is in $E$
+% \end{block}
+% \bsk
+% Notation: $CK\,E$ $=$ states where $E$ is common knowledge
+% \vspace{-0.3in}
+% \end{frame}
 
-\begin{frame}{Is the Quiz Common Knowledge?}
-\centering
-\only<1>{\quizparts{}}%
-\only<2>{\quizparts{\draw[->, very thick, red!70] (0.08, 0.32) to[bend left=30] node[above, font=\small] {Alex} (0.92, 0.32);}}%
-\only<3->{\quizparts{\draw[->, very thick, red!70] (0.08, 0.32) to[bend left=30] node[above, font=\small] {Alex} (0.92, 0.32);
-  \draw[->, very thick, red!70] (1.08, -1.32) to[bend right=30] node[below, font=\small] {Blair} (1.92, -1.32);}}
-\bsk
-\raggedright
-Starting at $\alpha$, which states are reachable? \ans[3]{1.2in}{$\alpha,\ \beta,\ \gamma$}
-\bsk
-\onslide<3->{$\gamma\notin Q$ $\Rightarrow$ the quiz is \textbf{not} common knowledge. Anywhere!}
-\bsk
-\onslide<4->{\textbf{Fact:} anything true at \textbf{every} state is common knowledge\\
-\textbf{Ex:} ``Alex knows whether there's a quiz'' \ \textbf{Ex:} the game's rules (Ch.~14!)}
-\vspace{-0.3in}
-\end{frame}
+% \begin{frame}{Is the Quiz Common Knowledge?}
+% \centering
+% \only<1>{\quizparts{}}%
+% \only<2>{\quizparts{\draw[->, very thick, red!70] (0.08, 0.32) to[bend left=30] node[above, font=\small] {Alex} (0.92, 0.32);}}%
+% \only<3->{\quizparts{\draw[->, very thick, red!70] (0.08, 0.32) to[bend left=30] node[above, font=\small] {Alex} (0.92, 0.32);
+%   \draw[->, very thick, red!70] (1.08, -1.32) to[bend right=30] node[below, font=\small] {Blair} (1.92, -1.32);}}
+% \bsk
+% \raggedright
+% Starting at $\alpha$, which states are reachable? \ans[3]{1.2in}{$\alpha,\ \beta,\ \gamma$}
+% \bsk
+% \onslide<3->{$\gamma\notin Q$ $\Rightarrow$ the quiz is \textbf{not} common knowledge. Anywhere!}
+% \bsk
+% \onslide<4->{\textbf{Fact:} anything true at \textbf{every} state is common knowledge\\
+% \textbf{Ex:} ``Alex knows whether there's a quiz'' \ \textbf{Ex:} the game's rules (Ch.~14!)}
+% \vspace{-0.3in}
+% \end{frame}
 
-\begin{frame}{Common Knowledge Is Rare, and Powerful}
-Things that work because they create common knowledge:
-\begin{itemize}
-    \item \textbf{Public announcements:} ``Not all hats are white'' (Bonanno \S8.2)
-    \item \textbf{Bank runs:} everyone sees the line around the block
-    \item \textbf{Super Bowl ads:} you know everyone else saw it too
-    \item \textbf{Read receipts:} ``Delivered'' vs.\ ``Read''
-    \item \textbf{Protests:} I'll go if I know others will go...
-\end{itemize}
-\bsk
-Private messages give knowledge. Public events give \textbf{common} knowledge
-\vfill
-{\footnotesize Not in the book. Chwe, \textit{Rational Ritual} (2001).}
-\vspace{-0.2in}
-\end{frame}
+% \begin{frame}{Common Knowledge Is Rare, and Powerful}
+% Things that work because they create common knowledge:
+% \begin{itemize}
+%     \item \textbf{Public announcements:} ``Not all hats are white'' (Bonanno \S8.2)
+%     \item \textbf{Bank runs:} everyone sees the line around the block
+%     \item \textbf{Super Bowl ads:} you know everyone else saw it too
+%     \item \textbf{Read receipts:} ``Delivered'' vs.\ ``Read''
+%     \item \textbf{Protests:} I'll go if I know others will go...
+% \end{itemize}
+% \bsk
+% Private messages give knowledge. Public events give \textbf{common} knowledge
+% \vfill
+% {\footnotesize Not in the book. Chwe, \textit{Rational Ritual} (2001).}
+% \vspace{-0.2in}
+% \end{frame}
+
 
 \begin{frame}{Adding Beliefs}
 Each player puts \textbf{probabilities} on the states in each of their info sets
@@ -362,10 +363,11 @@ Each player puts \textbf{probabilities} on the states in each of their info sets
 Alex: texts arrive 90\% of the time
 \end{column}
 \begin{column}{0.53\textwidth}
-Blair, with no text: Pr(quiz)?
+Blair, with no text: what's Pr(quiz)?
 \begin{itemize}
-    \item Need to know: Pr(quiz) at all
+    \item Need to know: ``prior'' Pr(quiz)
     \item Say Pr(quiz) $=\tfrac12$
+    \item So, $Pr(\{\alpha,\beta\})=Pr(\{\gamma\})=\tfrac12$
 \end{itemize}
 \end{column}
 \end{columns}
@@ -374,19 +376,67 @@ Blair, with no text: Pr(quiz)?
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Bayes' Rule}
-\textbf{In words:} chance of $A$ once you learn $B$ $=$ share of $B$'s probability where $A$ is true
-$$P(A\mid B)=\frac{\overbrace{P(A\cap B)}^{\text{$A$ and $B$}}}{\underbrace{P(B)}_{\text{all of $B$}}}$$
+\begin{frame}{Adding Beliefs}
+Each player puts \textbf{probabilities} on the states in each of their info sets
 \bsk
-Prior: $P(\alpha)=$ \ans{0.4in}{$.45$} \quad $P(\beta)=$ \ans{0.4in}{$.05$} \quad $P(\gamma)=$ \ans{0.4in}{$.50$}
+\centering
+\quizparts{\foreach \x/\y/\b in {0/0/{\tfrac{9}{10}}, 1/0/{\tfrac{1}{10}}, 2/0/1, 0/-1/1, 1/-1/?, 2/-1/?}
+  {\node[anchor=east, font=\footnotesize, inner sep=1pt] at (\x-0.05, \y) {$\b$};}}
 \bsk
-Blair gets no text, so learns $\{\beta,\gamma\}$:
-$$P(\text{quiz}\mid\text{no text})=P(\beta\mid\{\beta,\gamma\})=\ans{1.4in}{$\dfrac{.05}{.05+.50}=\dfrac{1}{11}$}$$
-\vspace{-0.3in}
+\raggedright
+\begin{columns}[T]
+\begin{column}{0.45\textwidth}
+Suppose texts go thru 90\% of the time
+\bsk
+And Pr(Quiz)=$\tfrac12$=Pr(No Quiz)
+\end{column}
+\begin{column}{0.53\textwidth}
+Then:\\
+$P(\alpha)=\tfrac12\cdot\frac{9}{10}=0.45$\\
+$P(\beta)=\tfrac12\cdot\frac{1}{10}=0.05$\\
+$P(\gamma)=\tfrac12=0.50$
+\bsk
+Blair, with no text: what's Pr(quiz)?
+\end{column}
+\end{columns}
+\vfill
+{\footnotesize Interactive knowledge-belief structure (Bonanno Def.~9.5.1): partitions plus beliefs.}
+\vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Back to Monty Hall}
-You pick door 1. A state: (where the car is, which door Monty opens)
+\begin{frame}{Bayes' Rule}
+What is Blair's Pr(quiz $\mid$ no text)? Or, ``Prob. of quiz \textbf{conditional on} no text''?
+\bsk
+General formula (\textbf{Bayes' Rule}): Let $A$=``quiz'' and $B$=``no text''
+\begin{align*}
+    P(A\mid B) &= \frac{\overbrace{P(A\cap B)}^{\text{$A$ and $B$}}}{\underbrace{P(B)}_{\text{all of $B$}}}
+\end{align*}
+\begin{align*}
+    P(\text{quiz}\mid \text{no text}) &= \frac{P(\text{quiz}\cap\text{no text})}{P(\text{no text})}\\
+    P(\{\alpha,\beta\}\mid\{\beta,\gamma\}) &=\frac{P(\beta)}{P(\{\beta,\gamma\})}=\frac{0.05}{0.05+0.50}=\frac{1}{11}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Adding Beliefs}
+Each player puts \textbf{probabilities} on the states in each of their info sets
+\bsk
+\centering
+\quizparts{\foreach \x/\y/\b in {0/0/{\tfrac{9}{10}}, 1/0/{\tfrac{1}{10}}, 2/0/1, 0/-1/1, 1/-1/\frac{1}{11}, 2/-1/\frac{10}{11}}
+  {\node[anchor=east, font=\footnotesize, inner sep=1pt] at (\x-0.05, \y) {$\b$};}}
+\bsk
+\raggedright
+We refer to these as \textbf{updated beliefs}. Updated, conditional on reaching that infoset
+\bsk
+Blair's updated beliefs:\\
+``No text because the text failed'' ($1/11$) is much less likely than\\
+``No text because there's no quiz'' ($10/11$)
+\vfill
+\vspace{-0.2in}
+\end{frame}
+
+
+\begin{frame}{Bayes' Rule for Monty Hall}
+You pick door 2. A state: (where the car is, which door Monty opens)
 \bsk
 \centering
 \renewcommand{\arraystretch}{1.5}
@@ -394,16 +444,17 @@ You pick door 1. A state: (where the car is, which door Monty opens)
 \hline
 State & Prior prob. & Monty opens \\
 \hline
-(Car 1, opens 2) & \ans{0.6in}{$\tfrac16$} & 2 \\
-(Car 1, opens 3) & \ans{0.6in}{$\tfrac16$} & 3 \\
-(Car 2, opens 3) & \ans{0.6in}{$\tfrac13$} & 3 \\
-(Car 3, opens 2) & \ans{0.6in}{$\tfrac13$} & 2 \\
+(Car 1, opens 3) & \ans{0.6in}{$\tfrac13$} & 3 \\
+(Car 2, opens 3) & \ans{0.6in}{$\tfrac16$} & 3 \\
+(Car 2, opens 1) & \ans{0.6in}{$\tfrac16$} & 1 \\
+(Car 3, opens 1) & \ans{0.6in}{$\tfrac13$} & 1 \\
 \hline
 \end{tabular}
 \bsk
 \raggedright
-Monty opens 3. Your info set: \ans{2.6in}{\{(Car 1, opens 3), (Car 2, opens 3)\}}\\[4pt]
-$P(\text{car 1}\mid\text{opens 3})=$ \ans{1.1in}{$\dfrac{1/6}{1/6+1/3}=\dfrac13$} \quad Switch? \ans{0.5in}{Yes!}
+If Monty opens 3. Your info set: \ans{2.6in}{\{(Car 1, opens 3), (Car 2, opens 3)\}}\\[4pt]
+$P(\text{car 2}\mid\text{opens 3})=$ \ans{1.1in}{$\dfrac{1/6}{1/6+1/3}=\dfrac13$}
+\quad $P(\text{car 1}\mid\text{opens 3})=$\ans{0.3in}{$\tfrac23$}\quad Switch to 1? \ans{0.5in}{Yes!}
 \bsk
 MobLab: \underline{\hspace{0.5in}}\% switched
 \vspace{-0.3in}
@@ -412,12 +463,16 @@ MobLab: \underline{\hspace{0.5in}}\% switched
 \begin{frame}{Common Prior}
 \textbf{Common prior}: one probability $p$ on $W$ that gives \textbf{everyone's} beliefs by Bayes' rule
 \bsk
-\textbf{Ex:} Alex at $\{\alpha,\beta\}$: $(\tfrac{9}{10},\tfrac{1}{10})$. \ Blair at $\{\beta,\gamma\}$: $(\tfrac{1}{11},\tfrac{10}{11})$. Find $p$:\\[0.22in]
-\onslide<2->{\alert{$p(\alpha)=9\,p(\beta)$ and $p(\gamma)=10\,p(\beta)$ \ $\Rightarrow$ \ $p=\left(\tfrac{9}{20},\ \tfrac{1}{20},\ \tfrac{10}{20}\right)$}}\\[0.22in]
-
-\onslide<3->{\textbf{Why we care:} in Chapter 14, the common prior tells ``Nature'' how often to pick each state}
+Alex and Blair both had $P(\alpha)=0.45$, $P(\beta)=0.05$, and $P(\gamma)=0.50$\\
+And those led to the updated beliefs we found.
 \bsk
-\onslide<4->{\textbf{Fact:} a common prior doesn't always exist}
+What if...
+Alex thinks $P(\alpha)=0.05$, $P(\beta)=0.45$, and $P(\gamma)=0.50$, but\\
+Blair thinks $P(\alpha)=0.10$, $P(\beta)=0.30$, and $P(\gamma)=0.60$
+\bsk
+\onslide<2->{They can still form updated beliefs, but they won't be \textbf{consistent}}
+\bsk
+\onslide<3->{This class: always assume a \textbf{common prior}}
 \vfill
 {\footnotesize Bonanno Def.~9.5.2. Existence of a common prior is also called \textbf{Harsanyi consistency}.}
 \vspace{-0.2in}
