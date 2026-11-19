@@ -276,14 +276,14 @@ $$\underbrace{3\mu\vphantom{(}}_{\text{payoff from Fight}}\ \ge\ \underbrace{2\m
 An \textbf{assessment} $(\sigma,\mu)$ is
 \begin{itemize}
     \item $\sigma$: a (behavioral) strategy profile, and
-    \item $\mu$: a \textbf{system of beliefs}. One distribution over the nodes in each info set
+    \item $\mu$: a \textbf{system of beliefs}. Probabilities over the nodes in each info set
 \end{itemize}
 \end{block}
 \bsk
 $\mu$: ``if I ever got here, where would I think I am?''
 \begin{itemize}
     \item Even at information sets that $\sigma$ never reaches!
-    \item Singleton info sets: belief is 1 on that node. We'll skip writing those
+    \item Singleton info sets: belief is 1 on that node. No need to write it.
 \end{itemize}
 \bsk
 \textbf{Ex:} $\sigma=$ (Out, Fight), $\mu=$ (Cart: $\tfrac23$, Premium: $\tfrac13$)
@@ -294,18 +294,18 @@ $\mu$: ``if I ever got here, where would I think I am?''
 \textbf{1. Sequential rationality} (Bonanno 11.1.2)
 \begin{itemize}
     \item At \textbf{every} info set, reached or not:
-    \item Your choice maximizes expected payoff, given your beliefs $\mu$ there and everyone's strategies from then on
+    \item Your choice maximizes expected payoff, given your beliefs $\mu$ and everyone's strategies from then on
 \end{itemize}
 \bsk
 \textbf{2. Bayesian updating} (Bonanno 11.2.2)
 \begin{itemize}
-    \item \textbf{On-path}: $\sigma$ reaches the info set with positive probability
+    \item \textbf{On-path}: if $\sigma$ reaches the info set with positive probability:
     \begin{itemize}
         \item Beliefs come from $\sigma$ by Bayes' rule. No choice
     \end{itemize}
-    \item \textbf{Off-path}: $\sigma$ never reaches it
+    \item \textbf{Off-path}: if $\sigma$ never reaches the info set:
     \begin{itemize}
-        \item \textbf{Any} beliefs are OK
+        \item \textbf{Any} beliefs can be used
     \end{itemize}
 \end{itemize}
 \vfill
@@ -321,7 +321,7 @@ $\mu$: ``if I ever got here, where would I think I am?''
 \end{column}
 \begin{column}{0.5\textwidth}
 Dodo mixes:
-$$\begin{pmatrix} \text{Out} & \text{Cart} & \text{Premium} \\ \tfrac12 & \tfrac{1}{10} & \tfrac25\end{pmatrix}$$
+$$\begin{pmatrix} \text{Out} & \text{Cart} & \text{Premium} \\ \tfrac12 & \tfrac{1}{10} & \tfrac{4}{10}\end{pmatrix}$$
 Pr(BuckyDs's info set reached) $=$ \ans{0.5in}{$\tfrac12$}
 \bsk
 $\mu=P(\text{Cart}\mid\text{reached})=$ \ans{0.9in}{$\dfrac{1/10}{1/2}=\dfrac15$}
@@ -393,7 +393,7 @@ Dodo: Out optimal? \ans{0.4in}{Yes}
 \end{columns}
 \bsk
 \onslide<3->{Off-path, so \textbf{we} get to pick the belief. \textbf{Any} belief! \ Pick $\mu=1$. Fight is optimal}\\[4pt]
-\onslide<4->{\textbf{One} belief that works is enough \ $\Rightarrow$ \ (Out, Fight) is a \textbf{real WSE}}
+\onslide<4->{\textbf{One} belief that works is enough \ $\Rightarrow$ \ (Out, Fight) with $\mu=1$ is a \textbf{real WSE}}
 \bsk
 \onslide<5->{The threat works only if BuckyDs \textbf{believes} a surprise entrant is small}
 \vspace{-0.3in}
@@ -410,11 +410,11 @@ Dodo: Out optimal? \ans{0.4in}{Yes}
 \bsk
 \textbf{Off-path} info sets
 \begin{itemize}
-    \item Bayes' rule says nothing. \textbf{We} get to pick $\mu$. \textbf{Any} belief!
-    \item Find \textbf{one} belief that makes the action there optimal. That's enough
+    \item Bayes' rule says nothing. \textbf{We} get to pick $\mu$.
+    \item Find \textbf{one} belief that makes the action there optimal. That's enough to generate a WSE
 \end{itemize}
 \bsk
-\onslide<2->{\textbf{One such belief exists} \ $\Rightarrow$ \ the candidate is validated at that info set}\\[6pt]
+\onslide<2->{\textbf{One such belief exists} \ $\Rightarrow$ \ the candidate equilibrium is validated at that info set}\\[6pt]
 \onslide<3->{\textbf{No such belief exists} \ $\Rightarrow$ \ not a WSE. \ \textbf{Ex:} an action strictly dominated at that info set}
 \vspace{-0.3in}
 \end{frame}
@@ -563,7 +563,7 @@ Alex and Blair have dinner plans. Alex either \textbf{Cancels} (Blair knows), or
     \item Which NE are part of a WSE? With what beliefs?\\[3pt]
     \onslide<2->{\alert{(Caz, C) with $\mu=1$ \qquad (Yoshi, Y) with $\mu=0$ \qquad (Cancel, M) with any $\mu\in[\tfrac13,\tfrac23]$\\
     (Cancel, H): never. The action H is strictly dominated by M at Blair's info set}}\vspace{0.08in}
-    \item If Alex mixes Cancel $\tfrac12$, Cazuela's $\tfrac13$, Yoshi $\tfrac16$: Blair's belief? Best reply?\\[3pt]
+    \item If Alex mixes Cancel $\tfrac12$, Cazuela's $\tfrac13$, and Yoshi $\tfrac16$, then what is Blair's belief? And Blair's best reply?\\[3pt]
     \onslide<2->{\alert{$\mu=\frac{1/3}{1/2}=\tfrac23$ \qquad C: 2, \ M: 2, \ Y: 1, \ H: 1 \ $\Rightarrow$ \ C or M (tie)}}
 \end{enumerate}
 \vspace{-0.3in}
