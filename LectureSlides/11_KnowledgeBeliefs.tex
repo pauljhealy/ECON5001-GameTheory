@@ -65,6 +65,8 @@
   \node[anchor=east, text=player2] at (-0.35, -1) {Blair:};
   \foreach \x in {0,1,2} {\fill (\x, 0) circle (2pt); \fill (\x, -1) circle (2pt);}
   \draw[player1, thick, rounded corners=8pt] (-0.22, -0.25) rectangle (1.22, 0.25);
+  \node[anchor=south] at (0.5, 0.25) {$\tfrac12$};
+  \node[anchor=south] at (2, 0.25) {$\tfrac12$};
   \draw[player1, thick, rounded corners=8pt] (1.78, -0.25) rectangle (2.22, 0.25);
   \draw[player2, thick, rounded corners=8pt] (-0.22, -1.25) rectangle (0.22, -0.75);
   \draw[player2, thick, rounded corners=8pt] (0.78, -1.25) rectangle (2.22, -0.75);
@@ -245,10 +247,10 @@ Three possible states:
     \item $\beta$: quiz tomorrow, text got lost
     \item $\gamma$: no quiz tomorrow, so no text
 \end{itemize}
-\bsk
-Suppose true state is $\alpha$
 \end{column}
 \begin{column}{0.5\textwidth}
+Information sets:
+\bsk
 \centering
 \quizparts[0.68in]{}
 \end{column}
@@ -351,8 +353,8 @@ Blair can't tell $\beta$ from $\gamma$. Why? \ans[3]{2.4in}{No text either way}}
 
 
 \begin{frame}{Adding Beliefs}
-Each player puts \textbf{probabilities} on the states in each of their info sets
-\bsk
+Each player puts \textbf{probabilities} on the states in each of their info sets\\
+Suppose we know: Pr(quiz)=$\tfrac12$ and Pr(text goes through when sent)=90\%
 \centering
 \quizparts{\foreach \x/\y/\b in {0/0/{\tfrac{9}{10}}, 1/0/{\tfrac{1}{10}}, 2/0/1, 0/-1/1, 1/-1/?, 2/-1/?}
   {\node[anchor=east, font=\footnotesize, inner sep=1pt] at (\x-0.05, \y) {$\b$};}}
@@ -365,9 +367,7 @@ Alex: texts arrive 90\% of the time
 \begin{column}{0.53\textwidth}
 Blair, with no text: what's Pr(quiz)?
 \begin{itemize}
-    \item Need to know: ``prior'' Pr(quiz)
-    \item Say Pr(quiz) $=\tfrac12$
-    \item So, $Pr(\{\alpha,\beta\})=Pr(\{\gamma\})=\tfrac12$
+    \item How can we derive her belief??
 \end{itemize}
 \end{column}
 \end{columns}
@@ -386,17 +386,15 @@ Each player puts \textbf{probabilities} on the states in each of their info sets
 \raggedright
 \begin{columns}[T]
 \begin{column}{0.45\textwidth}
-Suppose texts go thru 90\% of the time
-\bsk
-And Pr(Quiz)=$\tfrac12$=Pr(No Quiz)
-\end{column}
-\begin{column}{0.53\textwidth}
-Then:\\
+First we need:\\
 $P(\alpha)=\tfrac12\cdot\frac{9}{10}=0.45$\\
 $P(\beta)=\tfrac12\cdot\frac{1}{10}=0.05$\\
 $P(\gamma)=\tfrac12=0.50$
+\end{column}
+\begin{column}{0.53\textwidth}
+Then Pr(quiz | no text)= $\frac{P(\beta)}{P(\beta)+P(\gamma)}=\frac{0.05}{0.05+0.50}=\frac{1}{11}$
 \bsk
-Blair, with no text: what's Pr(quiz)?
+How did we get this formula?
 \end{column}
 \end{columns}
 \vfill
@@ -413,12 +411,14 @@ General formula (\textbf{Bayes' Rule}): Let $A$=``quiz'' and $B$=``no text''
 \end{align*}
 \begin{align*}
     P(\text{quiz}\mid \text{no text}) &= \frac{P(\text{quiz}\cap\text{no text})}{P(\text{no text})}\\
-    P(\{\alpha,\beta\}\mid\{\beta,\gamma\}) &=\frac{P(\beta)}{P(\{\beta,\gamma\})}=\frac{0.05}{0.05+0.50}=\frac{1}{11}
+    P(\{\alpha,\beta\}\mid\{\beta,\gamma\}) &=\frac{P(\{\alpha,\beta\} \cap\{\beta,\gamma\})}{P(\{\beta,\gamma\})}=\frac{P(\beta)}{P(\{\beta,\gamma\})}=\frac{P(\beta)}{P(\beta)+P(\gamma)}=\frac{0.05}{0.05+0.50}=\frac{1}{11}
 \end{align*}
+\bsk
+Venn diagram:
 \end{frame}
 
 \begin{frame}{Adding Beliefs}
-Each player puts \textbf{probabilities} on the states in each of their info sets
+Now we have the players' correct beliefs in each information set:
 \bsk
 \centering
 \quizparts{\foreach \x/\y/\b in {0/0/{\tfrac{9}{10}}, 1/0/{\tfrac{1}{10}}, 2/0/1, 0/-1/1, 1/-1/\frac{1}{11}, 2/-1/\frac{10}{11}}
@@ -435,19 +435,95 @@ Blair's updated beliefs:\\
 \end{frame}
 
 
+
 \begin{frame}{Bayes' Rule for Monty Hall}
-You pick door 2. A state: (where the car is, which door Monty opens)
+Venn diagram for the Monty Hall problem where you picked door 2:
+\bsk
+\centering
+\only<1>{
+    % Preamble: \usepackage{tikz}
+    \begin{tikzpicture}[
+        lbl/.style={fill=white, fill opacity=0.85, text opacity=1,
+                    rounded corners=2pt, inner sep=2pt, align=center, font=\small}
+      ]
+      \def\R{2.5}
+    
+      % --- States: car behind door 1, 2, 3 (equal thirds) ---
+      % Door 2 on top (30 to 150), Door 1 lower-left (150 to 270), Door 3 lower-right (270 to 390)
+      \fill[red!25]   (0,0) -- (150:\R) arc (150:270:\R) -- cycle;   % Car behind 1
+      \fill[green!25] (0,0) -- (30:\R)  arc (30:150:\R)  -- cycle;   % Car behind 2
+      \fill[blue!25]  (0,0) -- (270:\R) arc (270:390:\R) -- cycle;   % Car behind 3
+    
+      % --- Boundaries ---
+      \draw[thick] (0,0) circle (\R);
+      \foreach \a in {30,150,270} \draw[thick] (0,0) -- (\a:\R);
+    
+      % --- State labels ---
+      \node[lbl] at (210:0.6*\R) {Car\\behind 1};
+      \node[lbl] at (90:0.62*\R) {Car\\behind 2\\(your pick)};
+      \node[lbl] at (330:0.6*\R) {Car\\behind 3};
+    \end{tikzpicture}
+}
+\only<2->{
+    % Preamble: \usepackage{tikz}  \usetikzlibrary{patterns}
+    \begin{tikzpicture}[
+        lbl/.style={fill=white, fill opacity=0.85, text opacity=1,
+                    rounded corners=2pt, inner sep=2pt, align=center, font=\small}
+      ]
+      \def\R{2.5}
+    
+      % --- States: car behind door 1, 2, 3 (equal thirds) ---
+      % Door 2 on top (30 to 150), Door 1 lower-left (150 to 270), Door 3 lower-right (270 to 390)
+      \fill[red!25]   (0,0) -- (150:\R) arc (150:270:\R) -- cycle;   % Car behind 1
+      \fill[green!25] (0,0) -- (30:\R)  arc (30:150:\R)  -- cycle;   % Car behind 2
+      \fill[blue!25]  (0,0) -- (270:\R) arc (270:390:\R) -- cycle;   % Car behind 3
+    
+      % --- Events: patterned wedges (each is a half-disk) ---
+      % Monty opens 3 = all of Car 1 + left half of Car 2  (90 to 270)
+      \fill[pattern=north east lines, pattern color=black!60]
+        (0,0) -- (90:\R) arc (90:270:\R) -- cycle;
+      % Monty opens 1 = all of Car 3 + right half of Car 2 (-90 to 90)
+      \fill[pattern=dots, pattern color=black!70]
+        (0,0) -- (-90:\R) arc (-90:90:\R) -- cycle;
+    
+      % --- Boundaries ---
+      \draw[thick] (0,0) circle (\R);
+      \foreach \a in {30,150,270} \draw[thick] (0,0) -- (\a:\R);
+      \draw[very thick, dashed] (90:\R) -- (0,0);   % splits Car 2 between the events
+    
+      % --- State labels ---
+      \node[lbl] at (210:0.6*\R) {Car\\behind 1};
+      \node[lbl] at (90:0.62*\R) {Car\\behind 2\\(your pick)};
+      \node[lbl] at (330:0.6*\R) {Car\\behind 3};
+    
+      % --- Event labels (outer brackets) ---
+      \def\r{\R+0.25}
+      \draw[thick] (92:\r) arc (92:268:\r);
+      \draw[thick] (-88:\r) arc (-88:88:\r);
+      \node[left,  align=right, font=\small] at (180:\r+0.1) {Monty\\opens 3};
+      \node[right, align=left,  font=\small] at (0:\r+0.1)   {Monty\\opens 1};
+    \end{tikzpicture}
+}
+\bsk
+\only<1>{Prior probabilities: 1/3 at each location}
+\only<2>{Monty either opens door 3 or door 1, depending on where the car is.\\(If Door 2 then 50/50 mix)}
+\only<3->{Conditional on ``Monty opens 3'', there's a 1/3 chance your pick was correct.}
+\end{frame}
+
+
+\begin{frame}{Bayes' Rule for Monty Hall}
+Defining the states: (where the car is, which door Monty opens)
 \bsk
 \centering
 \renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|c|c|c|c|}
 \hline
-State & Prior prob. & Monty opens \\
+State & Area in Figure & Prior prob. & Monty opens \\
 \hline
-(Car 1, opens 3) & \ans{0.6in}{$\tfrac13$} & 3 \\
-(Car 2, opens 3) & \ans{0.6in}{$\tfrac16$} & 3 \\
-(Car 2, opens 1) & \ans{0.6in}{$\tfrac16$} & 1 \\
-(Car 3, opens 1) & \ans{0.6in}{$\tfrac13$} & 1 \\
+(Car 1, opens 3) & Red dashed & \ans{0.6in}{$\tfrac13$} & 3 \\
+(Car 2, opens 3) & Green dashed & \ans{0.6in}{$\tfrac16$} & 3 \\
+(Car 2, opens 1) & Green dotted & \ans{0.6in}{$\tfrac16$} & 1 \\
+(Car 3, opens 1) & Blue dotted & \ans{0.6in}{$\tfrac13$} & 1 \\
 \hline
 \end{tabular}
 \bsk
@@ -455,18 +531,17 @@ State & Prior prob. & Monty opens \\
 If Monty opens 3. Your info set: \ans{2.6in}{\{(Car 1, opens 3), (Car 2, opens 3)\}}\\[4pt]
 $P(\text{car 2}\mid\text{opens 3})=$ \ans{1.1in}{$\dfrac{1/6}{1/6+1/3}=\dfrac13$}
 \quad $P(\text{car 1}\mid\text{opens 3})=$\ans{0.3in}{$\tfrac23$}\quad Switch to 1? \ans{0.5in}{Yes!}
-\bsk
-MobLab: \underline{\hspace{0.5in}}\% switched
 \vspace{-0.3in}
 \end{frame}
 
 \begin{frame}{Common Prior}
-\textbf{Common prior}: one probability $p$ on $W$ that gives \textbf{everyone's} beliefs by Bayes' rule
+\textbf{Common prior}: all players agree on the ``prior'' probabilities over states
 \bsk
 Alex and Blair both had $P(\alpha)=0.45$, $P(\beta)=0.05$, and $P(\gamma)=0.50$\\
-And those led to the updated beliefs we found.
+And those led to the updated beliefs we found.\\
+Their \textit{updated} beliefs differ, but their \textit{prior} beliefs were the same.
 \bsk
-What if...
+What if...\\
 Alex thinks $P(\alpha)=0.05$, $P(\beta)=0.45$, and $P(\gamma)=0.50$, but\\
 Blair thinks $P(\alpha)=0.10$, $P(\beta)=0.30$, and $P(\gamma)=0.60$
 \bsk
