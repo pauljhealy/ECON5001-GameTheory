@@ -558,12 +558,12 @@ Blair thinks $P(\alpha)=0.10$, $P(\beta)=0.30$, and $P(\gamma)=0.60$
     \item MobLab time!
     \item A jar is either mostly \textbf{Blue} or mostly \textbf{Red} (equally likely)
     \begin{itemize}
-        \item Mostly $=$ 60\% of the balls
+        \item Mostly $=$ 60\% of the marbles
     \end{itemize}
-    \item You privately draw one ball (it goes back in)
+    \item You privately draw one marble (it goes back in)
     \item One at a time, in random order, guess: Blue jar or Red jar?
     \begin{itemize}
-        \item You see everyone's \textbf{guesses} before you. Not their balls
+        \item You see everyone's \textbf{guesses} before you. Not their marbles
     \end{itemize}
     \item Paid for a correct guess
 \end{itemize}
@@ -573,20 +573,21 @@ Feel free to talk! And play it the way you'd actually play it.
 \vspace{-0.2in}
 \end{frame}
 
-\begin{frame}{Back to Herding}
-Suppose everyone guesses their own ball's color... until it stops making sense
+\begin{frame}{Herding Math}
+Suppose everyone guesses their own marble's color...
+\bsk
+\textbf{Player 1} sees blue, guesses ``Blue''
 \bsk
 \textbf{Player 2} sees ``Blue'', draws blue:\\
-$P(\text{Blue jar})=\dfrac{(.6)(.6)}{(.6)(.6)+(.4)(.4)}=$ \ans{0.9in}{$\dfrac{9}{13}\approx .69$}
+$P(\text{Blue jar})=\dfrac{(.6)(.6)}{(.6)(.6)+(.4)(.4)}=$ \ans{2.1in}{$\dfrac{.36}{.36+.16}=\dfrac{.36}{.52}=\dfrac{9}{13}\approx .6923>0.5$} \ Guess? \ans{0.5in}{Blue}\\
+\textbf{Player 2} sees ``Blue'', draws red:\\
+$P(\text{Blue jar})=\dfrac{(.6)(.4)}{(.6)(.4)+(.4)(.6)}=$ \ans{1.9in}{$\dfrac{.24}{.24+.24}=\dfrac{.24}{.45}=0.50$} \ Guess? \ans{0.75in}{Red (tied)}\\
+Player 2's strategy: \ans{2.0in}{always reveal their signal}
 \bsk
 \textbf{Player 3} sees ``Blue, Blue'', draws \textbf{red}:\\
-Two blue balls revealed, one red. $P(\text{Blue jar})=$ \ans{0.6in}{$.6$} \ Guess? \ans{0.5in}{Blue}
+Two blue marbles revealed, one red. $P(\text{Blue jar})=\dfrac{(.6)(.6)(.4)}{(.6)(.6)(.4)+(.4)(.4)(.6)}=$ \ans{1.9in}{$\dfrac{.144}{.144+.096}=\dfrac{.144}{.240}=0.60$} \ Guess? \ans{0.5in}{Blue} \ Strategy? \ans{1.5in}{Always guess ``Blue''}
 \bsk
-\onslide<3->{\textbf{Cascade:} from now on, guesses reveal nothing. Everyone herds}\\
-\onslide<4->{This is \textbf{Bayes' rule} at work: early guesses reveal balls, later guesses don't\\
-Our groups: \underline{\hspace{0.4in}} cascades, \underline{\hspace{0.4in}} on the wrong color}
-\vfill
-{\footnotesize Anderson \& Holt (1997, \textit{AER}). Not in the book.}
+\onslide<3->{\textbf{Cascade:} from now on, guesses reveal nothing. Everyone herds. Inefficient learning!}
 \vspace{-0.2in}
 \end{frame}
 
