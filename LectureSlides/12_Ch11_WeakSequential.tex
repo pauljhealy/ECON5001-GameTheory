@@ -194,11 +194,13 @@ $(b,e,c)$ \quad $(b,f,d)$
 \bsk
 SPNE only checks \textbf{subgames}
 \begin{itemize}
-    \item P3's info set isn't a subgame
-    \item So bad choices there go unchecked
+    \item P3's infoset isn't a subgame
+    \item So SPNE doesn't require rationality at that infoset
 \end{itemize}
 \bsk
 \onslide<2->{\textbf{Fix:} give P3 a \textbf{belief} about where they are. Check every choice against it}
+\bsk
+\onslide<3->{Regardless of whether history $(a)$ or $(b,e)$ happened, $d$ is \textbf{never} a best reply!}
 \end{column}
 \end{columns}
 \vspace{-0.3in}
@@ -246,7 +248,7 @@ Players: \textbf{Dodo} and \textbf{BuckyDs}
 \bsk
 Proper subgames? \ans{0.5in}{None} \ So $SPNE=NE$
 \bsk
-\onslide<2->{NE: \ans[3]{1in}{(Out, Fight)} \quad \ans[3]{1.1in}{(Premium, Acc)}}
+\onslide<2->{Pure NE: \ans[3]{1in}{(Out, Fight)} \quad \ans[3]{1.1in}{(Premium, Acc)}}
 \bsk
 \onslide<4->{Is (Out, Fight) reasonable? \ \textbf{It depends on what BuckyDs believes}}
 \vspace{-0.3in}
@@ -259,7 +261,7 @@ Proper subgames? \ans{0.5in}{None} \ So $SPNE=NE$
 \donuttree[0.78]{\node[font=\small] at ($(w2)+(-0.15,0.35)$) {$\mu$}; \node[font=\small] at ($(w3)+(0.4,0.35)$) {$1-\mu$};}
 \end{column}
 \begin{column}{0.5\textwidth}
-$\mu=$ Pr(Cart $\mid$ Dodo is coming)
+$\mu=$ Pr(Cart $\mid$ Cart or Premium)
 \bsk
 Fight: \ans{1.1in}{$3\mu$}\\[6pt]
 Acc: \ \ \ans{1.1in}{$2\mu+1(1-\mu)$}
@@ -268,6 +270,10 @@ Acc: \ \ \ans{1.1in}{$2\mu+1(1-\mu)$}
 \bsk
 \onslide<2->{\textbf{In words:} fight when Dodo is likely enough to be a small cart
 $$\underbrace{3\mu\vphantom{(}}_{\text{payoff from Fight}}\ \ge\ \underbrace{2\mu+1(1-\mu)}_{\text{payoff from Acc}} \quad\iff\quad \mu\ \ge\ \ans[3]{0.4in}{$\tfrac12$}$$}
+\bsk
+\onslide<3->{$(Out,Fight)$ is reasonable only if $\mu\geq 1/2$}
+\bsk
+\onslide<4->{Is there any reason to have $\mu\geq 1/2$ if Pr(Out)=1??? Is there any reason \textbf{not to}???}
 \vspace{-0.3in}
 \end{frame}
 
@@ -306,10 +312,9 @@ $\mu$: ``if I ever got here, where would I think I am?''
     \item \textbf{Off-path}: if $\sigma$ never reaches the info set:
     \begin{itemize}
         \item \textbf{Any} beliefs can be used
+        \item \textbf{Ex:} Dodo plays \textbf{Out}, so BuckyD's move is off-path
     \end{itemize}
 \end{itemize}
-\vfill
-{\footnotesize Sequential rationality also means you can't gain by changing your choice here \textbf{and} later choices too.}
 \vspace{-0.2in}
 \end{frame}
 
@@ -324,12 +329,14 @@ Dodo mixes:
 $$\begin{pmatrix} \text{Out} & \text{Cart} & \text{Premium} \\ \tfrac12 & \tfrac{1}{10} & \tfrac{4}{10}\end{pmatrix}$$
 Pr(BuckyDs's info set reached) $=$ \ans{0.5in}{$\tfrac12$}
 \bsk
-$\mu=P(\text{Cart}\mid\text{reached})=$ \ans{0.9in}{$\dfrac{1/10}{1/2}=\dfrac15$}
+$\mu=P(\text{Cart}\mid\text{reached})=$ \ans{1.2in}{$\dfrac{1/10}{1/10+4/10}=\dfrac15$}
 \end{column}
 \end{columns}
 \bsk
 \onslide<3->{If Dodo plays \textbf{Out} for sure: info set never reached (off-path)\\
 $\Rightarrow$ Bayes' rule says nothing ($\tfrac{0}{0}$). Any $\mu$ allowed}
+\bsk
+\onslide<4->{We're allowed to assume $\mu\geq 1/2$, so $(Out,Fight)$ is \textbf{possible} (can't be disproven)}
 \vspace{-0.3in}
 \end{frame}
 
@@ -345,8 +352,8 @@ A \textbf{weak sequential equilibrium} (WSE) is an assessment $(\sigma,\mu)$ tha
 How to find them:
 \begin{enumerate}
     \item Delete \textbf{actions} that are strictly dominated \textbf{at an info set} (bad for \textbf{any} belief)
-    \item Guess a \textbf{candidate WSE}: a strategy profile $\sigma$
-    \item On-path info sets: Bayes' rule gives $\mu$. \ Off-path: \textbf{we} pick $\mu$
+    \item Guess a \textbf{candidate WSE}: a strategy profile $\sigma$ (this is the hard part)
+    \item On-path info sets: Bayes' rule gives $\mu$. \ Off-path: \textbf{we} pick $\mu$ to justify $\sigma$
     \item Sequentially rational everywhere? Then it's a \textbf{real WSE}. Repeat
 \end{enumerate}
 \vfill
@@ -411,7 +418,7 @@ Dodo: Out optimal? \ans{0.4in}{Yes}
 \textbf{Off-path} info sets
 \begin{itemize}
     \item Bayes' rule says nothing. \textbf{We} get to pick $\mu$.
-    \item Find \textbf{one} belief that makes the action there optimal. That's enough to generate a WSE
+    \item Find \textbf{one} belief that makes the action there optimal.\\That's enough to generate a WSE
 \end{itemize}
 \bsk
 \onslide<2->{\textbf{One such belief exists} \ $\Rightarrow$ \ the candidate equilibrium is validated at that info set}\\[6pt]
